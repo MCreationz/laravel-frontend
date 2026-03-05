@@ -4,11 +4,10 @@ namespace App\Http\Controllers\API\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\Organization;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Str;
-use Carbon\Carbon;
 
 class RegisterController extends Controller
 {
@@ -45,7 +44,7 @@ class RegisterController extends Controller
         ]);
     }
 
-        private function sendOtpMail($organization, $otp, $expiryMinutes)
+    private function sendOtpMail($organization, $otp, $expiryMinutes)
     {
         $subject = $organization->role === 'fund_seeker'
             ? 'Your Fundink OTP – Let’s Get You Started'
@@ -61,5 +60,4 @@ class RegisterController extends Controller
                 ->setBody($body, 'text/html');
         });
     }
-}
 }
