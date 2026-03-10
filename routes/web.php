@@ -15,3 +15,7 @@ Route::get('/login', function () {
 Route::get('/register', function () {
     return view('auth.register');
 })->name('register');
+
+Route::get('/verify-otp', function () {
+    return view('auth.verify-otp');
+})->name('verify.otp');

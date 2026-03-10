@@ -60,4 +60,78 @@ class RegisterController extends Controller
                 ->subject($subject);
         });
     }
+
+    public function verifyOtp(Request $request)
+    {
+        $request->validate([
+            'work_email' => 'required|email',
+            'otp' => 'required|digits:6',
+        ]);
+
+        $organization = Organization::where('work_email', $request->work_email)->first();
+
+        if (! $organization) {
+            return response()->json([
+                'res' => 'error',
+                'msg' => 'Organization not found.',
+            ], 404);
+        }
+
+        if ($organization->otp_code != $request->otp) {
+            return response()->json([
+                'res' => 'error',
+                'msg' => 'Invalid OTP.',
+            ], 400);
+        }
+
+        if (Carbon::now()->gt($organization->otp_expires_at)) {
+            return response()->json([
+                'res' => 'error',
+                'msg' => 'OTP expired.',
+            ], 400);
+        }
+
+        // mark verified
+        $organization->update([
+            'otp_code' => null,
+            'otp_expires_at' => null,
+            'email_verified_at' => now(),
+        ]);
+
+        return response()->json([
+            'res' => 'success',
+            'msg' => 'Email verified successfully.',
+        ]);
+    }
+
+    public function resendOtp(Request $request)
+    {
+        $request->validate([
+            'work_email' => 'required|email',
+        ]);
+
+        $organization = Organization::where('work_email', $request->work_email)->first();
+
+        if (! $organization) {
+            return response()->json([
+                'res' => 'error',
+                'msg' => 'Organization not found.',
+            ], 404);
+        }
+
+        $otp = rand(100000, 999999);
+        $expiryMinutes = 10;
+
+        $organization->update([
+            'otp_code' => $otp,
+            'otp_expires_at' => Carbon::now()->addMinutes($expiryMinutes),
+        ]);
+
+        $this->sendOtpMail($organization, $otp, $expiryMinutes);
+
+        return response()->json([
+            'res' => 'success',
+            'msg' => 'OTP resent successfully.',
+        ]);
+    }
 }

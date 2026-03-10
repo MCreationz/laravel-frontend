@@ -10,6 +10,9 @@ Route::prefix('v1')->group(function () {
 
 Route::post('/register-step-1', [RegisterController::class, 'registerStepOne']);
 
+Route::post('/verify-otp', [RegisterController::class, 'verifyOtp']);
+
+Route::post('/resend-otp', [RegisterController::class, 'resendOtp']);
     // Public Routes
     Route::post('user/register', [AuthController::class, 'register']);
     Route::post('user/login', [AuthController::class, 'login']);
