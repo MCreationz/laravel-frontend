@@ -8,7 +8,7 @@
 <form>
 
     <div class="mb-3">
-        <label class="form-label">Full Name</label>
+        <label class="form-label">Full N</label>
         <input type="text" class="form-control" placeholder="Enter your name">
     </div>
 
