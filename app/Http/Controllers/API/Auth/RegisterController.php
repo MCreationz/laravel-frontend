@@ -54,10 +54,10 @@ class RegisterController extends Controller
             ? view('emails.fund_seeker_otp', compact('organization', 'otp', 'expiryMinutes'))->render()
             : view('emails.funder_otp', compact('organization', 'otp', 'expiryMinutes'))->render();
 
-        Mail::raw([], function ($message) use ($organization, $subject, $body) {
+        // Correct way to send HTML email
+        Mail::html($body, function ($message) use ($organization, $subject) {
             $message->to($organization->work_email)
-                ->subject($subject)
-                ->setBody($body, 'text/html');
+                ->subject($subject);
         });
     }
 }
