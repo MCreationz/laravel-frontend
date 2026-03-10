@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,62 +9,64 @@
     <!-- App CSS -->
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 
+
     <!-- Optional: Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
+
 <body>
 
-<div class="auth-wrapper">
-    <div class="container">
-        <div class="row justify-content-center align-items-center min-vh-100">
-
-            <div class="col-md-6 col-lg-5">
-
-                <div class="card shadow-sm">
-                    <div class="card-body p-4">
-
-                        <h3 class="text-center mb-4">
-                            @yield('heading', 'Welcome')
-                        </h3>
-
-                        {{-- Flash Messages --}}
-                        @if(session('success'))
-                            <div class="alert alert-success">
-                                {{ session('success') }}
-                            </div>
-                        @endif
-
-                        @if(session('error'))
-                            <div class="alert alert-danger">
-                                {{ session('error') }}
-                            </div>
-                        @endif
-
-                        {{-- Validation Errors --}}
-                        @if($errors->any())
-                            <div class="alert alert-danger">
-                                <ul class="mb-0">
-                                    @foreach($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        @endif
-
-                        {{-- Page Content --}}
-                        @yield('content')
-
-                    </div>
+    <div class="auth-wrapper">
+        <div class="row align-items-center justify-content-between">
+            <div class="col left-logo-col position-relative">
+                <div class="bg-image">
+                    <img src="img/bg-image.png" alt="FundInk graphic image" class="img-fluid" width="100%" height="100%">
                 </div>
+                <div class="logo position-absolute">
+                    <img src="img/FundInk-logo.svg" alt="FundInk site logo" width="197.8251190185547px" height="42px">
+                </div>
+            </div>
+            <div class="col form-col">
+                {{-- <h3 class="text-center mb-4">
+                    @yield('heading', 'Welcome')
+                </h3> --}}
+
+                {{-- Flash Messages --}}
+                @if (session('success'))
+                    <div class="alert alert-success">
+                        {{ session('success') }}
+                    </div>
+                @endif
+
+                @if (session('error'))
+                    <div class="alert alert-danger">
+                        {{ session('error') }}
+                    </div>
+                @endif
+
+                {{-- Validation Errors --}}
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul class="mb-0">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+
+                {{-- Page Content --}}
+                @yield('content')
+
 
             </div>
 
         </div>
     </div>
-</div>
 
-<!-- App JS -->
-<script src="{{ asset('js/app.js') }}"></script>
+    <!-- App JS -->
+    <script src="{{ asset('js/app.js') }}"></script>
 
 </body>
+
 </html>

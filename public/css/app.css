@@ -1,0 +1,106 @@
+@font-face {
+    font-family: 'Coolvetica';
+    src: url('/fonts/Coolvetica-Regular.woff2') format('woff2'),
+        url('/fonts/Coolvetica-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Inter';
+    src: url('/fonts/Inter18pt-SemiBold.woff2') format('woff2'),
+        url('/fonts/Inter18pt-SemiBold.woff') format('woff');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Inter';
+    src: url('/fonts/Inter18pt-Regular.woff2') format('woff2'),
+        url('/fonts/Inter18pt-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Inter';
+    src: url('/fonts/Inter18pt-Bold.woff2') format('woff2'),
+        url('/fonts/Inter18pt-Bold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+:root {
+    --primary-color: #282828;
+    --secondary-color: #2B2B2B;
+    --accent-color: #0A66C2;
+    --primary-btn: linear-gradient(66.53deg, #0160D6 29%, #07CCB5 67.08%);
+}
+body {
+    font-family: 'Inter' !important;
+    font-size: 0.875rem;
+    line-height: 1.625rem;
+}
+.font-small {
+    font-size: 12px;
+}
+h1, .h1, h2, .h2 {
+    font-family: 'Coolvetica';
+    font-weight: 400;
+}
+.h1, h1 {
+    font-size: 1.993rem !important;
+}
+a {
+    color: var(--accent-color);
+}
+label {
+    font-weight: 600;    
+    font-size: 0.875rem;
+    line-height: 1.625rem;
+}
+.btn.btn-primary {
+    background: var(--primary-btn);
+    border: none !important;
+    font-weight: 700 !important;
+    font-size: 0.875rem !important;
+    padding: 9.5px 25px !important;
+}
+/* register page css */
+.auth-wrapper {
+    padding: 20px 54px 20px 20px;
+    height: 100vh;
+}
+.bg-image img {
+    height: 100%;
+    object-fit: cover;
+    border-radius: 21px;
+}
+.col.left-logo-col {
+    flex: 0 0 67.626%;
+}
+.left-logo-col .logo {
+    top: 43px;
+    left: 50px;
+}
+input.form-control, select.form-control {
+    background: #F7F7F7;
+    border: 1px solid #E2E2E2;
+    padding: 10px 14px;
+    font-size: 0.75rem;
+}
+.col.form-col {flex: 0 0 30.073%;}
+/* .bg-image:before {
+    content: '';
+    position: absolute;
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+    left: -2px;
+    top: -2px;
+    background: linear-gradient(66.53deg, rgba(1, 96, 214, 0.05) 29%, rgba(7, 204, 181, 0.05) 67.08%);
+    border-radius: 21px;
+}
+.bg-image {
+    position: relative;
+} */
