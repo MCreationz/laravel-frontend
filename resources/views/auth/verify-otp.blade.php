@@ -15,12 +15,12 @@
         <div class="fields-wrap">
             @csrf
             <div class="otp-container">
-                <input type="text" maxlength="1" class="otp-input" placeholder="-">
-                <input type="text" maxlength="1" class="otp-input" placeholder="-">
-                <input type="text" maxlength="1" class="otp-input" placeholder="-">
-                <input type="text" maxlength="1" class="otp-input" placeholder="-">
-                <input type="text" maxlength="1" class="otp-input" placeholder="-">
-                <input type="text" maxlength="1" class="otp-input" placeholder="-">
+                <input type="text" maxlength="1" class="otp-input" inputmode="numeric" pattern="[0-9]*" placeholder="-">
+            <input type="text" maxlength="1" class="otp-input" inputmode="numeric" pattern="[0-9]*" placeholder="-">
+            <input type="text" maxlength="1" class="otp-input" inputmode="numeric" pattern="[0-9]*" placeholder="-">
+            <input type="text" maxlength="1" class="otp-input" inputmode="numeric" pattern="[0-9]*" placeholder="-">
+            <input type="text" maxlength="1" class="otp-input" inputmode="numeric" pattern="[0-9]*" placeholder="-">
+            <input type="text" maxlength="1" class="otp-input" inputmode="numeric" pattern="[0-9]*" placeholder="-">
             </div>
 
             <input type="hidden" name="otp" id="otpValue">
@@ -39,27 +39,30 @@
 
     </form>
 
-@endsection
-
 <script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
     const inputs = document.querySelectorAll(".otp-input");
     const otpValue = document.getElementById("otpValue");
+    const form = document.getElementById("otpForm");
 
     inputs.forEach((input, index) => {
 
-        input.addEventListener("input", () => {
+        input.addEventListener("input", function () {
 
-            if (input.value.length === 1 && index < inputs.length - 1) {
+            this.value = this.value.replace(/[^0-9]/g, '');
+
+            if (this.value && index < inputs.length - 1) {
                 inputs[index + 1].focus();
             }
 
-            checkOTP();
-
+            updateOTP();
         });
 
-        input.addEventListener("keydown", (e) => {
+        input.addEventListener("keydown", function (e) {
 
-            if (e.key === "Backspace" && !input.value && index > 0) {
+            if (e.key === "Backspace" && !this.value && index > 0) {
                 inputs[index - 1].focus();
             }
 
@@ -67,21 +70,40 @@
 
     });
 
-    function checkOTP() {
+
+    inputs[0].addEventListener("paste", function(e) {
+
+        let paste = e.clipboardData.getData("text").trim();
+
+        if(paste.length === 6){
+
+            inputs.forEach((input,i)=>{
+                input.value = paste[i];
+            });
+
+            updateOTP();
+        }
+
+    });
+
+
+    function updateOTP(){
 
         let otp = "";
 
-        inputs.forEach(input => {
+        inputs.forEach(input=>{
             otp += input.value;
         });
 
-        if (otp.length === 6) {
+        otpValue.value = otp;
 
-            otpValue.value = otp;
-
-            document.getElementById("otpForm").submit();
-
+        if(otp.length === 6){
+            form.submit();
         }
 
     }
+
+});
+
 </script>
+@endsection

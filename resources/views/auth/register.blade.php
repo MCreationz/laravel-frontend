@@ -28,33 +28,38 @@
                 </div>
             </div>
 
-            
             <div class="col-12 mb-md-3 mb-2">
-                <label for="car-select" class="form-label">Are you a:</label>
+                 <label for="car-select" class="form-label">Are you a:</label>
                 <div class="select-wrapper w-100 position-relative">
-                    <select name="select" id="Select-option" class="form-control">
-                        <option value="Select an option">Select an option</option>
-                        <option value="Funder">Funder</option>
-                        <option value="Fund-Seeker">Fund-Seeker</option>
-                    </select>
+                    <div class="custom-select form-control" id="selected-option">Select an option</div>
+                    <ul class="select-list">
+                        <li data-value="Funder">Funder</li>
+                        <li data-value="Fund-Seeker">Fund-Seeker</li>
+                    </ul>
+
+                    <!-- Hidden input for form submission -->
+                    <input type="hidden" name="select" id="hidden-select">
                 </div>
             </div>
             <div class="col-12 mb-md-3 mb-2">
                 <label for="car-select" class="form-label">How did you hear about Fundink?</label>
                 <div class="select-wrapper w-100 position-relative">
-                    <select name="select" id="Select-option" class="form-control">
-                        <option value="Select an option">Select an option</option>
-                        <option value="Referrals">Referrals</option>
-                        <option value="Fundink Website">Fundink Website</option>
-                        <option value="Internet">Internet</option>
-                        <option value="Networking Event">Networking Event</option>
-                        <option value="Fundink Website">Fundink Website</option>
-                        <option value="News Article">News Article</option>
-                        <option value="Advertising">Advertising</option>
-                        <option value="Direct Visit">Direct Visit</option>
-                        <option value="LinkedIn">LinkedIn</option>
-                        <option value="Other Social Media">Other Social Media</option>
-                    </select>
+                    <div class="custom-select form-control" id="selected-option">Select an option</div>
+                    <ul class="select-list">
+                        <li data-value="Referrals">Referrals</li>
+                        <li data-value="Fundink Website">Fundink Website</li>
+                        <li data-value="Internet">Internet</li>
+                        <li data-value="Networking Event">Networking Event</li>
+                        <li data-value="Fundink Website">Fundink Website</li>
+                        <li data-value="News Article">News Article</li>
+                        <li data-value="Advertising">Advertising</li>
+                        <li data-value="Direct Visit">Direct Visit</li>
+                        <li data-value="LinkedIn">LinkedIn</li>
+                        <li data-value="Other Social Media">Other Social Media</li>
+                    </ul>
+
+                    <!-- Hidden input for form submission -->
+                    <input type="hidden" name="select" id="hidden-select">
                 </div>
             </div>
             <div class="col-12 mb-md-3 mb-2">
@@ -78,5 +83,35 @@
     </form>
 
 
+<script>
+document.querySelectorAll(".select-wrapper").forEach(function(wrapper) {
+    const selectBox = wrapper.querySelector(".custom-select");
+    const optionsList = wrapper.querySelector(".select-list");
+    const hiddenInput = wrapper.querySelector(".hidden-select");
+    // toggle dropdown
+    selectBox.addEventListener("click", function(e) {
+        e.stopPropagation();
+        document.querySelectorAll(".select-list").forEach(list => {
+            if(list !== optionsList) list.style.display = "none";
+        });
+        optionsList.style.display =
+            optionsList.style.display === "block" ? "none" : "block";
+    });
+    // select option
+    optionsList.querySelectorAll("li").forEach(function(option) {
+        option.addEventListener("click", function() {
+            selectBox.textContent = this.textContent;
+            hiddenInput.value = this.getAttribute("data-value");
+            optionsList.style.display = "none";
+        });
+    });
 
+});
+// close when clicking outside
+document.addEventListener("click", function() {
+    document.querySelectorAll(".select-list").forEach(list => {
+        list.style.display = "none";
+    });
+});
+</script>
 @endsection
