@@ -17,48 +17,52 @@
 <body>
 
     <div class="auth-wrapper">
-        <div class="row align-items-center justify-content-between gap-4 gap-lg-2">
+        <div class="row justify-content-between gap-4 gap-lg-2 align-items-stretch">
             <div class="col left-logo-col position-relative">
                 <div class="bg-image">
-                    <img src="img/bg-image.png" alt="FundInk graphic image" class="img-fluid" width="100%" height="100%">
+                    <img src="img/bg-image.png" alt="FundInk graphic image" class="img-fluid" width="100%"
+                        height="100%">
                 </div>
                 <div class="logo position-absolute">
                     <img src="img/FundInk-logo.svg" alt="FundInk site logo" width="197.8251190185547px" height="42px">
                 </div>
             </div>
             <div class="col form-col">
-                {{-- <h3 class="text-center mb-4">
+                <div class="form-col-wrap">
+
+
+                    {{-- <h3 class="text-center mb-4">
                     @yield('heading', 'Welcome')
                 </h3> --}}
 
-                {{-- Flash Messages --}}
-                @if (session('success'))
-                    <div class="alert alert-success">
-                        {{ session('success') }}
-                    </div>
-                @endif
+                    {{-- Flash Messages --}}
+                    @if (session('success'))
+                        <div class="alert alert-success">
+                            {{ session('success') }}
+                        </div>
+                    @endif
 
-                @if (session('error'))
-                    <div class="alert alert-danger">
-                        {{ session('error') }}
-                    </div>
-                @endif
+                    @if (session('error'))
+                        <div class="alert alert-danger">
+                            {{ session('error') }}
+                        </div>
+                    @endif
 
-                {{-- Validation Errors --}}
-                @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul class="mb-0">
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
+                    {{-- Validation Errors --}}
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul class="mb-0">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
 
-                {{-- Page Content --}}
-                @yield('content')
+                    {{-- Page Content --}}
+                    @yield('content')
 
-
+                </div>
             </div>
 
         </div>

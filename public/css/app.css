@@ -52,7 +52,7 @@
 body {
     font-family: 'Inter' !important;
     font-size: 0.875rem !important;
-    line-height: 1.5 !important;
+    line-height: 1.6 !important;
 }
 h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
     font-family: 'Coolvetica';
@@ -91,22 +91,38 @@ label {
 /* register page css */
 .auth-wrapper {
     padding: 20px 54px 20px 20px;
-    /* height: 100vh; */
+    min-height: 100vh;
 }
 .bg-image img {
-    height: 100vh;
+    height: 100%;
     object-fit: cover;
     border-radius: 21px;
 }
 .col.left-logo-col {
     flex: 0 0 67.626%;
 }
+.form-col-wrap {
+    padding: 153px 0 17px 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+/* .form-fields-wrap {
+    min-height: 100vh;
+    height: 100vh;
+} */
 .left-logo-col .logo {
     top: 43px;
     left: 50px;
 }
 .col.form-col {
     flex: 0 0 30.073%;
+}
+.form-fields-wrap {
+    flex-grow: 1;
+}
+.bg-image {
+    height: 100%;
 }
 /* form style */
 input.form-control, select.form-control {
@@ -143,10 +159,14 @@ input.form-control::placeholder {
     border-top: 10px solid var(--accent-color);
     pointer-events: none;
 }
-.form-control:focus {
+.form-control:focus, input:focus {
     border: 1px solid #D6DCE880;
     background: #8FA1B31A;
     box-shadow: unset !important;
+    outline: none;
+}
+input.otp-input::placeholder {
+    color: #E2E2E2;
 }
 .login-text p {
     text-decoration: underline;
@@ -154,17 +174,19 @@ input.form-control::placeholder {
     color: rgba(40, 40, 40, 0.6);
 }
 /* OTP verification */
-.otp-container{
-    display:flex;
-    gap:10px;
+.otp-container {
+    display: flex;
+    gap: 5px;
 }
-.otp-input{
-    width:50px;
-    height:50px;
-    font-size:22px;
-    text-align:center;
-    border:1px solid #ccc;
-    border-radius:6px;
+.otp-input {
+    width: calc(100% / 6 - 2px);
+    height: 64px;
+    font-size: 20px;
+    text-align: center;
+    padding: 5px;
+    border-radius: 15px;
+    border: 1px solid #E2E2E2;
+    background: #F7F7F7;
 }
 @media(max-width:1199px){
     /* register page css */
@@ -174,6 +196,9 @@ input.form-control::placeholder {
     }
     .col.form-col {
         flex: 0 0 31%;
+    }
+    .form-col-wrap {
+        padding: 80px 0 17px 0;
     }
 }
 @media(max-width:991px){
@@ -200,6 +225,9 @@ input.form-control::placeholder {
     .auth-wrapper {
         padding: 15px;
     }
+    .form-col-wrap {
+        padding: 0;
+    }
 }
 @media(max-width: 767px){
     h1, .h1 {
@@ -215,5 +243,10 @@ input.form-control::placeholder {
         border-left: 5px solid transparent;
         border-right: 5px solid transparent;
         border-top: 8px solid var(--accent-color);
+    }
+    .otp-input {
+        height: 56px;
+        border-radius: 10px;
+        font-size: 18px;
     }
 }
