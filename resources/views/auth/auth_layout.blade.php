@@ -17,7 +17,7 @@
 <body>
 
     <div class="auth-wrapper">
-        <div class="row align-items-center justify-content-between">
+        <div class="row align-items-center justify-content-between gap-4 gap-lg-2">
             <div class="col left-logo-col position-relative">
                 <div class="bg-image">
                     <img src="img/bg-image.png" alt="FundInk graphic image" class="img-fluid" width="100%" height="100%">
