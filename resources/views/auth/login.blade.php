@@ -57,7 +57,7 @@
 
     <div class="account-wrap">
 
-        <div class="col-12 btn-wrap mt-5 pt-xl-4">
+        <div class="col-12 btn-wrap mt-5">
             <button type="submit" class="btn btn-primary w-100">
                 Login
             </button>

@@ -80,7 +80,11 @@ label {
     padding: 20px 54px 20px 20px;
     min-height: 100vh;
 }
+.bg-image {
+    height: calc(100vh - 40px);
+}
 .bg-image img {
+    width: 100%;
     height: 100%;
     object-fit: cover;
     border-radius: 21px;
@@ -89,7 +93,7 @@ label {
     flex: 0 0 67.626%;
 }
 .form-col-wrap {
-    padding: 153px 0 17px 0;
+    padding: 10.625vw 0 17px 0;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -103,9 +107,6 @@ label {
 }
 .form-fields-wrap {
     flex-grow: 1;
-}
-.bg-image {
-    height: 100%;
 }
 /* form style */
 form .form-control {
@@ -352,6 +353,17 @@ header.header {
 }
 .progress-dots .dot.nine {
     opacity: 90%;
+}
+@media(max-width:1440px){
+.form-col-wrap {
+    padding: 20px 0 17px;
+}
+.bg-image {height: 100vh;}
+}
+@media(max-width:1320px){
+    .bg-image {
+        height: 100%;
+    }
 }
 @media(max-width:1199px){
     /* register page css */
