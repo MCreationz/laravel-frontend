@@ -37,11 +37,12 @@ class RegisterController extends Controller
         ]);
 
         $this->sendOtpMail($organization, $otp, $expiryMinutes);
+        session()->put('email', $organization->work_email);
 
-        return response()->json([
-            'res' => 'success',
-            'msg' => 'OTP sent to email.',
-        ]);
+        return redirect()->route('verify.otp')
+            ->with('email', $organization->work_email)
+            ->with('success', 'OTP sent to your email.');
+
     }
 
     private function sendOtpMail($organization, $otp, $expiryMinutes)
@@ -64,31 +65,30 @@ class RegisterController extends Controller
     public function verifyOtp(Request $request)
     {
         $request->validate([
-            'work_email' => 'required|email',
             'otp' => 'required|digits:6',
         ]);
 
-        $organization = Organization::where('work_email', $request->work_email)->first();
+        $email = session('email') ?? $request->work_email;
+
+        // dd($request->all(),$email);
+
+        if (! $email) {
+            return redirect()->route('register')
+                ->with('error', 'Session expired. Please register again.');
+        }
+
+        $organization = Organization::where('work_email', $email)->first();
 
         if (! $organization) {
-            return response()->json([
-                'res' => 'error',
-                'msg' => 'Organization not found.',
-            ], 404);
+            return redirect()->back()->with('error', 'Organization not found.');
         }
 
         if ($organization->otp_code != $request->otp) {
-            return response()->json([
-                'res' => 'error',
-                'msg' => 'Invalid OTP.',
-            ], 400);
+            return redirect()->back()->with('error', 'Invalid OTP.');
         }
 
         if (Carbon::now()->gt($organization->otp_expires_at)) {
-            return response()->json([
-                'res' => 'error',
-                'msg' => 'OTP expired.',
-            ], 400);
+            return redirect()->back()->with('error', 'OTP expired.');
         }
 
         // mark verified
@@ -98,10 +98,11 @@ class RegisterController extends Controller
             'email_verified_at' => now(),
         ]);
 
-        return response()->json([
-            'res' => 'success',
-            'msg' => 'Email verified successfully.',
-        ]);
+        // optional: clear session email
+        session()->forget('email');
+
+        return redirect()->route('login')
+            ->with('success', 'Email verified successfully. Please log in.');
     }
 
     public function resendOtp(Request $request)
@@ -133,5 +134,6 @@ class RegisterController extends Controller
             'res' => 'success',
             'msg' => 'OTP resent successfully.',
         ]);
+
     }
 }
