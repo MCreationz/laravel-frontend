@@ -41,11 +41,11 @@ Route::post('/login/send-otp', [AuthLoginController::class, 'sendLoginOtp'])->na
 Route::get('/login/otp', [AuthLoginController::class, 'showOtpForm'])->name('login.otp');
 
 Route::post('/login/verify-otp', [AuthLoginController::class, 'verifyLoginOtp'])->name('login.otp.verify');
-
+ Route::post('/logout', [AuthLoginController::class, 'logout'])
+        ->name('logout');
 Route::middleware(['auth:organization', 'check.onboarding'])->group(function () {
 
-    Route::post('/logout', [AuthLoginController::class, 'logout'])
-        ->name('logout');
+   
 
     Route::get('/dashboard', function () {
         return view('dashboard.index');
