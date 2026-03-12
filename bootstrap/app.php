@@ -30,28 +30,38 @@ return Application::configure(basePath: dirname(__DIR__))
     })
     ->withExceptions(function (Exceptions $exceptions): void {
 
-        $exceptions->render(function (Throwable $e, $request) {
+$exceptions->render(function (Throwable $e, $request) {
+    $status = method_exists($e, 'getStatusCode') ? $e->getStatusCode() : 500;
 
-            $status = method_exists($e, 'getStatusCode') ? $e->getStatusCode() : 500;
-
-            // If app debug is ON → show full error
-            if (config('app.debug')) {
-                return response()->json([
-                    'success' => false,
-                    'message' => $e->getMessage(),
-                    'exception' => class_basename($e),
-                    'file' => $e->getFile(),
-                    'line' => $e->getLine(),
-                    'trace' => $e->getTrace(),
-                ], $status);
-            }
-
-            // If APP_DEBUG = false → show generic error
+    // Only force JSON for API routes
+    if ($request->is('api/*')) {
+        if ($e instanceof \Illuminate\Auth\AuthenticationException) {
             return response()->json([
                 'success' => false,
-                'message' => 'Something went wrong. Please try again later.',
+                'message' => 'Unauthenticated.'
+            ], 401);
+        }
+
+        if (config('app.debug')) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage(),
+                'exception' => class_basename($e),
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+                'trace' => $e->getTrace(),
             ], $status);
-        });
+        }
+
+        return response()->json([
+            'success' => false,
+            'message' => 'Something went wrong. Please try again later.',
+        ], $status);
+    }
+
+    // For web routes, return null so Laravel handles it (redirect, error page)
+    return null;
+});
     })
 
     ->create();
