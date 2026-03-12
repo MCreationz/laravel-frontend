@@ -15,9 +15,8 @@
         <div class="fields-wrap">
             @csrf
             <div class="otp-container">
-                <input type="hidden" name="work_email" value="{{ session('email') }}"> 
-                <input type="text" maxlength="1"
-                    class="otp-input" inputmode="numeric" pattern="[0-9]*" placeholder="-">
+                <input type="hidden" name="work_email" value="{{ session('email') }}">
+                <input type="text" maxlength="1" class="otp-input" inputmode="numeric" pattern="[0-9]*" placeholder="-">
                 <input type="text" maxlength="1" class="otp-input" inputmode="numeric" pattern="[0-9]*" placeholder="-">
                 <input type="text" maxlength="1" class="otp-input" inputmode="numeric" pattern="[0-9]*" placeholder="-">
                 <input type="text" maxlength="1" class="otp-input" inputmode="numeric" pattern="[0-9]*" placeholder="-">
@@ -27,10 +26,11 @@
 
             <input type="hidden" name="otp" id="otpValue">
             <div class="col-12 otp-text login-text text-center mt-4">
-<p>
-    Didn’t receive the OTP?
-    <a href="#" id="resendOtpBtn">Resend OTP</a>
-</p>            </div>
+                <p>
+                    Didn’t receive the OTP?
+                    <a href="#" id="resendOtpBtn">Resend OTP</a>
+                </p>
+            </div>
         </div>
         <div class="account-wrap">
             <div class="col-12 btn-wrap mt-4 mt-md-5 pt-xl-4">
@@ -44,8 +44,7 @@
     </form>
 
     <script>
-
-        document.addEventListener("DOMContentLoaded", function () {
+        document.addEventListener("DOMContentLoaded", function() {
 
             const inputs = document.querySelectorAll(".otp-input");
             const otpValue = document.getElementById("otpValue");
@@ -53,7 +52,7 @@
 
             inputs.forEach((input, index) => {
 
-                input.addEventListener("input", function () {
+                input.addEventListener("input", function() {
 
                     this.value = this.value.replace(/[^0-9]/g, '');
 
@@ -64,7 +63,7 @@
                     updateOTP();
                 });
 
-                input.addEventListener("keydown", function (e) {
+                input.addEventListener("keydown", function(e) {
 
                     if (e.key === "Backspace" && !this.value && index > 0) {
                         inputs[index - 1].focus();
@@ -75,7 +74,7 @@
             });
 
 
-            inputs[0].addEventListener("paste", function (e) {
+            inputs[0].addEventListener("paste", function(e) {
 
                 let paste = e.clipboardData.getData("text").trim();
 
@@ -108,38 +107,37 @@
             }
 
         });
-
     </script>
 
     <script>
         const resendBtn = document.getElementById("resendOtpBtn");
 
-resendBtn.addEventListener("click", function(e) {
+        resendBtn.addEventListener("click", function(e) {
 
-    e.preventDefault();
+            e.preventDefault();
 
-    fetch("{{ route('resend.otp') }}", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            "X-CSRF-TOKEN": "{{ csrf_token() }}"
-        },
-        body: JSON.stringify({
-            work_email: "{{ session('email') }}"
-        })
-    })
-    .then(res => res.json())
-    .then(data => {
+            fetch("{{ route('resend.otp') }}", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                    },
+                    body: JSON.stringify({
+                        work_email: "{{ session('email') }}"
+                    })
+                })
+                .then(res => res.json())
+                .then(data => {
 
-        if (data.res === "success") {
-            alert("OTP sent again to your email");
-        } else {
-            alert(data.msg);
-        }
+                    if (data.res === "success") {
+                        alert("OTP sent again to your email");
+                    } else {
+                        alert(data.msg);
+                    }
 
-    });
+                });
 
-});
+        });
     </script>
 
 @endsection
