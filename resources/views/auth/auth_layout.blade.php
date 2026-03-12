@@ -19,24 +19,15 @@
     <div class="auth-wrapper">
         <div class="row justify-content-between gap-4 gap-lg-2 align-items-stretch">
             <div class="col left-logo-col position-relative">
-           <div class="bg-image">
-    <img 
-        src="{{ asset('img/bg-image.png') }}" 
-        alt="FundInk graphic image" 
-        class="img-fluid" 
-        width="100%" 
-        height="100%"
-    >
-</div>
+                <div class="bg-image">
+                    <img src="{{ asset('img/bg-image.png') }}" alt="FundInk graphic image" class="img-fluid"
+                        width="100%" height="100%">
+                </div>
 
-<div class="logo position-absolute">
-    <img 
-        src="{{ asset('img/FundInk-logo.svg') }}" 
-        alt="FundInk site logo" 
-        width="197.8251190185547px" 
-        height="42px"
-    >
-</div>
+                <div class="logo position-absolute">
+                    <img src="{{ asset('img/FundInk-logo.svg') }}" alt="FundInk site logo" width="197.8251190185547px"
+                        height="42px">
+                </div>
             </div>
             <div class="col form-col">
                 <div class="form-col-wrap">
