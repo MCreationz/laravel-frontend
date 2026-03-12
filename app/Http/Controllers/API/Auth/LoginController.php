@@ -30,26 +30,25 @@ class LoginController extends Controller
     |--------------------------------------------------------------------------
     */
 
-    public function loginWithPassword(Request $request)
-    {
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required'
-        ]);
+   public function loginWithPassword(Request $request)
+{
+    $request->validate([
+        'email' => 'required|email',
+        'password' => 'required'
+    ]);
 
-        if (Auth::attempt([
-            'work_email' => $request->email,
-            'password' => $request->password
-        ])) {
+    if (Auth::guard('organization')->attempt([
+        'work_email' => $request->email,
+        'password' => $request->password
+    ])) {
 
-            $request->session()->regenerate();
+        $request->session()->regenerate();
 
-            return redirect()->route('dashboard');
-        }
-
-        return back()->with('error', 'Invalid email or password.');
+        return redirect()->route('dashboard');
     }
 
+    return back()->with('error', 'Invalid email or password.');
+}
 
     /*
     |--------------------------------------------------------------------------
@@ -212,4 +211,14 @@ class LoginController extends Controller
                 ->subject($subject);
         });
     }
+
+    public function logout(Request $request)
+{
+    Auth::guard('organization')->logout();
+
+    $request->session()->invalidate();
+    $request->session()->regenerateToken();
+
+    return redirect()->route('login');
+}
 }

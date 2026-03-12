@@ -15,8 +15,9 @@
         <div class="fields-wrap">
             @csrf
             <div class="otp-container">
-                <input type="hidden" name="work_email" value="{{ session('email') }}">
-                <input type="text" maxlength="1" class="otp-input" inputmode="numeric" pattern="[0-9]*" placeholder="-">
+                <input type="hidden" name="work_email" value="{{ session('email') }}"> 
+                <input type="text" maxlength="1"
+                    class="otp-input" inputmode="numeric" pattern="[0-9]*" placeholder="-">
                 <input type="text" maxlength="1" class="otp-input" inputmode="numeric" pattern="[0-9]*" placeholder="-">
                 <input type="text" maxlength="1" class="otp-input" inputmode="numeric" pattern="[0-9]*" placeholder="-">
                 <input type="text" maxlength="1" class="otp-input" inputmode="numeric" pattern="[0-9]*" placeholder="-">
@@ -112,22 +113,22 @@
     <script>
         const resendBtn = document.getElementById("resendOtpBtn");
 
-        resendBtn.addEventListener("click", function(e) {
+resendBtn.addEventListener("click", function(e) {
 
             e.preventDefault();
 
-            fetch("{{ route('resend.otp') }}", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "X-CSRF-TOKEN": "{{ csrf_token() }}"
-                    },
-                    body: JSON.stringify({
-                        work_email: "{{ session('email') }}"
-                    })
-                })
-                .then(res => res.json())
-                .then(data => {
+    fetch("{{ route('resend.otp') }}", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRF-TOKEN": "{{ csrf_token() }}"
+        },
+        body: JSON.stringify({
+            work_email: "{{ session('email') }}"
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
 
                     if (data.res === "success") {
                         alert("OTP sent again to your email");
