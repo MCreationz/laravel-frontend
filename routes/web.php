@@ -9,9 +9,9 @@ Route::get('/', function () {
 })->middleware('role');
 
 
-Route::get('/login', function () {
-    return view('auth.login');
-})->name('login');
+// Route::get('/login', function () {
+//     return view('auth.login');
+// })->name('login');
 
 // Register page
 Route::get('/register', function () {
@@ -32,7 +32,6 @@ Route::post('/verify-otp', [RegisterController::class, 'verifyOtp'])
     Route::post('/resend-otp', [RegisterController::class, 'resendOtp'])->name('resend.otp');
 
 
-    use App\Http\Controllers\Auth\LoginController;
 
 Route::get('/login', [AuthLoginController::class, 'showLogin'])->name('login');
 
