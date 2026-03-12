@@ -84,8 +84,8 @@ class LoginController extends Controller
         $expiryMinutes = 10;
 
         $organization->update([
-            'login_otp' => $otp,
-            'login_otp_expires_at' => Carbon::now()->addMinutes($expiryMinutes)
+            'otp_code' => $otp,
+            'otp_expires_at' => Carbon::now()->addMinutes($expiryMinutes)
         ]);
 
         $this->sendOtpMail($organization, $otp, $expiryMinutes);
@@ -126,6 +126,7 @@ class LoginController extends Controller
         ]);
 
         $email = session('login_email');
+       // dd($request->all(),$email);
 
         if (!$email) {
             return redirect()->route('login')
@@ -139,19 +140,25 @@ class LoginController extends Controller
                 ->with('error', 'Account not found.');
         }
 
-        if ($organization->login_otp != $request->otp) {
+        if ($organization->otp_code != $request->otp) {
             return back()->with('error', 'Invalid OTP.');
         }
+//               //  dd($organization);
+//    $organization->update([
+//             'otp_code' => $otp,
+//             'otp_expires_at' => Carbon::now()->addMinutes($expiryMinutes)
+//         ]);
 
-        if (Carbon::now()->gt($organization->login_otp_expires_at)) {
+
+        if (Carbon::now()->gt($organization->otp_expires_at)) {
             return back()->with('error', 'OTP expired.');
         }
 
         Auth::login($organization);
 
         $organization->update([
-            'login_otp' => null,
-            'login_otp_expires_at' => null
+            'otp_code' => null,
+            'otp_expires_at' => null
         ]);
 
         session()->forget('login_email');
