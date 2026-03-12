@@ -112,9 +112,12 @@ form .form-control {
     font-size: 0.75rem;
     border-radius: 10px;
 }
-input.otp-input.error, form .form-control.error {
+input.otp-input.is-invalid {
     color: #E74C3C;
     border-color: #E74C3C;
+}
+.form-control.is-invalid, .was-validated .form-control:invalid {
+      border-color: #E74C3C !important;
 }
 .form-control::placeholder {
     color: var(--primary-gray);
