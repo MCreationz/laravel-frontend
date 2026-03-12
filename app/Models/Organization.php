@@ -16,7 +16,8 @@ class Organization extends Authenticatable
         'referral_source',
         'password',
         'otp_code',
-        'otp_expires_at'
+        'otp_expires_at',
+        'email_verified_at'
     ];
 
     protected $hidden = [
