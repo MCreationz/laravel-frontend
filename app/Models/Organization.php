@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class Organization extends Authenticatable
@@ -17,15 +16,25 @@ class Organization extends Authenticatable
         'password',
         'otp_code',
         'otp_expires_at',
-        'email_verified_at'
+        'email_verified_at',
     ];
 
     protected $hidden = [
         'password',
-        'otp_code'
+        'otp_code',
     ];
 
     protected $casts = [
-        'otp_expires_at' => 'datetime'
+        'otp_expires_at' => 'datetime',
     ];
+
+    public function profile()
+    {
+        return $this->hasOne(OrganizationProfile::class);
+    }
+
+    public function address()
+    {
+        return $this->hasOne(OrganizationAddress::class);
+    }
 }

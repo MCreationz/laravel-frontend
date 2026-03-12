@@ -22,7 +22,8 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'role' => \App\Http\Middleware\CheckRole::class,
             'auth:sanctum' => \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
-            'superadmin' => \App\Http\Middleware\SuperAdminMiddleware::class, // << Register it here
+            'superadmin' => \App\Http\Middleware\SuperAdminMiddleware::class,
+            'check.onboarding' => \App\Http\Middleware\CheckOrganizationOnboarding::class,
 
 
         ]);

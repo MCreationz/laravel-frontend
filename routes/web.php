@@ -42,7 +42,7 @@ Route::get('/login/otp', [AuthLoginController::class, 'showOtpForm'])->name('log
 
 Route::post('/login/verify-otp', [AuthLoginController::class, 'verifyLoginOtp'])->name('login.otp.verify');
 
-Route::middleware('auth:organization')->group(function () {
+Route::middleware(['auth:organization', 'check.onboarding'])->group(function () {
 
     Route::post('/logout', [AuthLoginController::class, 'logout'])
         ->name('logout');
@@ -68,5 +68,6 @@ Route::middleware('auth:organization')->group(function () {
 
     Route::post('/onboarding/step-3', [OnboardingController::class, 'storeStepThree'])
         ->name('onboarding.step3.store');
+
 
 });
