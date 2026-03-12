@@ -72,6 +72,7 @@ p:last-child {
 a {
     color: var(--accent-color) !important;
     font-weight: 500 !important;
+    transition: all .3s ease;
 }
 label {
     font-weight: 600;
@@ -79,11 +80,32 @@ label {
     line-height: 1.2;
 }
 .btn.btn-primary {
-    background: var(--primary-btn);
+ background: var(--primary-btn);
+}
+.btn.btn-primary:hover {
+    background: linear-gradient(66.53deg, #07CCB5 29%, #0160D6 67.08%);
+}
+.btn { 
     border: none !important;
     font-weight: 700 !important;
     font-size: 0.875rem !important;
     padding: 9.5px 25px !important;
+    border-radius: 30px !important;
+    transition: background 0.3s ease!important;
+}
+.btn.btn-secondary {
+    background: var(--white-color);
+    color: var(
+    --accent-color) !important;
+}
+.btn-wrap.secondary-btn {
+    background: var(--primary-btn);
+    border-radius: 30px;
+    padding: 1px;
+}
+.btn.btn-secondary:hover {
+    background: var(--primary-btn);
+    color: var(--white-color) !important;
 }
 /* register page css */
 .auth-wrapper {
@@ -264,6 +286,9 @@ input.otp-input::placeholder {
 @media(max-width: 767px){
     h1, .h1 {
         font-size: 1.5rem !important;
+    }
+    .login-text p {
+        font-size: 14px !important;
     }
     .bg-image {
         height: 160px;
