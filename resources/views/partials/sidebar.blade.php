@@ -18,12 +18,17 @@
             </div>
             <div class="flex-grow-1 ms-3">Settings</div>
         </a>
-        <a href="#" class="d-flex align-items-center text-decoration-none">
-            <div class="flex-shrink-0">
-                <img src="{{ asset('img/layout.svg') }}" alt="Logout" width="23px" height="22.984031677246094px">
-            </div>
-            <div class="flex-grow-1 ms-3">Logout</div>
-        </a>
+      <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+    @csrf
+</form>
+
+<a href="{{ route('logout') }}" class="d-flex align-items-center text-decoration-none"
+   onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+    <div class="flex-shrink-0">
+        <img src="{{ asset('img/layout.svg') }}" alt="Logout" width="23px" height="22.98px">
+    </div>
+    <div class="flex-grow-1 ms-3">Logout</div>
+</a>
         <a href="#" class="d-flex align-items-center mt-5 pt-4 text-decoration-none">
             <div class="flex-shrink-0">
                 <img src="{{ asset('img/help.svg') }}" alt="Need Help" width="23px" height="23px">
