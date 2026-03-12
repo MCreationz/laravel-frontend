@@ -43,7 +43,7 @@ Route::get('/login/otp', [AuthLoginController::class, 'showOtpForm'])->name('log
 Route::post('/login/verify-otp', [AuthLoginController::class, 'verifyLoginOtp'])->name('login.otp.verify');
  Route::post('/logout', [AuthLoginController::class, 'logout'])
         ->name('logout');
-Route::middleware(['auth:organization', 'check.onboarding'])->group(function () {
+Route::middleware(['check.onboarding','auth:organization'])->group(function () {
 
    
 
