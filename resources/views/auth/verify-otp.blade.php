@@ -15,14 +15,25 @@
         <div class="fields-wrap">
             @csrf
             <div class="otp-container">
-                <input type="hidden" name="work_email" value="{{ session('email') }}"> 
-                <input type="text" maxlength="1"
-                    class="otp-input" inputmode="numeric" pattern="[0-9]*" placeholder="-">
-                <input type="text" maxlength="1" class="otp-input" inputmode="numeric" pattern="[0-9]*" placeholder="-">
-                <input type="text" maxlength="1" class="otp-input" inputmode="numeric" pattern="[0-9]*" placeholder="-">
-                <input type="text" maxlength="1" class="otp-input" inputmode="numeric" pattern="[0-9]*" placeholder="-">
-                <input type="text" maxlength="1" class="otp-input" inputmode="numeric" pattern="[0-9]*" placeholder="-">
-                <input type="text" maxlength="1" class="otp-input" inputmode="numeric" pattern="[0-9]*" placeholder="-">
+                <input type="hidden" name="work_email" value="{{ session('email') }}">
+
+                <input type="text" maxlength="1" class="otp-input {{ session('error') ? 'is-invalid' : '' }}"
+                    inputmode="numeric" pattern="[0-9]*" placeholder="-">
+
+                <input type="text" maxlength="1" class="otp-input {{ session('error') ? 'is-invalid' : '' }}"
+                    inputmode="numeric" pattern="[0-9]*" placeholder="-">
+
+                <input type="text" maxlength="1" class="otp-input {{ session('error') ? 'is-invalid' : '' }}"
+                    inputmode="numeric" pattern="[0-9]*" placeholder="-">
+
+                <input type="text" maxlength="1" class="otp-input {{ session('error') ? 'is-invalid' : '' }}"
+                    inputmode="numeric" pattern="[0-9]*" placeholder="-">
+
+                <input type="text" maxlength="1" class="otp-input {{ session('error') ? 'is-invalid' : '' }}"
+                    inputmode="numeric" pattern="[0-9]*" placeholder="-">
+
+                <input type="text" maxlength="1" class="otp-input {{ session('error') ? 'is-invalid' : '' }}"
+                    inputmode="numeric" pattern="[0-9]*" placeholder="-">
             </div>
 
             <input type="hidden" name="otp" id="otpValue">
@@ -45,7 +56,7 @@
     </form>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
+        document.addEventListener("DOMContentLoaded", function () {
 
             const inputs = document.querySelectorAll(".otp-input");
             const otpValue = document.getElementById("otpValue");
@@ -53,7 +64,7 @@
 
             inputs.forEach((input, index) => {
 
-                input.addEventListener("input", function() {
+                input.addEventListener("input", function () {
 
                     this.value = this.value.replace(/[^0-9]/g, '');
 
@@ -64,7 +75,7 @@
                     updateOTP();
                 });
 
-                input.addEventListener("keydown", function(e) {
+                input.addEventListener("keydown", function (e) {
 
                     if (e.key === "Backspace" && !this.value && index > 0) {
                         inputs[index - 1].focus();
@@ -75,7 +86,7 @@
             });
 
 
-            inputs[0].addEventListener("paste", function(e) {
+            inputs[0].addEventListener("paste", function (e) {
 
                 let paste = e.clipboardData.getData("text").trim();
 
@@ -113,22 +124,22 @@
     <script>
         const resendBtn = document.getElementById("resendOtpBtn");
 
-resendBtn.addEventListener("click", function(e) {
+        resendBtn.addEventListener("click", function (e) {
 
             e.preventDefault();
 
-    fetch("{{ route('resend.otp') }}", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            "X-CSRF-TOKEN": "{{ csrf_token() }}"
-        },
-        body: JSON.stringify({
-            work_email: "{{ session('email') }}"
-        })
-    })
-    .then(res => res.json())
-    .then(data => {
+            fetch("{{ route('resend.otp') }}", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                },
+                body: JSON.stringify({
+                    work_email: "{{ session('email') }}"
+                })
+            })
+                .then(res => res.json())
+                .then(data => {
 
                     if (data.res === "success") {
                         alert("OTP sent again to your email");
