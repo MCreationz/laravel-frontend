@@ -8,42 +8,52 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+  use Illuminate\Validation\ValidationException;
 
 class RegisterController extends Controller
 {
-    public function registerStepOne(Request $request)
-    {
+
+public function registerStepOne(Request $request)
+{
+    try {
+
         $request->validate([
             'organization_name' => 'required|string|max:100',
             'work_email' => 'required|email|max:50|unique:organizations,work_email',
             'role' => 'required|in:funder,fund_seeker',
             'referral_source' => 'nullable|string',
             'password' => 'required|min:8|max:50|confirmed',
-            'captcha' => 'required|string|size:6', // implement actual captcha verification separately
+            'captcha' => 'required|string|size:6',
         ]);
 
-        // Generate OTP
-        $otp = rand(100000, 999999);
-        $expiryMinutes = 10;
+    } catch (ValidationException $e) {
 
-        $organization = Organization::create([
-            'organization_name' => ucfirst($request->organization_name),
-            'work_email' => $request->work_email,
-            'role' => $request->role,
-            'referral_source' => $request->referral_source,
-            'password' => Hash::make($request->password),
-            'otp_code' => $otp,
-            'otp_expires_at' => Carbon::now()->addMinutes($expiryMinutes),
-        ]);
-
-        $this->sendOtpMail($organization, $otp, $expiryMinutes);
-        session()->put('email', $organization->work_email);
-
-        return redirect()->route('verify.otp')
-            ->with('email', $organization->work_email)
-            ->with('success', 'OTP sent to your email.');
-
+        return redirect()->back()
+            ->withErrors($e->validator)
+            ->withInput();
     }
+
+    $otp = random_int(100000, 999999);
+    $expiryMinutes = 10;
+
+    $organization = Organization::create([
+        'organization_name' => ucfirst($request->organization_name),
+        'work_email' => $request->work_email,
+        'role' => $request->role,
+        'referral_source' => $request->referral_source,
+        'password' => Hash::make($request->password),
+        'otp_code' => $otp,
+        'otp_expires_at' => Carbon::now()->addMinutes($expiryMinutes),
+    ]);
+
+    $this->sendOtpMail($organization, $otp, $expiryMinutes);
+
+    session()->put('email', $organization->work_email);
+
+    return redirect()->route('verify.otp')
+        ->with('email', $organization->work_email)
+        ->with('success', 'OTP sent to your email.');
+}
 
     private function sendOtpMail($organization, $otp, $expiryMinutes)
     {

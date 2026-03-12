@@ -1,13 +1,11 @@
 <?php
 
-use App\Http\Controllers\API\Auth\RegisterController;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\CompanyController;
 use App\Http\Controllers\API\ContactInquiryController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1')->group(function () {
-
 
     // Public Routes
     Route::post('user/register', [AuthController::class, 'register']);

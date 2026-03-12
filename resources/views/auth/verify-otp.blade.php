@@ -14,23 +14,36 @@
         class="register-form row form-fields-wrap d-flex flex-wrap justify-content-between flex-column">
         <div class="fields-wrap">
             @csrf
-            <div class="otp-container">
-                <input type="hidden" name="work_email" value="{{ session('email') }}"> 
-                <input type="text" maxlength="1"
-                    class="otp-input" inputmode="numeric" pattern="[0-9]*" placeholder="-">
-                <input type="text" maxlength="1" class="otp-input" inputmode="numeric" pattern="[0-9]*" placeholder="-">
-                <input type="text" maxlength="1" class="otp-input" inputmode="numeric" pattern="[0-9]*" placeholder="-">
-                <input type="text" maxlength="1" class="otp-input" inputmode="numeric" pattern="[0-9]*" placeholder="-">
-                <input type="text" maxlength="1" class="otp-input" inputmode="numeric" pattern="[0-9]*" placeholder="-">
-                <input type="text" maxlength="1" class="otp-input" inputmode="numeric" pattern="[0-9]*" placeholder="-">
-            </div>
+            <input type="hidden" name="work_email" value="{{ session('email') }}">
+
+            @if(session('error'))
+                <div class="alert alert-danger text-center mb-3">
+                    {{ session('error') }}
+                </div>
+            @endif
+
+           <div class="otp-container">
+    <input type="text" maxlength="1" class="otp-input {{ session('error') || $errors->has('otp') ? 'is-invalid' : '' }}" inputmode="numeric" pattern="[0-9]*" placeholder="-">
+    <input type="text" maxlength="1" class="otp-input {{ session('error') || $errors->has('otp') ? 'is-invalid' : '' }}" inputmode="numeric" pattern="[0-9]*" placeholder="-">
+    <input type="text" maxlength="1" class="otp-input {{ session('error') || $errors->has('otp') ? 'is-invalid' : '' }}" inputmode="numeric" pattern="[0-9]*" placeholder="-">
+    <input type="text" maxlength="1" class="otp-input {{ session('error') || $errors->has('otp') ? 'is-invalid' : '' }}" inputmode="numeric" pattern="[0-9]*" placeholder="-">
+    <input type="text" maxlength="1" class="otp-input {{ session('error') || $errors->has('otp') ? 'is-invalid' : '' }}" inputmode="numeric" pattern="[0-9]*" placeholder="-">
+    <input type="text" maxlength="1" class="otp-input {{ session('error') || $errors->has('otp') ? 'is-invalid' : '' }}" inputmode="numeric" pattern="[0-9]*" placeholder="-">
+</div>
+
+            @error('otp')
+                <div class="text-danger text-center mt-2">
+                    {{ $message }}
+                </div>
+            @enderror
 
             <input type="hidden" name="otp" id="otpValue">
             <div class="col-12 otp-text login-text text-center mt-4">
-<p>
-    Didn’t receive the OTP?
-    <a href="#" id="resendOtpBtn">Resend OTP</a>
-</p>            </div>
+                <p>
+                    Didn’t receive the OTP?
+                    <a href="#" id="resendOtpBtn">Resend OTP</a>
+                </p>
+            </div>
         </div>
         <div class="account-wrap">
             <div class="col-12 btn-wrap mt-4 mt-md-5 pt-xl-4">
@@ -114,32 +127,32 @@
     <script>
         const resendBtn = document.getElementById("resendOtpBtn");
 
-resendBtn.addEventListener("click", function(e) {
+        resendBtn.addEventListener("click", function (e) {
 
-    e.preventDefault();
+            e.preventDefault();
 
-    fetch("{{ route('resend.otp') }}", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            "X-CSRF-TOKEN": "{{ csrf_token() }}"
-        },
-        body: JSON.stringify({
-            work_email: "{{ session('email') }}"
-        })
-    })
-    .then(res => res.json())
-    .then(data => {
+            fetch("{{ route('resend.otp') }}", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                },
+                body: JSON.stringify({
+                    work_email: "{{ session('email') }}"
+                })
+            })
+                .then(res => res.json())
+                .then(data => {
 
-        if (data.res === "success") {
-            alert("OTP sent again to your email");
-        } else {
-            alert(data.msg);
-        }
+                    if (data.res === "success") {
+                        alert("OTP sent again to your email");
+                    } else {
+                        alert(data.msg);
+                    }
 
-    });
+                });
 
-});
+        });
     </script>
 
 @endsection
