@@ -145,7 +145,7 @@ form .form-control {
     border: 1px solid #E2E2E2;
     padding: 10px 14px;
     font-size: 0.75rem;
-    color: var(--primary-gray);
+    /* color: var(--primary-gray); */
     border-radius: 10px;
 }
 .form-control::placeholder {
