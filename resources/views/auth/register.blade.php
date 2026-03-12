@@ -139,7 +139,7 @@
 
         <div class="account-wrap">
 
-            <div class="col-12 btn-wrap mt-4 mt-md-5 pt-xl-4">
+            <div class="col-12 btn-wrap mt-4">
                 <button type="submit" class="btn btn-primary w-100">Register</button>
             </div>
 
