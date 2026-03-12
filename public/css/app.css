@@ -15,12 +15,14 @@ body {
     font-family: 'Inter' !important;
     font-size: 0.875rem !important;
     line-height: 1.6 !important;
+    color: var(--secondary-color) !important;
 }
 h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
     font-family: 'Coolvetica';
     font-weight: 400;
     margin-bottom: 0.938rem !important;
     line-height: 1 !important;
+    color: var(--primary-color) !important;
 }
 .h1, h1 {
     font-size: 1.993rem !important;
@@ -45,7 +47,8 @@ label {
     line-height: 1.2;
 }
 .btn.btn-primary {
- background: var(--primary-btn);
+    background: var(--primary-btn);
+    color: var(--white-color) !important;
 }
 .btn.btn-primary:hover {
     background: linear-gradient(66.53deg, #07CCB5 29%, #0160D6 67.08%);
@@ -54,14 +57,14 @@ label {
     border: none !important;
     font-weight: 700 !important;
     font-size: 0.875rem !important;
-    padding: 9.5px 25px !important;
+    padding: 9.5px 17px !important;
     border-radius: 30px !important;
     transition: background 0.3s ease!important;
+    min-width: 124px;
 }
 .btn.btn-secondary {
     background: var(--white-color);
-    color: var(
-    --accent-color) !important;
+    color: var(--accent-color) !important;
 }
 .btn-wrap.secondary-btn {
     background: var(--primary-btn);
@@ -212,6 +215,45 @@ input.otp-input::placeholder {
     outline: none;
     background: #F7F7F7;
     font-weight: 600;
+}
+/* dashboard page */
+body.dashboard {
+    margin-left: 21.304%;
+    background: #9DC2E733;
+}
+.sidebar {
+    left: 0;
+    top: 0;
+    background: var(--white-color);
+    padding: 39px 34px 57px 21px;
+    width: 21.304%;
+    scrollbar-width: thin;
+    scrollbar-color: var(--white-color) transparent;
+    z-index: 11;
+    box-shadow: 0px 0px 9.75px 0px #D3D3D361;
+}
+.expert-sec {
+    background: radial-gradient(97.57% 210.75% at 0.9% 2.98%, rgba(0, 224, 220, 0.1) 0%, rgba(1, 96, 214, 0.1) 100%);
+    border-radius: 10px;
+}
+.expert-sec .btn {
+    font-size: 12px !important;
+}
+.sidebar-nav {
+    color: #8FA1B3;
+}
+/* header */
+.header-text {
+    font-weight: 600;
+    font-size: 20px;
+}
+header.header {
+    box-shadow: 0px 0px 10px 0px #D3D3D361;
+    background: var(--white-color);
+    padding-block: 33.5px;
+}
+.header-links .icon {
+    border-right: 1px solid #EAEAEA80;
 }
 @media(max-width:1199px){
     /* register page css */
