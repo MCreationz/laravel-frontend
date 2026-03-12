@@ -5,13 +5,13 @@
         </div>
         <div class="col">
             <div class="header-links d-flex justify-content-end align-items-center">
-                <div class="icon px-3">
+                <a href="#" class="icon px-3">
                     <img src="{{ asset('img/email.svg') }}" alt="settings" width="25px" height="20px">
-                </div>
-                <div class="icon px-3">
+                </a>
+                <a href="#" class="icon px-3">
                     <img src="{{ asset('img/notification.svg') }}" alt="settings" width="18.531612396240234px"
                         height="20px">
-                </div>
+                </a>
                 <div class="d-flex align-items-center ps-3">
                     <div class="flex-shrink-0">
                         <img src="{{ asset('img/profile.png') }}" alt="profile" width="36px" height="36px">
