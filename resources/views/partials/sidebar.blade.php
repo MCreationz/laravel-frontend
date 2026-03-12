@@ -12,24 +12,24 @@
         </div>
     </div>
     <div class="sidebar-nav mt-5 pt-3">
-        <div class="d-flex align-items-center mb-4 pb-2">
+        <a href="#" class="d-flex align-items-center mb-4 pb-2 text-decoration-none">
             <div class="flex-shrink-0">
                 <img src="{{ asset('img/setting.svg') }}" alt="settings" width="23px" height="23px">
             </div>
             <div class="flex-grow-1 ms-3">Settings</div>
-        </div>
-        <div class="d-flex align-items-center">
+        </a>
+        <a href="#" class="d-flex align-items-center text-decoration-none">
             <div class="flex-shrink-0">
                 <img src="{{ asset('img/layout.svg') }}" alt="Logout" width="23px" height="22.984031677246094px">
             </div>
             <div class="flex-grow-1 ms-3">Logout</div>
-        </div>
-        <div class="d-flex align-items-center mt-5 pt-4">
+        </a>
+        <a href="#" class="d-flex align-items-center mt-5 pt-4 text-decoration-none">
             <div class="flex-shrink-0">
                 <img src="{{ asset('img/help.svg') }}" alt="Need Help" width="23px" height="23px">
             </div>
             <div class="flex-grow-1 ms-3">Need Help?</div>
-        </div>
+        </a>
     </div>
 
 </div>

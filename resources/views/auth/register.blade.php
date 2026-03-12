@@ -35,8 +35,9 @@
                     <div class="col-6 ps-md-2 ps-1">
                         <label class="form-label">Work Email</label>
 
-                        <input type="email" name="work_email" class="form-control @error('work_email') is-invalid @enderror"
-                            placeholder="Enter Email" value="{{ old('work_email') }}" required>
+                        <input type="email" name="work_email"
+                            class="form-control @error('work_email') is-invalid @enderror" placeholder="Enter Email"
+                            value="{{ old('work_email') }}" required>
 
                         @error('work_email')
                             <div class="invalid-feedback">{{ $message }}</div>
@@ -102,7 +103,7 @@
                     class="form-control @error('password') is-invalid @enderror" placeholder="Enter Password" required>
 
                 <button type="button"
-                    class="btn btn-sm btn-outline-secondary position-absolute top-50 end-0 translate-middle-y me-2"
+                    class="btn show-password btn-outline-secondary position-absolute bottom-0 end-0 translate-middle-y me-2 p-0"
                     onclick="togglePasswordField('createPassword', 'createEye')">
                     <i id="createEye" class="bi bi-eye"></i>
                 </button>
@@ -120,7 +121,7 @@
                     required>
 
                 <button type="button"
-                    class="btn btn-sm btn-outline-secondary position-absolute top-50 end-0 translate-middle-y me-2"
+                    class="btn show-password btn-outline-secondary position-absolute bottom-0 end-0 translate-middle-y me-2 p-0"
                     onclick="togglePasswordField('confirmPassword', 'confirmEye')">
                     <i id="confirmEye" class="bi bi-eye"></i>
                 </button>
@@ -171,13 +172,13 @@
         }
     </script>
     <script>
-        document.querySelectorAll(".select-wrapper").forEach(function (wrapper) {
+        document.querySelectorAll(".select-wrapper").forEach(function(wrapper) {
 
             const selectBox = wrapper.querySelector(".custom-select");
             const optionsList = wrapper.querySelector(".select-list");
             const hiddenInput = wrapper.querySelector(".hidden-select");
 
-            selectBox.addEventListener("click", function (e) {
+            selectBox.addEventListener("click", function(e) {
                 e.stopPropagation();
 
                 document.querySelectorAll(".select-list").forEach(list => {
@@ -188,9 +189,9 @@
                     optionsList.style.display === "block" ? "none" : "block";
             });
 
-            optionsList.querySelectorAll("li").forEach(function (option) {
+            optionsList.querySelectorAll("li").forEach(function(option) {
 
-                option.addEventListener("click", function () {
+                option.addEventListener("click", function() {
 
                     selectBox.textContent = this.textContent;
                     hiddenInput.value = this.getAttribute("data-value");
@@ -202,7 +203,7 @@
 
         });
 
-        document.addEventListener("click", function () {
+        document.addEventListener("click", function() {
             document.querySelectorAll(".select-list").forEach(list => {
                 list.style.display = "none";
             });

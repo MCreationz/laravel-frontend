@@ -152,6 +152,13 @@ input.otp-input::placeholder {
     color: #E2E2E2;
     font-weight: 400;
 }
+button.btn.show-password {
+    min-width: 30px;
+    background: transparent !important;
+    color: #6c757d !important;
+    outline: none !important;
+    box-shadow: unset !important;
+}
 .login-text p {
     text-decoration: underline;
     font-size: 1rem !important;
@@ -239,9 +246,12 @@ body.dashboard {
 .expert-sec .btn {
     font-size: 12px !important;
 }
-.sidebar-nav {
-    color: #8FA1B3;
+.sidebar-nav a {
+    color: #8FA1B3 !important;
 }
+/* .sidebar-nav a:hover {
+    color: var(--accent-color) !important;
+}  */
 /* header */
 .header-text {
     font-weight: 600;
@@ -254,6 +264,94 @@ header.header {
 }
 .header-links .icon {
     border-right: 1px solid #EAEAEA80;
+}
+/*  */
+.step-section {
+    box-shadow: 0px 0px 9px 0px #A7A7A740;
+    border-radius: 10px;
+    background: var(--white-color);
+}
+.step {
+    text-align:center;
+    position:relative;
+    z-index:1;
+}
+.step-circle {
+    width: 20.33333396911621px;
+    height: 20.33333396911621px;
+    border-radius: 30px;
+    outline: 0.78px solid #9DC2E780;
+    margin: auto;
+    overflow: hidden;
+    background: #BFBFBF; 
+}
+.step-circle span {
+    display: inline-block;
+    width: 15.641026496887207px;
+    height: 15.641026496887207px;
+    border-radius: 30px;
+    background: var(--white-color);
+}
+.step-circle.active {
+    width: 29.370370864868164px;
+    height: 29.370370864868164px;
+    background: var(--primary-btn);
+}
+.step.active .step-circle {
+    border-color:var(--accent-color);
+    background:var(--accent-color);
+}
+.step-circle.next {
+    width: 26px;
+    height: 26px;
+    background: var(--primary-btn);
+}
+.step.active p {
+    color:var(--accent-color);
+    font-weight:600;
+}
+.step p {
+    margin-top:8px;
+    font-size:14px;
+}
+.progress-dots {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 19px;
+}
+.progress-dots {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 19px;
+    width: 301.4294128417969px !important;
+    left: 0;
+    height: 5.648148059844971px;
+}
+.progress-dots .dot.one {
+    opacity: 10%;
+}
+.progress-dots .dot.two {
+    opacity: 20%;
+}
+.progress-dots .dot.three {
+    opacity: 30%;
+}
+.progress-dots .dot.four {
+    opacity: 40%;
+}
+.progress-dots .dot.five {
+    opacity: 50%;
+}
+.progress-dots .dot.six {
+    opacity:60%;
+}
+.progress-dots .dot.seven {
+    opacity: 70%;
+}
+.progress-dots .dot.nine {
+    opacity: 90%;
 }
 @media(max-width:1199px){
     /* register page css */
