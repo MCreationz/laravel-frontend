@@ -41,7 +41,7 @@
     >
 
     <button type="button" 
-            class="btn btn-sm btn-outline-secondary position-absolute top-50 end-0 translate-middle-y me-2"
+            class="btn show-password btn-outline-secondary position-absolute bottom-0 end-0 translate-middle-y me-2 p-0"
             onclick="togglePassword()">
         <i id="eyeIcon" class="bi bi-eye"></i>
     </button>

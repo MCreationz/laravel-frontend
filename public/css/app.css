@@ -152,6 +152,13 @@ input.otp-input::placeholder {
     color: #E2E2E2;
     font-weight: 400;
 }
+button.btn.show-password {
+    min-width: 30px;
+    background: transparent !important;
+    color: #6c757d !important;
+    outline: none !important;
+    box-shadow: unset !important;
+}
 .login-text p {
     text-decoration: underline;
     font-size: 1rem !important;
