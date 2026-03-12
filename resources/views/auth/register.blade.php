@@ -116,37 +116,52 @@
             @enderror
         </div>
 
-        <div class="col-12 mb-md-3 mb-2">
-            <label class="form-label">Create Password</label>
+     <div class="col-12 mb-md-3 mb-2 position-relative">
+    <label class="form-label">Create Password</label>
 
-            <input 
-                type="password" 
-                name="password"
-                class="form-control @error('password') is-invalid @enderror"
-                placeholder="Enter Password"
-                required
-            >
+    <input 
+        type="password" 
+        name="password"
+        id="createPassword"
+        class="form-control @error('password') is-invalid @enderror"
+        placeholder="Enter Password"
+        required
+    >
 
-            @error('password')
-                <div class="invalid-feedback">{{ $message }}</div>
-            @enderror
-        </div>
+    <button type="button" 
+            class="btn btn-sm btn-outline-secondary position-absolute top-50 end-0 translate-middle-y me-2"
+            onclick="togglePasswordField('createPassword', 'createEye')">
+        <i id="createEye" class="bi bi-eye"></i>
+    </button>
 
-        <div class="col-12 mb-md-3 mb-2">
-            <label class="form-label">Re-enter Password</label>
+    @error('password')
+        <div class="invalid-feedback">{{ $message }}</div>
+    @enderror
+</div>
 
-            <input 
-                type="password" 
-                name="password_confirmation"
-                class="form-control @error('password_confirmation') is-invalid @enderror"
-                placeholder="Confirm Password"
-                required
-            >
+<div class="col-12 mb-md-3 mb-2 position-relative">
+    <label class="form-label">Re-enter Password</label>
 
-            @error('password_confirmation')
-                <div class="invalid-feedback">{{ $message }}</div>
-            @enderror
-        </div>
+    <input 
+        type="password" 
+        name="password_confirmation"
+        id="confirmPassword"
+        class="form-control @error('password_confirmation') is-invalid @enderror"
+        placeholder="Confirm Password"
+        required
+    >
+
+    <button type="button" 
+            class="btn btn-sm btn-outline-secondary position-absolute top-50 end-0 translate-middle-y me-2"
+            onclick="togglePasswordField('confirmPassword', 'confirmEye')">
+        <i id="confirmEye" class="bi bi-eye"></i>
+    </button>
+
+    @error('password_confirmation')
+        <div class="invalid-feedback">{{ $message }}</div>
+    @enderror
+</div>
+
 
         <!-- temporary captcha placeholder -->
         <input type="hidden" name="captcha" value="123456">
@@ -172,6 +187,21 @@
     border-color: #dc3545;
 }
 </style>
+<script>
+function togglePasswordField(inputId, iconId) {
+    const field = document.getElementById(inputId);
+    const icon = document.getElementById(iconId);
+    if (field.type === "password") {
+        field.type = "text";
+        icon.classList.remove('bi-eye');
+        icon.classList.add('bi-eye-slash');
+    } else {
+        field.type = "password";
+        icon.classList.remove('bi-eye-slash');
+        icon.classList.add('bi-eye');
+    }
+}
+</script>
 <script>
 document.querySelectorAll(".select-wrapper").forEach(function (wrapper) {
 
