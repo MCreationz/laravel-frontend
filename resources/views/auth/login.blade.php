@@ -28,18 +28,26 @@
                 required
             >
         </div>
+<div class="col-12 position-relative">
+    <label class="form-label">Enter Password</label>
 
-        <div class="col-12">
-            <label class="form-label">Enter Password</label>
+    <input 
+        type="password" 
+        name="password"
+        id="password"
+        class="form-control"
+        placeholder="Password"
+        required
+    >
 
-            <input 
-                type="password" 
-                name="password"
-                class="form-control" 
-                placeholder="Password"
-                required
-            >
-        </div>
+    <button type="button" 
+            class="btn btn-sm btn-outline-secondary position-absolute top-50 end-0 translate-middle-y me-2"
+            onclick="togglePassword()">
+        <i id="eyeIcon" class="bi bi-eye"></i>
+    </button>
+</div>
+
+
 
         <p class="forget-pass text-end mt-2 mt-md-4">
             <a href="#">Forget Password</a>
@@ -75,5 +83,19 @@
     </div>
 
 </form>
-
+<script>
+function togglePassword() {
+    const passwordField = document.getElementById('password');
+    const eyeIcon = document.getElementById('eyeIcon');
+    if (passwordField.type === "password") {
+        passwordField.type = "text";
+        eyeIcon.classList.remove('bi-eye');
+        eyeIcon.classList.add('bi-eye-slash');
+    } else {
+        passwordField.type = "password";
+        eyeIcon.classList.remove('bi-eye-slash');
+        eyeIcon.classList.add('bi-eye');
+    }
+}
+</script>
 @endsection
