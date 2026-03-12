@@ -11,8 +11,8 @@ class CheckOrganizationOnboarding
     public function handle(Request $request, Closure $next)
     {
         $organization = Auth::guard('organization')->user();
-        dd($organization);
-
+       // dd($organization);
+//
         if (!$organization) {
             return redirect()->route('login'); 
         }
