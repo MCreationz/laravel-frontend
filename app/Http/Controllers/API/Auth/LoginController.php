@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Mail;
 
 class LoginController extends Controller
 {
-
     /*
     |--------------------------------------------------------------------------
     | LOGIN PAGE
@@ -23,32 +22,31 @@ class LoginController extends Controller
         return view('auth.login');
     }
 
-
     /*
     |--------------------------------------------------------------------------
     | PASSWORD LOGIN
     |--------------------------------------------------------------------------
     */
 
-   public function loginWithPassword(Request $request)
-{
-    $request->validate([
-        'email' => 'required|email',
-        'password' => 'required'
-    ]);
+    public function loginWithPassword(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
 
-    if (Auth::guard('organization')->attempt([
-        'work_email' => $request->email,
-        'password' => $request->password
-    ])) {
+        if (Auth::guard('organization')->attempt([
+            'work_email' => $request->email,
+            'password' => $request->password,
+        ])) {
 
-        $request->session()->regenerate();
+            $request->session()->regenerate();
 
-        return redirect()->route('dashboard');
+            return redirect()->route('dashboard');
+        }
+
+        return back()->with('error', 'Invalid email or password.');
     }
-
-    return back()->with('error', 'Invalid email or password.');
-}
 
     /*
     |--------------------------------------------------------------------------
@@ -61,7 +59,6 @@ class LoginController extends Controller
         return view('auth.login-email');
     }
 
-
     /*
     |--------------------------------------------------------------------------
     | SEND LOGIN OTP
@@ -71,12 +68,12 @@ class LoginController extends Controller
     public function sendLoginOtp(Request $request)
     {
         $request->validate([
-            'email' => 'required|email'
+            'email' => 'required|email',
         ]);
 
         $organization = Organization::where('work_email', $request->email)->first();
 
-        if (!$organization) {
+        if (! $organization) {
             return back()->with('error', 'Account not found.');
         }
 
@@ -85,7 +82,7 @@ class LoginController extends Controller
 
         $organization->update([
             'otp_code' => $otp,
-            'otp_expires_at' => Carbon::now()->addMinutes($expiryMinutes)
+            'otp_expires_at' => Carbon::now()->addMinutes($expiryMinutes),
         ]);
 
         $this->sendOtpMail($organization, $otp, $expiryMinutes);
@@ -96,7 +93,6 @@ class LoginController extends Controller
             ->with('success', 'OTP sent to your email.');
     }
 
-
     /*
     |--------------------------------------------------------------------------
     | OTP INPUT PAGE
@@ -105,13 +101,12 @@ class LoginController extends Controller
 
     public function showOtpForm()
     {
-        if (!session('login_email')) {
+        if (! session('login_email')) {
             return redirect()->route('login');
         }
 
         return view('auth.login-otp');
     }
-
 
     /*
     |--------------------------------------------------------------------------
@@ -122,20 +117,20 @@ class LoginController extends Controller
     public function verifyLoginOtp(Request $request)
     {
         $request->validate([
-            'otp' => 'required|digits:6'
+            'otp' => 'required|digits:6',
         ]);
 
         $email = session('login_email');
-       // dd($request->all(),$email);
+        // dd($request->all(),$email);
 
-        if (!$email) {
+        if (! $email) {
             return redirect()->route('login')
                 ->with('error', 'Session expired.');
         }
 
         $organization = Organization::where('work_email', $email)->first();
 
-        if (!$organization) {
+        if (! $organization) {
             return redirect()->route('login')
                 ->with('error', 'Account not found.');
         }
@@ -143,29 +138,28 @@ class LoginController extends Controller
         if ($organization->otp_code != $request->otp) {
             return back()->with('error', 'Invalid OTP.');
         }
-//               //  dd($organization);
-//    $organization->update([
-//             'otp_code' => $otp,
-//             'otp_expires_at' => Carbon::now()->addMinutes($expiryMinutes)
-//         ]);
-
+        //               //  dd($organization);
+        //    $organization->update([
+        //             'otp_code' => $otp,
+        //             'otp_expires_at' => Carbon::now()->addMinutes($expiryMinutes)
+        //         ]);
 
         if (Carbon::now()->gt($organization->otp_expires_at)) {
             return back()->with('error', 'OTP expired.');
         }
 
-        Auth::login($organization);
+        Auth::guard('organization')->login($organization);
+        $request->session()->regenerate();
 
         $organization->update([
             'otp_code' => null,
-            'otp_expires_at' => null
+            'otp_expires_at' => null,
         ]);
 
         session()->forget('login_email');
 
         return redirect()->route('dashboard');
     }
-
 
     /*
     |--------------------------------------------------------------------------
@@ -177,13 +171,13 @@ class LoginController extends Controller
     {
         $email = session('login_email');
 
-        if (!$email) {
+        if (! $email) {
             return redirect()->route('login');
         }
 
         $organization = Organization::where('work_email', $email)->first();
 
-        if (!$organization) {
+        if (! $organization) {
             return redirect()->route('login');
         }
 
@@ -192,14 +186,13 @@ class LoginController extends Controller
 
         $organization->update([
             'login_otp' => $otp,
-            'login_otp_expires_at' => Carbon::now()->addMinutes($expiryMinutes)
+            'login_otp_expires_at' => Carbon::now()->addMinutes($expiryMinutes),
         ]);
 
         $this->sendOtpMail($organization, $otp, $expiryMinutes);
 
         return back()->with('success', 'OTP resent successfully.');
     }
-
 
     /*
     |--------------------------------------------------------------------------
@@ -220,12 +213,12 @@ class LoginController extends Controller
     }
 
     public function logout(Request $request)
-{
-    Auth::guard('organization')->logout();
+    {
+        Auth::guard('organization')->logout();
 
-    $request->session()->invalidate();
-    $request->session()->regenerateToken();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
 
-    return redirect()->route('login');
-}
+        return redirect()->route('login');
+    }
 }
