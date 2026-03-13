@@ -15,7 +15,20 @@
 </head>
 
 <body>
-
+<div id="pageLoader" style="
+    display:none;
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(255,255,255,0.7);
+    z-index:9999;
+    justify-content:center;
+    align-items:center;
+">
+    <div class="spinner-border text-primary"></div>
+</div>
     <div class="auth-wrapper">
         <div class="row justify-content-between gap-4 gap-lg-2 align-items-stretch">
             <div class="col left-logo-col position-relative">
@@ -74,5 +87,50 @@
     <script src="{{ asset('js/app.js') }}"></script>
 
 </body>
+<script>
+document.querySelectorAll('form').forEach(function(form) {
+    form.addEventListener('submit', function () {
+        document.getElementById('pageLoader').style.display = 'flex';
+    });
+});
+</script>
 
+ <script>
+        document.querySelectorAll(".select-wrapper").forEach(function(wrapper) {
+
+            const selectBox = wrapper.querySelector(".custom-select");
+            const optionsList = wrapper.querySelector(".select-list");
+            const hiddenInput = wrapper.querySelector(".hidden-select");
+
+            selectBox.addEventListener("click", function(e) {
+                e.stopPropagation();
+
+                document.querySelectorAll(".select-list").forEach(list => {
+                    if (list !== optionsList) list.style.display = "none";
+                });
+
+                optionsList.style.display =
+                    optionsList.style.display === "block" ? "none" : "block";
+            });
+
+            optionsList.querySelectorAll("li").forEach(function(option) {
+
+                option.addEventListener("click", function() {
+
+                    selectBox.textContent = this.textContent;
+                    hiddenInput.value = this.getAttribute("data-value");
+
+                    optionsList.style.display = "none";
+                });
+
+            });
+
+        });
+
+        document.addEventListener("click", function() {
+            document.querySelectorAll(".select-list").forEach(list => {
+                list.style.display = "none";
+            });
+        });
+    </script>
 </html>

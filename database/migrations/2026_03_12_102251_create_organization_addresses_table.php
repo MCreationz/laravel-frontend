@@ -18,6 +18,7 @@ return new class extends Migration
             $table->text('office_address_line_1');
             $table->text('office_address_line_2')->nullable();
             $table->string('office_city');
+            $table->string('office_town')->nullable();   // added
             $table->string('office_district');
             $table->string('office_state');
             $table->string('office_pin_code', 10);
@@ -27,6 +28,7 @@ return new class extends Migration
             $table->text('portal_address_line_1')->nullable();
             $table->text('portal_address_line_2')->nullable();
             $table->string('portal_city')->nullable();
+            $table->string('portal_town')->nullable();   // added
             $table->string('portal_district')->nullable();
             $table->string('portal_state')->nullable();
             $table->string('portal_pin_code', 10)->nullable();
