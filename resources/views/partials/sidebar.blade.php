@@ -1,9 +1,9 @@
-<div class="sidebar d-flex flex-column justify-content-between gap-2 position-fixed h-100 overflow-auto">
+<div class="sidebar d-flex flex-column justify-content-between gap-2 position-fixed">
     <div class="logo-wrap">
         <div class="logo ps-3 mb-4 pb-2">
-            <img src="{{ asset('img/FundInk-logo.svg') }}" alt="FundInk site logo" width="164px" height="35px">
+            <img src="{{ asset('img/FundInk-logo.svg') }}" alt="FundInk site logo" width="120px" height="auto">
         </div>
-        <div class="expert-sec p-4">
+        <div class="expert-sec p-3 p-lg-4">
             <p class="font-small">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam
                 rem aperiam, eaque ipsa quae ab illo inventore veritatis </p>
             <div class="btn-wrap">
