@@ -238,6 +238,7 @@ button.btn.show-password {
 body.dashboard {
     margin-left: 291px;
     background: #9DC2E733;
+    padding-top: 103px;
 }
 .sidebar {
     left: 0;
@@ -245,10 +246,13 @@ body.dashboard {
     background: var(--white-color);
     padding: 39px 34px 57px 21px;
     width: 291px;
+    height: 100vh;
     scrollbar-width: thin;
     scrollbar-color: var(--white-color) transparent;
-    z-index: 11;
+    z-index: 111;
     box-shadow: 0px 0px 9.75px 0px #D3D3D361;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 .expert-sec {
     background: radial-gradient(97.57% 210.75% at 0.9% 2.98%, rgba(0, 224, 220, 0.1) 0%, rgba(1, 96, 214, 0.1) 100%);
@@ -270,6 +274,8 @@ header.header {
     box-shadow: 0px 0px 10px 0px #D3D3D361;
     background: var(--white-color);
     padding-block: 33.5px;
+    z-index: 11;
+    width: calc(100% - 291px);
 }
 .header-links .icon {
     border-right: 1px solid #EAEAEA80;
@@ -280,6 +286,7 @@ button.nav-toggle {
     flex-direction: column;
     background: transparent;
     gap: 5px;
+    padding: 0;
 }
 button.nav-toggle span {
     background: var(--primary-color);
@@ -348,13 +355,15 @@ button.nav-toggle span {
     width: 100% !important;
     height: 5.648148059844971px;
     right: -50%;
-    top: 12px;
+    top: 12px;    
+    padding-inline: 20px;
 }
 .progress-dots .dot {
     display: inline-block;
     width: 5.648148059844971px;
+    flex: 0 0 5.648148059844971px;
     height: 5.648148059844971px;
-    border-radius: 50px;
+    border-radius: 10px;
     background: var(--accent-color);
 }
 .progress-dots .dot.one {
@@ -387,6 +396,14 @@ button.nav-toggle span {
 label.form-label span {
     color: #E74C3C;
     display: inline-block;
+}
+.top-heading {
+    font-size: 20px !important;
+    font-weight: 400 !important;
+}
+form hr {
+    border-color: #EAEAEA;
+    opacity: 1;
 }
 @media(min-width: 1900px){
     .form-col-wrap {
@@ -446,24 +463,58 @@ label.form-label span {
     .header-toggle {
         display: block;
     }
+    body.dashboard {
+        padding-top: 76px;
+    }
     .sidebar {
         transform: translateX(-240px);
         width: 240px;
-        padding: 35px 15px;
+        padding: 30px 15px 35px;
         transition: transform .3s ease;
+        top: 76px;
+        box-shadow: 0 9px 9.75px 0px #D3D3D361;
+        height: calc(100vh - 76px);
+    }
+    body.dashboard.sidebar-active {
+        overflow: hidden;
+    }
+    .logo-wrap .logo img {
+        max-width: 130px;
     }
     body.dashboard {
         margin-left: 0;
     }
-    /* body.dashboard.sidebar-active {
-        margin-left: 240px;
-    } */
-    body.dashboard.sidebar-active header.header {
-        padding-left: 250px !important;
-    }
     .sidebar-active .sidebar {transform: translateX(0);}
     header.header {
         padding-block: 20px;
+        width: 100%;
+    }
+    .header-text {
+        font-size: 16px;
+    }
+    .header-links .icon img {
+        width: 22px;
+    }
+    .profile-name {
+        display: none;
+    }
+    .logo img {
+        object-fit: contain;
+    }
+    .header-text {
+        display: none;
+    }
+    .logo.mobile {
+        display: block !important;
+    }
+    .logo-wrap .logo {
+        display: none;
+    }
+    .progress-dots {
+        gap: 4px;
+        justify-content: space-between;
+        padding-inline: 30px;
+        top: 10px;
     }
 }
 @media(max-width: 767px){
@@ -488,5 +539,48 @@ label.form-label span {
         height: 56px;
         border-radius: 10px;
         font-size: 18px;
+    }
+    .header-text {
+        font-size: 13px;
+    }
+    header.header {
+        padding-block: 10px;
+    }
+    .header-links .icon img {
+        width: 18px;
+    }
+    .profile-img {
+        width: 32px;
+        height: 32px;
+    }
+    .profile-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    .header-links .icon {
+        border-right: none;
+    }
+    .sidebar {
+        top: 52px;
+        height: calc(100vh - 52px);
+    }
+    body.dashboard {
+        padding-top: 52px;
+    }
+    .logo.mobile img {
+        max-width: 100px;
+    }
+    .step p {
+        margin-top: 10px;
+        font-size: 12px;
+    }
+    .steps-btn .btn.btn-primary {
+        min-width: 124px;
+    }
+}
+@media(max-width: 575px){
+    .progress-dots {
+        display: none;
     }
 }

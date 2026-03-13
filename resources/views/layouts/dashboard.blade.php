@@ -12,7 +12,7 @@
 
 <body class="dashboard">
 
-    <div class="d-flex">
+    <div class="">
 
         @include('partials.sidebar')
 
@@ -41,8 +41,8 @@
                             width="100%" height="100%">
                     </div>
                     <div
-                        class="row step-wrapper position-absolute justify-content-between align-items-center top-0 start-0 w-100 h-100">
-                        <div class="col step bold position-relative">
+                        class="step-wrapper d-flex flex-wrap position-absolute justify-content-center justify-content-sm-between align-items-center top-0 start-0 w-100 h-100 p-2 row-gap-2">
+                        <div class="col-6 col-sm-4 step bold position-relative">
                             <div class="step-inner">
                                 <div class="step-circle active d-flex justify-content-center align-items-center">
                                     <img src="{{ asset('img/direction.png') }}" class="object-fit-contain"
@@ -65,7 +65,7 @@
                                 <span class="dot"></span>
                             </div>
                         </div>
-                        <div class="col step bold">
+                        <div class="col-6 col-sm-4 step bold">
                             <div class="step-inner">
                                 <div class="step-circle next d-flex justify-content-center align-items-center">
                                     <span></span>
@@ -89,7 +89,7 @@
                             </div>
                         </div>
 
-                        <div class="col step">
+                        <div class="col-6 col-sm-4 step">
                             <div class="step-circle d-flex justify-content-center align-items-center">
                                 <span></span>
                             </div>
