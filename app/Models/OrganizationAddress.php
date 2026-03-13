@@ -11,8 +11,9 @@ class OrganizationAddress extends Model
 
         'office_house_floor_no',
         'office_address_line_1',
-        'office_address_line_2',
+        'office_address_line_2',        
         'office_city',
+        'office_town',
         'office_district',
         'office_state',
         'office_pin_code',
@@ -21,6 +22,7 @@ class OrganizationAddress extends Model
         'portal_address_line_1',
         'portal_address_line_2',
         'portal_city',
+        'portal_town',
         'portal_district',
         'portal_state',
         'portal_pin_code',
