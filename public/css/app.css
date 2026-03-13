@@ -431,34 +431,6 @@ form hr {
         padding: 80px 0 17px 0;
     }
 }
-@media(max-width:991px){
-    h1, .h1 {
-        font-size: 1.75rem !important;    
-    }
-    .col.form-col {
-        flex: 0 0 100%;
-    }
-    .col.left-logo-col {
-        flex: 0 0 100%;
-    }
-    .left-logo-col .logo img {
-        width: 140px;
-    }
-    .left-logo-col .logo {
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-    }
-    .bg-image {
-        height: 200px;
-    }
-    .auth-wrapper {
-        padding: 15px;
-    }
-    .form-col-wrap {
-        padding: 0;
-    }
-}
 @media(max-width: 1024px){
     .header-toggle {
         display: block;
@@ -517,9 +489,41 @@ form hr {
         top: 10px;
     }
 }
+@media(max-width:991px){
+    h1, .h1 {
+        font-size: 1.75rem !important;    
+    }
+    .col.form-col {
+        flex: 0 0 100%;
+    }
+    .col.left-logo-col {
+        flex: 0 0 100%;
+    }
+    .left-logo-col .logo img {
+        width: 140px;
+    }
+    .left-logo-col .logo {
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    .bg-image {
+        height: 200px;
+    }
+    .auth-wrapper {
+        padding: 15px;
+    }
+    .form-col-wrap {
+        padding: 0;
+    }
+}
+
 @media(max-width: 767px){
     h1, .h1 {
         font-size: 1.5rem !important;
+    }
+    .top-heading {
+        font-size: 18px !important;
     }
     .login-text p {
         font-size: 14px !important;
@@ -578,9 +582,15 @@ form hr {
     .steps-btn .btn.btn-primary {
         min-width: 124px;
     }
+    form hr {
+        display: none;
+    }
 }
 @media(max-width: 575px){
     .progress-dots {
         display: none;
+    }
+    label.form-check-label {
+        font-size: 12px;
     }
 }
