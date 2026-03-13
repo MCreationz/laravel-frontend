@@ -19,8 +19,8 @@
 
                         <div class="col-12 col-md-6 col-xl-4 px-md-2">
                             <label class="form-label">Address Line 1<span>*</span></label>
-                            <input type="text" name="office_address_line_1" class="form-control"
-                                placeholder="Enter Address" required>
+                            <input type="text" name="office_address_line_1" class="form-control" placeholder="Enter Address"
+                                required>
                         </div>
 
                         <div class="col-12 col-md-6 col-xl-4 px-md-2">
@@ -138,6 +138,26 @@
                                         <li data-value="Ahmedabad">Ahmedabad</li>
                                         <li data-value="Jaipur">Jaipur</li>
                                         <li data-value="Chandigarh">Chandigarh</li>
+                                        <li data-value="Lucknow">Lucknow</li>
+                                        <li data-value="Kanpur">Kanpur</li>
+                                        <li data-value="Nagpur">Nagpur</li>
+                                        <li data-value="Indore">Indore</li>
+                                        <li data-value="Bhopal">Bhopal</li>
+                                        <li data-value="Patna">Patna</li>
+                                        <li data-value="Ludhiana">Ludhiana</li>
+                                        <li data-value="Amritsar">Amritsar</li>
+                                        <li data-value="Surat">Surat</li>
+                                        <li data-value="Vadodara">Vadodara</li>
+                                        <li data-value="Rajkot">Rajkot</li>
+                                        <li data-value="Coimbatore">Coimbatore</li>
+                                        <li data-value="Madurai">Madurai</li>
+                                        <li data-value="Visakhapatnam">Visakhapatnam</li>
+                                        <li data-value="Vijayawada">Vijayawada</li>
+                                        <li data-value="Thiruvananthapuram">Thiruvananthapuram</li>
+                                        <li data-value="Kochi">Kochi</li>
+                                        <li data-value="Guwahati">Guwahati</li>
+                                        <li data-value="Ranchi">Ranchi</li>
+                                        <li data-value="Dehradun">Dehradun</li>
                                     </ul>
                                 </div>
                             </div>
@@ -146,16 +166,53 @@
                                 <div class="select-wrapper w-100 position-relative">
                                     <div class="custom-select form-control">Select an option</div>
                                     <ul class="select-list">
-                                        <li data-value="Delhi">Delhi</li>
-                                        <li data-value="Mumbai">Mumbai</li>
-                                        <li data-value="Bengaluru">Bengaluru</li>
-                                        <li data-value="Hyderabad">Hyderabad</li>
-                                        <li data-value="Chennai">Chennai</li>
-                                        <li data-value="Kolkata">Kolkata</li>
-                                        <li data-value="Pune">Pune</li>
-                                        <li data-value="Ahmedabad">Ahmedabad</li>
-                                        <li data-value="Jaipur">Jaipur</li>
-                                        <li data-value="Chandigarh">Chandigarh</li>
+                                        <!-- Punjab -->
+                                        <li data-value="Amritsar">Amritsar</li>
+                                        <li data-value="Ludhiana">Ludhiana</li>
+                                        <li data-value="Patiala">Patiala</li>
+                                        <li data-value="Jalandhar">Jalandhar</li>
+                                        <li data-value="Sahibzada Ajit Singh Nagar">Sahibzada Ajit Singh Nagar (Mohali)</li>
+                                        <li data-value="Bathinda">Bathinda</li>
+                                        <li data-value="Firozpur">Firozpur</li>
+                                        <li data-value="Hoshiarpur">Hoshiarpur</li>
+                                        <li data-value="Kapurthala">Kapurthala</li>
+                                        <li data-value="Moga">Moga</li>
+                                        <li data-value="Faridkot">Faridkot</li>
+                                        <li data-value="Sri Muktsar Sahib">Sri Muktsar Sahib</li>
+                                        <li data-value="Gurdaspur">Gurdaspur</li>
+                                        <li data-value="Pathankot">Pathankot</li>
+                                        <li data-value="Tarn Taran">Tarn Taran</li>
+                                        <li data-value="Barnala">Barnala</li>
+                                        <li data-value="Mansa">Mansa</li>
+                                        <li data-value="Sangrur">Sangrur</li>
+                                        <li data-value="Fatehgarh Sahib">Fatehgarh Sahib</li>
+                                        <li data-value="Rupnagar">Rupnagar</li>
+                                        <li data-value="Shaheed Bhagat Singh Nagar">Shaheed Bhagat Singh Nagar</li>
+                                        <li data-value="Malerkotla">Malerkotla</li>
+
+                                        <!-- Haryana -->
+                                        <li data-value="Ambala">Ambala</li>
+                                        <li data-value="Bhiwani">Bhiwani</li>
+                                        <li data-value="Charkhi Dadri">Charkhi Dadri</li>
+                                        <li data-value="Faridabad">Faridabad</li>
+                                        <li data-value="Fatehabad">Fatehabad</li>
+                                        <li data-value="Gurugram">Gurugram</li>
+                                        <li data-value="Hisar">Hisar</li>
+                                        <li data-value="Jhajjar">Jhajjar</li>
+                                        <li data-value="Jind">Jind</li>
+                                        <li data-value="Kaithal">Kaithal</li>
+                                        <li data-value="Karnal">Karnal</li>
+                                        <li data-value="Kurukshetra">Kurukshetra</li>
+                                        <li data-value="Mahendragarh">Mahendragarh</li>
+                                        <li data-value="Nuh">Nuh</li>
+                                        <li data-value="Palwal">Palwal</li>
+                                        <li data-value="Panchkula">Panchkula</li>
+                                        <li data-value="Panipat">Panipat</li>
+                                        <li data-value="Rewari">Rewari</li>
+                                        <li data-value="Rohtak">Rohtak</li>
+                                        <li data-value="Sirsa">Sirsa</li>
+                                        <li data-value="Sonipat">Sonipat</li>
+                                        <li data-value="Yamunanagar">Yamunanagar</li>
                                     </ul>
                                 </div>
                             </div>
@@ -167,8 +224,7 @@
 
                             <div class="col-12 col-md-6 col-xl-4 px-md-2">
                                 <label class="form-label">Pin Code<span>*</span></label>
-                                <input type="text" name="portal_pin_code" class="form-control"
-                                    placeholder="Enter pin code">
+                                <input type="text" name="portal_pin_code" class="form-control" placeholder="Enter pin code">
                             </div>
 
                         </div>
@@ -190,7 +246,7 @@
     </div>
 
     <script>
-        document.getElementById('sameAsOffice').addEventListener('change', function() {
+        document.getElementById('sameAsOffice').addEventListener('change', function () {
 
             const fields = [
                 ['office_house_floor_no', 'portal_house_floor_no'],

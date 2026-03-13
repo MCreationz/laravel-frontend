@@ -12,7 +12,11 @@ class OnboardingController extends Controller
 {
     public function stepOne()
     {
-        return view('onboarding.step1');
+        $organization = Auth::guard('organization')->user();
+        $profile = $organization->profile; // relation
+        // return $profile;
+
+        return view('onboarding.step1', compact('profile'));
     }
 
     public function storeStepOne(Request $request)
@@ -24,10 +28,10 @@ class OnboardingController extends Controller
             'legal_name' => 'required|string|max:255',
             'date_of_incorporation' => 'required|date',
             'brand_name' => 'nullable|string|max:255',
-            'website_url' => 'nullable|url|max:255',
-            'linkedin_url' => 'nullable|url|max:255',
+            'website_url' => 'nullable|max:255',
+            'linkedin_url' => 'nullable|max:255',
         ]);
-
+        // return $validated;
         // Get authenticated organization
         $organization = Auth::guard('organization')->user();
 
@@ -43,7 +47,9 @@ class OnboardingController extends Controller
 
     public function stepTwo()
     {
-        return view('onboarding.step2');
+        $address = OrganizationAddress::where('organization_id', auth()->guard('organization')->id())->first();
+
+        return view('onboarding.step2',compact('address'));
     }
 
     public function storeStepTwo(Request $request)
