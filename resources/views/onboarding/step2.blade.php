@@ -142,15 +142,28 @@
                                         <li data-value="Jaipur">Jaipur</li>
                                         <li data-value="Chandigarh">Chandigarh</li>
                                     </ul>
-
-                                    <input type="hidden" name="referral_source" class="hidden-select"
-                                        value="{{ old('referral_source') }}">
                                 </div>
                             </div>
                             <div class="col-6 col-xl-4 px-2">
                                 <label class="form-label">District<span>*</span></label>
-                                <select name="portal_district" class="form-select form-control">
-                                    <option value="">Select an option</option>
+
+                                <div class="select-wrapper w-100 position-relative">
+                                    <div class="custom-select form-control">Select an option</div>
+                                    <ul class="select-list">
+                                        <li data-value="Delhi">Delhi</li>
+                                        <li data-value="Mumbai">Mumbai</li>
+                                        <li data-value="Bengaluru">Bengaluru</li>
+                                        <li data-value="Hyderabad">Hyderabad</li>
+                                        <li data-value="Chennai">Chennai</li>
+                                        <li data-value="Kolkata">Kolkata</li>
+                                        <li data-value="Pune">Pune</li>
+                                        <li data-value="Ahmedabad">Ahmedabad</li>
+                                        <li data-value="Jaipur">Jaipur</li>
+                                        <li data-value="Chandigarh">Chandigarh</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-6 col-xl-4 px-2">
                                     <option value="New Delhi">New Delhi</option>
                                     <option value="Mumbai Suburban">Mumbai Suburban</option>
                                     <option value="Bangalore Urban">Bangalore Urban</option>
