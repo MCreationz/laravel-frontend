@@ -7,7 +7,7 @@
             <p class="font-small">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam
                 rem aperiam, eaque ipsa quae ab illo inventore veritatis </p>
             <div class="btn-wrap">
-                <a href="#" class="btn btn-primary">Talk to our experts today</a>
+                <a href="#" class="btn btn-primary w-100">Talk to our experts today</a>
             </div>
         </div>
     </div>

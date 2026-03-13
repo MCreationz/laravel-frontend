@@ -1,6 +1,13 @@
-<header class="header px-4">
+<header class="header px-3 px-lg-4">
     <div class="row justify-content-between align-items-center">
-        <div class="col">
+        <div class="col d-flex gap-2 align-items-center">
+            <div class="header-toggle">
+                <button class="nav-toggle" id="sidebar-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
             <p class="mb-0 header-text">Set up your Profile</p>
         </div>
         <div class="col">
@@ -23,9 +30,4 @@
             </div>
         </div>
     </div>
-
-
-
-
-
 </header>

@@ -11,7 +11,7 @@
     </div>
 
     <form action="{{ route('register.step1') }}" method="POST"
-        class="register-form row form-fields-wrap d-flex flex-wrap justify-content-between flex-column">
+        class="register-form row form-fields-wrap d-flex flex-wrap justify-content-between flex-column gap-3">
 
         @csrf
 
@@ -139,7 +139,7 @@
 
         <div class="account-wrap">
 
-            <div class="col-12 btn-wrap mt-4">
+            <div class="col-12 btn-wrap">
                 <button type="submit" class="btn btn-primary w-100">Register</button>
             </div>
 
