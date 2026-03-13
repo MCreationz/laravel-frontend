@@ -41,11 +41,13 @@ Route::post('/login/send-otp', [AuthLoginController::class, 'sendLoginOtp'])->na
 Route::get('/login/otp', [AuthLoginController::class, 'showOtpForm'])->name('login.otp');
 
 Route::post('/login/verify-otp', [AuthLoginController::class, 'verifyLoginOtp'])->name('login.otp.verify');
- Route::post('/logout', [AuthLoginController::class, 'logout'])
-        ->name('logout');
-Route::middleware(['check.onboarding','auth:organization'])->group(function () {
 
-   
+
+
+Route::post('/logout', [AuthLoginController::class, 'logout'])
+    ->name('logout');
+
+Route::middleware(['check.onboarding', 'auth:organization'])->group(function () {
 
     Route::get('/dashboard', function () {
         return view('dashboard.index');
@@ -68,6 +70,5 @@ Route::middleware(['check.onboarding','auth:organization'])->group(function () {
 
     Route::post('/onboarding/step-3', [OnboardingController::class, 'storeStepThree'])
         ->name('onboarding.step3.store');
-
 
 });

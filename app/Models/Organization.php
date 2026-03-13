@@ -37,4 +37,14 @@ class Organization extends Authenticatable
     {
         return $this->hasOne(OrganizationAddress::class);
     }
+
+    public function operationalDetail()
+    {
+        return $this->hasOne(OrganizationOperationalDetail::class);
+    }
+
+    public function funders()
+    {
+        return $this->hasMany(OrganizationFunder::class);
+    }
 }

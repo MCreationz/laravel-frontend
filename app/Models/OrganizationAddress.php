@@ -11,7 +11,7 @@ class OrganizationAddress extends Model
 
         'office_house_floor_no',
         'office_address_line_1',
-        'office_address_line_2',        
+        'office_address_line_2',
         'office_city',
         'office_town',
         'office_district',
