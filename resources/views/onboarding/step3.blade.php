@@ -157,7 +157,7 @@
 
             </div>
             {{-- second card --}}
-            <div class="card p-3 p-md-4 border-0 rounded-3">
+            <div class="card p-3 mb-3 p-md-4 border-0 rounded-3">
                 <div class="inner-fields mt-md-4 small-label">
                     <div class="mb-4">
                         <h2 class="inner-title mb-0">Donation summary</h2>
@@ -186,26 +186,46 @@
                     </div>
                 </div>
                 <div class="row two-col-text justify-content-md-between align-items-center mt-4 mb-2">
-                    <div class="col-12 col-md-6 text-center text-md-start">
+                    <div class="col-12 col-md-6 text-start">
                         <p class="mb-0">Total Funding Received Till Date (₹ Lakh)</p>
                     </div>
-                    <div class="col-12 col-md-6 text-center text-md-end">
+                    <div class="col-12 col-md-6 text-start text-md-end">
                         <p>0000.00 Lakh</p>
                     </div>
                 </div>
             </div>
 
             {{-- third card --}}
-            <div class="card p-3 p-md-4 border-0 rounded-3">
-                <div class="inner-fields mt-md-4">
-                    <div class="mb-4">
+            <div class="card p-0 border-0 rounded-3">
+                <div class="inner-fields d-flex justify-content-between align-items-center p-3 p-md-4">
+                    <div class="">
                         <h2 class="inner-title mb-0">Major Institutional Funders</h2>
                     </div>
-                     <div class="btn-wrap">
-                    <button type="submit" class="btn btn-primary">Next</button>
+                    <div class="btn-wrap">
+                        <button type="submit" class="btn btn-primary add-fund">Add Funders</button>
+                    </div>
                 </div>
+                <div class="table-wrap">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">S No.</th>
+                                <th scope="col">Funder Name</th>
+                                <th scope="col">Year</th>
+                                <th scope="col">Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1.</td>
+                                <td>Mukesh Sharma</td>
+                                <td>2026</td>
+                                <td>2,00,000</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
-               
+
             </div>
 
             <div
@@ -214,7 +234,7 @@
                     <button type="button" class="btn simple-btn">Cancel</button>
                 </div>
                 <div class="btn-wrap">
-                    <button type="submit" class="btn btn-primary">Next</button>
+                    <button type="submit" class="btn btn-primary">Continue</button>
                 </div>
             </div>
 

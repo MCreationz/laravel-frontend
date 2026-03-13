@@ -20,11 +20,6 @@
                         <input type="text" name="office_address_line_1" class="form-control" placeholder="Enter Address"
                             required>
                     </div>
-                        <div class="col-12 col-md-6 col-xl-4 px-md-2">
-                            <label class="form-label">Address Line 1<span>*</span></label>
-                            <input type="text" name="office_address_line_1" class="form-control" placeholder="Enter Address"
-                                required>
-                        </div>
 
                     <div class="col-12 col-md-6 col-xl-4 px-md-2">
                         <label class="form-label">Address Line 2<span>*</span></label>
@@ -32,47 +27,8 @@
                     </div>
                     <hr class="mb-0">
 
-                    <div class="col-12 col-md-6 col-xl-4 px-md-2">
-                        <label class="form-label">Town<span>*</span></label>
-                        <input type="text" name="office_town" class="form-control" placeholder="Enter town" required>
-                    </div>
-                    <div class="col-12 col-md-6 col-xl-4 px-md-2">
-                        <label class="form-label">City<span>*</span></label>
-                        <div class="select-wrapper w-100 position-relative">
-                            <div class="custom-select form-control">Select an option</div>
-                            <ul class="select-list">
-                                <li data-value="Delhi">Delhi</li>
-                                <li data-value="Mumbai">Mumbai</li>
-                                <li data-value="Bengaluru">Bengaluru</li>
-                                <li data-value="Hyderabad">Hyderabad</li>
-                                <li data-value="Chennai">Chennai</li>
-                                <li data-value="Kolkata">Kolkata</li>
-                                <li data-value="Pune">Pune</li>
-                                <li data-value="Ahmedabad">Ahmedabad</li>
-                                <li data-value="Jaipur">Jaipur</li>
-                                <li data-value="Chandigarh">Chandigarh</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-6 col-xl-4 px-md-2">
-                        <label class="form-label">District<span>*</span></label>
-                        <div class="select-wrapper w-100 position-relative">
-                            <div class="custom-select form-control">Select an option</div>
-                            <ul class="select-list">
-                                <li data-value="Delhi">Delhi</li>
-                                <li data-value="Mumbai">Mumbai</li>
-                                <li data-value="Bengaluru">Bengaluru</li>
-                                <li data-value="Hyderabad">Hyderabad</li>
-                                <li data-value="Chennai">Chennai</li>
-                                <li data-value="Kolkata">Kolkata</li>
-                                <li data-value="Pune">Pune</li>
-                                <li data-value="Ahmedabad">Ahmedabad</li>
-                                <li data-value="Jaipur">Jaipur</li>
-                                <li data-value="Chandigarh">Chandigarh</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <hr class="mb-0">
+                   
+                   
                         <div class="col-12 col-md-6 col-xl-4 px-md-2">
                             <label class="form-label">Town<span>*</span></label>
                             <input type="text" name="office_town" class="form-control" placeholder="Enter town" required>
@@ -188,7 +144,7 @@
                     <div>
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <h2 class="col top-heading mb-0">Portal Address</h2>
-                            <div class="col form-check">
+                            <div class="col-auto form-check">
                                 <input class="form-check-input" type="checkbox" name="is_portal_same_as_office"
                                     id="sameAsOffice" value="1">
                                 <label class="form-check-label" for="sameAsOffice">
