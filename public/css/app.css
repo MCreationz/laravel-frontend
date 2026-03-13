@@ -401,9 +401,25 @@ label.form-label span {
     font-size: 20px !important;
     font-weight: 400 !important;
 }
+.inner-title {
+    font-size: 18px;
+    color: var(--accent-color) !important;
+}
 form hr {
     border-color: #EAEAEA;
     opacity: 1;
+}
+.inner-fields.small-label label {
+    font-size: 11px;
+    min-height: 20px;
+    display: inline-block;
+    width: 100%;
+}
+.two-col-text p {
+    font-family: 'Coolvetica';
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 1.3;
 }
 @media(min-width: 1900px){
     .form-col-wrap {
@@ -516,6 +532,9 @@ form hr {
     .form-col-wrap {
         padding: 0;
     }
+    .inner-fields.small-label label {
+        min-height: min-content;
+    }
 }
 
 @media(max-width: 767px){
@@ -524,6 +543,9 @@ form hr {
     }
     .top-heading {
         font-size: 18px !important;
+    }
+    .inner-title {
+        font-size: 16px;
     }
     .login-text p {
         font-size: 14px !important;
@@ -584,6 +606,9 @@ form hr {
     }
     form hr {
         display: none;
+    }
+    .two-col-text p {
+        font-size: 16px;
     }
 }
 @media(max-width: 575px){
