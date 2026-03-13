@@ -397,6 +397,14 @@ label.form-label span {
     color: #E74C3C;
     display: inline-block;
 }
+.top-heading {
+    font-size: 20px !important;
+    font-weight: 400 !important;
+}
+form hr {
+    border-color: #EAEAEA;
+    opacity: 1;
+}
 @media(min-width: 1900px){
     .form-col-wrap {
         padding: 150px 0 17px;

@@ -6,11 +6,11 @@
         <div class="card-body p-0">
             <form method="POST" action="{{ route('onboarding.step1.store') }}">
                 @csrf
-                <div class="card p-4 border-0">
+                <div class="card p-4 border-0 rounded-3">
                     <div class="mb-4">
-                        <h2>Organization Details</h2>
+                        <h1 class="top-heading mb-0">Organization Details</h1>
                     </div>
-                    <div class="row mb-3 flex-wrap row-gap-4">
+                    <div class="row mb-3 flex-wrap row-gap-4 px-1">
                         <div class="col-12 col-md-6 col-xl-4 px-2">
                             <label class="form-label">Enter your organization PAN<span>*</span></label>
                             <input type="text" name="pan_number" class="form-control" placeholder="ABCDE1234F" required>
