@@ -15,7 +15,20 @@
 </head>
 
 <body>
-
+<div id="pageLoader" style="
+    display:none;
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(255,255,255,0.7);
+    z-index:9999;
+    justify-content:center;
+    align-items:center;
+">
+    <div class="spinner-border text-primary"></div>
+</div>
     <div class="auth-wrapper">
         <div class="row justify-content-between gap-4 gap-lg-2 align-items-stretch">
             <div class="col left-logo-col position-relative">
@@ -74,5 +87,11 @@
     <script src="{{ asset('js/app.js') }}"></script>
 
 </body>
-
+<script>
+document.querySelectorAll('form').forEach(function(form) {
+    form.addEventListener('submit', function () {
+        document.getElementById('pageLoader').style.display = 'flex';
+    });
+});
+</script>
 </html>

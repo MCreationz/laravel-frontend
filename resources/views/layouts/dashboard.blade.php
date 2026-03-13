@@ -21,7 +21,20 @@
             @include('partials.header')
 
             <main class="p-3">
-
+<div id="pageLoader" style="
+    display:none;
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(255,255,255,0.7);
+    z-index:9999;
+    justify-content:center;
+    align-items:center;
+">
+    <div class="spinner-border text-primary"></div>
+</div>
                 <div class="step-section position-relative mb-3">
                     <div class="bg-image">
                         <img src="{{ asset('img/dasboard-bg.png') }}" class="img-fluid" alt="steps section"
