@@ -702,13 +702,30 @@ span.badge img {
     padding: 15px;
     border-radius: 8px;
 }
-.publish-date {
+.publish-date, .status {
     background: #9DC2E780;
     display: inline-block;
     padding: 5.5px 10px;
     border-radius: 2px;
     font-size: 10px !important;
     font-weight: 700;
+    text-align: center;
+}
+.status.ongoing {
+    background: #C4FFDF;
+    color: #0CB559 !important;
+}
+.status.review {
+    background: #B9DCFF;
+    color: #0160D6 !important;
+}
+.status.reject {
+    background: #FFD6D2;
+    color: #E74C3C !important;
+}
+.status {
+    border-radius: 36px;
+    min-width: 71px;
 }
 .project-details .title {
     font-size: 21px !important;
@@ -755,7 +772,16 @@ span.badge img {
     background: rgba(217, 217, 217, 0.3);
     border-radius: 10px;
 }
-
+button.tab {
+    background: transparent;
+    border: none;
+    padding: 4.82px 20px;
+    border-radius: 6px;
+}
+button.tab.active {
+    background: #9DC2E780;
+    font-weight: 700;
+}
 /*  */
 @media(min-width: 1900px){
     .form-col-wrap {
@@ -989,6 +1015,13 @@ span.badge img {
     }
     .search-box {
         max-width: 100% !important;
+    }
+    .tabs {
+        white-space: nowrap;
+        overflow: scroll;
+    }
+    button.tab {
+        padding: 4.82px 12px;
     }
 }
 @media(max-width: 575px){
