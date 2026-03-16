@@ -43,7 +43,6 @@
                             <div class="custom-select form-control">
                                 {{ old('office_city', $address->office_city ?? 'Select an option') }}
                             </div>
-
                             <input type="hidden" name="office_city"
                                 value="{{ old('office_city', $address->office_city ?? '') }}">
 
