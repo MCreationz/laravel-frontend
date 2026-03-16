@@ -11,7 +11,10 @@
     --white-color: #fff;
     --primary-btn: linear-gradient(66.53deg, #0160D6 29%, #07CCB5 67.08%);
 }
-body, p, span {
+* {
+    box-sizing: border-box;
+}
+body, p, span, ul li, ol li, div {
     font-family: 'Inter' !important;
     font-size: 0.875rem !important;
     line-height: 1.6 !important;
@@ -394,7 +397,7 @@ button.nav-toggle span {
     min-width: 152px;
 }
 label.form-label span {
-    color: #E74C3C;
+    color: #E74C3C !important;
     display: inline-block;
 }
 .top-heading {
@@ -490,6 +493,72 @@ input:checked + .slider {
 }
 input:checked + .slider:before {
   transform: translateX(22px);
+}
+
+/* modal */
+.modal-content {
+border-radius:12px;
+}
+.check-item {
+    font-size: 12px;
+    font-weight: 400;
+    margin-bottom: 20px;
+    display: flex;
+    gap: 12px;
+}
+.consent-box input[type="checkbox"] {
+    width: 24px;
+    flex: 0 0 24px;
+    height: 24px;
+    background: #F7F7F7;
+    appearance: none;
+    margin-top: 3px;
+    border: 1px solid #E2E2E2;
+    border-radius: 6px;
+    position: relative;
+}
+.consent-box input[type="checkbox"]:after {
+    content: '';
+    position: absolute;
+    left: 8px;
+    top: 3px;
+    width: 6px;
+    height: 14px;
+    border: solid #fff;
+    border-width: 0 2px 2px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+    z-index: 1;
+    opacity: 0;
+}
+.consent-box input[type="checkbox"]:checked {
+    background: var(--accent-color);
+    border-color: var(--accent-color);
+}
+.consent-box input[type="checkbox"]:checked:after {
+    opacity: 1;
+}
+label.check-item.final-check {
+    background: #F9F9F9 !important;
+    margin-bottom: 0;
+}
+ul.sub-list li {
+    line-height: 1.4 !important;
+}
+ul.sub-list li::marker {
+    color: #9DC2E7;
+    font-size: 24px;
+}
+ul.sub-list {
+    padding-left: 20px;
+    margin-bottom: 0;
+}
+.final-check input[type="checkbox"] {
+    margin-top: 0;
+}
+.modal-body p, .modal-body li, .modal-body div {
+    font-size: 12px !important;
 }
 @media(min-width: 1900px){
     .form-col-wrap {
@@ -682,6 +751,16 @@ input:checked + .slider:before {
     }
     .table-wrap {
         overflow-x: auto;
+    }
+    /* modal */
+    .check-item {
+        gap: 8px;
+    }
+    .consent-box input[type="checkbox"] {
+        width: 20px;
+        flex: 0 0 20px;
+        height: 20px;
+        margin-top: 4px;
     }
 }
 @media(max-width: 575px){

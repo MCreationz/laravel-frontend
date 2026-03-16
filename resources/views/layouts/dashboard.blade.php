@@ -21,7 +21,8 @@
             @include('partials.header')
 
             <main class="p-3">
-<div id="pageLoader" style="
+                <div id="pageLoader"
+                    style="
     display:none;
     position:fixed;
     top:0;
@@ -33,8 +34,8 @@
     justify-content:center;
     align-items:center;
 ">
-    <div class="spinner-border text-primary"></div>
-</div>
+                    <div class="spinner-border text-primary"></div>
+                </div>
                 <div class="step-section position-relative mb-3">
                     <div class="bg-image">
                         <img src="{{ asset('img/dasboard-bg.png') }}" class="img-fluid" alt="steps section"
@@ -116,44 +117,47 @@
     });
 </script>
 
- <script>
-        document.querySelectorAll(".select-wrapper").forEach(function(wrapper) {
+<script>
+    document.querySelectorAll(".select-wrapper").forEach(function(wrapper) {
 
-            const selectBox = wrapper.querySelector(".custom-select");
-            const optionsList = wrapper.querySelector(".select-list");
-            const hiddenInput = wrapper.querySelector(".hidden-select");
+        const selectBox = wrapper.querySelector(".custom-select");
+        const optionsList = wrapper.querySelector(".select-list");
+        const hiddenInput = wrapper.querySelector(".hidden-select");
 
-            selectBox.addEventListener("click", function(e) {
-                e.stopPropagation();
+        selectBox.addEventListener("click", function(e) {
+            e.stopPropagation();
 
-                document.querySelectorAll(".select-list").forEach(list => {
-                    if (list !== optionsList) list.style.display = "none";
-                });
-
-                optionsList.style.display =
-                    optionsList.style.display === "block" ? "none" : "block";
-            });
-
-            optionsList.querySelectorAll("li").forEach(function(option) {
-
-                option.addEventListener("click", function() {
-
-                    selectBox.textContent = this.textContent;
-                    hiddenInput.value = this.getAttribute("data-value");
-
-                    optionsList.style.display = "none";
-                });
-
-            });
-
-        });
-
-        document.addEventListener("click", function() {
             document.querySelectorAll(".select-list").forEach(list => {
-                list.style.display = "none";
+                if (list !== optionsList) list.style.display = "none";
             });
+
+            optionsList.style.display =
+                optionsList.style.display === "block" ? "none" : "block";
         });
-    </script>
+
+        optionsList.querySelectorAll("li").forEach(function(option) {
+
+            option.addEventListener("click", function() {
+
+                selectBox.textContent = this.textContent;
+                hiddenInput.value = this.getAttribute("data-value");
+
+                optionsList.style.display = "none";
+            });
+
+        });
+
+    });
+
+    document.addEventListener("click", function() {
+        document.querySelectorAll(".select-list").forEach(list => {
+            list.style.display = "none";
+        });
+    });
+
+
+
+</script>
 
 
 </html>

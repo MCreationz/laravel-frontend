@@ -267,10 +267,125 @@
                     <button type="button" class="btn simple-btn">Cancel</button>
                 </div>
                 <div class="btn-wrap">
-                    <button type="submit" class="btn btn-primary">Continue</button>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                        data-bs-target="#staticBackdrop">Continue</button>
                 </div>
             </div>
 
         </form>
     </div>
+
+
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content border-0">
+                <div class="modal-header">
+                    <h3 class="modal-title mb-0">Consent & Declaration</h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-3 p-md-4">
+                    <p>By registering and submitting information on Fundink, I hereby declare and agree that:</p>
+                    <div class="consent-box">
+
+                        <label class="check-item">
+                            <input type="checkbox">
+                            <p>All information provided by our organization — including organization details, PAN, statutory
+                                registrations, governance structure, geographical coverage, domain expertise, project track
+                                record, and financial records (including institutional, foreign, and individual donations,
+                                and total turnover) — is true, accurate, and complete to the best of my knowledge.</p>
+                        </label>
+
+                        <label class="check-item">
+                            <input type="checkbox">
+                            <p>I authorize Fundink to collect, store, process, analyze, and present this information to
+                                verified funders, CSR entities, philanthropies, impact investors, financial institutions,
+                                and ecosystem partners for the purpose of fundraising, due diligence, evaluation, and
+                                collaboration.</p>
+                        </label>
+
+                        <div class="check-item">
+                            <input type="checkbox">
+                            <div>I expressly consent to Fundink conducting verification and due diligence checks, including
+                                but not limited to:
+
+                                <ul class="sub-list">
+                                    <li>PAN validation</li>
+                                    <li>Statutory registration verification</li>
+                                    <li>Background and compliance checks</li>
+                                    <li>Credit bureau checks using the organization’s PAN, where applicable, for the purpose
+                                        of financial assessment and risk evaluation</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="check-item">
+                            <input type="checkbox">
+                            <div>I grant Fundink the right to use our organization’s details for:
+
+                                <ul class="sub-list">
+                                    <li>Fundraising campaigns and curated funding calls</li>
+                                    <li>Promotional materials, website listings, newsletters, and social media communication
+                                    </li>
+                                    <li>Investor/funder presentations and ecosystem reports</li>
+                                    <li>Showcasing case studies and impact highlights</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <label class="check-item">
+                            <input type="checkbox">
+                            <p>I consent to receive communication from Fundink regarding funding opportunities, partnership
+                                introductions, events, workshops, ecosystem updates, and promotional announcements via
+                                email, phone, or other digital channels.</p>
+                        </label>
+
+                        <label class="check-item">
+                            <input type="checkbox">
+                            <p>I acknowledge that registration on Fundink does not guarantee funding, grants, investment, or
+                                partnership confirmation.</p>
+                        </label>
+
+                        <label class="check-item">
+                            <input type="checkbox">
+                            <p>I confirm that I am an authorized representative of the organization and legally empowered to
+                                provide this declaration and consent on behalf of the organization.</p>
+                        </label>
+
+                        <label class="check-item">
+                            <input type="checkbox">
+                            <p>I understand that Fundink will take reasonable measures to safeguard sensitive information
+                                and will share confidential data strictly with relevant stakeholders for legitimate
+                                evaluation, risk assessment, and fundraising purposes.</p>
+                        </label>
+                        <label class="check-item bg-light p-2 rounded-3 final-check align-items-center">
+                            <input type="checkbox">
+                            <p>I have read, understood, and agree to the above Consent & Declaration.</p>
+                        </label>
+                    </div>
+                </div>
+                <div
+                    class="modal-footer d-flex justify-content-center justify-content-md-end gap-2 gap-md-2 pt-0 p-4 steps-btn flex-wrap border-0">
+                    <div class="btn-wrap">
+                        <button type="button" class="btn simple-btn">Cancel</button>
+                    </div>
+                    <div class="btn-wrap">
+                        <button type="button" class="btn btn-primary">Submit</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        var myModal = document.getElementById('staticBackdrop')
+        var myInput = document.getElementById('myInput')
+
+        myModal.addEventListener('shown.bs.modal', function() {
+            if (myInput) {
+                myInput.focus()
+            }
+        })
+    </script>
 @endsection
