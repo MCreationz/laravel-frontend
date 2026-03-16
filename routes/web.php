@@ -3,6 +3,7 @@
 use App\Http\Controllers\API\Auth\LoginController as AuthLoginController;
 use App\Http\Controllers\API\Auth\RegisterController;
 use App\Http\Controllers\OnboardingController;
+use App\Http\Controllers\OrganizationFunderController;
 use App\Http\Controllers\ProjectController;
 use Illuminate\Support\Facades\Route;
 
@@ -43,8 +44,6 @@ Route::get('/login/otp', [AuthLoginController::class, 'showOtpForm'])->name('log
 
 Route::post('/login/verify-otp', [AuthLoginController::class, 'verifyLoginOtp'])->name('login.otp.verify');
 
-
-
 Route::post('/logout', [AuthLoginController::class, 'logout'])
     ->name('logout');
 
@@ -72,8 +71,21 @@ Route::middleware(['check.onboarding', 'auth:organization'])->group(function () 
     Route::post('/onboarding/step-3', [OnboardingController::class, 'storeStepThree'])
         ->name('onboarding.step3.store');
 
+    Route::get('/projects', [ProjectController::class, 'index'])->name('projects.index');
 
-            Route::get('/projects', [ProjectController::class, 'index'])->name('projects.index');
+        Route::get('/funders', [OrganizationFunderController::class, 'index'])
+        ->name('funders.index');
 
+    // add funder
+    Route::post('/funders', [OrganizationFunderController::class, 'store'])
+        ->name('funders.store');
+
+    // update funder
+    Route::put('/funders/{id}', [OrganizationFunderController::class, 'update'])
+        ->name('funders.update');
+
+    // delete funder
+    Route::delete('/funders/{id}', [OrganizationFunderController::class, 'destroy'])
+        ->name('funders.destroy');
 
 });
