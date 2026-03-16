@@ -10,7 +10,7 @@ class OrganizationFunder extends Model
         'organization_id',
         'name',
         'year',
-        'amount'
+        'amount',
     ];
 
     public function organization()
