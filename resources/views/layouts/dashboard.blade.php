@@ -158,6 +158,31 @@
 
 
 </script>
+    </script>
+<script>
+    document.querySelectorAll('.select-wrapper').forEach(wrapper => {
 
+    const display = wrapper.querySelector('.custom-select');
+    const hiddenInput = wrapper.querySelector('input[type="hidden"]');
+    const options = wrapper.querySelectorAll('.select-list li');
+
+    options.forEach(option => {
+
+        option.addEventListener('click', function () {
+
+            const value = this.getAttribute('data-value');
+
+            // update visible text
+            display.textContent = value;
+
+            // update hidden input (this is what gets submitted)
+            hiddenInput.value = value;
+
+        });
+
+    });
+
+});
+</script>
 
 </html>

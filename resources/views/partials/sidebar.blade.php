@@ -3,13 +3,22 @@
         <div class="logo ps-3 mb-4 pb-2">
             <img src="{{ asset('img/FundInk-logo.svg') }}" alt="FundInk site logo" width="120px" height="auto">
         </div>
-        <div class="expert-sec p-3 p-lg-4">
-            <p class="font-small">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam
-                rem aperiam, eaque ipsa quae ab illo inventore veritatis </p>
-            <div class="btn-wrap">
-                <a href="#" class="btn btn-primary w-100">Talk to our experts today</a>
-            </div>
+       @unless(auth('organization')->user()->profile)
+    <div class="expert-sec p-3 p-lg-4">
+        <p class="font-small">
+            Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam
+            rem aperiam, eaque ipsa quae ab illo inventore veritatis
+        </p>
+        <div class="btn-wrap">
+            <a href="#" class="btn btn-primary w-100">Talk to our experts today</a>
         </div>
+    </div>
+@else
+    <div class="btn-wrap">
+        <a href="{{ route('dashboard') }}" class="btn btn-primary w-100">Dashboard</a>
+        <a href="{{ route('projects.index') }}" class="btn btn-primary w-100">My Projects</a>
+    </div>
+@endunless
     </div>
     <div class="sidebar-nav mt-5 pt-3">
         <a href="#" class="d-flex align-items-center mb-4 pb-2 text-decoration-none">

@@ -54,6 +54,7 @@ class OnboardingController extends Controller
 
     public function storeStepTwo(Request $request)
     {
+        
         $organization = Auth::guard('organization')->user();
 
         $validated = $request->validate([

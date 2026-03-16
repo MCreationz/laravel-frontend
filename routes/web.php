@@ -3,6 +3,7 @@
 use App\Http\Controllers\API\Auth\LoginController as AuthLoginController;
 use App\Http\Controllers\API\Auth\RegisterController;
 use App\Http\Controllers\OnboardingController;
+use App\Http\Controllers\ProjectController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -70,5 +71,9 @@ Route::middleware(['check.onboarding', 'auth:organization'])->group(function () 
 
     Route::post('/onboarding/step-3', [OnboardingController::class, 'storeStepThree'])
         ->name('onboarding.step3.store');
+
+
+            Route::get('/projects', [ProjectController::class, 'index'])->name('projects.index');
+
 
 });
