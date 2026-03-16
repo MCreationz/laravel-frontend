@@ -36,7 +36,8 @@
 ">
                     <div class="spinner-border text-primary"></div>
                 </div>
-                <div class="step-section position-relative mb-3">
+
+                {{-- <div class="step-section position-relative mb-3">
                     <div class="bg-image">
                         <img src="{{ asset('img/dasboard-bg.png') }}" class="img-fluid" alt="steps section"
                             width="100%" height="100%">
@@ -98,7 +99,7 @@
                         </div>
 
                     </div>
-                </div>
+                </div> --}}
 
                 @yield('content')
             </main>
