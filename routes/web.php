@@ -72,6 +72,10 @@ Route::middleware(['check.onboarding', 'auth:organization'])->group(function () 
         ->name('onboarding.step3.store');
 
     Route::get('/projects', [ProjectController::class, 'index'])->name('projects.index');
+    Route::get('/projects/{id}', function ($id) {
+    // For now, returning a static view
+    return view('projects.detail', ['projectId' => $id]);
+})->name('projects.detail');
 
         Route::get('/funders', [OrganizationFunderController::class, 'index'])
         ->name('funders.index');
@@ -87,5 +91,7 @@ Route::middleware(['check.onboarding', 'auth:organization'])->group(function () 
     // delete funder
     Route::delete('/funders/{id}', [OrganizationFunderController::class, 'destroy'])
         ->name('funders.destroy');
+
+
 
 });
