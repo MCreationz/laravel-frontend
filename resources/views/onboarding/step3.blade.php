@@ -412,8 +412,9 @@
                         <h2 class="inner-title mb-0">Major Institutional Funders</h2>
                     </div>
                     <div class="btn-wrap">
-                        <button type="submit" class="btn btn-primary add-fund">Add Funders</button>
-                    </div>
+<button type="button" class="btn btn-primary add-fund" id="addFunderBtn">
+    Add Funders
+</button>                    </div>
                 </div>
                 <div class="table-wrap">
                     <table class="table">
@@ -425,7 +426,7 @@
                                 <th scope="col">Amount</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="fundersTable">
                             <tr>
                                 <td>1.</td>
                                 <td>Mukesh Sharma</td>
@@ -451,6 +452,47 @@
         </form>
     </div>
 
+
+
+    <div class="modal fade" id="funderModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title">Add Funder</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+                <form id="funderForm">
+
+                    <input type="hidden" id="funder_id">
+
+                    <div class="mb-3">
+                        <label>Funder Name</label>
+                        <input type="text" class="form-control" id="funder_name">
+                    </div>
+
+                    <div class="mb-3">
+                        <label>Year</label>
+                        <input type="number" class="form-control" id="funder_year">
+                    </div>
+
+                    <div class="mb-3">
+                        <label>Amount</label>
+                        <input type="number" class="form-control" id="funder_amount">
+                    </div>
+
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-primary" id="saveFunder">Save</button>
+            </div>
+
+        </div>
+    </div>
+</div>
 
     <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -663,5 +705,165 @@
         });
     </script>
 
+
+
+
+@endsection
+
+@section('scripts')
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+console.log('loaded')
+let funderModal = new bootstrap.Modal(document.getElementById('funderModal'))
+
+let fundersTable = document.getElementById('fundersTable')
+let API = {
+    list: "{{ route('funders.index') }}",
+    store: "{{ route('funders.store') }}",
+    update: "/funders/",
+    delete: "/funders/"
+}
+
+let csrf = document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+
+/* =========================
+   Load Funders
+========================= */
+
+function loadFunders(){
+
+    fetch(API.list)
+    .then(res => res.json())
+    .then(res => {
+
+        fundersTable.innerHTML = ''
+
+        res.data.forEach((funder,index)=>{
+
+            fundersTable.innerHTML += `
+            <tr data-id="${funder.id}">
+                <td>${index+1}</td>
+                <td>${funder.name}</td>
+                <td>${funder.year}</td>
+                <td>${Number(funder.amount).toLocaleString()}</td>
+                <td>
+                    <button class="btn btn-sm btn-warning editFunder">Edit</button>
+                    <button class="btn btn-sm btn-danger deleteFunder">Delete</button>
+                </td>
+            </tr>`
+        })
+    })
+
+}
+
+/* =========================
+   Open Add Modal
+========================= */
+
+document.getElementById('addFunderBtn').addEventListener('click',()=>{
+
+    document.getElementById('funderForm').reset()
+    document.getElementById('funder_id').value=''
+
+    funderModal.show()
+
+})
+
+
+/* =========================
+   Save Funder (Add / Update)
+========================= */
+
+document.getElementById('saveFunder').addEventListener('click',()=>{
+
+    let id = document.getElementById('funder_id').value
+
+    let data = {
+        name: document.getElementById('funder_name').value,
+        year: document.getElementById('funder_year').value,
+        amount: document.getElementById('funder_amount').value
+    }
+
+    let url = id ? API.update+id : API.store
+    let method = id ? 'PUT' : 'POST'
+
+    fetch(url,{
+        method:method,
+        headers:{
+            "Content-Type":"application/json",
+            "X-CSRF-TOKEN":csrf
+        },
+        body:JSON.stringify(data)
+    })
+    .then(res=>res.json())
+    .then(res=>{
+
+        funderModal.hide()
+        loadFunders()
+
+    })
+
+})
+
+
+/* =========================
+   Edit Funder
+========================= */
+
+document.addEventListener('click',(e)=>{
+
+    if(e.target.classList.contains('editFunder')){
+
+        let row = e.target.closest('tr')
+
+        document.getElementById('funder_id').value = row.dataset.id
+        document.getElementById('funder_name').value = row.children[1].innerText
+        document.getElementById('funder_year').value = row.children[2].innerText
+        document.getElementById('funder_amount').value = row.children[3].innerText.replace(/,/g,'')
+
+        funderModal.show()
+
+    }
+
+})
+
+
+/* =========================
+   Delete Funder
+========================= */
+
+document.addEventListener('click',(e)=>{
+
+    if(e.target.classList.contains('deleteFunder')){
+
+        let row = e.target.closest('tr')
+        let id = row.dataset.id
+
+        if(!confirm("Delete this funder?")) return
+
+        fetch(API.delete+id,{
+            method:'DELETE',
+            headers:{
+                "X-CSRF-TOKEN":csrf
+            }
+        })
+        .then(res=>res.json())
+        .then(res=>{
+            loadFunders()
+        })
+
+    }
+
+})
+
+
+/* =========================
+   Initial Load
+========================= */
+
+loadFunders()
+});
+</script>
 
 @endsection

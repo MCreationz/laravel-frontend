@@ -15,7 +15,7 @@
             </div>
         @else
             <div class="btn-wrap">
-                <a href="{{ route('dashboard') }}" class="d-flex align-items-center text-decoration-none sidebar-links active">
+                <a href="{{ route('dashboard') }}" class="d-flex align-items-center text-decoration-none sidebar-links {{ request()->routeIs('dashboard') ? 'active' : '' }}">
                     <div class="flex-shrink-0">
                         <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" viewBox="0 0 23 23"
                             fill="none">
@@ -35,7 +35,7 @@
                     </div>
                     <div class="flex-grow-1 ms-3">Dashboard</div>
                 </a>
-                <a href="{{ route('projects.index') }}" class="d-flex align-items-center text-decoration-none sidebar-links">
+                <a href="{{ route('projects.index') }}" class="d-flex align-items-center text-decoration-none sidebar-links {{ request()->routeIs('projects.*') ? 'active' : '' }}"">
                     <div class="flex-shrink-0">
 
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"

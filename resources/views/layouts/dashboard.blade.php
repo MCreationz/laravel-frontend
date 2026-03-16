@@ -47,6 +47,10 @@
     </div>
 
 </body>
+
+@yield('scripts')
+
+
 <script>
     const toggleBtn = document.getElementById("sidebar-toggle");
     const sidebar = document.querySelector("body");
@@ -123,5 +127,7 @@
 
 });
 </script>
+
+
 
 </html>
