@@ -55,7 +55,7 @@
                     <div class="mb-4">
                         <h2 class="inner-title mb-0">Non-profit Organization</h2>
                     </div>
-                    <div class="row mb-3 flex-wrap row-gap-3 row-gap-md-4 px-md-1">
+                    <div class="row mb-4 pb-1 flex-wrap row-gap-3 row-gap-md-4 px-md-1">
                         <div class="col-12 col-md-6 col-xl-5 px-md-2">
                             <label class="form-label">Registration Type<span>*</span></label>
 
@@ -94,6 +94,39 @@
                                     <li data-value="Chandigarh">Chandigarh</li>
                                 </ul>
                             </div>
+                        </div>
+                    </div>
+                    <div class="row toggle-container mb-3">
+                        <div class="col-auto toggle-item">
+                            <span>12A Status</span>
+                            <label class="switch">
+                                <input type="checkbox" checked>
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+
+                        <div class="col-auto toggle-item">
+                            <span>80G Status</span>
+                            <label class="switch">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+
+                        <div class="col-auto toggle-item">
+                            <span>FCRA Status</span>
+                            <label class="switch">
+                                <input type="checkbox" checked>
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+
+                        <div class="col-auto toggle-item">
+                            <span>CSR-1 Registration</span>
+                            <label class="switch">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
                         </div>
                     </div>
                 </div>
