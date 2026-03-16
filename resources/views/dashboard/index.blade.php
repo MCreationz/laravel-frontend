@@ -2,12 +2,12 @@
 
 @section('content')
     <div class="project-status-sec">
-        <div class="row gap-3 gap-md-0">
-            <div class="col-md-4 ongoing">
+        <div class="row row-gap-3 justify-content-center">
+            <div class="col-md-6 col-lg-4 px-md-2 ongoing">
                 <div class="card dashboard-card">
                     <div class="card-inner d-flex justify-content-between align-items-start">
                         <!-- Left Content -->
-                        <div class="pt-5">
+                        <div class="pt-3 pt-md-5">
                             <div class="number-wrap d-flex align-items-end gap-2">
                                 <h2 class="mb-0">14</h2>
                                 <span class="badge ms-1">+11.01% <img src="img/grow.png" alt="grow"
@@ -24,10 +24,10 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-4 completed">
+            <div class="col-md-6  col-lg-4 px-md-2 completed">
                 <div class="card dashboard-card">
                     <div class="card-inner d-flex justify-content-between align-items-start">
-                        <div class="pt-5">
+                        <div class="pt-3 pt-md-5">
                             <div class="number-wrap d-flex align-items-end gap-2">
                                 <h2 class="mb-0">08</h2>
                                 <span class="badge ms-1">+11.01% <img src="img/grow.png" alt="grow"
@@ -43,10 +43,10 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-4 rejected">
+            <div class="col-md-6 col-lg-4 px-md-2 rejected">
                 <div class="card dashboard-card">
                     <div class="card-inner d-flex justify-content-between align-items-start">
-                        <div class="pt-5">
+                        <div class="pt-3 pt-md-5">
                             <div class="number-wrap d-flex align-items-end gap-2">
                                 <h2 class="mb-0">02</h2>
                                 <span class="badge ms-1">-11.01% <img src="img/reject.png" alt="grow"
@@ -67,18 +67,18 @@
 
     {{-- projects  --}}
 
-    <div class="recent-activities mt-3">
-        <div class="row">
-            <div class="col-8">
-                <div class="card project-sec p-3 border-0 rounded-3">
-                    <div class="row justify-content-between align-items-center">
-                        <div class="col-auto">
-                            <p class="small-title">All Projects</p>
+    <div class="recent-activities-sec mt-3">
+        <div class="row row-gap-3">
+            <div class="col-12 col-lg-8 pe-lg-1">
+                <div class="card project-sec px-3 pb-3 border-0 rounded-3">
+                    <div class="row py-3 justify-content-between align-items-center row-gap-2">
+                        <div class="col-12 col-md-auto">
+                            <p class="small-title text-center text-md-start">All Projects</p>
                         </div>
-                        <div class="col-7 d-flex align-items-center justify-content-end  gap-1">
+                        <div class="col-12 col-sm-9 col-xl-7 d-flex align-items-center justify-content-md-end flex-wrap">
                             <!-- Search Bar -->
-                            <div class="col-auto search-box">
-                                <span class="search-icon">
+                            <div class="col-12 col-sm-8 col-md-auto search-box  pe-lg-1 pe-xl-2 ">
+                                <span class="search-icon w-100">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13"
                                         viewBox="0 0 13 13" fill="none">
                                         <path
@@ -90,29 +90,203 @@
                             </div>
                             {{-- categories --}}
 
-                            
-                        <div class="col-4 select-wrapper position-relative">
-                            <div class="custom-select form-control">
-                                Category
-                            </div>
-                            <input type="hidden" name="office_city"
-                                value="Category">
 
-                            <ul class="select-list">
-                                <li data-value="Delhi">Design</li>
-                                <li data-value="Mumbai">Development</li>
-                            </ul>
-                        </div>
+                            <div class="col-12 col-sm-4 col-md-4 select-wrapper position-relative">
+                                <div class="custom-select form-control">
+                                    Category
+                                </div>
+                                <input type="hidden" name="office_city" value="Category">
+
+                                <ul class="select-list">
+                                    <li data-value="Delhi">Design</li>
+                                    <li data-value="Mumbai">Development</li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col">
-                            <div class=""></div>
+                    <hr>
+                    <div class="row mt-3 row-gap-3">
+                        <div class="col-12 col-sm-6">
+                            <div class="single-project">
+                                <div class="img-wrap mb-3">
+                                    <img src="img/project-img.jpg" alt="project image" width="100%" height="100%"
+                                        class="img-fluid rounded-2">
+                                </div>
+                                <div class="project-details">
+                                    <div class="publish-date mb-3">24 March 2026</div>
+                                    <p class="title mb-0">Project Name</p>
+                                    <div class="id">Application ID</div>
+                                    <p>Lorem ipsum dolor sit amet consectetur.</p>
+                                    <div class="btn-wrap">
+                                        <a href="#" class="btn btn-primary w-100">Appy now</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <div class="single-project">
+                                <div class="img-wrap mb-3">
+                                    <img src="img/project-img.jpg" alt="project image" width="100%" height="100%"
+                                        class="img-fluid rounded-2">
+                                </div>
+                                <div class="project-details">
+                                    <div class="publish-date mb-3">24 March 2026</div>
+                                    <p class="title mb-0">Project Name</p>
+                                    <div class="id">Application ID</div>
+                                    <p>Lorem ipsum dolor sit amet consectetur.</p>
+                                    <div class="btn-wrap">
+                                        <a href="#" class="btn btn-primary w-100">Appy now</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <div class="single-project">
+                                <div class="img-wrap mb-3">
+                                    <img src="img/project-img.jpg" alt="project image" width="100%" height="100%"
+                                        class="img-fluid rounded-2">
+                                </div>
+                                <div class="project-details">
+                                    <div class="publish-date mb-3">24 March 2026</div>
+                                    <p class="title mb-0">Project Name</p>
+                                    <div class="id">Application ID</div>
+                                    <p>Lorem ipsum dolor sit amet consectetur.</p>
+                                    <div class="btn-wrap">
+                                        <a href="#" class="btn btn-primary w-100">Appy now</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <div class="single-project">
+                                <div class="img-wrap mb-3">
+                                    <img src="img/project-img.jpg" alt="project image" width="100%" height="100%"
+                                        class="img-fluid rounded-2">
+                                </div>
+                                <div class="project-details">
+                                    <div class="publish-date mb-3">24 March 2026</div>
+                                    <p class="title mb-0">Project Name</p>
+                                    <div class="id">Application ID</div>
+                                    <p>Lorem ipsum dolor sit amet consectetur.</p>
+                                    <div class="btn-wrap">
+                                        <a href="#" class="btn btn-primary w-100">Appy now</a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-3"></div>
+            <div class="col-12 col-lg-4">
+                <div class="card px-3 pb-3 border-0 rounded-3">
+                    <div class="recent-activities">
+                        <div class="title-wrapper pt-3 pb-2">
+                            <p class="small-title">Recent Activity</p>
+                        </div>
+                       
+                        <hr>
+                        <div class="activities-wrapper">
+                            <div class="single-activity d-flex align-items-center py-3">
+                                <div class="flex-shrink-0">
+                                    <img src="img/project-img.jpg" alt="activity" width="74px" height="61px" class="rounded-1">
+                                </div>
+                                <div class="flex-grow-1 ms-2 ps-1">
+                                    <p class="small-title fw-semibold mb-0">Funding Literacy Mission</p>
+                                    <p class="approve-text"><span>Rs. 50 Lacs</span> Approveo rom ABC cop</p>
+                                </div>
+                            </div>
+                            <div class="single-activity d-flex align-items-center py-3">
+                                <div class="flex-shrink-0">
+                                    <img src="img/project-img.jpg" alt="activity" width="74px" height="61px" class="rounded-1">
+                                </div>
+                                <div class="flex-grow-1 ms-2 ps-1">
+                                    <p class="small-title fw-semibold mb-0">Funding Literacy Mission</p>
+                                    <p class="approve-text"><span>Rs. 50 Lacs</span> Approveo rom ABC cop</p>
+                                </div>
+                            </div>
+                            <div class="single-activity d-flex align-items-center py-3">
+                                <div class="flex-shrink-0">
+                                    <img src="img/project-img.jpg" alt="activity" width="74px" height="61px" class="rounded-1">
+                                </div>
+                                <div class="flex-grow-1 ms-2 ps-1">
+                                    <p class="small-title fw-semibold mb-0">Funding Literacy Mission</p>
+                                    <p class="approve-text"><span>Rs. 50 Lacs</span> Approveo rom ABC cop</p>
+                                </div>
+                            </div>
+                            <div class="single-activity d-flex align-items-center py-3">
+                                <div class="flex-shrink-0">
+                                    <img src="img/project-img.jpg" alt="activity" width="74px" height="61px" class="rounded-1">
+                                </div>
+                                <div class="flex-grow-1 ms-2 ps-1">
+                                    <p class="small-title fw-semibold mb-0">Funding Literacy Mission</p>
+                                    <p class="approve-text"><span>Rs. 50 Lacs</span> Approveo rom ABC cop</p>
+                                </div>
+                            </div>
+                            <div class="single-activity d-flex align-items-center py-3">
+                                <div class="flex-shrink-0">
+                                    <img src="img/project-img.jpg" alt="activity" width="74px" height="61px" class="rounded-1">
+                                </div>
+                                <div class="flex-grow-1 ms-2 ps-1">
+                                    <p class="small-title fw-semibold mb-0">Funding Literacy Mission</p>
+                                    <p class="approve-text"><span>Rs. 50 Lacs</span> Approveo rom ABC cop</p>
+                                </div>
+                            </div>
+                            <div class="single-activity d-flex align-items-center py-3">
+                                <div class="flex-shrink-0">
+                                    <img src="img/project-img.jpg" alt="activity" width="74px" height="61px" class="rounded-1">
+                                </div>
+                                <div class="flex-grow-1 ms-2 ps-1">
+                                    <p class="small-title fw-semibold mb-0">Funding Literacy Mission</p>
+                                    <p class="approve-text"><span>Rs. 50 Lacs</span> Approveo rom ABC cop</p>
+                                </div>
+                            </div><div class="single-activity d-flex align-items-center py-3">
+                                <div class="flex-shrink-0">
+                                    <img src="img/project-img.jpg" alt="activity" width="74px" height="61px" class="rounded-1">
+                                </div>
+                                <div class="flex-grow-1 ms-2 ps-1">
+                                    <p class="small-title fw-semibold mb-0">Funding Literacy Mission</p>
+                                    <p class="approve-text"><span>Rs. 50 Lacs</span> Approveo rom ABC cop</p>
+                                </div>
+                            </div><div class="single-activity d-flex align-items-center py-3">
+                                <div class="flex-shrink-0">
+                                    <img src="img/project-img.jpg" alt="activity" width="74px" height="61px" class="rounded-1">
+                                </div>
+                                <div class="flex-grow-1 ms-2 ps-1">
+                                    <p class="small-title fw-semibold mb-0">Funding Literacy Mission</p>
+                                    <p class="approve-text"><span>Rs. 50 Lacs</span> Approveo rom ABC cop</p>
+                                </div>
+                            </div>
+                            <div class="single-activity d-flex align-items-center py-3">
+                                <div class="flex-shrink-0">
+                                    <img src="img/project-img.jpg" alt="activity" width="74px" height="61px" class="rounded-1">
+                                </div>
+                                <div class="flex-grow-1 ms-2 ps-1">
+                                    <p class="small-title fw-semibold mb-0">Funding Literacy Mission</p>
+                                    <p class="approve-text"><span>Rs. 50 Lacs</span> Approveo rom ABC cop</p>
+                                </div>
+                            </div>
+                            <div class="single-activity d-flex align-items-center py-3">
+                                <div class="flex-shrink-0">
+                                    <img src="img/project-img.jpg" alt="activity" width="74px" height="61px" class="rounded-1">
+                                </div>
+                                <div class="flex-grow-1 ms-2 ps-1">
+                                    <p class="small-title fw-semibold mb-0">Funding Literacy Mission</p>
+                                    <p class="approve-text"><span>Rs. 50 Lacs</span> Approveo rom ABC cop</p>
+                                </div>
+                            </div><div class="single-activity d-flex align-items-center py-3">
+                                <div class="flex-shrink-0">
+                                    <img src="img/project-img.jpg" alt="activity" width="74px" height="61px" class="rounded-1">
+                                </div>
+                                <div class="flex-grow-1 ms-2 ps-1">
+                                    <p class="small-title fw-semibold mb-0">Funding Literacy Mission</p>
+                                    <p class="approve-text"><span>Rs. 50 Lacs</span> Approveo rom ABC cop</p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -122,7 +296,7 @@
 
     <div class="d-flex justify-content-between align-items-center mb-4">
 
-        <form method="POST" action="{{ route('logout') }}">
+        {{-- <form method="POST" action="{{ route('logout') }}">
             @csrf
             <button type="submit" class="btn btn-danger">
                 Logout
@@ -141,7 +315,7 @@
                 This is your organization dashboard.
             </p>
 
-        </div>
+        </div> --}}
 
         <script>
             document.querySelectorAll(".progress-circle").forEach(function(circle) {

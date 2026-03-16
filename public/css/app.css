@@ -683,6 +683,79 @@ span.badge img {
     padding: 4px 8px;
     font-size: 12px !important;
 }
+.project-sec .select-wrapper::after {
+    border-width: 0px 1.5px 1.5px 0px;
+    border-style: solid;
+    border-color: #6A6A6A;
+    width: 8px;
+    height: 8px;
+    transform: rotate(45deg) translateY(-50%);
+    top: 40%;
+}
+.small-title {
+    font-weight: 700;
+    font-size: 16px !important;
+}
+.single-project {
+    background: #FEFEFE;
+    border: 1px solid #1E27461A;
+    padding: 15px;
+    border-radius: 8px;
+}
+.publish-date {
+    background: #9DC2E780;
+    display: inline-block;
+    padding: 5.5px 10px;
+    border-radius: 2px;
+    font-size: 10px !important;
+    font-weight: 700;
+}
+.project-details .title {
+    font-size: 21px !important;
+    font-weight: 500 !important;
+}
+.single-project a.btn-primary {
+    font-size: 16px !important;
+}
+.recent-activities-sec hr {
+    border-color: #EAEAEA;
+    opacity: 1;
+    margin: 0 ;
+}
+.single-project .img-wrap img {
+    object-fit: cover;
+    height: 100%;
+}
+.single-project .img-wrap {
+    height: 135px;
+}
+.single-activity {
+    border-bottom: 1px solid #EAEAEA;
+}
+.single-activity p span {
+    color: #00B050 !important;
+}
+.single-activity .approve-text, .single-activity .approve-text span {
+    font-size: 12px !important;
+}
+.activities-wrapper {
+    height: 775px;
+    overflow: auto;
+    padding-right: 8px;
+}
+.activities-wrapper::-webkit-scrollbar {
+    width: 7px;
+}
+.activities-wrapper::-webkit-scrollbar-thumb {
+    background: radial-gradient(97.57% 210.75% at 0.9% 2.98%, rgba(0, 224, 220, 0.9) 0%, rgba(1, 96, 214, 0.9) 100%);
+    border-radius: 10px;
+    backdrop-filter: blur(6px)
+}
+.activities-wrapper::-webkit-scrollbar-track {
+    background: rgba(217, 217, 217, 0.3);
+    border-radius: 10px;
+}
+
 /*  */
 @media(min-width: 1900px){
     .form-col-wrap {
@@ -770,6 +843,9 @@ span.badge img {
         justify-content: space-between;
         padding-inline: 30px;
         top: 10px;
+    }
+    .project-status-sec {
+        padding: 20px;
     }
 }
 @media(max-width:991px){
@@ -889,6 +965,30 @@ span.badge img {
         flex: 0 0 20px;
         height: 20px;
         margin-top: 4px;
+    }
+    .project-status-sec {
+        padding: 12px;
+    }
+    .number-wrap h2 {
+        font-size: 40px;
+        letter-spacing: -2.8px;
+    }
+    .progress-circle {
+        width: 70px;
+        height: 70px;
+    }
+    .progress-circle::before {
+        width: 50px;
+        height: 50px;
+    }
+    .card.dashboard-card .card-inner {
+        padding: 12px;
+    }
+    .single-project a.btn-primary {
+        font-size: 14px !important;
+    }
+    .search-box {
+        max-width: 100% !important;
     }
 }
 @media(max-width: 575px){
