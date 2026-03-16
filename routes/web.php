@@ -72,10 +72,11 @@ Route::middleware(['check.onboarding', 'auth:organization'])->group(function () 
         ->name('onboarding.step3.store');
 
     Route::get('/projects', [ProjectController::class, 'index'])->name('projects.index');
-    Route::get('/projects/{id}', function ($id) {
-    // For now, returning a static view
-    return view('projects.detail', ['projectId' => $id]);
-})->name('projects.detail');
+// routes/web.php
+Route::get('/projects/details', function () {
+    // Returning a static view
+    return view('projects.detail');
+})->name('projects.details');  // named "project details"
 
         Route::get('/funders', [OrganizationFunderController::class, 'index'])
         ->name('funders.index');
