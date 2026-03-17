@@ -21,7 +21,7 @@
                                 <div class="id">Application ID</div>
                             </div>
                         </div>
-                        <div class="col grow-1">
+                        <div class="col-md-7 col-xl-5 grow-1">
                             <div class="row justify-content-between">
                                 <div class="col px-1">
                                     <div class="boxes rounded-3 px-2 pt-4 pb-2 h-100">
