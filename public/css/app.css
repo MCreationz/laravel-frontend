@@ -86,10 +86,12 @@ label {
 .auth-wrapper {
     /* padding: 20px 54px 20px 20px; */
     background-color: #000;
+    min-height: 100vh;
 }
 .auth-inner {
     padding: 60px 24px 67px 60px;
     z-index: 1;
+    min-height: 100vh;
 }
 .bg-image {
     height:100%;
@@ -110,6 +112,9 @@ label {
     padding: 38px;
     background: var(--white-color);
     border-radius: 21px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 .bottom-content * {
     color: var(--white-color) !important;
@@ -852,14 +857,14 @@ button.tab.active {
     line-height: 15px !important;
 }
 /*  */
-@media(min-width: 1900px){
+/* @media(min-width: 1900px){
     .form-col-wrap {
         padding: 150px 0 17px;
     }
     .left-logo-col .bg-image img {
         aspect-ratio: 916 / 984;
     }
-}
+} */
 @media(max-width:1440px){
 .left-logo-col .bg-image img {
     aspect-ratio: 916 / 600;
