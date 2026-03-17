@@ -782,6 +782,58 @@ button.tab.active {
     background: #9DC2E780;
     font-weight: 700;
 }
+/* project detail page */
+.project-detail {
+    background: var(--white-color);
+}
+.single-project-details {
+    margin-top: -95px;
+}
+.project-title {
+    font-size: 21px !important;
+    font-weight: 700 !important;
+    letter-spacing: -0.8px;
+    font-family: 'Inter';
+}
+.boxes {
+    background: #F9F9F9;
+}
+.boxes .number {
+    font-size: 21px !important;
+    color: #1E2746 !important;
+    font-weight: 500;
+    letter-spacing: -0.8px;
+}
+.boxes .text {
+    color: #6D6D6D !important;
+    font-size: 10px !important;
+}
+.project-detail .bg-image {
+    height: 127px;
+}
+.project-detail .card {
+    border: 1px solid #1E27461A;
+}
+.description-wrapper {
+    background: #F9F9F98A;
+}
+.sub-heading {
+    font-size: 18px;
+    font-weight: 500 !important;
+    font-family: 'Inter';
+    letter-spacing: -0.7px;
+}
+.description-wrapper .boxes {
+    background: #FEFEFE;
+    border: 1px solid #1E27461A;
+}
+.large-text {
+    font-size: 14px !important;
+    color: #1E2746 !important;
+    font-weight: 500;
+    letter-spacing: -0.6px;
+    line-height: 15px !important;
+}
 /*  */
 @media(min-width: 1900px){
     .form-col-wrap {
@@ -872,6 +924,11 @@ button.tab.active {
     }
     .project-status-sec {
         padding: 20px;
+    }
+}
+@media(min-width:992px){
+    .five-col {
+        width: 20% !important;
     }
 }
 @media(max-width:991px){
@@ -1023,6 +1080,20 @@ button.tab.active {
     button.tab {
         padding: 4.82px 12px;
     }
+    /* project detail */
+    .single-project-details {
+        margin-top: -35px;
+    }
+    .project-title {
+        font-size: 18px !important;
+        letter-spacing: -0.5px;
+    }
+    .project-detail .bg-image {
+        height: 115px;
+    }
+    .boxes .number {
+        font-size: 18px !important;
+    }
 }
 @media(max-width: 575px){
     .progress-dots {
@@ -1033,5 +1104,20 @@ button.tab.active {
     }
     .table-wrap table {
         width: 600px;
+    }
+    .project-thumbnail {
+        width: 120px;
+    }
+    .project-title {
+        font-size: 16px !important;
+    }
+    .id {
+        font-size: 12px !important;
+    }
+    .single-project-details {
+        margin-top: -25px;
+    }
+    .boxes .number {
+        font-size: 16px !important;
     }
 }
