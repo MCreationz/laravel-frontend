@@ -118,7 +118,7 @@
                                     <div class="id">Application ID</div>
                                     <p>Lorem ipsum dolor sit amet consectetur.</p>
                                     <div class="btn-wrap">
-                                        <a href="#" class="btn btn-primary w-100">Appy now</a>
+                                        <a href="#" class="btn btn-primary w-100">Apply now</a>
                                     </div>
                                 </div>
                             </div>
@@ -135,7 +135,7 @@
                                     <div class="id">Application ID</div>
                                     <p>Lorem ipsum dolor sit amet consectetur.</p>
                                     <div class="btn-wrap">
-                                        <a href="#" class="btn btn-primary w-100">Appy now</a>
+                                        <a href="#" class="btn btn-primary w-100">Apply now</a>
                                     </div>
                                 </div>
                             </div>
@@ -152,7 +152,7 @@
                                     <div class="id">Application ID</div>
                                     <p>Lorem ipsum dolor sit amet consectetur.</p>
                                     <div class="btn-wrap">
-                                        <a href="#" class="btn btn-primary w-100">Appy now</a>
+                                        <a href="#" class="btn btn-primary w-100">Apply now</a>
                                     </div>
                                 </div>
                             </div>
@@ -169,7 +169,7 @@
                                     <div class="id">Application ID</div>
                                     <p>Lorem ipsum dolor sit amet consectetur.</p>
                                     <div class="btn-wrap">
-                                        <a href="#" class="btn btn-primary w-100">Appy now</a>
+                                        <a href="#" class="btn btn-primary w-100">Apply now</a>
                                     </div>
                                 </div>
                             </div>

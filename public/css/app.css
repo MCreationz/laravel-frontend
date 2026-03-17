@@ -84,7 +84,6 @@ label {
 }
 /* register page css */
 .auth-wrapper {
-    /* padding: 20px 54px 20px 20px; */
     background-color: #000;
     min-height: 100vh;
 }
@@ -119,10 +118,6 @@ label {
 .bottom-content * {
     color: var(--white-color) !important;
 }
-/* .left-logo-col .logo {
-    top: 43px;
-    left: 50px;
-} */
 .col.form-col {
     flex: 0 0 34.661%;
 }
@@ -530,7 +525,6 @@ input:checked + .slider {
 input:checked + .slider:before {
   transform: translateX(22px);
 }
-
 /* modal */
 .modal-content {
 border-radius:12px;
@@ -856,15 +850,7 @@ button.tab.active {
     letter-spacing: -0.6px;
     line-height: 15px !important;
 }
-/*  */
-/* @media(min-width: 1900px){
-    .form-col-wrap {
-        padding: 150px 0 17px;
-    }
-    .left-logo-col .bg-image img {
-        aspect-ratio: 916 / 984;
-    }
-} */
+/* responsive */
 @media(max-width:1440px){
 .left-logo-col .bg-image img {
     aspect-ratio: 916 / 600;
@@ -967,17 +953,6 @@ button.tab.active {
     .auth-inner {
         flex-wrap: wrap;
     }
-    /* .left-logo-col .logo {
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-    } */
-    /* .bg-image {
-        height: 200px;
-    }
-    .auth-wrapper {
-        padding: 15px;
-    } */
     .inner-fields.small-label label {
         min-height: min-content;
     }
