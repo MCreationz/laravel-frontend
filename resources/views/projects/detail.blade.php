@@ -103,7 +103,7 @@
                 <p class="mb-3">Transparency You Can Trust</p>
                 <div class="row justify-content-center row-gap-2">
                     <div class="col-6 col-md-4 five-col grow-1 px-1">
-                        <div class="boxes rounded-3 px-3 pt-4 pb-3 h-100">                        
+                        <div class="boxes rounded-3 px-3 pt-4 pb-3 h-100">
                             <p class="large-text pt-1">Real-time progress updates</p>
                         </div>
                     </div>
@@ -128,8 +128,14 @@
                         </div>
                     </div>
                 </div>
-
+                <div
+                    class="d-flex justify-content-center justify-content-md-end gap-2 mt-4 pt-md-2 steps-btn flex-wrap">
+                    <div class="btn-wrap">
+                        <button type="submit" class="btn btn-primary">Apply</button>
+                    </div>
+                </div>
             </div>
+
         </div>
     </div>
 @endsection
