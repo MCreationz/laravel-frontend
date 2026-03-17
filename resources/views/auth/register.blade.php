@@ -6,8 +6,8 @@
 @section('content')
 
     <div class="form-heading mb-4 pb-lg-2">
-        <h1>Register Your Organization</h1>
-        <p class="font-small">Register your organization by filling the details below.</p>
+        <h2 class="h1 mb-2">Welcome to Fundink</h2>
+        <p class="font-small">Register your organization to start funding journey</p>
     </div>
 
     <form action="{{ route('register.step1') }}" method="POST"
@@ -48,7 +48,7 @@
             </div>
 
             <div class="col-12 mb-md-3 mb-2">
-                <label class="form-label">Are you a:</label>
+                <label class="form-label">Are you looking to:</label>
 
                 <div class="select-wrapper w-100 position-relative">
                     <div class="custom-select form-control @error('role') is-invalid @enderror">
@@ -143,7 +143,7 @@
                 <button type="submit" class="btn btn-primary w-100">Register</button>
             </div>
 
-            <div class="col-12 login-text text-center mt-3 mt-md-5 pt-xl-3">
+            <div class="col-12 login-text text-center mt-3">
                 <p>Already have an account? <a href="#">Log in</a></p>
             </div>
 

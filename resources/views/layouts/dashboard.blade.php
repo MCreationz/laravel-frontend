@@ -8,6 +8,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="preload" href="/fonts/Coolvetica-Regular.woff2" as="font" type="font/woff2" crossorigin>
+
+    <link rel="preload" href="/fonts/Inter18pt-Regular.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/Inter18pt-Medium.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/Inter18pt-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/Inter18pt-Bold.woff2" as="font" type="font/woff2" crossorigin>
 </head>
 
 <body class="dashboard">
@@ -37,7 +43,7 @@
                     <div class="spinner-border text-primary"></div>
                 </div>
 
-          
+
 
                 @yield('content')
             </main>
@@ -97,35 +103,32 @@
             list.style.display = "none";
         });
     });
-
-
-
 </script>
-    </script>
+</script>
 <script>
     document.querySelectorAll('.select-wrapper').forEach(wrapper => {
 
-    const display = wrapper.querySelector('.custom-select');
-    const hiddenInput = wrapper.querySelector('input[type="hidden"]');
-    const options = wrapper.querySelectorAll('.select-list li');
+        const display = wrapper.querySelector('.custom-select');
+        const hiddenInput = wrapper.querySelector('input[type="hidden"]');
+        const options = wrapper.querySelectorAll('.select-list li');
 
-    options.forEach(option => {
+        options.forEach(option => {
 
-        option.addEventListener('click', function () {
+            option.addEventListener('click', function() {
 
-            const value = this.getAttribute('data-value');
+                const value = this.getAttribute('data-value');
 
-            // update visible text
-            display.textContent = value;
+                // update visible text
+                display.textContent = value;
 
-            // update hidden input (this is what gets submitted)
-            hiddenInput.value = value;
+                // update hidden input (this is what gets submitted)
+                hiddenInput.value = value;
+
+            });
 
         });
 
     });
-
-});
 </script>
 
 
