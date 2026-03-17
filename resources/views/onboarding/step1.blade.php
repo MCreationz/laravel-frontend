@@ -3,12 +3,12 @@
 @section('content')
 
    <div class="step-section position-relative mb-3">
-                    <div class="bg-image">
+                    <div class="bg-image position-absolute top-0 start-0 w-100 h-100">
                         <img src="{{ asset('img/dasboard-bg.png') }}" class="img-fluid" alt="steps section"
                             width="100%" height="100%">
                     </div>
                     <div
-                        class="step-wrapper d-flex flex-wrap position-absolute justify-content-center justify-content-sm-between align-items-center top-0 start-0 w-100 h-100 p-2 row-gap-2">
+                        class="step-wrapper d-flex flex-wrap justify-content-center justify-content-sm-between align-items-center py-3 py-md-4 py-xl-5 px-2 row-gap-2">
                         <div class="col-6 col-sm-4 step bold position-relative">
                             <div class="step-inner">
                                 <div class="step-circle active d-flex justify-content-center align-items-center">

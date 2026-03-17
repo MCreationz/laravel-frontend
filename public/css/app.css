@@ -92,7 +92,7 @@ label {
     z-index: 1;
     min-height: 100vh;
 }
-.bg-image {
+.auth-wrapper .bg-image {
     height:100%;
 }
 .bg-image img {
@@ -353,8 +353,8 @@ button.nav-toggle span {
 }
 .step-circle span {
     display: inline-block;
-    width: 15.641026496887207px;
-    height: 15.641026496887207px;
+    width: 16px;
+    height: 16px;
     border-radius: 30px;
     background: var(--white-color);
 }
