@@ -48,7 +48,7 @@
                                     <div class="id">Application ID</div>
                                     <p>Lorem ipsum dolor sit amet consectetur.</p>
                                     <div class="btn-wrap">
-                                        <a href="#" class="btn btn-primary w-100">View Details</a>
+                                        <a href="projects/details" class="btn btn-primary w-100">View Details</a>
                                     </div>
                                 </div>
                             </div>
@@ -69,7 +69,7 @@
                                     <div class="id">Application ID</div>
                                     <p>Lorem ipsum dolor sit amet consectetur.</p>
                                     <div class="btn-wrap">
-                                        <a href="#" class="btn btn-primary w-100">View Details</a>
+                                        <a href="projects/details" class="btn btn-primary w-100">View Details</a>
                                     </div>
                                 </div>
                             </div>
@@ -90,7 +90,7 @@
                                     <div class="id">Application ID</div>
                                     <p>Lorem ipsum dolor sit amet consectetur.</p>
                                     <div class="btn-wrap">
-                                        <a href="#" class="btn btn-primary w-100">View Details</a>
+                                        <a href="projects/details" class="btn btn-primary w-100">View Details</a>
                                     </div>
                                 </div>
                             </div>
@@ -111,7 +111,7 @@
                                     <div class="id">Application ID</div>
                                     <p>Lorem ipsum dolor sit amet consectetur.</p>
                                     <div class="btn-wrap">
-                                        <a href="#" class="btn btn-primary w-100">View Details</a>
+                                        <a href="projects/details" class="btn btn-primary w-100">View Details</a>
                                     </div>
                                 </div>
                             </div>
@@ -132,7 +132,7 @@
                                     <div class="id">Application ID</div>
                                     <p>Lorem ipsum dolor sit amet consectetur.</p>
                                     <div class="btn-wrap">
-                                        <a href="#" class="btn btn-primary w-100">View Details</a>
+                                        <a href="projects/details" class="btn btn-primary w-100">View Details</a>
                                     </div>
                                 </div>
                             </div>
@@ -153,7 +153,7 @@
                                     <div class="id">Application ID</div>
                                     <p>Lorem ipsum dolor sit amet consectetur.</p>
                                     <div class="btn-wrap">
-                                        <a href="#" class="btn btn-primary w-100">View Details</a>
+                                        <a href="projects/details" class="btn btn-primary w-100">View Details</a>
                                     </div>
                                 </div>
                             </div>
@@ -174,7 +174,7 @@
                                     <div class="id">Application ID</div>
                                     <p>Lorem ipsum dolor sit amet consectetur.</p>
                                     <div class="btn-wrap">
-                                        <a href="#" class="btn btn-primary w-100">View Details</a>
+                                        <a href="projects/details" class="btn btn-primary w-100">View Details</a>
                                     </div>
                                 </div>
                             </div>
@@ -195,7 +195,7 @@
                                     <div class="id">Application ID</div>
                                     <p>Lorem ipsum dolor sit amet consectetur.</p>
                                     <div class="btn-wrap">
-                                        <a href="#" class="btn btn-primary w-100">View Details</a>
+                                        <a href="projects/details" class="btn btn-primary w-100">View Details</a>
                                     </div>
                                 </div>
                             </div>
@@ -216,7 +216,7 @@
                                     <div class="id">Application ID</div>
                                     <p>Lorem ipsum dolor sit amet consectetur.</p>
                                     <div class="btn-wrap">
-                                        <a href="#" class="btn btn-primary w-100">View Details</a>
+                                        <a href="projects/details" class="btn btn-primary w-100">View Details</a>
                                     </div>
                                 </div>
                             </div>
@@ -237,7 +237,7 @@
                                     <div class="id">Application ID</div>
                                     <p>Lorem ipsum dolor sit amet consectetur.</p>
                                     <div class="btn-wrap">
-                                        <a href="#" class="btn btn-primary w-100">View Details</a>
+                                        <a href="projects/details" class="btn btn-primary w-100">View Details</a>
                                     </div>
                                 </div>
                             </div>
@@ -258,7 +258,7 @@
                                     <div class="id">Application ID</div>
                                     <p>Lorem ipsum dolor sit amet consectetur.</p>
                                     <div class="btn-wrap">
-                                        <a href="#" class="btn btn-primary w-100">View Details</a>
+                                        <a href="projects/details" class="btn btn-primary w-100">View Details</a>
                                     </div>
                                 </div>
                             </div>
@@ -279,7 +279,7 @@
                                     <div class="id">Application ID</div>
                                     <p>Lorem ipsum dolor sit amet consectetur.</p>
                                     <div class="btn-wrap">
-                                        <a href="#" class="btn btn-primary w-100">View Details</a>
+                                        <a href="projects/details" class="btn btn-primary w-100">View Details</a>
                                     </div>
                                 </div>
                             </div>
@@ -300,7 +300,7 @@
                                     <div class="id">Application ID</div>
                                     <p>Lorem ipsum dolor sit amet consectetur.</p>
                                     <div class="btn-wrap">
-                                        <a href="#" class="btn btn-primary w-100">View Details</a>
+                                        <a href="projects/details" class="btn btn-primary w-100">View Details</a>
                                     </div>
                                 </div>
                             </div>
@@ -321,7 +321,7 @@
                                     <div class="id">Application ID</div>
                                     <p>Lorem ipsum dolor sit amet consectetur.</p>
                                     <div class="btn-wrap">
-                                        <a href="#" class="btn btn-primary w-100">View Details</a>
+                                        <a href="projects/details" class="btn btn-primary w-100">View Details</a>
                                     </div>
                                 </div>
                             </div>
@@ -342,7 +342,7 @@
                                     <div class="id">Application ID</div>
                                     <p>Lorem ipsum dolor sit amet consectetur.</p>
                                     <div class="btn-wrap">
-                                        <a href="#" class="btn btn-primary w-100">View Details</a>
+                                        <a href="projects/details" class="btn btn-primary w-100">View Details</a>
                                     </div>
                                 </div>
                             </div>
