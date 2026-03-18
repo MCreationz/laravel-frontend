@@ -10,12 +10,15 @@
         <p class="font-small">We’ve sent a 6-digit verification code to your registered email address. Please enter the
             code below to securely log in to your Fundink account.</p>
     </div>
+
     <form id="otpForm" method="POST" action="{{ route('verify.otp.submit') }}"
         class="register-form row form-fields-wrap d-flex flex-wrap justify-content-between flex-column">
+
         <div class="fields-wrap">
             @csrf
+
             <div class="otp-container">
-                
+
                 <input type="hidden" name="work_email" value="{{ session('email') }}">
 
                 <input type="text" maxlength="1" class="otp-input {{ session('error') ? 'is-invalid' : '' }}"
@@ -38,6 +41,7 @@
             </div>
 
             <input type="hidden" name="otp" id="otpValue">
+
             <div class="col-12 otp-text login-text text-center mt-4">
                 <p>
                     Didn’t receive the OTP?
@@ -45,13 +49,19 @@
                 </p>
             </div>
         </div>
+
         <div class="account-wrap">
+
             <div class="col-12 btn-wrap mt-4 mt-md-5 pt-xl-4">
-                <button type="submit" class="btn btn-primary w-100">Register</button>
+                <button type="submit" id="verifyBtn" class="btn btn-primary w-100" disabled>
+                    Register
+                </button>
             </div>
+
             <div class="col-12 login-text text-center mt-3 mt-md-5 pt-xl-3">
-                <p>Already have an account? <a href="#">Log in</a></p>
+                <p>Already have an account? <a href="/login">Log in</a></p>
             </div>
+
         </div>
 
     </form>
@@ -62,6 +72,7 @@
             const inputs = document.querySelectorAll(".otp-input");
             const otpValue = document.getElementById("otpValue");
             const form = document.getElementById("otpForm");
+            const submitBtn = document.getElementById("verifyBtn");
 
             inputs.forEach((input, index) => {
 
@@ -86,22 +97,18 @@
 
             });
 
-
             inputs[0].addEventListener("paste", function (e) {
 
                 let paste = e.clipboardData.getData("text").trim();
 
-                if (paste.length === 6) {
-
+                if (/^\d{6}$/.test(paste)) {
                     inputs.forEach((input, i) => {
                         input.value = paste[i];
                     });
-
                     updateOTP();
                 }
 
             });
-
 
             function updateOTP() {
 
@@ -113,32 +120,46 @@
 
                 otpValue.value = otp;
 
-                if (otp.length === 6) {
-                  //  form.submit();
+                // ✅ Enable only when valid 6-digit OTP
+                submitBtn.disabled = !/^\d{6}$/.test(otp);
+            }
+
+            form.addEventListener("submit", function (e) {
+
+                let otp = otpValue.value;
+
+                if (!/^\d{6}$/.test(otp)) {
+                    e.preventDefault();
+                    alert("Please enter all 6 digits of OTP");
                 }
 
-            }
+            });
+
+            // initialize state
+            updateOTP();
 
         });
     </script>
 
     <script>
-        const resendBtn = document.getElementById("resendOtpBtn");
+        document.addEventListener("DOMContentLoaded", function () {
 
-        resendBtn.addEventListener("click", function (e) {
+            const resendBtn = document.getElementById("resendOtpBtn");
 
-            e.preventDefault();
+            resendBtn.addEventListener("click", function (e) {
 
-            fetch("{{ route('resend.otp') }}", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "X-CSRF-TOKEN": "{{ csrf_token() }}"
-                },
-                body: JSON.stringify({
-                    work_email: "{{ session('email') }}"
+                e.preventDefault();
+
+                fetch("{{ route('resend.otp') }}", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                    },
+                    body: JSON.stringify({
+                        work_email: "{{ session('email') }}"
+                    })
                 })
-            })
                 .then(res => res.json())
                 .then(data => {
 
@@ -149,6 +170,8 @@
                     }
 
                 });
+
+            });
 
         });
     </script>
