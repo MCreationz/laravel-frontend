@@ -20,16 +20,28 @@
 
     <div class="fields-wrap">
 
-        <div class="otp-container">
+       <div class="otp-container">
+                
+                <input type="hidden" name="work_email" value="{{ session('email') }}">
 
-            <input type="text" maxlength="1" class="otp-input" inputmode="numeric" pattern="[0-9]*">
-            <input type="text" maxlength="1" class="otp-input" inputmode="numeric" pattern="[0-9]*">
-            <input type="text" maxlength="1" class="otp-input" inputmode="numeric" pattern="[0-9]*">
-            <input type="text" maxlength="1" class="otp-input" inputmode="numeric" pattern="[0-9]*">
-            <input type="text" maxlength="1" class="otp-input" inputmode="numeric" pattern="[0-9]*">
-            <input type="text" maxlength="1" class="otp-input" inputmode="numeric" pattern="[0-9]*">
+                <input type="text" maxlength="1" class="otp-input {{ session('error') ? 'is-invalid' : '' }}"
+                    inputmode="numeric" pattern="[0-9]*" placeholder="-">
 
-        </div>
+                <input type="text" maxlength="1" class="otp-input {{ session('error') ? 'is-invalid' : '' }}"
+                    inputmode="numeric" pattern="[0-9]*" placeholder="-">
+
+                <input type="text" maxlength="1" class="otp-input {{ session('error') ? 'is-invalid' : '' }}"
+                    inputmode="numeric" pattern="[0-9]*" placeholder="-">
+
+                <input type="text" maxlength="1" class="otp-input {{ session('error') ? 'is-invalid' : '' }}"
+                    inputmode="numeric" pattern="[0-9]*" placeholder="-">
+
+                <input type="text" maxlength="1" class="otp-input {{ session('error') ? 'is-invalid' : '' }}"
+                    inputmode="numeric" pattern="[0-9]*" placeholder="-">
+
+                <input type="text" maxlength="1" class="otp-input {{ session('error') ? 'is-invalid' : '' }}"
+                    inputmode="numeric" pattern="[0-9]*" placeholder="-">
+            </div>
 
         <input type="hidden" name="otp" id="otpValue">
 
