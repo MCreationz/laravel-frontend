@@ -175,6 +175,7 @@ button.btn.show-password {
     color: #6c757d !important;
     outline: none !important;
     box-shadow: unset !important;
+    top: 47px;
 }
 .login-text p {
     text-decoration: underline;
@@ -442,6 +443,12 @@ label.form-label span {
 form hr {
     border-color: #EAEAEA;
     opacity: 1;
+}
+.form-control.is-invalid, .was-validated .form-control:invalid {
+    background-image: unset !important;
+}
+.invalid-feedback {
+  color: #dc3545 !important
 }
 .inner-fields.small-label label {
     font-size: 11px;
