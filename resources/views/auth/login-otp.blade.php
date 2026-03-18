@@ -8,7 +8,8 @@
     <div class="form-heading mb-5 pb-lg-4">
         <h1>Verify your Email</h1>
         <p class="font-small">
-            We’ve sent a 6-digit verification code to your registered email address. Please enter the code below to securely log in to your Fundink account.
+            We’ve sent a 6-digit verification code to your registered email address. Please enter the code below to securely
+            log in to your Fundink account.
 
         </p>
     </div>
@@ -64,7 +65,7 @@
 
             <div class="col-12 login-text text-center mt-3 mt-md-5 pt-xl-3">
                 <p>
-                    Already have an account? 
+                    Already have an account?
                     <a href="{{ route('login') }}">Login</a>
                 </p>
             </div>
@@ -74,72 +75,72 @@
     </form>
 
 
-<script>
-document.addEventListener("DOMContentLoaded", function () {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
 
-    const inputs = document.querySelectorAll(".otp-input");
-    const otpValue = document.getElementById("otpValue");
-    const form = document.getElementById("otpForm");
-    const submitBtn = document.getElementById("verifyBtn");
+            const inputs = document.querySelectorAll(".otp-input");
+            const otpValue = document.getElementById("otpValue");
+            const form = document.getElementById("otpForm");
+            const submitBtn = document.getElementById("verifyBtn");
 
-    inputs.forEach((input, index) => {
+            inputs.forEach((input, index) => {
 
-        input.addEventListener("input", function () {
+                input.addEventListener("input", function () {
 
-            this.value = this.value.replace(/[^0-9]/g, '');
+                    this.value = this.value.replace(/[^0-9]/g, '');
 
-            if (this.value && index < inputs.length - 1) {
-                inputs[index + 1].focus();
-            }
+                    if (this.value && index < inputs.length - 1) {
+                        inputs[index + 1].focus();
+                    }
 
-            updateOTP();
-        });
+                    updateOTP();
+                });
 
-        input.addEventListener("keydown", function (e) {
-            if (e.key === "Backspace" && !this.value && index > 0) {
-                inputs[index - 1].focus();
-            }
-        });
+                input.addEventListener("keydown", function (e) {
+                    if (e.key === "Backspace" && !this.value && index > 0) {
+                        inputs[index - 1].focus();
+                    }
+                });
 
-    });
-
-    inputs[0].addEventListener("paste", function (e) {
-        let paste = e.clipboardData.getData("text").trim();
-
-        if (/^\d{6}$/.test(paste)) {
-            inputs.forEach((input, i) => {
-                input.value = paste[i];
             });
+
+            inputs[0].addEventListener("paste", function (e) {
+                let paste = e.clipboardData.getData("text").trim();
+
+                if (/^\d{6}$/.test(paste)) {
+                    inputs.forEach((input, i) => {
+                        input.value = paste[i];
+                    });
+                    updateOTP();
+                }
+            });
+
+            function updateOTP() {
+                let otp = "";
+
+                inputs.forEach(input => {
+                    otp += input.value;
+                });
+
+                otpValue.value = otp;
+
+                // enable only when valid 6 digit OTP
+                submitBtn.disabled = !/^\d{6}$/.test(otp);
+            }
+
+            form.addEventListener("submit", function (e) {
+                let otp = otpValue.value;
+
+                if (!/^\d{6}$/.test(otp)) {
+                    e.preventDefault();
+                    alert("Please enter all 6 digits of OTP");
+                }
+            });
+
+            // initialize state on page load
             updateOTP();
-        }
-    });
 
-    function updateOTP() {
-        let otp = "";
-
-        inputs.forEach(input => {
-            otp += input.value;
         });
-
-        otpValue.value = otp;
-
-        // enable only when valid 6 digit OTP
-        submitBtn.disabled = !/^\d{6}$/.test(otp);
-    }
-
-    form.addEventListener("submit", function (e) {
-        let otp = otpValue.value;
-
-        if (!/^\d{6}$/.test(otp)) {
-            e.preventDefault();
-            alert("Please enter all 6 digits of OTP");
-        }
-    });
-
-    // initialize state on page load
-    updateOTP();
-
-});
-</script>
+    </script>
 
 @endsection
