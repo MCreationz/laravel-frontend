@@ -41,8 +41,8 @@
 
         <div class="col-12 login-text text-center mt-3 mt-md-5 pt-xl-4">
             <p>
-                Back to
-                <a href="{{ route('login') }}">Login</a>
+                Don’t have an account?
+                <a href="{{ route('register') }}">Register</a>
             </p>
         </div>
 
