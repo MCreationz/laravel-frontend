@@ -8,73 +8,72 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
-  use Illuminate\Validation\ValidationException;
+use Illuminate\Validation\ValidationException;
 
 class RegisterController extends Controller
 {
+    public function registerStepOne(Request $request)
+    {
+        try {
 
-public function registerStepOne(Request $request)
-{
-    try {
+            $request->validate([
+                'organization_name' => 'required|string|max:100',
+                'work_email' => 'required|email|max:50', // removed unique
+                'role' => 'required|in:funder,fund_seeker',
+                'referral_source' => 'nullable|string',
+                'password' => 'required|min:8|max:50|confirmed',
+                'captcha' => 'required|string|size:6',
+            ]);
 
-        $request->validate([
-            'organization_name' => 'required|string|max:100',
-            'work_email' => 'required|email|max:50', // removed unique
-            'role' => 'required|in:funder,fund_seeker',
-            'referral_source' => 'nullable|string',
-            'password' => 'required|min:8|max:50|confirmed',
-            'captcha' => 'required|string|size:6',
-        ]);
+        } catch (ValidationException $e) {
 
-    } catch (ValidationException $e) {
-
-        return redirect()->back()
-            ->withErrors($e->validator)
-            ->withInput();
-    }
-
-    // check existing email
-    $existing = Organization::where('work_email', $request->work_email)->first();
-
-    if ($existing) {
-
-        // if already verified → block
-        if ($existing->email_verified_at) {
             return redirect()->back()
-                ->withErrors(['work_email' => 'Email already registered and verified.'])
+                ->withErrors($e->validator)
                 ->withInput();
         }
 
-        // use existing record (override)
-        $organization = $existing;
+        // check existing email
+        $existing = Organization::where('work_email', $request->work_email)->first();
 
-    } else {
-        // create new instance
-        $organization = new Organization();
+        if ($existing) {
+
+            // if already verified → block
+            if ($existing->email_verified_at) {
+                return redirect()->back()
+                    ->withErrors(['work_email' => 'Email already registered and verified.'])
+                    ->withInput();
+            }
+
+            // use existing record (override)
+            $organization = $existing;
+
+        } else {
+            // create new instance
+            $organization = new Organization;
+        }
+
+        $otp = random_int(100000, 999999);
+        $expiryMinutes = 10;
+
+        // assign/update fields
+        $organization->organization_name = ucfirst($request->organization_name);
+        $organization->work_email = $request->work_email;
+        $organization->role = $request->role;
+        $organization->referral_source = $request->referral_source;
+        $organization->password = Hash::make($request->password);
+        $organization->otp_code = $otp;
+        $organization->otp_expires_at = Carbon::now()->addMinutes($expiryMinutes);
+
+        $organization->save();
+
+        $this->sendOtpMail($organization, $otp, $expiryMinutes);
+
+        session()->put('email', $organization->work_email);
+
+        return redirect()->route('verify.otp')
+            ->with('email', $organization->work_email)
+            ->with('success', 'OTP sent to your email.');
     }
-
-    $otp = random_int(100000, 999999);
-    $expiryMinutes = 10;
-
-    // assign/update fields
-    $organization->organization_name = ucfirst($request->organization_name);
-    $organization->work_email = $request->work_email;
-    $organization->role = $request->role;
-    $organization->referral_source = $request->referral_source;
-    $organization->password = Hash::make($request->password);
-    $organization->otp_code = $otp;
-    $organization->otp_expires_at = Carbon::now()->addMinutes($expiryMinutes);
-
-    $organization->save();
-
-    $this->sendOtpMail($organization, $otp, $expiryMinutes);
-
-    session()->put('email', $organization->work_email);
-
-    return redirect()->route('verify.otp')
-        ->with('email', $organization->work_email)
-        ->with('success', 'OTP sent to your email.');
-}
 
     private function sendOtpMail($organization, $otp, $expiryMinutes)
     {
@@ -93,54 +92,54 @@ public function registerStepOne(Request $request)
         });
     }
 
- public function verifyOtp(Request $request)
-{
-    $request->validate([
-        'otp' => 'required|digits:6',
-        'work_email' => 'nullable|email'
-    ]);
+    public function verifyOtp(Request $request)
+    {
+        $request->validate([
+            'otp' => 'required|digits:6',
+            'work_email' => 'nullable|email',
+        ]);
 
-    $email = $request->work_email ?? session('email');
+        $email = $request->work_email ?? session('email');
 
-    if (!$email) {
-        return redirect()->route('register')
-            ->with('error', 'Session expired. Please register again.');
+        if (! $email) {
+            return redirect()->route('register')
+                ->with('error', 'Session expired. Please register again.');
+        }
+
+        $organization = Organization::where('work_email', $email)->first();
+
+        if (! $organization) {
+            return redirect()->back()
+                ->with('error', 'Organization not found.')
+                ->withInput()
+                ->with('email', $email);
+        }
+
+        if ($organization->otp_code != $request->otp) {
+            return redirect()->back()
+                ->with('error', 'Invalid OTP.')
+                ->withInput()
+                ->with('email', $email);
+        }
+
+        if (Carbon::now()->gt($organization->otp_expires_at)) {
+            return redirect()->back()
+                ->with('error', 'OTP expired.')
+                ->withInput()
+                ->with('email', $email);
+        }
+
+        $organization->update([
+            'otp_code' => null,
+            'otp_expires_at' => null,
+            'email_verified_at' => now(),
+        ]);
+
+        session()->forget('email');
+
+        return redirect()->route('login')
+            ->with('success', 'Email verified successfully. Please log in.');
     }
-
-    $organization = Organization::where('work_email', $email)->first();
-
-    if (!$organization) {
-        return redirect()->back()
-            ->with('error', 'Organization not found.')
-            ->withInput()
-            ->with('email', $email);
-    }
-
-    if ($organization->otp_code != $request->otp) {
-        return redirect()->back()
-            ->with('error', 'Invalid OTP.')
-            ->withInput()
-            ->with('email', $email);
-    }
-
-    if (Carbon::now()->gt($organization->otp_expires_at)) {
-        return redirect()->back()
-            ->with('error', 'OTP expired.')
-            ->withInput()
-            ->with('email', $email);
-    }
-
-    $organization->update([
-        'otp_code' => null,
-        'otp_expires_at' => null,
-        'email_verified_at' => now(),
-    ]);
-
-    session()->forget('email');
-
-    return redirect()->route('login')
-        ->with('success', 'Email verified successfully. Please log in.');
-}
 
     public function resendOtp(Request $request)
     {
