@@ -35,9 +35,8 @@
                     <div class="col-6 ps-md-2 ps-1">
                         <label class="form-label">Work Email</label>
 
-                        <input type="email" name="work_email"
-                            class="form-control @error('work_email') is-invalid @enderror" placeholder="Enter Email"
-                            value="{{ old('work_email') }}" required>
+                        <input type="email" name="work_email" class="form-control @error('work_email') is-invalid @enderror"
+                            placeholder="Enter Email" value="{{ old('work_email') }}" required>
 
                         @error('work_email')
                             <div class="invalid-feedback">{{ $message }}</div>
@@ -54,10 +53,9 @@
                     <div class="custom-select form-control @error('role') is-invalid @enderror">
                         {{ old('role') ? ucfirst(str_replace('_', ' ', old('role'))) : 'Select an option' }}
                     </div>
-
                     <ul class="select-list">
-                        <li data-value="funder">Raise Fund</li>
-                        <li data-value="fund_seeker">Invest Fund</li>
+                        <li data-value="fund_seeker">Raise Fund</li>
+                        <li data-value="funder">Invest Fund</li>
                     </ul>
 
                     <input type="hidden" name="role" class="hidden-select" value="{{ old('role') }}">
@@ -172,6 +170,6 @@
         }
     </script>
 
-   
+
 
 @endsection

@@ -5,23 +5,23 @@
 
 @section('content')
 
-<div class="form-heading mb-5 pb-lg-4">
-    <h1>Enter Verification Code</h1>
-    <p class="font-small">
-        We’ve sent a 6-digit verification code to your email. 
-        Please enter it below to log in.
-    </p>
-</div>
+    <div class="form-heading mb-5 pb-lg-4">
+        <h1>Enter Verification Code</h1>
+        <p class="font-small">
+            We’ve sent a 6-digit verification code to your email.
+            Please enter it below to log in.
+        </p>
+    </div>
 
-<form id="otpForm" method="POST" action="{{ route('login.otp.verify') }}"
-      class="register-form row form-fields-wrap d-flex flex-wrap justify-content-between flex-column">
+    <form id="otpForm" method="POST" action="{{ route('login.otp.verify') }}"
+        class="register-form row form-fields-wrap d-flex flex-wrap justify-content-between flex-column">
 
-    @csrf
+        @csrf
 
-    <div class="fields-wrap">
+        <div class="fields-wrap">
 
-       <div class="otp-container">
-                
+            <div class="otp-container">
+
                 <input type="hidden" name="work_email" value="{{ session('email') }}">
 
                 <input type="text" maxlength="1" class="otp-input {{ session('error') ? 'is-invalid' : '' }}"
@@ -43,96 +43,96 @@
                     inputmode="numeric" pattern="[0-9]*" placeholder="-">
             </div>
 
-        <input type="hidden" name="otp" id="otpValue">
+            <input type="hidden" name="otp" id="otpValue">
 
-        <div class="col-12 otp-text login-text text-center mt-4">
-            <p>
-                Didn’t receive the OTP?
-                <a href="{{ route('login.otp.email') }}">Send again</a>
-            </p>
+            <div class="col-12 otp-text login-text text-center mt-4">
+                <p>
+                    Didn’t receive the OTP?
+                    <a href="{{ route('login.otp.email') }}">Send again</a>
+                </p>
+            </div>
+
         </div>
 
-    </div>
+        <div class="account-wrap">
 
-    <div class="account-wrap">
+            <div class="col-12 btn-wrap mt-4 mt-md-5 pt-xl-4">
+                <button type="submit" class="btn btn-primary w-100">
+                    Verify & Login
+                </button>
+            </div>
 
-        <div class="col-12 btn-wrap mt-4 mt-md-5 pt-xl-4">
-            <button type="submit" class="btn btn-primary w-100">
-                Verify & Login
-            </button>
+            <div class="col-12 login-text text-center mt-3 mt-md-5 pt-xl-3">
+                <p>
+                    Back to
+                    <a href="{{ route('login') }}">Login</a>
+                </p>
+            </div>
+
         </div>
 
-        <div class="col-12 login-text text-center mt-3 mt-md-5 pt-xl-3">
-            <p>
-                Back to 
-                <a href="{{ route('login') }}">Login</a>
-            </p>
-        </div>
-
-    </div>
-
-</form>
+    </form>
 
 
-<script>
+    <script>
 
-document.addEventListener("DOMContentLoaded", function () {
+        document.addEventListener("DOMContentLoaded", function () {
 
-    const inputs = document.querySelectorAll(".otp-input");
-    const otpValue = document.getElementById("otpValue");
+            const inputs = document.querySelectorAll(".otp-input");
+            const otpValue = document.getElementById("otpValue");
 
-    inputs.forEach((input, index) => {
+            inputs.forEach((input, index) => {
 
-        input.addEventListener("input", function () {
+                input.addEventListener("input", function () {
 
-            this.value = this.value.replace(/[^0-9]/g, '');
+                    this.value = this.value.replace(/[^0-9]/g, '');
 
-            if (this.value && index < inputs.length - 1) {
-                inputs[index + 1].focus();
-            }
+                    if (this.value && index < inputs.length - 1) {
+                        inputs[index + 1].focus();
+                    }
 
-            updateOTP();
-        });
+                    updateOTP();
+                });
 
-        input.addEventListener("keydown", function (e) {
+                input.addEventListener("keydown", function (e) {
 
-            if (e.key === "Backspace" && !this.value && index > 0) {
-                inputs[index - 1].focus();
-            }
+                    if (e.key === "Backspace" && !this.value && index > 0) {
+                        inputs[index - 1].focus();
+                    }
 
-        });
+                });
 
-    });
-
-    inputs[0].addEventListener("paste", function (e) {
-
-        let paste = e.clipboardData.getData("text").trim();
-
-        if (/^\d{6}$/.test(paste)) {
-
-            inputs.forEach((input, i) => {
-                input.value = paste[i];
             });
 
-            updateOTP();
-        }
+            inputs[0].addEventListener("paste", function (e) {
 
-    });
+                let paste = e.clipboardData.getData("text").trim();
 
-    function updateOTP() {
+                if (/^\d{6}$/.test(paste)) {
 
-        let otp = "";
+                    inputs.forEach((input, i) => {
+                        input.value = paste[i];
+                    });
 
-        inputs.forEach(input => {
-            otp += input.value;
+                    updateOTP();
+                }
+
+            });
+
+            function updateOTP() {
+
+                let otp = "";
+
+                inputs.forEach(input => {
+                    otp += input.value;
+                });
+
+                otpValue.value = otp;
+
+            }
+
         });
 
-        otpValue.value = otp;
-
-    }
-
-});
-
-</script>
+    </script>
 
 @endsection
