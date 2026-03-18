@@ -68,7 +68,7 @@
         <div class="col-12 btn-wrap secondary-btn">
 
             <a href="{{ route('login.otp.email') }}" class="btn btn-secondary w-100">
-                Login with one-time code
+                Login with OTP
             </a>
 
         </div>
