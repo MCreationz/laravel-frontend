@@ -56,8 +56,8 @@
                     </div>
 
                     <ul class="select-list">
-                        <li data-value="funder">Funder</li>
-                        <li data-value="fund_seeker">Fund Seeker</li>
+                        <li data-value="funder">Raise Fund</li>
+                        <li data-value="fund_seeker">Invest Fund</li>
                     </ul>
 
                     <input type="hidden" name="role" class="hidden-select" value="{{ old('role') }}">
@@ -81,10 +81,10 @@
                         <li data-value="Fundink Website">Fundink Website</li>
                         <li data-value="Internet">Internet</li>
                         <li data-value="Networking Event">Networking Event</li>
+                        <li data-value="News Article">Remove duplicacy</li>
                         <li data-value="News Article">News Article</li>
                         <li data-value="Advertising">Advertising</li>
-                        <li data-value="Direct Visit">Direct Visit</li>
-                        <li data-value="LinkedIn">LinkedIn</li>
+                        <li data-value="Direct Visit">LinkedIn</li>
                         <li data-value="Other Social Media">Other Social Media</li>
                     </ul>
 
