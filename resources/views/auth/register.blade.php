@@ -142,7 +142,7 @@
             </div>
 
             <div class="col-12 login-text text-center mt-3">
-                <p>Already have an account? <a href="#">Log in</a></p>
+                <p>Already have an account? <a href="/login">Log in</a></p>
             </div>
 
         </div>
