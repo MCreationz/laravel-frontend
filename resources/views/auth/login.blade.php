@@ -6,8 +6,8 @@
 @section('content')
 
 <div class="form-heading mb-4 pb-lg-2">
-    <h1>Get Started Now!</h1>
-    <p class="font-small">Please login to your account to continue.</p>
+    <h1>Welcome to Fundink</h1>
+    <p class="font-small">Enter email & password to login</p>
 </div>
 
 <form method="POST" action="{{ route('login.password') }}" 

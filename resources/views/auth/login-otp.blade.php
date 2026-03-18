@@ -6,10 +6,10 @@
 @section('content')
 
     <div class="form-heading mb-5 pb-lg-4">
-        <h1>Enter Verification Code</h1>
+        <h1>Verify your Email</h1>
         <p class="font-small">
-            We’ve sent a 6-digit verification code to your email.
-            Please enter it below to log in.
+            We’ve sent a 6-digit verification code to your registered email address. Please enter the code below to securely log in to your Fundink account.
+
         </p>
     </div>
 
