@@ -445,9 +445,10 @@ form hr {
 }
 .inner-fields.small-label label {
     font-size: 11px;
-    min-height: 20px;
+    min-height: 31px;
     display: inline-block;
     width: 100%;
+    line-height: 1;
 }
 .two-col-text p {
     font-family: 'Coolvetica';
