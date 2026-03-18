@@ -15,6 +15,7 @@
         <div class="fields-wrap">
             @csrf
             <div class="otp-container">
+                
                 <input type="hidden" name="work_email" value="{{ session('email') }}">
 
                 <input type="text" maxlength="1" class="otp-input {{ session('error') ? 'is-invalid' : '' }}"
@@ -113,7 +114,7 @@
                 otpValue.value = otp;
 
                 if (otp.length === 6) {
-                    form.submit();
+                  //  form.submit();
                 }
 
             }
