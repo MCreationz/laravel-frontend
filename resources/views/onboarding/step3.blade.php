@@ -820,6 +820,8 @@
                                 <th scope="col">Funder Name</th>
                                 <th scope="col">Year</th>
                                 <th scope="col">Amount</th>
+                                <th scope="col" class="">Actions</th>
+                            
                             </tr>
                         </thead>
                         <tbody id="fundersTable">
@@ -829,7 +831,6 @@
                 </div>
 
             </div>
-
             <div
                 class="d-flex justify-content-center justify-content-md-end gap-2 gap-md-3 mt-4 steps-btn pe-lg-4 flex-wrap">
                 <div class="btn-wrap">
@@ -839,44 +840,33 @@
                     <button type="button" id="continueBtn" class="btn btn-primary">Continue</button>
                 </div>
             </div>
-
         </form>
-
-
     </div>
 
     <div class="modal fade" id="funderModal" tabindex="-1">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered modal-md">
             <div class="modal-content">
-
                 <div class="modal-header">
-                    <h5 class="modal-title">Add Funder</h5>
+                    <h3 class="modal-title mb-0">Add Funder</h3>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
-
                 <div class="modal-body">
                     <form id="funderForm">
-
-                        <input type="hidden" id="funder_id">
-
+                    <input type="hidden" id="funder_id">
                         <div class="mb-3">
                             <label>Funder Name</label>
                             <input type="text" class="form-control" id="funder_name">
                         </div>
-
                         <div class="mb-3">
                             <label>Year</label>
                             <input type="number" class="form-control" id="funder_year">
                         </div>
-
                         <div class="mb-3">
                             <label>Amount</label>
                             <input type="number" class="form-control" id="funder_amount">
                         </div>
-
                     </form>
                 </div>
-
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" id="saveFunder">Save</button>
                 </div>
@@ -1202,9 +1192,9 @@
                             <td>${funder.name}</td>
                             <td>${funder.year}</td>
                             <td>${Number(funder.amount).toLocaleString()}</td>
-                            <td>
-                                <button  type='button' class="btn btn-sm btn-warning editFunder">Edit</button>
-                                <button type='button' class="btn btn-sm btn-danger deleteFunder">Delete</button>
+                            <td class="">
+                                <button  type='button' class="edit editFunder"><i class="bi bi-pencil-square"></i></button>
+                                <button type='button' class="trash deleteFunder"><i class="bi bi-trash3"></i></button>
                             </td>
                         </tr>`;
                     });

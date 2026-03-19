@@ -858,6 +858,26 @@ button.tab.active {
     letter-spacing: -0.6px;
     line-height: 15px !important;
 }
+button.trash {
+    color: #d90606;
+}
+button.trash:hover {
+    background: #d90606;
+    color: var(--white-color);
+}
+button.trash, button.edit {
+    background: transparent;
+    border: 1px solid #EAEAEA;
+    border-radius: 4px;
+    padding: 3px 8px;
+}
+button.edit {
+    color: #0160d6;
+}
+button.edit:hover {
+    background: #0160d6;
+    color: #fff;
+}
 /* responsive */
 @media(max-width:1440px){
 .left-logo-col .bg-image img {
