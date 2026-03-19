@@ -8,10 +8,29 @@ use Illuminate\Support\Facades\Auth;
 
 class OrganizationFunderController extends Controller
 {
-    // List funders
+    /* =========================
+       Helper: Get Auth Organization
+    ========================= */
+    private function organization()
+    {
+        return Auth::guard('organization')->user();
+    }
+
+    /* =========================
+       List Funders
+    ========================= */
     public function index()
     {
-        $funders = OrganizationFunder::where('organization_id', Auth::id())
+        $organization = $this->organization();
+
+        if (!$organization) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Unauthorized'
+            ], 401);
+        }
+
+        $funders = OrganizationFunder::where('organization_id', $organization->id)
             ->orderBy('year', 'desc')
             ->get();
 
@@ -21,9 +40,20 @@ class OrganizationFunderController extends Controller
         ]);
     }
 
-    // Add funder
+    /* =========================
+       Store Funder
+    ========================= */
     public function store(Request $request)
     {
+        $organization = $this->organization();
+
+        if (!$organization) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Unauthorized'
+            ], 401);
+        }
+
         $request->validate([
             'name' => 'required|string|max:255',
             'year' => 'required|digits:4',
@@ -31,7 +61,7 @@ class OrganizationFunderController extends Controller
         ]);
 
         $funder = OrganizationFunder::create([
-            'organization_id' => Auth::id(),
+            'organization_id' => $organization->id,
             'name' => $request->name,
             'year' => $request->year,
             'amount' => $request->amount,
@@ -44,10 +74,21 @@ class OrganizationFunderController extends Controller
         ]);
     }
 
-    // Edit funder
+    /* =========================
+       Update Funder
+    ========================= */
     public function update(Request $request, $id)
     {
-        $funder = OrganizationFunder::where('organization_id', Auth::id())
+        $organization = $this->organization();
+
+        if (!$organization) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Unauthorized'
+            ], 401);
+        }
+
+        $funder = OrganizationFunder::where('organization_id', $organization->id)
             ->where('id', $id)
             ->firstOrFail();
 
@@ -70,10 +111,21 @@ class OrganizationFunderController extends Controller
         ]);
     }
 
-    // Delete funder
+    /* =========================
+       Delete Funder
+    ========================= */
     public function destroy($id)
     {
-        $funder = OrganizationFunder::where('organization_id', Auth::id())
+        $organization = $this->organization();
+
+        if (!$organization) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Unauthorized'
+            ], 401);
+        }
+
+        $funder = OrganizationFunder::where('organization_id', $organization->id)
             ->where('id', $id)
             ->firstOrFail();
 

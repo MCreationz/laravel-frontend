@@ -91,93 +91,114 @@ class OnboardingController extends Controller
         return redirect()->route('onboarding.step3');
     }
 
-    public function stepThree()
-    {
-        return view('onboarding.step3');
+public function stepThree()
+{
+    $organization = Auth::guard('organization')->user();
+
+    $operationalDetail = OrganizationOperationalDetail::firstOrNew([
+        'organization_id' => $organization->id
+    ]);
+
+    return view('onboarding.step3', compact('operationalDetail'));
+}
+
+
+
+public function storeStepThree(Request $request)
+{
+   // return $request->all();
+    $organization = Auth::guard('organization')->user();
+
+    // Base data
+    $data = [
+        'organization_id' => $organization->id,
+        'organization_type' => $request->organization_type,
+        'state' => $request->state,
+        'years_of_operation_months' => $request->years_of_operation_months,
+        'key_achievements' => $request->key_achievements,
+        'total_beneficiaries' => $request->total_beneficiaries,
+    ];
+
+    /*
+    |------------------------------------------------------------------
+    | PROFIT
+    |------------------------------------------------------------------
+    */
+    if ($request->organization_type === 'profit') {
+
+        // calculate total (DON’T trust frontend)
+        $totalFunding =
+            ($request->grants_received ?? 0) +
+            ($request->equity_raised ?? 0) +
+            ($request->bootstrapped_friends_family ?? 0) +
+            ($request->debt ?? 0);
+
+        $data = array_merge($data, [
+            'registration_type' => $request->registration_type,
+            'current_stage' => $request->current_stage,
+            'product_category' => $request->product_category,
+
+            'dpiit_recognition' => $request->dpiit_recognition ?? 0,
+            'msme_registered' => $request->msme_registered ?? 0,
+            'gstin_registration' => $request->gstin_registration ?? 0,
+
+            'lifetime_revenue_lakh' => $request->lifetime_revenue_lakh,
+            'ongoing_year_revenue_lakh' => $request->ongoing_year_revenue_lakh,
+            'last_year_revenue_lakh' => $request->last_year_revenue_lakh,
+            'last_to_last_year_revenue_lakh' => $request->last_to_last_year_revenue_lakh,
+
+            'grants_received' => $request->grants_received,
+            'equity_raised' => $request->equity_raised,
+            'bootstrapped_friends_family' => $request->bootstrapped_friends_family,
+            'debt' => $request->debt,
+
+            'total_funding_lakh' => $totalFunding,
+        ]);
     }
 
-    public function storeStepThree(Request $request)
-    {
+    /*
+    |------------------------------------------------------------------
+    | NON PROFIT
+    |------------------------------------------------------------------
+    */
+    if ($request->organization_type === 'non_profit') {
 
-    //return $request->all();
-        $organization = Auth::guard('organization')->user();
+        $totalFunding =
+            ($request->govt_grants ?? 0) +
+            ($request->foreign_donations_institutional ?? 0) +
+            ($request->promoters_money ?? 0) +
+            ($request->individual_donations ?? 0);
 
-        $data = [
-            'organization_id' => $organization->id,
-            'organization_type' => $request->organization_type,
-            'state' => $request->state,
-            'years_of_operation_months' => $request->years_of_operation_months,
-            'key_achievements' => $request->key_achievements,
-            'total_funding_lakh' => $request->total_funding_lakh,
-        ];
+        $data = array_merge($data, [
+            'registration_type' => $request->registration_type,
+            'domain_of_expertise' => $request->domain_of_expertise,
 
-        /*
-        |--------------------------------------------------------------------------
-        | PROFIT ORGANIZATION
-        |--------------------------------------------------------------------------
-        */
+            'status_12a' => $request->status_12a ?? 0,
+            'status_80g' => $request->status_80g ?? 0,
+            'status_fcra' => $request->status_fcra ?? 0,
+            'csr_1_registration' => $request->csr_1_registration ?? 0,
 
-        if ($request->organization_type === 'profit') {
+            'lifetime_revenue_lakh' => $request->lifetime_revenue_lakh,
+            'ongoing_year_revenue_lakh' => $request->ongoing_year_revenue_lakh,
+            'last_year_revenue_lakh' => $request->last_year_revenue_lakh,
+            'last_to_last_year_revenue_lakh' => $request->last_to_last_year_revenue_lakh,
 
-            $data = array_merge($data, [
-                'registration_type' => $request->registration_type,
-                'current_stage' => $request->current_stage,
-                'product_category' => $request->product_category,
+            'govt_grants' => $request->govt_grants,
+            'foreign_donations_institutional' => $request->foreign_donations_institutional,
+            'promoters_money' => $request->promoters_money,
+            'individual_donations' => $request->individual_donations,
 
-                'dpiit_recognition' => $request->dpiit_recognition,
-                'msme_registered' => $request->msme_registered,
-                'gstin_registration' => $request->gstin_registration,
-
-                'total_beneficiaries' => $request->total_beneficiaries_served,
-
-                'lifetime_revenue_lakh' => $request->lifetime_revenue_lakh,
-                'ongoing_year_revenue_lakh' => $request->ongoing_year_revenue_lakh,
-                'last_year_revenue_lakh' => $request->last_year_revenue_lakh,
-                'last_to_last_year_revenue_lakh' => $request->last_to_last_year_revenue_lakh,
-
-                'grants_received' => $request->grants_received,
-                'equity_raised' => $request->equity_raised,
-                'bootstrapped_friends_family' => $request->bootstrapped_friends_family,
-                'debt' => $request->debt,
-            ]);
-        }
-
-        /*
-        |--------------------------------------------------------------------------
-        | NON PROFIT ORGANIZATION
-        |--------------------------------------------------------------------------
-        */
-
-        if ($request->organization_type === 'non_profit') {
-
-            $data = array_merge($data, [
-                'registration_type' => $request->registration_type,
-                'domain_of_expertise' => $request->domain_of_expertise,
-
-                'status_12a' => $request->status_12a,
-                'status_80g' => $request->status_80g,
-                'status_fcra' => $request->status_fcra,
-                'csr_1_registration' => $request->csr_1_registration,
-
-                'total_beneficiaries' => $request->total_beneficiaries,
-
-                'lifetime_revenue_lakh' => $request->lifetime_turnover_lakh,
-                'ongoing_year_revenue_lakh' => $request->ongoing_year_turnover_lakh,
-                'last_year_revenue_lakh' => $request->last_year_turnover_lakh,
-                'last_to_last_year_revenue_lakh' => $request->last_to_last_year_turnover_lakh,
-
-                'govt_grants' => $request->govt_grants,
-                'foreign_donations_institutional' => $request->foreign_donations_institutional,
-                'promoters_money' => $request->promoters_money,
-                'individual_donations' => $request->individual_donations,
-            ]);
-        }
-
-        OrganizationOperationalDetail::updateOrCreate(
-            ['organization_id' => $organization->id],
-            $data
-        );
-
-        return redirect()->route('dashboard');
+            'total_funding_lakh' => $totalFunding,
+        ]);
     }
+
+    OrganizationOperationalDetail::updateOrCreate(
+        ['organization_id' => $organization->id],
+        $data
+    );
+
+    return redirect()->route('dashboard');
+}
+
+
 }

@@ -78,13 +78,20 @@ Route::get('/projects/details', function () {
     return view('projects.detail');
 })->name('projects.details');  // named "project details"
 
-        Route::get('/funders', [OrganizationFunderController::class, 'index'])
+
+
+
+
+});
+
+   Route::post('/funders/store', [OrganizationFunderController::class, 'store'])
+        ->name('funders.store');
+
+           Route::get('/funders', [OrganizationFunderController::class, 'index'])
         ->name('funders.index');
 
     // add funder
-    Route::post('/funders', [OrganizationFunderController::class, 'store'])
-        ->name('funders.store');
-
+ 
     // update funder
     Route::put('/funders/{id}', [OrganizationFunderController::class, 'update'])
         ->name('funders.update');
@@ -92,7 +99,3 @@ Route::get('/projects/details', function () {
     // delete funder
     Route::delete('/funders/{id}', [OrganizationFunderController::class, 'destroy'])
         ->name('funders.destroy');
-
-
-
-});
