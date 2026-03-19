@@ -976,7 +976,23 @@
         </div>
     </div>
 </div>
+<style>
+    .editFunder,
+.deleteFunder {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 10px;   /* increases clickable area */
+    border: none;
+    background: transparent;
+    cursor: pointer;
+}
 
+.editFunder i,
+.deleteFunder i {
+    pointer-events: none; /* ensures clicks go to button, not icon */
+}
+</style>
 @endsection
 
 @section('scripts')
