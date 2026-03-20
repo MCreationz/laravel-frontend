@@ -712,7 +712,7 @@
 
                 <div class="inner-fields mt-md-4 small-label">
                     <div class="mb-4">
-                        <h2 class="inner-title mb-0">Funding Summary</h2>
+                        <h2 class="inner-title mb-0">Donation Summary</h2>
                     </div>
 
                     @php
@@ -821,7 +821,7 @@
                                 <th scope="col">Year</th>
                                 <th scope="col">Amount</th>
                                 <th scope="col" class="">Actions</th>
-                            
+
                             </tr>
                         </thead>
                         <tbody id="fundersTable">
@@ -852,7 +852,7 @@
                 </div>
                 <div class="modal-body">
                     <form id="funderForm">
-                    <input type="hidden" id="funder_id">
+                        <input type="hidden" id="funder_id">
                         <div class="mb-3">
                             <label>Funder Name</label>
                             <input type="text" class="form-control" id="funder_name">
@@ -875,509 +875,503 @@
         </div>
     </div>
 
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
-        <div class="modal-content border-0">
-            <div class="modal-header">
-                <h3 class="modal-title mb-0">Consent & Declaration</h3>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body p-3 p-md-4">
-                <p>By registering and submitting information on Fundink, I hereby declare and agree that:</p>
-                <div class="consent-box">
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content border-0">
+                <div class="modal-header">
+                    <h3 class="modal-title mb-0">Consent & Declaration</h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-3 p-md-4">
+                    <p>By registering and submitting information on Fundink, I hereby declare and agree that:</p>
+                    <div class="consent-box">
 
-                    <label class="check-item">
-                        <input type="checkbox" class="consent-checkbox">
-                        <p>All information provided by our organization — including organization details, PAN, statutory
-                            registrations, governance structure, geographical coverage, domain expertise, project track
-                            record, and financial records (including institutional, foreign, and individual donations,
-                            and total turnover) — is true, accurate, and complete to the best of my knowledge.</p>
-                    </label>
+                        <label class="check-item">
+                            <input type="checkbox" class="consent-checkbox">
+                            <p>All information provided by our organization — including organization details, PAN, statutory
+                                registrations, governance structure, geographical coverage, domain expertise, project track
+                                record, and financial records (including institutional, foreign, and individual donations,
+                                and total turnover) — is true, accurate, and complete to the best of my knowledge.</p>
+                        </label>
 
-                    <label class="check-item">
-                        <input type="checkbox" class="consent-checkbox">
-                        <p>I authorize Fundink to collect, store, process, analyze, and present this information to
-                            verified funders, CSR entities, philanthropies, impact investors, financial institutions,
-                            and ecosystem partners for the purpose of fundraising, due diligence, evaluation, and
-                            collaboration.</p>
-                    </label>
+                        <label class="check-item">
+                            <input type="checkbox" class="consent-checkbox">
+                            <p>I authorize Fundink to collect, store, process, analyze, and present this information to
+                                verified funders, CSR entities, philanthropies, impact investors, financial institutions,
+                                and ecosystem partners for the purpose of fundraising, due diligence, evaluation, and
+                                collaboration.</p>
+                        </label>
 
-                    <div class="check-item">
-                        <input type="checkbox" class="consent-checkbox">
-                        <div>I expressly consent to Fundink conducting verification and due diligence checks, including
-                            but not limited to:
+                        <div class="check-item">
+                            <input type="checkbox" class="consent-checkbox">
+                            <div>I expressly consent to Fundink conducting verification and due diligence checks, including
+                                but not limited to:
 
-                            <ul class="sub-list">
-                                <li>PAN validation</li>
-                                <li>Statutory registration verification</li>
-                                <li>Background and compliance checks</li>
-                                <li>Credit bureau checks using the organization’s PAN, where applicable, for the purpose
-                                    of financial assessment and risk evaluation</li>
-                            </ul>
+                                <ul class="sub-list">
+                                    <li>PAN validation</li>
+                                    <li>Statutory registration verification</li>
+                                    <li>Background and compliance checks</li>
+                                    <li>Credit bureau checks using the organization’s PAN, where applicable, for the purpose
+                                        of financial assessment and risk evaluation</li>
+                                </ul>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="check-item">
-                        <input type="checkbox" class="consent-checkbox">
-                        <div>I grant Fundink the right to use our organization’s details for:
+                        <div class="check-item">
+                            <input type="checkbox" class="consent-checkbox">
+                            <div>I grant Fundink the right to use our organization’s details for:
 
-                            <ul class="sub-list">
-                                <li>Fundraising campaigns and curated funding calls</li>
-                                <li>Promotional materials, website listings, newsletters, and social media communication
-                                </li>
-                                <li>Investor/funder presentations and ecosystem reports</li>
-                                <li>Showcasing case studies and impact highlights</li>
-                            </ul>
+                                <ul class="sub-list">
+                                    <li>Fundraising campaigns and curated funding calls</li>
+                                    <li>Promotional materials, website listings, newsletters, and social media communication
+                                    </li>
+                                    <li>Investor/funder presentations and ecosystem reports</li>
+                                    <li>Showcasing case studies and impact highlights</li>
+                                </ul>
+                            </div>
                         </div>
+
+                        <label class="check-item">
+                            <input type="checkbox" class="consent-checkbox">
+                            <p>I consent to receive communication from Fundink regarding funding opportunities, partnership
+                                introductions, events, workshops, ecosystem updates, and promotional announcements via
+                                email, phone, or other digital channels.</p>
+                        </label>
+
+                        <label class="check-item">
+                            <input type="checkbox" class="consent-checkbox">
+                            <p>I acknowledge that registration on Fundink does not guarantee funding, grants, investment, or
+                                partnership confirmation.</p>
+                        </label>
+
+                        <label class="check-item">
+                            <input type="checkbox" class="consent-checkbox">
+                            <p>I confirm that I am an authorized representative of the organization and legally empowered to
+                                provide this declaration and consent on behalf of the organization.</p>
+                        </label>
+
+                        <label class="check-item">
+                            <input type="checkbox" class="consent-checkbox">
+                            <p>I understand that Fundink will take reasonable measures to safeguard sensitive information
+                                and will share confidential data strictly with relevant stakeholders for legitimate
+                                evaluation, risk assessment, and fundraising purposes.</p>
+                        </label>
+                        <label class="check-item bg-light p-2 rounded-3 final-check align-items-center">
+                            <input type="checkbox" class="consent-checkbox">
+                            <p>I have read, understood, and agree to the above Consent & Declaration.</p>
+                        </label>
                     </div>
-
-                    <label class="check-item">
-                        <input type="checkbox" class="consent-checkbox">
-                        <p>I consent to receive communication from Fundink regarding funding opportunities, partnership
-                            introductions, events, workshops, ecosystem updates, and promotional announcements via
-                            email, phone, or other digital channels.</p>
-                    </label>
-
-                    <label class="check-item">
-                        <input type="checkbox" class="consent-checkbox">
-                        <p>I acknowledge that registration on Fundink does not guarantee funding, grants, investment, or
-                            partnership confirmation.</p>
-                    </label>
-
-                    <label class="check-item">
-                        <input type="checkbox" class="consent-checkbox">
-                        <p>I confirm that I am an authorized representative of the organization and legally empowered to
-                            provide this declaration and consent on behalf of the organization.</p>
-                    </label>
-
-                    <label class="check-item">
-                        <input type="checkbox" class="consent-checkbox">
-                        <p>I understand that Fundink will take reasonable measures to safeguard sensitive information
-                            and will share confidential data strictly with relevant stakeholders for legitimate
-                            evaluation, risk assessment, and fundraising purposes.</p>
-                    </label>
-                    <label class="check-item bg-light p-2 rounded-3 final-check align-items-center">
-                        <input type="checkbox" class="consent-checkbox">
-                        <p>I have read, understood, and agree to the above Consent & Declaration.</p>
-                    </label>
                 </div>
+                <div
+                    class="modal-footer d-flex justify-content-center justify-content-md-end gap-2 gap-md-2 pt-0 p-4 steps-btn flex-wrap border-0">
+                    <div class="btn-wrap">
+                        <button type="button" class="btn simple-btn" data-bs-dismiss="modal">Cancel</button>
+                    </div>
+                    <div class="btn-wrap">
+                        <button type="submit" form="onboardingForm" id="finalSubmit" class="btn btn-primary" disabled>Submit
+                        </button>
+                    </div>
+                </div>
+
             </div>
-            <div
-                class="modal-footer d-flex justify-content-center justify-content-md-end gap-2 gap-md-2 pt-0 p-4 steps-btn flex-wrap border-0">
-                <div class="btn-wrap">
-                    <button type="button" class="btn simple-btn" data-bs-dismiss="modal">Cancel</button>
-                </div>
-                <div class="btn-wrap">
-                    <button type="submit" form="onboardingForm" id="finalSubmit" class="btn btn-primary" disabled>Submit
-                    </button>
-                </div>
-            </div>
-
         </div>
     </div>
-</div>
-<style>
-    .editFunder,
-.deleteFunder {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 6px 10px;   /* increases clickable area */
-    border: none;
-    background: transparent;
-    cursor: pointer;
-}
+    <style>
+        .editFunder,
+        .deleteFunder {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 6px 10px;
+            /* increases clickable area */
+            border: none;
+            background: transparent;
+            cursor: pointer;
+        }
 
-.editFunder i,
-.deleteFunder i {
-    pointer-events: none; /* ensures clicks go to button, not icon */
-}
-</style>
+        .editFunder i,
+        .deleteFunder i {
+            pointer-events: none;
+            /* ensures clicks go to button, not icon */
+        }
+    </style>
 @endsection
 
 @section('scripts')
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
 
-        function calculateTotal(sectionId, displayId, inputId) {
-            const section = document.getElementById(sectionId);
-            if (!section) return;
+            function calculateTotal(sectionId, displayId, inputId) {
+                const section = document.getElementById(sectionId);
+                if (!section) return;
 
-            const inputs = section.querySelectorAll('.funding-input');
-            const display = document.getElementById(displayId);
-            const hiddenInput = document.getElementById(inputId);
+                const inputs = section.querySelectorAll('.funding-input');
+                const display = document.getElementById(displayId);
+                const hiddenInput = document.getElementById(inputId);
 
-            function updateTotal() {
-                let total = 0;
+                function updateTotal() {
+                    let total = 0;
 
-                inputs.forEach(input => {
-                    let value = parseFloat(input.value);
-                    if (!isNaN(value)) {
-                        total += value;
-                    }
-                });
-
-                // Update UI
-                if (display) {
-                    display.innerText = total.toLocaleString(undefined, {
-                        minimumFractionDigits: 2,
-                        maximumFractionDigits: 2
-                    }) + ' Lakh';
-                }
-
-                // Update hidden input
-                if (hiddenInput) {
-                    hiddenInput.value = total;
-                }
-            }
-
-            // Bind events
-            inputs.forEach(input => {
-                input.addEventListener('input', updateTotal);
-            });
-
-            // Initial calculation (important for edit case)
-            updateTotal();
-        }
-
-        // NON PROFIT
-        calculateTotal(
-            'non_profit_donation',
-            'totalFundingDisplay',
-            'totalFundingInput'
-        );
-
-        // PROFIT
-        calculateTotal(
-            'profit_donation',
-            'profitTotalDisplay',
-            'profitTotalInput'
-        );
-
-    });
-</script>
-
-
-
-
-<script>
-    var myModal = document.getElementById('staticBackdrop')
-    var myInput = document.getElementById('myInput')
-
-    myModal.addEventListener('shown.bs.modal', function () {
-        if (myInput) {
-            myInput.focus()
-        }
-    })
-</script>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        //console.warn("loaded form script")
-
-
-        // ORGANIZATION TYPE (main controller)
-        const orgWrapper = document.querySelector('input[name="organization_type"]').closest('.select-wrapper');
-        const orgInput = orgWrapper.querySelector('input[name="organization_type"]');
-        const orgItems = orgWrapper.querySelectorAll('.select-list li');
-        const orgDisplay = orgWrapper.querySelector('.custom-select');
-
-        const sections = {
-            non_profit: [
-                document.getElementById('section_non_profit'),
-                document.getElementById('non_profit_donation')
-            ],
-            profit: [
-                document.getElementById('section_profit'),
-                document.getElementById('profit_donation')
-            ]
-        };
-
-        function updateUI(value, text = null) {
-
-            const active = value === 'profit' ? 'profit' : 'non_profit';
-            const inactive = active === 'profit' ? 'non_profit' : 'profit';
-
-            sections[active].forEach(el => {
-                if (!el) return;
-                el.style.display = 'block';
-                el.querySelectorAll('input,select,textarea').forEach(i => i.disabled = false);
-            });
-
-            sections[inactive].forEach(el => {
-                if (!el) return;
-                el.style.display = 'none';
-                el.querySelectorAll('input,select,textarea').forEach(i => i.disabled = true);
-            });
-
-            if (text) {
-                orgDisplay.textContent = text;
-            }
-        }
-
-        orgItems.forEach(item => {
-            item.addEventListener('click', function (e) {
-
-                e.stopPropagation();
-
-                const value = this.dataset.value;
-                const text = this.textContent;
-
-                orgInput.value = value;
-
-                updateUI(value, text);
-            });
-        });
-
-        // default state
-        updateUI(orgInput.value || 'non_profit');
-
-    });
-</script>
-
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        console.log("loaded form script")
-        const form = document.querySelector("form");
-        const continueBtn = document.getElementById("continueBtn");
-        const modalElement = document.getElementById("staticBackdrop");
-
-        // Use a safe check so the script doesn't crash if the element is missing
-        if (modalElement) {
-            const modal = new bootstrap.Modal(modalElement);
-            const consentCheckboxes = document.querySelectorAll(".consent-checkbox");
-            const submitBtn = document.getElementById("finalSubmit");
-
-            // Continue button validation
-            if (continueBtn) {
-                continueBtn.addEventListener("click", function () {
-                    if (!form.checkValidity()) {
-                        form.reportValidity();
-                        return;
-                    }
-                    modal.show();
-                });
-            }
-
-            // Enable submit only if all checkboxes checked
-            consentCheckboxes.forEach(cb => {
-                cb.addEventListener("change", function () {
-                    const allChecked = [...consentCheckboxes].every(c => c.checked);
-                    if (submitBtn) {
-                        submitBtn.disabled = !allChecked;
-                    }
-                });
-            });
-        } // <--- You were likely missing this closing brace for the 'if'
-    });
-</script>
-
-
-
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-
-        let funderModal = new bootstrap.Modal(document.getElementById('funderModal'));
-        let fundersTable = document.getElementById('fundersTable');
-
-        let API = {
-            list: "{{ route('funders.index') }}",
-            store: "{{ route('funders.store') }}",
-            update: "/funders/", // expects /funders/{id}
-            delete: "/funders/"  // expects /funders/{id}
-        };
-
-        let csrf = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-
-        /* =========================
-           LOAD
-        ========================= */
-        function loadFunders() {
-            fetch(API.list)
-                .then(res => res.json())
-                .then(res => {
-                    fundersTable.innerHTML = '';
-
-                    res.data.forEach((funder, index) => {
-                        fundersTable.innerHTML += `
-                        <tr data-id="${funder.id}">
-                            <td>${index + 1}</td>
-                            <td>${funder.name}</td>
-                            <td>${funder.year}</td>
-                            <td>${Number(funder.amount).toLocaleString()}</td>
-                            <td class="">
-                                <button  type='button' class="edit editFunder"><i class="bi bi-pencil-square"></i></button>
-                                <button type='button' class="trash deleteFunder"><i class="bi bi-trash3"></i></button>
-                            </td>
-                        </tr>`;
+                    inputs.forEach(input => {
+                        let value = parseFloat(input.value);
+                        if (!isNaN(value)) {
+                            total += value;
+                        }
                     });
-                });
-        }
 
-        /* =========================
-           ADD
-        ========================= */
-        function addFunder(data) {
-            return fetch(API.store, {
-                method: 'POST',
-                headers: {
-                    "Content-Type": "application/json",
-                    "X-CSRF-TOKEN": csrf
-                },
-                body: JSON.stringify(data)
-            }).then(res => res.json());
-        }
+                    // Update UI
+                    if (display) {
+                        display.innerText = total.toLocaleString(undefined, {
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2
+                        }) + ' Lakh';
+                    }
 
-        /* =========================
-           UPDATE
-        ========================= */
-        function updateFunder(id, data) {
-            return fetch(API.update + id, {
-                method: 'PUT',
-                headers: {
-                    "Content-Type": "application/json",
-                    "X-CSRF-TOKEN": csrf
-                },
-                body: JSON.stringify(data)
-            }).then(res => res.json());
-        }
-
-        /* =========================
-           DELETE
-        ========================= */
-        function deleteFunder(id) {
-            return fetch(API.delete + id, {
-                method: 'DELETE',
-                headers: {
-                    "X-CSRF-TOKEN": csrf
+                    // Update hidden input
+                    if (hiddenInput) {
+                        hiddenInput.value = total;
+                    }
                 }
-            }).then(res => res.json());
-        }
 
-        /* =========================
-           OPEN MODAL (ADD)
-        ========================= */
-        document.getElementById('addFunderBtn').addEventListener('click', () => {
-            document.getElementById('funderForm').reset();
-            document.getElementById('funder_id').value = '';
+                // Bind events
+                inputs.forEach(input => {
+                    input.addEventListener('input', updateTotal);
+                });
+
+                // Initial calculation (important for edit case)
+                updateTotal();
+            }
+
+            // NON PROFIT
+            calculateTotal(
+                'non_profit_donation',
+                'totalFundingDisplay',
+                'totalFundingInput'
+            );
+
+            // PROFIT
+            calculateTotal(
+                'profit_donation',
+                'profitTotalDisplay',
+                'profitTotalInput'
+            );
+
         });
+    </script>
 
-        /* =========================
-           SAVE (decides ADD or UPDATE)
-        ========================= */
-        document.getElementById('saveFunder').addEventListener('click', async (e) => {
-            e.preventDefault();
 
-            let id = document.getElementById('funder_id').value;
 
-            let data = {
-                name: document.getElementById('funder_name').value,
-                year: document.getElementById('funder_year').value,
-                amount: document.getElementById('funder_amount').value
+
+    <script>
+        var myModal = document.getElementById('staticBackdrop')
+        var myInput = document.getElementById('myInput')
+
+        myModal.addEventListener('shown.bs.modal', function () {
+            if (myInput) {
+                myInput.focus()
+            }
+        })
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            //console.warn("loaded form script")
+
+
+            // ORGANIZATION TYPE (main controller)
+            const orgWrapper = document.querySelector('input[name="organization_type"]').closest('.select-wrapper');
+            const orgInput = orgWrapper.querySelector('input[name="organization_type"]');
+            const orgItems = orgWrapper.querySelectorAll('.select-list li');
+            const orgDisplay = orgWrapper.querySelector('.custom-select');
+
+            const sections = {
+                non_profit: [
+                    document.getElementById('section_non_profit'),
+                    document.getElementById('non_profit_donation')
+                ],
+                profit: [
+                    document.getElementById('section_profit'),
+                    document.getElementById('profit_donation')
+                ]
             };
 
-            try {
-                if (id) {
-                    await updateFunder(id, data);
-                } else {
-                    await addFunder(data);
-                }
+            function updateUI(value, text = null) {
 
-                funderModal.hide();
-                loadFunders();
+                const active = value === 'profit' ? 'profit' : 'non_profit';
+                const inactive = active === 'profit' ? 'non_profit' : 'profit';
 
-            } catch (err) {
-                console.error("Error saving funder:", err);
-            }
-        });
+                sections[active].forEach(el => {
+                    if (!el) return;
+                    el.style.display = 'block';
+                    el.querySelectorAll('input,select,textarea').forEach(i => i.disabled = false);
+                });
 
-        /* =========================
-           EDIT CLICK
-        ========================= */
-        document.addEventListener('click', (e) => {
-            if (e.target.classList.contains('editFunder')) {
+                sections[inactive].forEach(el => {
+                    if (!el) return;
+                    el.style.display = 'none';
+                    el.querySelectorAll('input,select,textarea').forEach(i => i.disabled = true);
+                });
 
-                let row = e.target.closest('tr');
-
-                document.getElementById('funder_id').value = row.dataset.id;
-                document.getElementById('funder_name').value = row.children[1].innerText;
-                document.getElementById('funder_year').value = row.children[2].innerText;
-                document.getElementById('funder_amount').value =
-                    row.children[3].innerText.replace(/,/g, '');
-
-                funderModal.show();
-            }
-        });
-
-        /* =========================
-           DELETE CLICK
-        ========================= */
-        document.addEventListener('click', async (e) => {
-            if (e.target.classList.contains('deleteFunder')) {
-
-                let row = e.target.closest('tr');
-                let id = row.dataset.id;
-
-                if (!confirm("Delete this funder?")) return;
-
-                try {
-                    await deleteFunder(id);
-                    loadFunders();
-                } catch (err) {
-                    console.error("Delete failed:", err);
-                }
-            }
-        });
-
-        /* =========================
-           INIT
-        ========================= */
-        loadFunders();
-    });
-</script>
-
-
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-
-        document.querySelectorAll('.select-wrapper').forEach(wrapper => {
-
-            const hiddenInput = wrapper.querySelector('.hidden-select');
-            const customSelect = wrapper.querySelector('.custom-select');
-            const items = wrapper.querySelectorAll('.select-list li');
-
-            // ✅ FIX: Set correct label on page load
-            if (hiddenInput.value) {
-                const selectedItem = wrapper.querySelector(`.select-list li[data-value="${hiddenInput.value}"]`);
-                if (selectedItem) {
-                    customSelect.innerText = selectedItem.innerText;
+                if (text) {
+                    orgDisplay.textContent = text;
                 }
             }
 
-            // Click handler
-            items.forEach(item => {
-                item.addEventListener('click', function () {
-                    hiddenInput.value = this.dataset.value;
-                    customSelect.innerText = this.innerText;
+            orgItems.forEach(item => {
+                item.addEventListener('click', function (e) {
+
+                    e.stopPropagation();
+
+                    const value = this.dataset.value;
+                    const text = this.textContent;
+
+                    orgInput.value = value;
+
+                    updateUI(value, text);
                 });
             });
 
-        });
+            // default state
+            updateUI(orgInput.value || 'non_profit');
 
-    }); 
-</script>
+        });
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            console.log("loaded form script")
+            const form = document.querySelector("form");
+            const continueBtn = document.getElementById("continueBtn");
+            const modalElement = document.getElementById("staticBackdrop");
+
+            // Use a safe check so the script doesn't crash if the element is missing
+            if (modalElement) {
+                const modal = new bootstrap.Modal(modalElement);
+                const consentCheckboxes = document.querySelectorAll(".consent-checkbox");
+                const submitBtn = document.getElementById("finalSubmit");
+
+                // Continue button validation
+                if (continueBtn) {
+                    continueBtn.addEventListener("click", function () {
+                        if (!form.checkValidity()) {
+                            form.reportValidity();
+                            return;
+                        }
+                        modal.show();
+                    });
+                }
+
+                // Enable submit only if all checkboxes checked
+                consentCheckboxes.forEach(cb => {
+                    cb.addEventListener("change", function () {
+                        const allChecked = [...consentCheckboxes].every(c => c.checked);
+                        if (submitBtn) {
+                            submitBtn.disabled = !allChecked;
+                        }
+                    });
+                });
+            } // <--- You were likely missing this closing brace for the 'if'
+        });
+    </script>
+
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+
+            let funderModal = new bootstrap.Modal(document.getElementById('funderModal'));
+            let fundersTable = document.getElementById('fundersTable');
+
+            let API = {
+                list: "{{ route('funders.index') }}",
+                store: "{{ route('funders.store') }}",
+                update: "/funders/", // expects /funders/{id}
+                delete: "/funders/"  // expects /funders/{id}
+            };
+
+            let csrf = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+            /* =========================
+               LOAD
+            ========================= */
+            function loadFunders() {
+                fetch(API.list)
+                    .then(res => res.json())
+                    .then(res => {
+                        fundersTable.innerHTML = '';
+
+                        res.data.forEach((funder, index) => {
+                            fundersTable.innerHTML += `
+                                <tr data-id="${funder.id}">
+                                    <td>${index + 1}</td>
+                                    <td>${funder.name}</td>
+                                    <td>${funder.year}</td>
+                                    <td>${Number(funder.amount).toLocaleString()}</td>
+                                    <td class="">
+                                        <button  type='button' class="edit editFunder"><i class="bi bi-pencil-square"></i></button>
+                                        <button type='button' class="trash deleteFunder"><i class="bi bi-trash3"></i></button>
+                                    </td>
+                                </tr>`;
+                        });
+                    });
+            }
+
+            /* =========================
+               ADD
+            ========================= */
+            function addFunder(data) {
+                return fetch(API.store, {
+                    method: 'POST',
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRF-TOKEN": csrf
+                    },
+                    body: JSON.stringify(data)
+                }).then(res => res.json());
+            }
+
+            /* =========================
+               UPDATE
+            ========================= */
+            function updateFunder(id, data) {
+                return fetch(API.update + id, {
+                    method: 'PUT',
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRF-TOKEN": csrf
+                    },
+                    body: JSON.stringify(data)
+                }).then(res => res.json());
+            }
+
+            /* =========================
+               DELETE
+            ========================= */
+            function deleteFunder(id) {
+                return fetch(API.delete + id, {
+                    method: 'DELETE',
+                    headers: {
+                        "X-CSRF-TOKEN": csrf
+                    }
+                }).then(res => res.json());
+            }
+
+            /* =========================
+               OPEN MODAL (ADD)
+            ========================= */
+            document.getElementById('addFunderBtn').addEventListener('click', () => {
+                document.getElementById('funderForm').reset();
+                document.getElementById('funder_id').value = '';
+            });
+
+            /* =========================
+               SAVE (decides ADD or UPDATE)
+            ========================= */
+            document.getElementById('saveFunder').addEventListener('click', async (e) => {
+                e.preventDefault();
+
+                let id = document.getElementById('funder_id').value;
+
+                let data = {
+                    name: document.getElementById('funder_name').value,
+                    year: document.getElementById('funder_year').value,
+                    amount: document.getElementById('funder_amount').value
+                };
+
+                try {
+                    if (id) {
+                        await updateFunder(id, data);
+                    } else {
+                        await addFunder(data);
+                    }
+
+                    funderModal.hide();
+                    loadFunders();
+
+                } catch (err) {
+                    console.error("Error saving funder:", err);
+                }
+            });
+
+            /* =========================
+               EDIT CLICK
+            ========================= */
+            document.addEventListener('click', (e) => {
+                if (e.target.classList.contains('editFunder')) {
+
+                    let row = e.target.closest('tr');
+
+                    document.getElementById('funder_id').value = row.dataset.id;
+                    document.getElementById('funder_name').value = row.children[1].innerText;
+                    document.getElementById('funder_year').value = row.children[2].innerText;
+                    document.getElementById('funder_amount').value =
+                        row.children[3].innerText.replace(/,/g, '');
+
+                    funderModal.show();
+                }
+            });
+
+            /* =========================
+               DELETE CLICK
+            ========================= */
+            document.addEventListener('click', async (e) => {
+                if (e.target.classList.contains('deleteFunder')) {
+
+                    let row = e.target.closest('tr');
+                    let id = row.dataset.id;
+
+                    if (!confirm("Delete this funder?")) return;
+
+                    try {
+                        await deleteFunder(id);
+                        loadFunders();
+                    } catch (err) {
+                        console.error("Delete failed:", err);
+                    }
+                }
+            });
+
+            /* =========================
+               INIT
+            ========================= */
+            loadFunders();
+        });
+    </script>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+
+            document.querySelectorAll('.select-wrapper').forEach(wrapper => {
+
+                const hiddenInput = wrapper.querySelector('.hidden-select');
+                const customSelect = wrapper.querySelector('.custom-select');
+                const items = wrapper.querySelectorAll('.select-list li');
+
+                // ✅ FIX: Set correct label on page load
+                if (hiddenInput.value) {
+                    const selectedItem = wrapper.querySelector(`.select-list li[data-value="${hiddenInput.value}"]`);
+                    if (selectedItem) {
+                        customSelect.innerText = selectedItem.innerText;
+                    }
+                }
+
+                // Click handler
+                items.forEach(item => {
+                    item.addEventListener('click', function () {
+                        hiddenInput.value = this.dataset.value;
+                        customSelect.innerText = this.innerText;
+                    });
+                });
+
+            });
+
+        }); 
+    </script>
 
 
 
 @endsection
-
-
-
-
-
-
-
-
