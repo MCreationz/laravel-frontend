@@ -150,7 +150,7 @@
 
                         <!-- Registration Type -->
                         <div class="col-12 col-md-6 col-xl-5 px-md-2">
-                            <label class="form-label">Registration Type<span>*</span></label>
+                            <label class="form-label">Organization Legal Type<span>*</span></label>
 
                             @php
                                 $registrationType = old('registration_type', $operationalDetail->registration_type ?? '');
