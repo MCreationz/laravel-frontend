@@ -19,31 +19,36 @@ class OnboardingController extends Controller
         return view('onboarding.step1', compact('profile'));
     }
 
-    public function storeStepOne(Request $request)
-    {
-        // return $request->all();
-        // Validate the request
-        $validated = $request->validate([
-            'pan_number' => 'required|string|max:20',
-            'legal_name' => 'required|string|max:255',
-            'date_of_incorporation' => 'required|date',
-            'brand_name' => 'nullable|string|max:255',
-            'website_url' => 'nullable|max:255',
-            'linkedin_url' => 'nullable|max:255',
-        ]);
-        // return $validated;
-        // Get authenticated organization
-        $organization = Auth::guard('organization')->user();
+  public function storeStepOne(Request $request)
+{
+    // Validate the request
+    $validated = $request->validate([
+        'pan_number' => 'required|string|max:20',
+        'legal_name' => 'required|string|max:255',
+        'date_of_incorporation' => 'required|date',
+        'brand_name' => 'nullable|string|max:255',
 
-        // Create or update profile
-        $profile = OrganizationProfile::updateOrCreate(
-            ['organization_id' => $organization->id],
-            $validated
-        );
+        // Allow long URLs + proper URL format validation
+        'website_url' => 'nullable|url|max:2000',
+        'linkedin_url' => 'nullable|url|max:2000',
+    ]);
 
-        // Redirect to step 2
-        return redirect()->route('onboarding.step2');
+    // Get authenticated organization
+    $organization = Auth::guard('organization')->user();
+
+    if (!$organization) {
+        abort(403, 'Unauthorized');
     }
+
+    // Create or update profile
+    OrganizationProfile::updateOrCreate(
+        ['organization_id' => $organization->id],
+        $validated
+    );
+
+    // Redirect to step 2
+    return redirect()->route('onboarding.step2');
+}
 
     public function stepTwo()
     {
