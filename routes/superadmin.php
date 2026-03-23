@@ -1,16 +1,15 @@
 <?php
 
-use App\Http\Controllers\SuperAdmin\UserController;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\SuperAdmin\DashboardController;
 use App\Http\Controllers\SuperAdmin\ApplicationController;
-use App\Http\Controllers\SuperAdmin\SectorController;
-
-
 use App\Http\Controllers\SuperAdmin\Auth\LoginController;
 use App\Http\Controllers\SuperAdmin\CompanyController;
+use App\Http\Controllers\SuperAdmin\DashboardController;
 use App\Http\Controllers\SuperAdmin\FundingCategoryController;
+use App\Http\Controllers\SuperAdmin\ProjectController;
+use App\Http\Controllers\SuperAdmin\SectorController;
 use App\Http\Controllers\SuperAdmin\SettingsController;
+use App\Http\Controllers\SuperAdmin\UserController;
+use Illuminate\Support\Facades\Route;
 
 Route::prefix('super-admin')
     ->name('superadmin.')
@@ -24,9 +23,6 @@ Route::prefix('super-admin')
         // Logout
         Route::post('logout', [LoginController::class, 'logout'])->name('logout');
     });
-
-
-
 
 Route::prefix('super-admin')
     ->as('superadmin.')
@@ -139,15 +135,15 @@ Route::prefix('super-admin')
         Route::delete('/users/{user}', [UserController::class, 'destroy'])
             ->name('users.destroy');
 
+        Route::resource('funding-categories', FundingCategoryController::class);
 
-                    Route::resource('funding-categories', FundingCategoryController::class);
-
- Route::get('/settings', [SettingsController::class, 'index'])
+        Route::get('/settings', [SettingsController::class, 'index'])
             ->name('settings');
         /*
         |--------------------------------------------------------------------------
         | Settings
         |--------------------------------------------------------------------------
         */
+            Route::resource('projects', ProjectController::class);
 
     });
