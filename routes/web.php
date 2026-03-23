@@ -72,30 +72,26 @@ Route::middleware(['check.onboarding', 'auth:organization'])->group(function () 
         ->name('onboarding.step3.store');
 
     Route::get('/projects', [ProjectController::class, 'index'])->name('projects.index');
-// routes/web.php
-Route::get('/projects/details', function () {
-    // Returning a static view
-    return view('projects.detail');
-})->name('projects.details');  // named "project details"
-
-
-
-
+    // routes/web.php
+    Route::get('/projects/details', function () {
+        // Returning a static view
+        return view('projects.detail');
+    })->name('projects.details');  // named "project details"
 
 });
 
-   Route::post('/funders/store', [OrganizationFunderController::class, 'store'])
-        ->name('funders.store');
+Route::post('/funders/store', [OrganizationFunderController::class, 'store'])
+    ->name('funders.store');
 
-           Route::get('/funders', [OrganizationFunderController::class, 'index'])
-        ->name('funders.index');
+Route::get('/funders', [OrganizationFunderController::class, 'index'])
+    ->name('funders.index');
 
-    // add funder
- 
-    // update funder
-    Route::put('/funders/{id}', [OrganizationFunderController::class, 'update'])
-        ->name('funders.update');
+// add funder
 
-    // delete funder
-    Route::delete('/funders/{id}', [OrganizationFunderController::class, 'destroy'])
-        ->name('funders.destroy');
+// update funder
+Route::put('/funders/{id}', [OrganizationFunderController::class, 'update'])
+    ->name('funders.update');
+
+// delete funder
+Route::delete('/funders/{id}', [OrganizationFunderController::class, 'destroy'])
+    ->name('funders.destroy');

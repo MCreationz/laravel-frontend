@@ -527,12 +527,14 @@
                         <div class="col-12 px-md-2">
                             <div class="textarea-label d-flex justify-content-between gap-1">
                                 <label class="form-label">Key Achievements<span>*</span></label>
-                                <p class="font-small">Word Limit: 100</p>
+                                <p class="font-small">
+                                    <span id="wordCount">0</span>/100 words
+                                </p>
                             </div>
 
-                            <textarea name="key_achievements" maxlength="500" rows="5"
-                                class="form-control @error('key_achievements') is-invalid @enderror"
-                                placeholder="Enter Achievements">{{ $achievements }}</textarea>
+                           <textarea name="key_achievements" rows="5"
+    class="form-control"
+    placeholder="Enter Achievements">{{ $achievements }}</textarea>
 
                             @error('key_achievements')
                                 <div class="text-danger small">{{ $message }}</div>
@@ -859,7 +861,9 @@
                         </div>
                         <div class="mb-3">
                             <label>Year</label>
-                            <input type="number" class="form-control" id="funder_year">
+                            <select class="form-control" id="funder_year">
+                                <option value="">Select Year</option>
+                            </select>
                         </div>
                         <div class="mb-3">
                             <label>Amount</label>
@@ -1061,8 +1065,42 @@
 
         });
     </script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
 
+    let textarea = document.querySelector('textarea[name="key_achievements"]');
+    let counter = document.getElementById('wordCount');
 
+    let maxWords = 100;
+    let maxChars = 800; // 🔥 control total length properly
+
+    function handleLimits() {
+        let value = textarea.value;
+
+        // 🔹 Character limit
+        if (value.length > maxChars) {
+            textarea.value = value.substring(0, maxChars);
+            toastr.warning("Maximum character limit reached");
+        }
+
+        // 🔹 Word limit
+        let words = textarea.value.trim().split(/\s+/).filter(w => w.length > 0);
+
+        if (words.length > maxWords) {
+            textarea.value = words.slice(0, maxWords).join(' ');
+            toastr.warning("Maximum 100 words allowed");
+        }
+
+        counter.textContent = words.length;
+    }
+
+    textarea.addEventListener('input', handleLimits);
+
+    // run on load
+    handleLimits();
+
+});
+</script>
 
 
     <script>
@@ -1074,6 +1112,16 @@
                 myInput.focus()
             }
         })
+    </script>
+
+    <script>
+        let yearSelect = document.getElementById('funder_year');
+        let currentYear = new Date().getFullYear();
+
+        for (let i = currentYear; i >= currentYear - 50; i--) {
+            let option = `<option value="${i}">${i}</option>`;
+            yearSelect.innerHTML += option;
+        }
     </script>
 
     <script>
@@ -1103,17 +1151,50 @@
                 const active = value === 'profit' ? 'profit' : 'non_profit';
                 const inactive = active === 'profit' ? 'non_profit' : 'profit';
 
+                // SHOW active
                 sections[active].forEach(el => {
                     if (!el) return;
                     el.style.display = 'block';
                     el.querySelectorAll('input,select,textarea').forEach(i => i.disabled = false);
                 });
 
+                // HIDE inactive + RESET VALUES
                 sections[inactive].forEach(el => {
                     if (!el) return;
                     el.style.display = 'none';
-                    el.querySelectorAll('input,select,textarea').forEach(i => i.disabled = true);
+
+                    el.querySelectorAll('input,select,textarea').forEach(i => {
+                        i.disabled = true;
+
+                        // 🔥 reset value
+                        if (i.type === 'hidden' || i.type === 'text' || i.tagName === 'SELECT') {
+                            i.value = '';
+                        }
+
+                        if (i.type === 'checkbox') {
+                            i.checked = false;
+                        }
+                    });
+
+                    // reset custom select UI text
+                    el.querySelectorAll('.custom-select').forEach(cs => {
+                        cs.textContent = 'Select';
+                    });
                 });
+
+                // 🔥 set default for active section
+                let activeSection = sections[active][0];
+                if (activeSection) {
+                    let firstOption = activeSection.querySelector('.select-list li');
+
+                    if (firstOption) {
+                        let hiddenInput = activeSection.querySelector('input[type="hidden"]');
+                        let display = activeSection.querySelector('.custom-select');
+
+                        hiddenInput.value = firstOption.dataset.value;
+                        display.textContent = firstOption.textContent;
+                    }
+                }
 
                 if (text) {
                     orgDisplay.textContent = text;
@@ -1188,18 +1269,31 @@
             let API = {
                 list: "{{ route('funders.index') }}",
                 store: "{{ route('funders.store') }}",
-                update: "/funders/", // expects /funders/{id}
-                delete: "/funders/"  // expects /funders/{id}
+                update: "/funders/",
+                delete: "/funders/"
             };
 
             let csrf = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+            /* =========================
+               COMMON FETCH HANDLER
+            ========================= */
+            async function handleResponse(res) {
+                let data = await res.json();
+
+                if (!res.ok) {
+                    throw data;
+                }
+
+                return data;
+            }
 
             /* =========================
                LOAD
             ========================= */
             function loadFunders() {
                 fetch(API.list)
-                    .then(res => res.json())
+                    .then(handleResponse)
                     .then(res => {
                         fundersTable.innerHTML = '';
 
@@ -1210,12 +1304,19 @@
                                     <td>${funder.name}</td>
                                     <td>${funder.year}</td>
                                     <td>${Number(funder.amount).toLocaleString()}</td>
-                                    <td class="">
-                                        <button  type='button' class="edit editFunder"><i class="bi bi-pencil-square"></i></button>
-                                        <button type='button' class="trash deleteFunder"><i class="bi bi-trash3"></i></button>
+                                    <td>
+                                        <button type='button' class="edit editFunder">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </button>
+                                        <button type='button' class="trash deleteFunder">
+                                            <i class="bi bi-trash3"></i>
+                                        </button>
                                     </td>
                                 </tr>`;
                         });
+                    })
+                    .catch(() => {
+                        toastr.error("Failed to load funders");
                     });
             }
 
@@ -1230,7 +1331,7 @@
                         "X-CSRF-TOKEN": csrf
                     },
                     body: JSON.stringify(data)
-                }).then(res => res.json());
+                }).then(handleResponse);
             }
 
             /* =========================
@@ -1244,7 +1345,7 @@
                         "X-CSRF-TOKEN": csrf
                     },
                     body: JSON.stringify(data)
-                }).then(res => res.json());
+                }).then(handleResponse);
             }
 
             /* =========================
@@ -1256,7 +1357,7 @@
                     headers: {
                         "X-CSRF-TOKEN": csrf
                     }
-                }).then(res => res.json());
+                }).then(handleResponse);
             }
 
             /* =========================
@@ -1268,7 +1369,7 @@
             });
 
             /* =========================
-               SAVE (decides ADD or UPDATE)
+               SAVE (ADD / UPDATE)
             ========================= */
             document.getElementById('saveFunder').addEventListener('click', async (e) => {
                 e.preventDefault();
@@ -1284,8 +1385,10 @@
                 try {
                     if (id) {
                         await updateFunder(id, data);
+                        toastr.success("Funder updated successfully");
                     } else {
                         await addFunder(data);
+                        toastr.success("Funder added successfully");
                     }
 
                     funderModal.hide();
@@ -1293,6 +1396,16 @@
 
                 } catch (err) {
                     console.error("Error saving funder:", err);
+
+                    if (err.errors) {
+                        Object.values(err.errors).forEach(fieldErrors => {
+                            fieldErrors.forEach(msg => toastr.error(msg));
+                        });
+                    } else if (err.message) {
+                        toastr.error(err.message);
+                    } else {
+                        toastr.error("Something went wrong");
+                    }
                 }
             });
 
@@ -1300,7 +1413,7 @@
                EDIT CLICK
             ========================= */
             document.addEventListener('click', (e) => {
-                if (e.target.classList.contains('editFunder')) {
+                if (e.target.closest('.editFunder')) {
 
                     let row = e.target.closest('tr');
 
@@ -1318,7 +1431,7 @@
                DELETE CLICK
             ========================= */
             document.addEventListener('click', async (e) => {
-                if (e.target.classList.contains('deleteFunder')) {
+                if (e.target.closest('.deleteFunder')) {
 
                     let row = e.target.closest('tr');
                     let id = row.dataset.id;
@@ -1327,9 +1440,10 @@
 
                     try {
                         await deleteFunder(id);
+                        toastr.success("Funder deleted successfully");
                         loadFunders();
                     } catch (err) {
-                        console.error("Delete failed:", err);
+                        toastr.error("Delete failed");
                     }
                 }
             });

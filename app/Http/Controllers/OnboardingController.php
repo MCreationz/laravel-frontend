@@ -23,7 +23,7 @@ class OnboardingController extends Controller
 {
     // Validate the request
     $validated = $request->validate([
-        'pan_number' => 'required|string|max:20',
+        'pan_number' => 'required|string|max:10',
         'legal_name' => 'required|string|max:255',
         'date_of_incorporation' => 'required|date',
         'brand_name' => 'nullable|string|max:255',
