@@ -19,7 +19,7 @@ return new class extends Migration
         DB::table('roles')->updateOrInsert(
             ['id' => 1],
             [
-                'name' => 'superadmin',
+                'name' => 'super_admin',
                 'created_at' => now(),
                 'updated_at' => now(),
             ]

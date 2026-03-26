@@ -11,6 +11,20 @@ class SuperAdminSeeder extends Seeder
 {
     public function run()
     {
+        // Ensure role exists first
+        $role = DB::table('roles')->where('name', 'super_admin')->first();
+
+        if (!$role) {
+            $roleId = DB::table('roles')->insertGetId([
+                'name' => 'super_admin',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ]);
+        } else {
+            $roleId = $role->id;
+        }
+
+        // Create or update user
         $user = DB::table('users')->where('email', 'superadmin@gmail.com')->first();
 
         if (!$user) {
@@ -27,7 +41,6 @@ class SuperAdminSeeder extends Seeder
                 'updated_at' => Carbon::now(),
             ]);
         } else {
-            // Update existing user password (optional but recommended)
             DB::table('users')
                 ->where('id', $user->id)
                 ->update([
@@ -38,17 +51,13 @@ class SuperAdminSeeder extends Seeder
             $userId = $user->id;
         }
 
-        // Assign role (assuming role_id = 1 is Super Admin)
-        $roleExists = DB::table('role_user')
-            ->where('user_id', $userId)
-            ->where('role_id', 1)
-            ->exists();
-
-        if (!$roleExists) {
-            DB::table('role_user')->insert([
+        // Attach role safely
+        DB::table('role_user')->updateOrInsert(
+            [
                 'user_id' => $userId,
-                'role_id' => 1,
-            ]);
-        }
+                'role_id' => $roleId,
+            ],
+            []
+        );
     }
 }
