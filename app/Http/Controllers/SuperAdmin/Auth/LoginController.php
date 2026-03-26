@@ -27,7 +27,7 @@ class LoginController extends Controller
             $user = Auth::user();
             if ($user->role()->where('role_id', 1)->exists()) {
                 $request->session()->regenerate();
-                return redirect()->intended(route('superadmin.dashboard'));
+                return redirect()->intended(route('superadmin.projects.index'));
             }
 
             Auth::logout();
