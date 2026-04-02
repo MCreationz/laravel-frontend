@@ -32,12 +32,7 @@
                     @yield('page-title', 'Dashboard')
                 </span>
 
-                <form method="POST" action="{{ route('superadmin.logout') }}">
-                    @csrf
-                    <button class="btn btn-danger btn-sm">
-                        Logout
-                    </button>
-                </form>
+            
             </nav>
 
             <!-- Page Content -->

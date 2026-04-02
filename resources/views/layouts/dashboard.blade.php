@@ -15,6 +15,12 @@
     <link rel="preload" href="/fonts/Inter18pt-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="/fonts/Inter18pt-Bold.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
 </head>
 
 <body class="dashboard">
@@ -28,8 +34,7 @@
             @include('partials.header')
 
             <main class="p-3">
-                <div id="pageLoader"
-                    style="
+                <div id="pageLoader" style="
     display:none;
     position:fixed;
     top:0;
@@ -55,8 +60,141 @@
 
 </body>
 
-@yield('scripts')
+<style>
+    #toast-container>div {
+        position: relative;
+    }
 
+    /* Fix close (×) button */
+    .toast-close-button {
+        position: absolute;
+        top: 6px;
+        right: 10px;
+        font-size: 18px;
+        color: #fff !important;
+        opacity: 0.8;
+    }
+
+    /* Better hover */
+    .toast-close-button:hover {
+        opacity: 1;
+    }
+
+    #toast-container>div {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 14px 16px 14px 50px !important;
+        /* space for icon */
+        position: relative;
+    }
+
+    /* Fix icon position */
+    #toast-container>div::before {
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    /* Force white text globally inside toast */
+    #toast-container>div,
+    #toast-container>div * {
+        color: #fff !important;
+    }
+
+    /* Also ensure base toast class doesn't override */
+    .toast {
+        color: #fff !important;
+    }
+
+    /* Toast container spacing */
+    #toast-container>div {
+        border-radius: 10px;
+        padding: 14px 18px;
+        font-size: 14px;
+        font-weight: 500;
+        opacity: 1 !important;
+        /* REMOVE transparency */
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    /* Success */
+    .toast-success {
+        background-color: #16a34a !important;
+        color: #fff !important;
+    }
+
+    /* Error */
+    .toast-error {
+        background-color: #dc2626 !important;
+        color: #fff !important;
+    }
+
+    /* Warning */
+    .toast-warning {
+        background-color: #f59e0b !important;
+        color: #fff !important;
+    }
+
+    /* Info */
+    .toast-info {
+        background-color: #2563eb !important;
+        color: #fff !important;
+    }
+
+    /* Remove default background image (icons) */
+    .toast {
+        background-image: none !important;
+    }
+
+    /* Close button */
+    .toast-close-button {
+        color: #fff !important;
+        opacity: 0.8;
+    }
+
+    .toast-close-button:hover {
+        opacity: 1;
+    }
+</style>
+
+
+@yield('scripts')
+<script>
+    toastr.options = {
+        closeButton: true,
+        progressBar: true,
+        newestOnTop: true,
+        positionClass: "toast-top-right",
+        timeOut: "3500",
+        showDuration: "300",
+        hideDuration: "200",
+        showMethod: "fadeIn",
+        hideMethod: "fadeOut"
+    };
+    @if(session('success'))
+        toastr.success("{{ session('success') }}");
+    @endif
+
+    @if(session('error'))
+        toastr.error("{{ session('error') }}");
+    @endif
+
+    @if(session('warning'))
+        toastr.warning("{{ session('warning') }}");
+    @endif
+
+    @if(session('info'))
+        toastr.info("{{ session('info') }}");
+    @endif
+
+    @if ($errors->any())
+        @foreach ($errors->all() as $error)
+            toastr.error("{{ $error }}");
+        @endforeach
+    @endif
+</script>
 
 <script>
     const toggleBtn = document.getElementById("sidebar-toggle");
@@ -68,13 +206,13 @@
 </script>
 
 <script>
-    document.querySelectorAll(".select-wrapper").forEach(function(wrapper) {
+    document.querySelectorAll(".select-wrapper").forEach(function (wrapper) {
 
         const selectBox = wrapper.querySelector(".custom-select");
         const optionsList = wrapper.querySelector(".select-list");
         const hiddenInput = wrapper.querySelector(".hidden-select");
 
-        selectBox.addEventListener("click", function(e) {
+        selectBox.addEventListener("click", function (e) {
             e.stopPropagation();
 
             document.querySelectorAll(".select-list").forEach(list => {
@@ -85,9 +223,9 @@
                 optionsList.style.display === "block" ? "none" : "block";
         });
 
-        optionsList.querySelectorAll("li").forEach(function(option) {
+        optionsList.querySelectorAll("li").forEach(function (option) {
 
-            option.addEventListener("click", function() {
+            option.addEventListener("click", function () {
 
                 selectBox.textContent = this.textContent;
                 hiddenInput.value = this.getAttribute("data-value");
@@ -99,7 +237,7 @@
 
     });
 
-    document.addEventListener("click", function() {
+    document.addEventListener("click", function () {
         document.querySelectorAll(".select-list").forEach(list => {
             list.style.display = "none";
         });
@@ -115,7 +253,7 @@
 
         options.forEach(option => {
 
-            option.addEventListener('click', function() {
+            option.addEventListener('click', function () {
 
                 const value = this.getAttribute('data-value');
 

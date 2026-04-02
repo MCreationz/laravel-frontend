@@ -42,12 +42,17 @@ class LoginController extends Controller
 
             $request->session()->regenerate();
 
-            return redirect()->route('dashboard');
+            return redirect()
+                ->route('dashboard')
+                ->with('success', 'Login successful');
         }
 
-        return back()->with('error', 'Invalid email or password.');
+        return back()
+            ->withInput($request->only('email')) // keeps email in form
+            ->with('error', 'Invalid email or password.');
     }
 
+    
     /*
     |--------------------------------------------------------------------------
     | OTP LOGIN EMAIL PAGE
@@ -121,28 +126,28 @@ class LoginController extends Controller
         ]);
 
         $email = session('login_email');
-        // dd($request->all(),$email);
 
         if (! $email) {
-            return redirect()->route('login')
+            return redirect()
+                ->route('login')
                 ->with('error', 'Session expired.');
         }
 
         $organization = Organization::where('work_email', $email)->first();
 
         if (! $organization) {
-            return redirect()->route('login')
+            return redirect()
+                ->route('login')
                 ->with('error', 'Account not found.');
+        }
+
+        if (! $organization->otp_code) {
+            return back()->with('error', 'OTP not generated.');
         }
 
         if ($organization->otp_code != $request->otp) {
             return back()->with('error', 'Invalid OTP.');
         }
-        //               //  dd($organization);
-        //    $organization->update([
-        //             'otp_code' => $otp,
-        //             'otp_expires_at' => Carbon::now()->addMinutes($expiryMinutes)
-        //         ]);
 
         if (Carbon::now()->gt($organization->otp_expires_at)) {
             return back()->with('error', 'OTP expired.');
@@ -151,6 +156,7 @@ class LoginController extends Controller
         Auth::guard('organization')->login($organization);
         $request->session()->regenerate();
 
+        // Clear OTP
         $organization->update([
             'otp_code' => null,
             'otp_expires_at' => null,
@@ -158,7 +164,9 @@ class LoginController extends Controller
 
         session()->forget('login_email');
 
-        return redirect()->route('dashboard');
+        return redirect()
+            ->route('dashboard')
+            ->with('success', 'Login successful');
     }
 
     /*
@@ -219,6 +227,12 @@ class LoginController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect()->route('login');
+        return redirect()
+            ->route('login')
+            ->with('success', 'Logged out successfully');
     }
+
+
+
+
 }
