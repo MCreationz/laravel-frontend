@@ -119,7 +119,7 @@ label {
     border-radius: 21px;
     display: flex;
     flex-direction: column;
-    min-height: 87vh;
+    max-height: 87vh;
     overflow: auto;
 }
 .bottom-content * {
@@ -1002,7 +1002,7 @@ button.edit:hover {
         font-size: 16px;
     }
     .form-col-wrap {
-        height: auto;
+        max-height: max-content;
     }
 }
 @media(max-width: 767px){
