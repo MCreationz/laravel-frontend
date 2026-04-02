@@ -15,9 +15,9 @@
         </div>
         <div class="col-auto">
             <div class="header-links d-flex justify-content-end align-items-center">
-                <a href="#" class="icon px-2 px-lg-3">
+                {{-- <a href="#" class="icon px-2 px-lg-3">
                     <img src="{{ asset('img/email.svg') }}" alt="settings" width="25px" height="20px">
-                </a>
+                </a> --}}
                 <a href="#" class="icon px-2 px-lg-3">
                     <img src="{{ asset('img/notification.svg') }}" alt="settings" width="18.531612396240234px"
                         height="20px">

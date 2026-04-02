@@ -5,7 +5,7 @@
 
 @section('content')
 
-    <div class="form-heading mb-4 pb-lg-2">
+    <div class="form-heading mb-4">
         <h2 class="h1 mb-2">Welcome to Fundink</h2>
         <p class="font-small">Register your organization to start funding journey</p>
     </div>
@@ -21,7 +21,7 @@
                 <div class="row mb-md-3 mb-2">
 
                     <div class="col-6 pe-md-2 pe-1">
-                        <label class="form-label">Organization Name</label>
+                        <label class="form-label">Organization Name<span>*</span></label>
 
                         <input type="text" name="organization_name"
                             class="form-control @error('organization_name') is-invalid @enderror"
@@ -33,10 +33,11 @@
                     </div>
 
                     <div class="col-6 ps-md-2 ps-1">
-                        <label class="form-label">Work Email</label>
+                        <label class="form-label">Work Email<span>*</span></label>
 
-                        <input type="email" name="work_email" class="form-control @error('work_email') is-invalid @enderror"
-                            placeholder="Enter Email" value="{{ old('work_email') }}" required>
+                        <input type="email" name="work_email"
+                            class="form-control @error('work_email') is-invalid @enderror" placeholder="Enter Email"
+                            value="{{ old('work_email') }}" required>
 
                         @error('work_email')
                             <div class="invalid-feedback">{{ $message }}</div>
@@ -47,15 +48,15 @@
             </div>
 
             <div class="col-12 mb-md-3 mb-2">
-                <label class="form-label">Are you looking to:</label>
+                <label class="form-label">Are you a<span>*</span></label>
 
                 <div class="select-wrapper w-100 position-relative">
                     <div class="custom-select form-control @error('role') is-invalid @enderror">
                         {{ old('role') ? ucfirst(str_replace('_', ' ', old('role'))) : 'Select an option' }}
                     </div>
                     <ul class="select-list">
-                        <li data-value="fund_seeker">Raise Fund</li>
-                        <li data-value="funder">Invest Fund</li>
+                        <li data-value="NPO">NPO</li>
+                        <li data-value="Startup">Startup</li>
                     </ul>
 
                     <input type="hidden" name="role" class="hidden-select" value="{{ old('role') }}">
@@ -67,7 +68,7 @@
             </div>
 
             <div class="col-12 mb-md-3 mb-2">
-                <label class="form-label">How did you hear about Fundink?</label>
+                <label class="form-label">How did you hear about Fundink?<span>*</span></label>
 
                 <div class="select-wrapper w-100 position-relative">
                     <div class="custom-select form-control @error('referral_source') is-invalid @enderror">
@@ -76,13 +77,10 @@
 
                     <ul class="select-list">
                         <li data-value="Referrals">Referrals</li>
-                        <li data-value="Fundink Website">Fundink Website</li>
-                        <li data-value="Internet">Internet</li>
-                        <li data-value="Networking Event">Networking Event</li>
-                        <li data-value="News Article">Remove duplicacy</li>
-                        <li data-value="News Article">News Article</li>
-                        <li data-value="Advertising">Advertising</li>
                         <li data-value="Direct Visit">LinkedIn</li>
+                        <li data-value="Networking Event">Networking Event</li>
+                        <li data-value="Fundink Website">Fundink Website</li>
+                        <li data-value="News Article">News Article</li>
                         <li data-value="Other Social Media">Other Social Media</li>
                     </ul>
 
@@ -95,7 +93,7 @@
             </div>
 
             <div class="col-12 mb-md-3 mb-2 position-relative">
-                <label class="form-label">Create Password</label>
+                <label class="form-label">Create Password<span>*</span></label>
 
                 <input type="password" name="password" id="createPassword"
                     class="form-control @error('password') is-invalid @enderror" placeholder="Enter Password" required>
@@ -112,7 +110,7 @@
             </div>
 
             <div class="col-12 mb-md-3 mb-2 position-relative">
-                <label class="form-label">Re-enter Password</label>
+                <label class="form-label">Re-enter Password<span>*</span></label>
 
                 <input type="password" name="password_confirmation" id="confirmPassword"
                     class="form-control @error('password_confirmation') is-invalid @enderror" placeholder="Confirm Password"
@@ -136,12 +134,12 @@
         </div>
 
         <div class="account-wrap">
-
             <div class="col-12 btn-wrap">
                 <button type="submit" class="btn btn-primary w-100">Register</button>
             </div>
 
             <div class="col-12 login-text text-center mt-3">
+                <p class="text-decoration-none">By continuing you agree to our <a href="#">privacy policy</a> and <a href="#">terms of use</a></p>
                 <p>Already have an account? <a href="/login">Log in</a></p>
             </div>
 

@@ -5,17 +5,22 @@
         </div>
         @unless (auth('organization')->user()->profile)
             <div class="expert-sec p-3 p-lg-4">
-                <p class="font-small">
-                    Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam
-                    rem aperiam, eaque ipsa quae ab illo inventore veritatis
-                </p>
-                <div class="btn-wrap">
+                <p class="font-small mb-2">
+                    How to raise fund with Fundink</p>
+                <ol class="ps-3 mb-2">
+                    <li class="font-small">Register your organization</li>
+                    <li class="font-small">Select Funding Calls</li>
+                    <li class="font-small">Write 1000 words</li>
+                </ol>
+                <p class="font-small">That’s it</p>
+                {{-- <div class="btn-wrap">
                     <a href="#" class="btn btn-primary w-100">Talk to our experts today</a>
-                </div>
+                </div> --}}
             </div>
         @else
-            <div class="btn-wrap">
-                <a href="{{ route('dashboard') }}" class="d-flex align-items-center text-decoration-none sidebar-links {{ request()->routeIs('dashboard') ? 'active' : '' }}">
+            <div class="btn-wrap d-flex flex-column gap-1">
+                <a href="{{ route('dashboard') }}"
+                    class="d-flex align-items-center text-decoration-none sidebar-links {{ request()->routeIs('dashboard') ? 'active' : '' }}">
                     <div class="flex-shrink-0">
                         <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" viewBox="0 0 23 23"
                             fill="none">
@@ -35,7 +40,8 @@
                     </div>
                     <div class="flex-grow-1 ms-3">Dashboard</div>
                 </a>
-                <a href="{{ route('projects.index') }}" class="d-flex align-items-center text-decoration-none sidebar-links {{ request()->routeIs('projects.*') ? 'active' : '' }}"">
+                <a href="{{ route('projects.index') }}"
+                    class="d-flex align-items-center text-decoration-none sidebar-links {{ request()->routeIs('projects.*') ? 'active' : '' }}"">
                     <div class="flex-shrink-0">
 
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -58,7 +64,7 @@
     <div class="sidebar-nav mt-5 pt-3">
         <a href="#" class="d-flex align-items-center text-decoration-none">
             <div class="flex-shrink-0">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24"
                     fill="none">
                     <mask id="path-1-outside-1_2969_1217" maskUnits="userSpaceOnUse" x="-0.769531" y="-0.77002"
                         width="25" height="25" fill="black">
@@ -86,7 +92,7 @@
         <a href="{{ route('logout') }}" class="d-flex align-items-center text-decoration-none"
             onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
             <div class="flex-shrink-0">
-                <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" viewBox="0 0 23 23"
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 23 23"
                     fill="none">
                     <path
                         d="M11.4943 20.4303H5.10857C3.70371 20.4303 2.55428 19.281 2.55428 17.8765V5.10756C2.55428 3.70298 3.70371 2.55378 5.10857 2.55378H11.4943C12.1967 2.55378 12.7714 1.97918 12.7714 1.27689C12.7714 0.574601 12.1967 0 11.4943 0H5.10857C2.28608 0 0 2.28563 0 5.10756V17.8765C0 20.6984 2.28608 22.984 5.10857 22.984H11.4943C12.1967 22.984 12.7714 22.4094 12.7714 21.7071C12.7714 21.0049 12.1967 20.4303 11.4943 20.4303Z"
@@ -98,9 +104,9 @@
             </div>
             <div class="flex-grow-1 ms-3">Logout</div>
         </a>
-        <a href="#" class="d-flex align-items-center mt-5 text-decoration-none">
+        <a href="#" class="d-flex align-items-center text-decoration-none">
             <div class="flex-shrink-0">
-                <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" viewBox="0 0 23 23"
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 23 23"
                     fill="none">
                     <g clip-path="url(#clip0_2969_1222)">
                         <path

@@ -57,13 +57,15 @@
 
         <div class="account-wrap">
 
-            <div class="col-12 btn-wrap mt-4 mt-md-5 pt-xl-4">
+            <div class="col-12 btn-wrap mt-2">
                 <button type="submit" class="btn btn-primary w-100" id="verifyBtn" disabled>
                     Verify & Login
                 </button>
             </div>
 
-            <div class="col-12 login-text text-center mt-3 mt-md-5 pt-xl-3">
+            <div class="col-12 login-text text-center mt-3">
+                <p class="text-decoration-none">By continuing you agree to our <a href="#">privacy policy</a> and <a
+                        href="#">terms of use</a></p>
                 <p>
                     Already have an account?
                     <a href="{{ route('login') }}">Login</a>
@@ -76,7 +78,7 @@
 
 
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
+        document.addEventListener("DOMContentLoaded", function() {
 
             const inputs = document.querySelectorAll(".otp-input");
             const otpValue = document.getElementById("otpValue");
@@ -85,7 +87,7 @@
 
             inputs.forEach((input, index) => {
 
-                input.addEventListener("input", function () {
+                input.addEventListener("input", function() {
 
                     this.value = this.value.replace(/[^0-9]/g, '');
 
@@ -96,7 +98,7 @@
                     updateOTP();
                 });
 
-                input.addEventListener("keydown", function (e) {
+                input.addEventListener("keydown", function(e) {
                     if (e.key === "Backspace" && !this.value && index > 0) {
                         inputs[index - 1].focus();
                     }
@@ -104,7 +106,7 @@
 
             });
 
-            inputs[0].addEventListener("paste", function (e) {
+            inputs[0].addEventListener("paste", function(e) {
                 let paste = e.clipboardData.getData("text").trim();
 
                 if (/^\d{6}$/.test(paste)) {
@@ -128,7 +130,7 @@
                 submitBtn.disabled = !/^\d{6}$/.test(otp);
             }
 
-            form.addEventListener("submit", function (e) {
+            form.addEventListener("submit", function(e) {
                 let otp = otpValue.value;
 
                 if (!/^\d{6}$/.test(otp)) {

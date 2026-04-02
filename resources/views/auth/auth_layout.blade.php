@@ -38,7 +38,7 @@
     </div>
     <div class="auth-wrapper position-relative">
         <div class="bg-image position-absolute top-0 end-0 bottm-0 start-0 w-100">
-            <img src="{{ asset('img/register-background.png') }}" alt="FundInk graphic image"
+            <img src="{{ asset('img/beautiful-girl-works-office.webp') }}" alt="FundInk graphic image"
                 class="rounded-0 img-fluid" width="100%" height="100%" fetchpriority="high">
         </div>
         <div class="auth-inner d-flex justify-content-between gap-4 gap-lg-2 align-items-stretch position-relative ">
@@ -128,7 +128,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col form-col">
+            <div class="col form-col d-flex flex-column justify-content-center">
                 <div class="form-col-wrap">
                     {{-- Flash Messages --}}
                     @if (session('success'))

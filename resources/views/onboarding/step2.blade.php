@@ -1,81 +1,80 @@
 @extends('layouts.dashboard')
 
 @section('content')
- <div class="step-section position-relative mb-3">
-                    <div class="bg-image position-absolute top-0 start-0 w-100 h-100">
-                        <img src="{{ asset('img/dasboard-bg.png') }}" class="img-fluid" alt="steps section"
-                            width="100%" height="100%">
+    <div class="step-section position-relative mb-3">
+        <div class="bg-image position-absolute top-0 start-0 w-100 h-100">
+            <img src="{{ asset('img/dasboard-bg.png') }}" class="img-fluid" alt="steps section" width="100%" height="100%">
+        </div>
+        <div
+            class="step-wrapper d-flex flex-wrap justify-content-center justify-content-sm-between align-items-center py-3 py-md-4 py-xl-5 px-2 row-gap-2">
+            <div class="col-6 col-sm-4 step bold position-relative">
+                <div class="step-inner">
+                    <div class="step-circle active next d-flex justify-content-center align-items-center">
+                        <span></span>
                     </div>
-                    <div
-                        class="step-wrapper d-flex flex-wrap justify-content-center justify-content-sm-between align-items-center py-3 py-md-4 py-xl-5 px-2 row-gap-2">
-                        <div class="col-6 col-sm-4 step bold position-relative">
-                            <div class="step-inner">
-                                <div class="step-circle active next d-flex justify-content-center align-items-center">
-                                   <span></span>
-                                </div>
-                                <p>1. Organization Details</p>
-                            </div>
-                            <div class="progress-dots position-absolute">
-                                <span class="dot one"></span>
-                                <span class="dot two"></span>
-                                <span class="dot three"></span>
-                                <span class="dot four"></span>
-                                <span class="dot five"></span>
-                                <span class="dot five"></span>
-                                <span class="dot six"></span>
-                                <span class="dot seven"></span>
-                                <span class="dot nine"></span>
-                                <span class="dot"></span>
-                                <span class="dot"></span>
-                                <span class="dot"></span>
-                            </div>
-                        </div>
-                        <div class="col-6 col-sm-4 step bold">
-                            <div class="step-inner">
-                                <div class="step-circle active  d-flex justify-content-center align-items-center">
-                                     <img src="{{ asset('img/direction.png') }}" class="object-fit-contain"
-                                        alt="steps section" width="15px" height="11px">
-                                </div>
-                                <p>2. Office / Portal Address</p>
-                            </div>
-
-                            <div class="progress-dots position-absolute">
-                                <span class="dot one"></span>
-                                <span class="dot two"></span>
-                                <span class="dot three"></span>
-                                <span class="dot four"></span>
-                                <span class="dot five"></span>
-                                <span class="dot five"></span>
-                                <span class="dot six"></span>
-                                <span class="dot seven"></span>
-                                <span class="dot nine"></span>
-                                <span class="dot"></span>
-                                <span class="dot"></span>
-                                <span class="dot"></span>
-                            </div>
-                        </div>
-
-                        <div class="col-6 col-sm-4 step">
-                            <div class="step-circle d-flex justify-content-center align-items-center">
-                                <span></span>
-                            </div>
-                            <p>3. Not-for Profit/For Profit</p>
-                        </div>
-
-                    </div>
+                    <p>1. Organization Details</p>
                 </div>
+                <div class="progress-dots position-absolute">
+                    <span class="dot one"></span>
+                    <span class="dot two"></span>
+                    <span class="dot three"></span>
+                    <span class="dot four"></span>
+                    <span class="dot five"></span>
+                    <span class="dot five"></span>
+                    <span class="dot six"></span>
+                    <span class="dot seven"></span>
+                    <span class="dot nine"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                </div>
+            </div>
+            <div class="col-6 col-sm-4 step bold">
+                <div class="step-inner">
+                    <div class="step-circle active  d-flex justify-content-center align-items-center">
+                        <img src="{{ asset('img/direction.png') }}" class="object-fit-contain" alt="steps section"
+                            width="15px" height="11px">
+                    </div>
+                    <p>2. Address</p>
+                </div>
+
+                <div class="progress-dots position-absolute">
+                    <span class="dot one"></span>
+                    <span class="dot two"></span>
+                    <span class="dot three"></span>
+                    <span class="dot four"></span>
+                    <span class="dot five"></span>
+                    <span class="dot five"></span>
+                    <span class="dot six"></span>
+                    <span class="dot seven"></span>
+                    <span class="dot nine"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                </div>
+            </div>
+
+            <div class="col-6 col-sm-4 step">
+                <div class="step-circle d-flex justify-content-center align-items-center">
+                    <span></span>
+                </div>
+                <p>3. Organization Type</p>
+            </div>
+
+        </div>
+    </div>
     <div class="card-body p-0">
         <form method="POST" action="{{ route('onboarding.step2.store') }}">
             @csrf
             <div class="card p-3 p-md-4 border-0 mb-3 rounded-3">
                 <div class="mb-4">
-                    <h1 class="top-heading mb-0">Registered Address</h1>
+                    <h1 class="top-heading mb-0">Corporate Office Address</h1>
                 </div>
                 <div class="row mb-3 flex-wrap row-gap-3 row-gap-md-4 px-md-1">
                     <div class="col-12 col-md-6 col-xl-4 px-md-2">
-                        <label class="form-label">House / Flat / Floor / Door No<span>*</span></label>
-                        <input type="text" name="office_house_floor_no" class="form-control" placeholder="Enter here"
-                            required value="{{ optional($address)->office_house_floor_no }}">
+                        <label class="form-label">Town<span>*</span></label>
+                        <input type="text" name="office_town" class="form-control" placeholder="Enter town" required
+                            value="{{ old('office_town', $address?->office_town) }}">
                     </div>
 
                     <div class="col-12 col-md-6 col-xl-4 px-md-2">
@@ -90,18 +89,11 @@
                             value="{{ old('office_address_line_2', $address?->office_address_line_2) }}">
                     </div>
                     <hr class="mb-0">
-
-
-
-                    <div class="col-12 col-md-6 col-xl-4 px-md-2">
-                        <label class="form-label">Town<span>*</span></label>
-                        <input type="text" name="office_town" class="form-control" placeholder="Enter town" required
-                            value="{{ old('office_town', $address?->office_town) }}">
-                    </div>
-
                     <div class="col-12 col-md-6 col-xl-4 px-md-2">
                         <label class="form-label">City<span>*</span></label>
-
+                        <input type="text" name="office_city" class="form-control" placeholder="Enter Your City"
+                            value="">
+                        {{-- 
                         <div class="select-wrapper w-100 position-relative">
                             <div class="custom-select form-control">
                                 {{ old('office_city', $address->office_city ?? 'Select an option') }}
@@ -141,7 +133,7 @@
                                 <li data-value="Ranchi">Ranchi</li>
                                 <li data-value="Dehradun">Dehradun</li>
                             </ul>
-                        </div>
+                        </div> --}}
                     </div>
 
 
@@ -207,18 +199,17 @@
                             </ul>
                         </div>
                     </div>
-                    <hr class="mb-0">
-
                     <div class="col-12 col-md-6 col-xl-4 px-md-2">
                         <label class="form-label">State<span>*</span></label>
                         <input type="text" name="office_state" class="form-control" placeholder="Type here" required
                             value="{{ old('office_state', $address?->office_state) }}">
                     </div>
+                    <hr class="mb-0">
 
                     <div class="col-12 col-md-6 col-xl-4 px-md-2">
                         <label class="form-label">Pin Code<span>*</span></label>
-                        <input type="text" name="office_pin_code" class="form-control" placeholder="Enter pin code" required
-                            value="{{ old('office_pin_code', $address?->office_pin_code) }}">
+                        <input type="text" name="office_pin_code" class="form-control" placeholder="Enter pin code"
+                            required value="{{ old('office_pin_code', $address?->office_pin_code) }}">
                     </div>
                 </div>
             </div>
@@ -226,10 +217,11 @@
             <div class="card p-3 p-md-4 border-0 rounded-3">
                 <div>
                     <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h2 class="col top-heading mb-0">Office Address</h2>
+                        <h2 class="col top-heading mb-0">Registered Office Address</h2>
                         <div class="col-auto form-check">
                             <input class="form-check-input" type="checkbox" name="is_portal_same_as_office"
-                                id="sameAsOffice" value="1" {{ old('is_portal_same_as_office', $address?->is_portal_same_as_office) ? 'checked' : '' }}>
+                                id="sameAsOffice" value="1"
+                                {{ old('is_portal_same_as_office', $address?->is_portal_same_as_office) ? 'checked' : '' }}>
                             <label class="form-check-label" for="sameAsOffice">
                                 Same as Registered Address
                             </label>
@@ -239,20 +231,22 @@
                     <div id="portal-address-fields" class="row flex-wrap row-gap-4">
 
                         <div class="col-12 col-md-6 col-xl-4 px-md-2">
-                            <label class="form-label">House/Flat/Floor/Door No<span>*</span></label>
-                            <input type="text" name="portal_house_floor_no" class="form-control" placeholder="Enter here"
-                                value="{{ old('portal_house_floor_no', $address?->portal_house_floor_no) }}">
+                            <label class="form-label">Town<span>*</span></label>
+                            <input type="text" name="portal_house_floor_no" class="form-control" class="form-control"
+                                placeholder="Enter town" value="">
                         </div>
 
                         <div class="col-12 col-md-6 col-xl-4 px-md-2">
                             <label class="form-label">Address Line 1<span>*</span></label>
-                            <input type="text" name="portal_address_line_1" class="form-control" placeholder="Enter Address"
+                            <input type="text" name="portal_address_line_1" class="form-control"
+                                placeholder="Enter Address"
                                 value="{{ old('portal_address_line_1', $address?->portal_address_line_1) }}">
                         </div>
 
                         <div class="col-12 col-md-6 col-xl-4 px-md-2">
                             <label class="form-label">Address Line 2</label>
-                            <input type="text" name="portal_address_line_2" class="form-control" placeholder="Enter Address"
+                            <input type="text" name="portal_address_line_2" class="form-control"
+                                placeholder="Enter Address"
                                 value="{{ old('portal_address_line_2', $address?->portal_address_line_2) }}">
                         </div>
 
@@ -264,7 +258,7 @@
                                 value="{{ old('portal_town', $address?->portal_town) }}">
                         </div>
 
-                        <div class="col-12 col-md-6 col-xl-4 px-md-2">
+                        {{-- <div class="col-12 col-md-6 col-xl-4 px-md-2">
                             <label class="form-label">City<span>*</span></label>
 
                             <div class="select-wrapper w-100 position-relative">
@@ -308,7 +302,7 @@
                                     <li data-value="Dehradun">Dehradun</li>
                                 </ul>
                             </div>
-                        </div>
+                        </div> --}}
 
                         <div class="col-12 col-md-6 col-xl-4 px-md-2">
                             <label class="form-label">District<span>*</span></label>
@@ -373,29 +367,25 @@
                                 </ul>
                             </div>
                         </div>
-
-                        <hr class="mb-0">
-
                         <div class="col-12 col-md-6 col-xl-4 px-md-2">
                             <label class="form-label">State<span>*</span></label>
                             <input type="text" name="portal_state" class="form-control" placeholder="Type here"
                                 value="{{ old('portal_state', $address?->portal_state) }}">
                         </div>
-
+                        <hr class="mb-0">
                         <div class="col-12 col-md-6 col-xl-4 px-md-2">
                             <label class="form-label">Pin Code<span>*</span></label>
-                            <input type="text" name="portal_pin_code" class="form-control" placeholder="Enter pin code"
+                            <input type="text" name="portal_pin_code" class="form-control"
+                                placeholder="Enter pin code"
                                 value="{{ old('portal_pin_code', $address?->portal_pin_code) }}">
                         </div>
-
                     </div>
                 </div>
             </div>
-
             <div
                 class="d-flex justify-content-center justify-content-md-end gap-2 gap-md-3 mt-4 steps-btn pe-lg-4 flex-wrap">
                 <div class="btn-wrap">
-                    <button type="button" class="btn simple-btn">Cancel</button>
+                    <button type="button" class="btn simple-btn">Back</button>
                 </div>
                 <div class="btn-wrap">
                     <button type="submit" class="btn btn-primary">Next</button>
@@ -406,7 +396,7 @@
     </div>
 
     <script>
-        document.getElementById('sameAsOffice').addEventListener('change', function () {
+        document.getElementById('sameAsOffice').addEventListener('change', function() {
 
             const fields = [
                 ['office_house_floor_no', 'portal_house_floor_no'],
@@ -443,7 +433,4 @@
 
         });
     </script>
-
-
-
 @endsection

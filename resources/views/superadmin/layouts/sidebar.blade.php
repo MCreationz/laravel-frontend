@@ -50,11 +50,11 @@
         </li>
 
         <!-- Divider -->
-    <li class="nav-item mt-3">
-    <div class="text-uppercase fw-semibold text-light small px-3 opacity-75">
-        Configuration
-    </div>
-</li>
+        <li class="nav-item mt-3">
+            <div class="text-uppercase fw-semibold text-light small px-3 opacity-75">
+                Configuration
+            </div>
+        </li>
 
 
         <!-- Sectors -->
