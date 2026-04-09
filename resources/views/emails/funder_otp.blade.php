@@ -12,7 +12,7 @@
 <body>
     <div class="container">
         <h2>Hello {{ $organization->organization_name }},</h2>
-        <p>Thank you for registering as a Funder on Fundink. Please verify your email using the OTP below:</p>
+        <p>Thank you for registering as a Startup on Fundink. Please verify your email using the OTP below:</p>
         <div class="otp">{{ $otp }}</div>
         <p class="note">This OTP is valid for {{ $expiryMinutes }} minutes.</p>
         <p>We look forward to your contributions!</p>

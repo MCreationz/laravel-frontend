@@ -21,8 +21,7 @@
 </head>
 
 <body>
-    <div id="pageLoader"
-        style="
+    <div id="pageLoader" style="
     display:none;
     position:fixed;
     top:0;
@@ -53,8 +52,8 @@
                         <div class="col-auto">
                             <div class="d-flex align-items-center">
                                 <div class="flex-shrink-0">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15"
-                                        viewBox="0 0 15 15" fill="none">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 15 15"
+                                        fill="none">
                                         <g clip-path="url(#clip0_3723_3729)">
                                             <path
                                                 d="M14.5711 2.05069C14.3504 1.82964 13.9924 1.82926 13.7717 2.04975L6.98968 8.81387L4.54274 6.15626C4.33131 5.92675 3.97383 5.91187 3.74393 6.12328C3.51422 6.33471 3.49951 6.69237 3.71094 6.92208L6.55643 10.0123C6.60798 10.0684 6.67033 10.1134 6.73973 10.1447C6.80913 10.176 6.88414 10.193 6.96026 10.1946C6.96439 10.1947 6.96838 10.1947 6.97233 10.1947C7.12193 10.1947 7.26543 10.1354 7.37144 10.0299L14.5699 2.85023C14.7912 2.62977 14.7915 2.27173 14.5711 2.05069Z"
@@ -78,8 +77,8 @@
                         <div class="col-auto">
                             <div class="d-flex align-items-center">
                                 <div class="flex-shrink-0">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15"
-                                        viewBox="0 0 15 15" fill="none">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 15 15"
+                                        fill="none">
                                         <g clip-path="url(#clip0_3723_3729)">
                                             <path
                                                 d="M14.5711 2.05069C14.3504 1.82964 13.9924 1.82926 13.7717 2.04975L6.98968 8.81387L4.54274 6.15626C4.33131 5.92675 3.97383 5.91187 3.74393 6.12328C3.51422 6.33471 3.49951 6.69237 3.71094 6.92208L6.55643 10.0123C6.60798 10.0684 6.67033 10.1134 6.73973 10.1447C6.80913 10.176 6.88414 10.193 6.96026 10.1946C6.96439 10.1947 6.96838 10.1947 6.97233 10.1947C7.12193 10.1947 7.26543 10.1354 7.37144 10.0299L14.5699 2.85023C14.7912 2.62977 14.7915 2.27173 14.5711 2.05069Z"
@@ -103,8 +102,8 @@
                         <div class="col-auto">
                             <div class="d-flex align-items-center">
                                 <div class="flex-shrink-0">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15"
-                                        viewBox="0 0 15 15" fill="none">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 15 15"
+                                        fill="none">
                                         <g clip-path="url(#clip0_3723_3729)">
                                             <path
                                                 d="M14.5711 2.05069C14.3504 1.82964 13.9924 1.82926 13.7717 2.04975L6.98968 8.81387L4.54274 6.15626C4.33131 5.92675 3.97383 5.91187 3.74393 6.12328C3.51422 6.33471 3.49951 6.69237 3.71094 6.92208L6.55643 10.0123C6.60798 10.0684 6.67033 10.1134 6.73973 10.1447C6.80913 10.176 6.88414 10.193 6.96026 10.1946C6.96439 10.1947 6.96838 10.1947 6.97233 10.1947C7.12193 10.1947 7.26543 10.1354 7.37144 10.0299L14.5699 2.85023C14.7912 2.62977 14.7915 2.27173 14.5711 2.05069Z"
@@ -130,18 +129,23 @@
             </div>
             <div class="col form-col d-flex flex-column justify-content-center">
                 <div class="form-col-wrap">
-                    {{-- Flash Messages --}}
-                    @if (session('success'))
-                        <div class="alert alert-success">
-                            {{ session('success') }}
-                        </div>
-                    @endif
 
-@if (session('error'))
-    <div class="alert alert-danger">
-        {{ session('error') }}
-    </div>
-@endif
+                    {{-- Flash Messages (hidden on OTP routes) --}}
+                    @if (!in_array(Route::currentRouteName(), ['login.otp', 'verify.otp']))
+
+                        @if (session('success'))
+                            <div class="alert alert-success">
+                                {{ session('success') }}
+                            </div>
+                        @endif
+
+                        @if (session('error'))
+                            <div class="alert alert-danger">
+                                {{ session('error') }}
+                            </div>
+                        @endif
+
+                    @endif
 
                     {{-- Page Content --}}
                     @yield('content')
@@ -157,21 +161,21 @@
 
 </body>
 <script>
-    document.querySelectorAll('form').forEach(function(form) {
-        form.addEventListener('submit', function() {
+    document.querySelectorAll('form').forEach(function (form) {
+        form.addEventListener('submit', function () {
             document.getElementById('pageLoader').style.display = 'flex';
         });
     });
 </script>
 
 <script>
-    document.querySelectorAll(".select-wrapper").forEach(function(wrapper) {
+    document.querySelectorAll(".select-wrapper").forEach(function (wrapper) {
 
         const selectBox = wrapper.querySelector(".custom-select");
         const optionsList = wrapper.querySelector(".select-list");
         const hiddenInput = wrapper.querySelector(".hidden-select");
 
-        selectBox.addEventListener("click", function(e) {
+        selectBox.addEventListener("click", function (e) {
             e.stopPropagation();
 
             document.querySelectorAll(".select-list").forEach(list => {
@@ -182,9 +186,9 @@
                 optionsList.style.display === "block" ? "none" : "block";
         });
 
-        optionsList.querySelectorAll("li").forEach(function(option) {
+        optionsList.querySelectorAll("li").forEach(function (option) {
 
-            option.addEventListener("click", function() {
+            option.addEventListener("click", function () {
 
                 selectBox.textContent = this.textContent;
                 hiddenInput.value = this.getAttribute("data-value");
@@ -196,7 +200,7 @@
 
     });
 
-    document.addEventListener("click", function() {
+    document.addEventListener("click", function () {
         document.querySelectorAll(".select-list").forEach(list => {
             list.style.display = "none";
         });

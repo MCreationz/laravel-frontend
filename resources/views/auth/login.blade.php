@@ -51,7 +51,8 @@
             </div>
 
             <div class="col-12 login-text text-center mt-3">
-                <p class="text-decoration-none">By continuing you agree to our <a href="#">privacy policy</a> and <a href="#">terms of use</a></p>
+                <p class="text-decoration-none">By continuing you agree to our <a href="#">privacy policy</a> and <a
+                        href="#">terms of use</a></p>
                 <p>
                     Don’t have an account?
                     <a href="{{ route('register') }}">Register</a>

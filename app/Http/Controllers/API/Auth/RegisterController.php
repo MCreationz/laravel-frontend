@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Organization;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\ValidationException;
@@ -14,6 +15,8 @@ class RegisterController extends Controller
 {
     public function registerStepOne(Request $request)
     {
+
+        // return $request->all();
         try {
 
             $request->validate([
@@ -115,6 +118,14 @@ class RegisterController extends Controller
                 ->with('email', $email);
         }
 
+        // Safety check (you missed this in your original logic)
+        if (! $organization->otp_code) {
+            return redirect()->back()
+                ->with('error', 'OTP not generated.')
+                ->withInput()
+                ->with('email', $email);
+        }
+
         if ($organization->otp_code != $request->otp) {
             return redirect()->back()
                 ->with('error', 'Invalid OTP.')
@@ -129,16 +140,23 @@ class RegisterController extends Controller
                 ->with('email', $email);
         }
 
+        // Mark verified + clear OTP
         $organization->update([
             'otp_code' => null,
             'otp_expires_at' => null,
             'email_verified_at' => now(),
         ]);
 
+        // LOGIN USER (this is the key change)
+        Auth::guard('organization')->login($organization);
+
+        $request->session()->regenerate();
+
         session()->forget('email');
 
-        return redirect()->route('login')
-            ->with('success', 'Email verified successfully. Please log in.');
+        return redirect()
+            ->route('dashboard')
+            ->with('success', 'Email verified successfully');
     }
 
     public function resendOtp(Request $request)

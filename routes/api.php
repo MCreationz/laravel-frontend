@@ -3,7 +3,6 @@
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\CompanyController;
 use App\Http\Controllers\API\ContactInquiryController;
-use App\Http\Controllers\OrganizationFunderController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1')->group(function () {
@@ -31,12 +30,6 @@ Route::prefix('v1')->group(function () {
             Route::get('/{company}/users', [CompanyController::class, 'getUsers']);
         });
 
-
+    });
 
 });
-
-
-
-     
-
-    });

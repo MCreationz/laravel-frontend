@@ -55,8 +55,8 @@
                         {{ old('role') ? ucfirst(str_replace('_', ' ', old('role'))) : 'Select an option' }}
                     </div>
                     <ul class="select-list">
-                        <li data-value="NPO">NPO</li>
-                        <li data-value="Startup">Startup</li>
+                        <li data-value="fund_seeker">NPO</li>
+                        <li data-value="funder">Startup</li>
                     </ul>
 
                     <input type="hidden" name="role" class="hidden-select" value="{{ old('role') }}">
