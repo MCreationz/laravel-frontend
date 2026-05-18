@@ -2,7 +2,7 @@
     <div class="brand">FUNDINK</div>
     <div class="nav-links">
         <a href="{{ route('login') }}">Login</a>
-        <a href="{{ route('register') }}">Signup</a>
+        <a href="{{ route('organization.type') }}">Signup</a>
     </div>
 </div>
 
