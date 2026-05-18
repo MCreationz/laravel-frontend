@@ -1,11 +1,15 @@
 <?php
 
+use App\Http\Controllers\SuperAdmin\ApplicantController;
 use App\Http\Controllers\SuperAdmin\ApplicationController;
 use App\Http\Controllers\SuperAdmin\Auth\LoginController;
+use App\Http\Controllers\SuperAdmin\ClientAdminController;
 use App\Http\Controllers\SuperAdmin\CompanyController;
 use App\Http\Controllers\SuperAdmin\DashboardController;
+use App\Http\Controllers\SuperAdmin\FundController;
 use App\Http\Controllers\SuperAdmin\FundingCategoryController;
 use App\Http\Controllers\SuperAdmin\ProjectController;
+use App\Http\Controllers\SuperAdmin\ReviewerController;
 use App\Http\Controllers\SuperAdmin\SectorController;
 use App\Http\Controllers\SuperAdmin\SettingsController;
 use App\Http\Controllers\SuperAdmin\UserController;
@@ -42,6 +46,8 @@ Route::prefix('super-admin')
         | Applications
         |--------------------------------------------------------------------------
         */
+        
+        
         Route::get('/applications', [ApplicationController::class, 'index'])
             ->name('applications.index');
 
@@ -59,6 +65,8 @@ Route::prefix('super-admin')
 
         Route::delete('/applications/{application}', [ApplicationController::class, 'destroy'])
             ->name('applications.destroy');
+
+
 
         /*
         |--------------------------------------------------------------------------
@@ -144,6 +152,23 @@ Route::prefix('super-admin')
         | Settings
         |--------------------------------------------------------------------------
         */
-            Route::resource('projects', ProjectController::class);
+        Route::resource('projects', ProjectController::class);
+        Route::resource('client-admins', ClientAdminController::class);
+
+        // Dashboard
+        // Route::get('/dashboard', [DashboardController::class, 'index'])
+        //     ->name('dashboard');
+
+        // Applicants
+        Route::get('/applicants', [ApplicantController::class, 'index'])
+            ->name('applicants.index');
+
+        // Reviewers
+        Route::get('/reviewers', [ReviewerController::class, 'index'])
+            ->name('reviewers.index');
+
+        // Funds
+        Route::get('/funds', [FundController::class, 'index'])
+            ->name('funds.index');
 
     });
