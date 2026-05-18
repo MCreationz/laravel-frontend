@@ -6,6 +6,13 @@
 @section('content')
 
     <div class="form-heading mb-5 pb-lg-4">
+        <div class="with-back d-flex justify-content-between align-items-center mb-4">
+            <div class="gradient-icon ">
+                <img src="{{ asset('img/direction.png') }}" alt="direction icon" width="25.228912353515625"
+                    height="18.28917694091797" fetchpriority="high">
+            </div>
+            <a href="#" class="back-btn">Go Back</a>
+        </div>
         <h1>Verify your Email</h1>
         <p class="font-small">
             We’ve sent a 6-digit verification code to your registered email address. Please enter the code below to securely
@@ -20,17 +27,17 @@
         @csrf
 
         <div class="fields-wrap">
-                @if (session('success'))
-                            <div class="alert alert-success">
-                                {{ session('success') }}
-                            </div>
-                        @endif
+            @if (session('success'))
+                <div class="alert alert-success">
+                    {{ session('success') }}
+                </div>
+            @endif
 
-                        @if (session('error'))
-                            <div class="alert alert-danger">
-                                {{ session('error') }}
-                            </div>
-                        @endif
+            @if (session('error'))
+                <div class="alert alert-danger">
+                    {{ session('error') }}
+                </div>
+            @endif
 
             <div class="otp-container">
 

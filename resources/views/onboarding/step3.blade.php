@@ -7,12 +7,13 @@
         </div>
         <div
             class="step-wrapper d-flex flex-wrap justify-content-center justify-content-sm-between align-items-center py-3 py-md-4 py-xl-5 px-2 row-gap-2">
-            <div class="col-6 col-sm-4 step bold position-relative">
+            <div class="col-6 col-sm-4 step bold active position-relative done">
                 <div class="step-inner">
-                    <div class="step-circle active d-flex justify-content-center align-items-center">
-                        <span></span>
+                    <div class="step-circle active d-flex justify-content-center align-items-center done">
+                        <img src="{{ asset('img/checkmark.png') }}" class="object-fit-contain" alt="steps section"
+                            width="15px" height="11px">
                     </div>
-                    <p>1. Organization Details</p>
+                    <p>1. Basic Details</p>
                 </div>
                 <div class="progress-dots position-absolute">
                     <span class="dot one"></span>
@@ -29,10 +30,11 @@
                     <span class="dot"></span>
                 </div>
             </div>
-            <div class="col-6 col-sm-4 step bold">
+            <div class="col-6 col-sm-4 step bold active done">
                 <div class="step-inner">
-                    <div class="step-circle next d-flex justify-content-center align-items-center">
-                        <span></span>
+                    <div class="step-circle active d-flex justify-content-center align-items-center active done">
+                        <img src="{{ asset('img/checkmark.png') }}" class="object-fit-contain" alt="steps section"
+                            width="15px" height="11px">
                     </div>
                     <p>2. Address</p>
                 </div>
@@ -53,13 +55,12 @@
                 </div>
             </div>
 
-            <div class="col-6 col-sm-4 step">
-                <div class="step-circle active d-flex justify-content-center align-items-center">
-
+            <div class="col-6 col-sm-4 step active">
+                <div class="step-circle active d-flex justify-content-center align-items-center active">
                     <img src="{{ asset('img/direction.png') }}" class="object-fit-contain" alt="steps section"
                         width="15px" height="11px">
                 </div>
-                <p>3. Organization Type</p>
+                <p>3. Organization Details</p>
             </div>
 
         </div>
@@ -69,39 +70,118 @@
         <form id="onboardingForm" method="POST" action="{{ route('onboarding.step3.store') }}"> @csrf
             <div class="card p-3 p-md-4 border-0 mb-3 rounded-3">
                 <div class="mb-4">
-                    <h1 class="top-heading mb-0">Organization type</h1>
+                    <h1 class="top-heading mb-2">NPO Credentials</h1>
+                    <p>Tell us about your organisation's legal structure and financial track record</p>
                 </div>
-
-
                 <div class="row mb-3 flex-wrap row-gap-3 row-gap-md-4 px-md-1">
-
-                    <!-- Organization Type -->
-                    {{-- <div class="col-12 col-md-6 col-xl-4 px-md-2">
-                        <label class="form-label">What best describe your organization:<span>*</span></label>
+                    <!-- State -->
+                    <!-- Registration Type -->
+                    <div class="col-12 col-md-6 col-xl-4 px-md-2">
+                        <label class="form-label">Organization Legal Type<span>*</span></label>
 
                         @php
-                            $orgType = old('organization_type', $operationalDetail->organization_type ?? '');
+                            $registrationType = old('registration_type', $operationalDetail->registration_type ?? '');
+
+                            $labels = [
+                                'society' => 'Society',
+                                'trust' => 'Trust',
+                                'section_8_company' => 'Section 8 Company',
+                            ];
                         @endphp
 
+
+
                         <div class="select-wrapper w-100 position-relative">
-                            <div class="custom-select form-control @error('organization_type') is-invalid @enderror">
-                                {{ $orgType ? ucfirst(str_replace('_', ' ', $orgType)) : 'Select an option' }}
+                            <div class="custom-select form-control">
+                                {{ $registrationType ? $labels[$registrationType] ?? 'Select' : 'Select entity type' }}
                             </div>
 
                             <ul class="select-list">
-                                <li data-value="non_profit">Non Profit</li>
-                                <li data-value="profit">For Profit</li>
+                                <li data-value="society">Society</li>
+                                <li data-value="trust">Trust</li>
+                                <li data-value="section_8_company">Section 8 Company</li>
                             </ul>
 
-                            <input type="hidden" name="organization_type" class="hidden-select" value="{{ $orgType }}">
+                            <input type="hidden" name="registration_type" class="hidden-select"
+                                value="{{ $registrationType }}">
                         </div>
 
-                        @error('organization_type')
+                        @error('registration_type')
                             <div class="text-danger small">{{ $message }}</div>
                         @enderror
-                    </div> --}}
+                    </div>
+                    <!-- Domain of Expertise -->
+                    <div class="col-12 col-md-6 col-xl-4 px-md-2">
+                        <label class="form-label">Domain of Expertise<span>*</span></label>
 
-                    <!-- State -->
+                        @php
+                            $domain = old('domain_of_expertise', $operationalDetail->domain_of_expertise ?? '');
+                        @endphp
+
+                        <div class="select-wrapper w-100 position-relative">
+                            <div class="custom-select form-control @error('domain_of_expertise') is-invalid @enderror">
+                                {{ $domain ? $domain : 'Select expertise' }}
+                            </div>
+
+                            <ul class="select-list">
+                                <li data-value="school-Education">School Education (Primary & Secondary)</li>
+                                <li data-value="Higher-Education">Higher Education Support</li>
+                                <li data-value="Digital">Digital Education</li>
+                                <li data-value="STEM">STEM Education</li>
+                                <li data-value="Special">Special Education (Children with Disabilities)</li>
+                                <li data-value="Vocational">Vocational Training & Skill Development</li>
+                                <li data-value="Employability">Employability & Livelihood Programs</li>
+                                <li data-value="Healthcare">Primary Healthcare</li>
+                                <li data-value="Maternal">Maternal & Child Health</li>
+                                <li data-value="Nutrition">Nutrition & Malnutrition</li>
+                                <li data-value="Mental">Mental Health</li>
+                                <li data-value="Disability">Disability Rehabilitation</li>
+                                <li data-value="Sanitation">Public Health & Sanitation</li>
+                                <li data-value="Preventive">Preventive Healthcare & Awareness</li>
+                                <li data-value="HIV/AIDS">HIV/AIDS & Communicable Diseases</li>
+                                <li data-value="Empowerment">Women Empowerment</li>
+                                <li data-value="Gender-Equality">Gender Equality</li>
+                                <li data-value="Violence">Prevention of Domestic Violence</li>
+                                <li data-value="Development">Girl Child Development</li>
+                                <li data-value="Protection">Child Protection & Child Rights</li>
+                                <li data-value="Livelihoods">Rural Livelihoods</li>
+                                <li data-value="Urban">Urban Livelihoods</li>
+                                <li data-value="Self-Help">Self-Help Groups (SHGs)</li>
+                                <li data-value="Microfinance">Microfinance & Financial Inclusion</li>
+                                <li data-value="Entrepreneurship">Entrepreneurship Development</li>
+                                <li data-value="Environmental">Environmental Conservation</li>
+                                <li data-value="Climate">Climate Action</li>
+                                <li data-value="Afforestation">Afforestation</li>
+                                <li data-value="Water">Water Conservation</li>
+                                <li data-value="Waste-Management">Waste Management</li>
+                                <li data-value="Renewable">Renewable Energy Access</li>
+                                <li data-value="Biodiversity">Biodiversity Protection</li>
+                                <li data-value="Rural">Rural Development Projects</li>
+                                <li data-value="Infrastructure">Infrastructure Development (Community Assets)</li>
+                                <li data-value="Drinking">Drinking Water Projects</li>
+                                <li data-value="Sanitation">Sanitation & Hygiene (WASH)</li>
+                                <li data-value="Rights">Human Rights</li>
+                                <li data-value="Legal">Legal Aid & Access to Justice</li>
+                                <li data-value="Governance">Governance & Civic Participation</li>
+                                <li data-value="Transparency">Transparency & Accountability</li>
+                                <li data-value="Senior">Senior Citizens Welfare</li>
+                                <li data-value="Persons">Persons with Disabilities</li>
+                                <li data-value="Tribal">Tribal Development</li>
+                                <li data-value="Minority">Minority Welfare</li>
+                                <li data-value="Migrant">Migrant Workers Support</li>
+                                <li data-value="Disaster">Disaster Relief & Rehabilitation</li>
+                                <li data-value="Emergency">Emergency Response & Humanitarian Aid</li>
+                            </ul>
+
+                            <input type="hidden" name="domain_of_expertise" class="hidden-select"
+                                value="{{ $domain }}">
+                        </div>
+
+                        @error('domain_of_expertise')
+                            <div class="text-danger small">{{ $message }}</div>
+                        @enderror
+                    </div>
+
                     <div class="col-12 col-md-6 col-xl-4 px-md-2">
                         <label class="form-label">Operational States<span>*</span></label>
 
@@ -154,131 +234,7 @@
                     </div>
 
                 </div>
-
-
-                <hr class="mb-0">
-                {{-- --}}
                 <div class="inner-fields mt-4" id="section_non_profit">
-
-                    <div class="mb-4">
-                        <h2 class="inner-title mb-0">Startup Credentials</h2>
-                    </div>
-
-                    <div class="row mb-4 pb-1 flex-wrap row-gap-3 row-gap-md-4 px-md-1">
-
-                        <!-- Registration Type -->
-                        <div class="col-12 col-md-6 col-xl-5 px-md-2">
-                            <label class="form-label">Organization Legal Type<span>*</span></label>
-
-                            @php
-                                $registrationType = old(
-                                    'registration_type',
-                                    $operationalDetail->registration_type ?? '',
-                                );
-
-                                $labels = [
-                                    'society' => 'Society',
-                                    'trust' => 'Trust',
-                                    'section_8_company' => 'Section 8 Company',
-                                ];
-                            @endphp
-
-
-
-                            <div class="select-wrapper w-100 position-relative">
-                                <div class="custom-select form-control">
-                                    {{ $registrationType ? $labels[$registrationType] ?? 'Select' : 'Select' }}
-                                </div>
-
-                                <ul class="select-list">
-                                    <li data-value="society">Society</li>
-                                    <li data-value="trust">Trust</li>
-                                    <li data-value="section_8_company">Section 8 Company</li>
-                                </ul>
-
-                                <input type="hidden" name="registration_type" class="hidden-select"
-                                    value="{{ $registrationType }}">
-                            </div>
-
-                            @error('registration_type')
-                                <div class="text-danger small">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        <!-- Domain of Expertise -->
-                        <div class="col-12 col-md-6 col-xl-5 px-md-2">
-                            <label class="form-label">Domain of Expertise<span>*</span></label>
-
-                            @php
-                                $domain = old('domain_of_expertise', $operationalDetail->domain_of_expertise ?? '');
-                            @endphp
-
-                            <div class="select-wrapper w-100 position-relative">
-                                <div class="custom-select form-control @error('domain_of_expertise') is-invalid @enderror">
-                                    {{ $domain ? $domain : 'Select' }}
-                                </div>
-
-                                <ul class="select-list">
-                                    <li data-value="school-Education">School Education (Primary & Secondary)</li>
-                                    <li data-value="Higher-Education">Higher Education Support</li>
-                                    <li data-value="Digital">Digital Education</li>
-                                    <li data-value="STEM">STEM Education</li>
-                                    <li data-value="Special">Special Education (Children with Disabilities)</li>
-                                    <li data-value="Vocational">Vocational Training & Skill Development</li>
-                                    <li data-value="Employability">Employability & Livelihood Programs</li>
-                                    <li data-value="Healthcare">Primary Healthcare</li>
-                                    <li data-value="Maternal">Maternal & Child Health</li>
-                                    <li data-value="Nutrition">Nutrition & Malnutrition</li>
-                                    <li data-value="Mental">Mental Health</li>
-                                    <li data-value="Disability">Disability Rehabilitation</li>
-                                    <li data-value="Sanitation">Public Health & Sanitation</li>
-                                    <li data-value="Preventive">Preventive Healthcare & Awareness</li>
-                                    <li data-value="HIV/AIDS">HIV/AIDS & Communicable Diseases</li>
-                                    <li data-value="Empowerment">Women Empowerment</li>
-                                    <li data-value="Gender-Equality">Gender Equality</li>
-                                    <li data-value="Violence">Prevention of Domestic Violence</li>
-                                    <li data-value="Development">Girl Child Development</li>
-                                    <li data-value="Protection">Child Protection & Child Rights</li>
-                                    <li data-value="Livelihoods">Rural Livelihoods</li>
-                                    <li data-value="Urban">Urban Livelihoods</li>
-                                    <li data-value="Self-Help">Self-Help Groups (SHGs)</li>
-                                    <li data-value="Microfinance">Microfinance & Financial Inclusion</li>
-                                    <li data-value="Entrepreneurship">Entrepreneurship Development</li>
-                                    <li data-value="Environmental">Environmental Conservation</li>
-                                    <li data-value="Climate">Climate Action</li>
-                                    <li data-value="Afforestation">Afforestation</li>
-                                    <li data-value="Water">Water Conservation</li>
-                                    <li data-value="Waste-Management">Waste Management</li>
-                                    <li data-value="Renewable">Renewable Energy Access</li>
-                                    <li data-value="Biodiversity">Biodiversity Protection</li>
-                                    <li data-value="Rural">Rural Development Projects</li>
-                                    <li data-value="Infrastructure">Infrastructure Development (Community Assets)</li>
-                                    <li data-value="Drinking">Drinking Water Projects</li>
-                                    <li data-value="Sanitation">Sanitation & Hygiene (WASH)</li>
-                                    <li data-value="Rights">Human Rights</li>
-                                    <li data-value="Legal">Legal Aid & Access to Justice</li>
-                                    <li data-value="Governance">Governance & Civic Participation</li>
-                                    <li data-value="Transparency">Transparency & Accountability</li>
-                                    <li data-value="Senior">Senior Citizens Welfare</li>
-                                    <li data-value="Persons">Persons with Disabilities</li>
-                                    <li data-value="Tribal">Tribal Development</li>
-                                    <li data-value="Minority">Minority Welfare</li>
-                                    <li data-value="Migrant">Migrant Workers Support</li>
-                                    <li data-value="Disaster">Disaster Relief & Rehabilitation</li>
-                                    <li data-value="Emergency">Emergency Response & Humanitarian Aid</li>
-                                </ul>
-
-                                <input type="hidden" name="domain_of_expertise" class="hidden-select"
-                                    value="{{ $domain }}">
-                            </div>
-
-                            @error('domain_of_expertise')
-                                <div class="text-danger small">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                    </div>
-
                     <!-- Toggles -->
                     @php
                         $status12a = old('status_12a', $operationalDetail->status_12a ?? 0);
@@ -286,65 +242,63 @@
                         $statusFcra = old('status_fcra', $operationalDetail->status_fcra ?? 0);
                         $csr1 = old('csr_1_registration', $operationalDetail->csr_1_registration ?? 0);
                     @endphp
-
                 </div>
-                <hr class="mb-0">
-                <div class="inner-fields mt-4">
+                <div class="inner-fields">
                     <div class="mb-4">
                         <h2 class="inner-title">Applicable Registration & Certification</h2>
                     </div>
-                    <div class="row toggle-container mb-3">
-                        <div class="col-auto toggle-item">
-                            <span>12A Status</span>
-                            <label class="switch">
-                                <input type="hidden" name="status_12a" value="0">
-                                <input type="checkbox" name="status_12a" value="1"
-                                    {{ $status12a ? 'checked' : '' }}>
-                                <span class="slider"></span>
-                            </label>
+                    <div class="row toggle-container mb-3 justify-content-start gap-0 row-gap-3">
+                        <div class="col-12 col-sm-6 col-md-auto toggle-item">
+                            <div class="toggle-wrap">
+                                <span class="font-small">12A Registration</span>
+                                <label class="switch mb-0">
+                                    <input type="hidden" name="status_12a" value="0">
+                                    <input type="checkbox" name="status_12a" value="1"
+                                        {{ $status12a ? 'checked' : '' }}>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
                         </div>
-
-                        <div class="col-auto toggle-item">
-                            <span>80G Status</span>
-                            <label class="switch">
-                                <input type="hidden" name="status_80g" value="0">
-                                <input type="checkbox" name="status_80g" value="1"
-                                    {{ $status80g ? 'checked' : '' }}>
-                                <span class="slider"></span>
-                            </label>
+                        <div class="col-12 col-sm-6 col-md-auto toggle-item">
+                            <div class="toggle-wrap">
+                                <span class="font-small">80G Registration</span>
+                                <label class="switch mb-0">
+                                    <input type="hidden" name="status_80g" value="0">
+                                    <input type="checkbox" name="status_80g" value="1"
+                                        {{ $status80g ? 'checked' : '' }}>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
                         </div>
-
-                        <div class="col-auto toggle-item">
-                            <span>FCRA Status</span>
-                            <label class="switch">
-                                <input type="hidden" name="status_fcra" value="0">
-                                <input type="checkbox" name="status_fcra" value="1"
-                                    {{ $statusFcra ? 'checked' : '' }}>
-                                <span class="slider"></span>
-                            </label>
+                        <div class="col-12 col-sm-6 col-md-auto toggle-item">
+                            <div class="toggle-wrap">
+                                <span class="font-small">FCRA Registration</span>
+                                <label class="switch mb-0">
+                                    <input type="hidden" name="status_fcra" value="0">
+                                    <input type="checkbox" name="status_fcra" value="1"
+                                        {{ $statusFcra ? 'checked' : '' }}>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
                         </div>
-
-                        <div class="col-auto toggle-item">
-                            <span>CSR-1 Registration</span>
-                            <label class="switch">
-                                <input type="hidden" name="csr_1_registration" value="0">
-                                <input type="checkbox" name="csr_1_registration" value="1"
-                                    {{ $csr1 ? 'checked' : '' }}>
-                                <span class="slider"></span>
-                            </label>
+                        <div class="col-12 col-sm-6 col-md-auto toggle-item">
+                            <div class="toggle-wrap">
+                                <span class="font-small">CSR-1 Registration</span>
+                                <label class="switch mb-0">
+                                    <input type="hidden" name="csr_1_registration" value="0">
+                                    <input type="checkbox" name="csr_1_registration" value="1"
+                                        {{ $csr1 ? 'checked' : '' }}>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
                         </div>
-
                     </div>
                 </div>
-
                 <div class="inner-fields mt-4" id="section_profit" style="display: none;">
-
                     <div class="mb-4">
                         <h2 class="inner-title mb-0">NPO Credentials</h2>
                     </div>
-
                     <div class="row mb-4 pb-1 flex-wrap row-gap-3 row-gap-md-4 px-md-1">
-
                         <!-- Registration Type -->
                         <div class="col-12 col-md-4 col-xl-4 px-md-2">
                             <label class="form-label">Registration Type<span>*</span></label>
@@ -571,9 +525,7 @@
                                 </p>
                             </div>
 
-                           <textarea name="key_achievements" rows="5"
-    class="form-control"
-    placeholder="Enter Achievements">{{ $achievements }}</textarea>
+                            <textarea name="key_achievements" rows="5" class="form-control" placeholder="Enter Achievements">{{ $achievements }}</textarea>
 
                             @error('key_achievements')
                                 <div class="text-danger small">{{ $message }}</div>
@@ -607,8 +559,8 @@
                     <div class="row mb-3 flex-wrap row-gap-3 row-gap-md-4 px-md-1">
 
                         <!-- Lifetime Revenue -->
-                        <div class="col-12 col-md-6 col-lg-3 px-md-2">
-                            <label class="form-label">Last to Last Year Turnover (₹ Lakh)<span>*</span></label>
+                        <div class="col-12 col-md-6 col-lg-4 px-md-2">
+                            <label class="form-label">Ongoing Year Turnover (till last month) (₹ Lakh)<span>*</span></label>
 
                             <input type="number" name="lifetime_revenue_lakh"
                                 class="form-control @error('lifetime_revenue_lakh') is-invalid @enderror"
@@ -621,13 +573,12 @@
                         </div>
 
                         <!-- Ongoing Year -->
-                        <div class="col-12 col-md-6 col-lg-3 px-md-2">
-                            <label class="form-label">Ongoing Year Turnover (till last month) (₹
-                                Lakh)<span>*</span></label>
+                        <div class="col-12 col-md-6 col-lg-4 px-md-2">
+                            <label class="form-label">Last Year Turnover (₹ Lakh)<span>*</span></label>
 
                             <input type="number" name="ongoing_year_revenue_lakh"
                                 class="form-control @error('ongoing_year_revenue_lakh') is-invalid @enderror"
-                                value="{{ $ongoing }}" placeholder="Enter Amount" required>
+                                value="{{ $ongoing }}" placeholder="Enter amount, if you have zero turnover just put 0" required>
 
                             @error('ongoing_year_revenue_lakh')
                                 <div class="text-danger small">{{ $message }}</div>
@@ -635,12 +586,12 @@
                         </div>
 
                         <!-- Last Year -->
-                        <div class="col-12 col-md-6 col-lg-3 px-md-2">
-                            <label class="form-label">Last Year Turnover (₹00.00 Lakh)<span>*</span></label>
+                        <div class="col-12 col-md-6 col-lg-4 px-md-2">
+                            <label class="form-label">Last to Last Year Turnover (₹ Lakh)<span>*</span></label>
 
                             <input type="number" name="last_year_revenue_lakh"
                                 class="form-control @error('last_year_revenue_lakh') is-invalid @enderror"
-                                value="{{ $lastYear }}" placeholder="Enter Amount" required>
+                                value="{{ $lastYear }}" placeholder="Enter amount, If you have zero turnover then put 0" required>
 
                             @error('last_year_revenue_lakh')
                                 <div class="text-danger small">{{ $message }}</div>
@@ -648,7 +599,7 @@
                         </div>
 
                         <!-- Last to Last Year -->
-                        <div class="col-12 col-md-6 col-lg-3 px-md-2">
+                        {{-- <div class="col-12 col-md-6 col-lg-3 px-md-2">
                             <label class="form-label">Last to Last Year Turnover (₹ Lakh)<span>*</span></label>
 
                             <input type="number" name="last_to_last_year_revenue_lakh"
@@ -659,7 +610,7 @@
                             @error('last_to_last_year_revenue_lakh')
                                 <div class="text-danger small">{{ $message }}</div>
                             @enderror
-                        </div>
+                        </div> --}}
 
                     </div>
 
@@ -667,7 +618,7 @@
 
             </div>
             {{-- second card --}}
-            <div class="card p-3 mb-3 p-md-4 border-0 rounded-3" id="non_profit_donation">
+            {{-- <div class="card p-3 mb-3 p-md-4 border-0 rounded-3" id="non_profit_donation">
 
                 <div class="inner-fields mt-md-4 small-label">
                     <div class="mb-4">
@@ -754,9 +705,9 @@
                 <!-- Hidden total field -->
                 <input type="hidden" name="total_funding_lakh" id="totalFundingInput" value="{{ $total }}">
 
-            </div>
+            </div> --}}
 
-            <div class="card p-3 mb-3 p-md-4 border-0 rounded-3" id="profit_donation">
+            {{-- <div class="card p-3 mb-3 p-md-4 border-0 rounded-3" id="profit_donation">
 
                 <div class="inner-fields mt-md-4 small-label">
                     <div class="mb-4">
@@ -845,18 +796,20 @@
                 <!-- Hidden total -->
                 <input type="hidden" name="total_funding_lakh" id="profitTotalInput" value="{{ $total }}">
 
-            </div>
+            </div> --}}
 
             {{-- third card --}}
             <div class="card p-0 border-0 rounded-3">
                 <div class="inner-fields d-flex justify-content-between align-items-center p-3 p-md-4">
                     <div class="">
-                        <h2 class="inner-title mb-0">Major Institutional Funders</h2>
+                        <h2 class="inner-title mb-0">Major Funders</h2>
                     </div>
                     <div class="btn-wrap">
-                        <button type="button" class="btn btn-primary add-fund" id="addFunderBtn" data-bs-toggle="modal"
+                        <button type="button" class="btn btn-primary add-fund gradient-btn" id="addFunderBtn" data-bs-toggle="modal"
                             data-bs-target="#funderModal">
-                            Add Funders
+                            <svg xmlns="http://www.w3.org/2000/svg" class="ms-0 me-2" width="11" height="11" viewBox="0 0 11 11" fill="none">
+<path d="M5.125 0.75V9.5M9.5 5.125H0.75" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg> Add Funders
                         </button>
                     </div>
                 </div>
@@ -879,13 +832,17 @@
                 </div>
 
             </div>
-            <div
+           <div
                 class="d-flex justify-content-center justify-content-md-end gap-2 gap-md-3 mt-4 steps-btn pe-lg-4 flex-wrap">
                 <div class="btn-wrap">
-                    <button type="button" class="btn simple-btn">Back</button>
+                    <button type="button" class="btn simple-btn"><img src="/img/back.png" class="me-2" width="15" height="6.25">Back</button>
                 </div>
                 <div class="btn-wrap">
-                    <button type="button" id="continueBtn" class="btn btn-primary">Continue</button>
+                    <button type="submit" class="btn gradient-btn">Next <svg xmlns="http://www.w3.org/2000/svg"
+                            width="17" height="8" viewBox="0 0 17 8" fill="none">
+                            <path d="M12.625 7L15.75 3.875L12.625 0.75M15.75 3.875H0.75" stroke="white" stroke-width="1.5"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg></button>
                 </div>
             </div>
         </form>
@@ -1018,7 +975,8 @@
                         <button type="button" class="btn simple-btn" data-bs-dismiss="modal">Cancel</button>
                     </div>
                     <div class="btn-wrap">
-                        <button type="submit" form="onboardingForm" id="finalSubmit" class="btn btn-primary" disabled>Submit
+                        <button type="submit" form="onboardingForm" id="finalSubmit" class="btn btn-primary"
+                            disabled>Submit
                         </button>
                     </div>
                 </div>
@@ -1048,11 +1006,10 @@
 @endsection
 
 @section('scripts')
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
 
             function calculateTotal(sectionId, displayId, inputId) {
                 const section = document.getElementById(sectionId);
@@ -1111,49 +1068,49 @@
 
         });
     </script>
-<script>
-document.addEventListener('DOMContentLoaded', function () {
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
 
-    let textarea = document.querySelector('textarea[name="key_achievements"]');
-    let counter = document.getElementById('wordCount');
+            let textarea = document.querySelector('textarea[name="key_achievements"]');
+            let counter = document.getElementById('wordCount');
 
-    let maxWords = 100;
-    let maxChars = 800; // 🔥 control total length properly
+            let maxWords = 100;
+            let maxChars = 800; // 🔥 control total length properly
 
-    function handleLimits() {
-        let value = textarea.value;
+            function handleLimits() {
+                let value = textarea.value;
 
-        // 🔹 Character limit
-        if (value.length > maxChars) {
-            textarea.value = value.substring(0, maxChars);
-            toastr.warning("Maximum character limit reached");
-        }
+                // 🔹 Character limit
+                if (value.length > maxChars) {
+                    textarea.value = value.substring(0, maxChars);
+                    toastr.warning("Maximum character limit reached");
+                }
 
-        // 🔹 Word limit
-        let words = textarea.value.trim().split(/\s+/).filter(w => w.length > 0);
+                // 🔹 Word limit
+                let words = textarea.value.trim().split(/\s+/).filter(w => w.length > 0);
 
-        if (words.length > maxWords) {
-            textarea.value = words.slice(0, maxWords).join(' ');
-            toastr.warning("Maximum 100 words allowed");
-        }
+                if (words.length > maxWords) {
+                    textarea.value = words.slice(0, maxWords).join(' ');
+                    toastr.warning("Maximum 100 words allowed");
+                }
 
-        counter.textContent = words.length;
-    }
+                counter.textContent = words.length;
+            }
 
-    textarea.addEventListener('input', handleLimits);
+            textarea.addEventListener('input', handleLimits);
 
-    // run on load
-    handleLimits();
+            // run on load
+            handleLimits();
 
-});
-</script>
+        });
+    </script>
 
 
     <script>
         var myModal = document.getElementById('staticBackdrop')
         var myInput = document.getElementById('myInput')
 
-        myModal.addEventListener('shown.bs.modal', function () {
+        myModal.addEventListener('shown.bs.modal', function() {
             if (myInput) {
                 myInput.focus()
             }
@@ -1171,7 +1128,7 @@ document.addEventListener('DOMContentLoaded', function () {
     </script>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
             //console.warn("loaded form script")
 
 
@@ -1248,7 +1205,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
             orgItems.forEach(item => {
-                item.addEventListener('click', function (e) {
+                item.addEventListener('click', function(e) {
 
                     e.stopPropagation();
 
@@ -1268,7 +1225,7 @@ document.addEventListener('DOMContentLoaded', function () {
     </script>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
+        document.addEventListener("DOMContentLoaded", function() {
             console.log("loaded form script")
             const form = document.querySelector("form");
             const continueBtn = document.getElementById("continueBtn");
@@ -1282,7 +1239,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 // Continue button validation
                 if (continueBtn) {
-                    continueBtn.addEventListener("click", function () {
+                    continueBtn.addEventListener("click", function() {
                         if (!form.checkValidity()) {
                             form.reportValidity();
                             return;
@@ -1293,7 +1250,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 // Enable submit only if all checkboxes checked
                 consentCheckboxes.forEach(cb => {
-                    cb.addEventListener("change", function () {
+                    cb.addEventListener("change", function() {
                         const allChecked = [...consentCheckboxes].every(c => c.checked);
                         if (submitBtn) {
                             submitBtn.disabled = !allChecked;
@@ -1307,7 +1264,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
 
             let funderModal = new bootstrap.Modal(document.getElementById('funderModal'));
             let fundersTable = document.getElementById('fundersTable');
@@ -1503,7 +1460,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
 
             document.querySelectorAll('.select-wrapper').forEach(wrapper => {
 
@@ -1513,7 +1470,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 // ✅ FIX: Set correct label on page load
                 if (hiddenInput.value) {
-                    const selectedItem = wrapper.querySelector(`.select-list li[data-value="${hiddenInput.value}"]`);
+                    const selectedItem = wrapper.querySelector(
+                        `.select-list li[data-value="${hiddenInput.value}"]`);
                     if (selectedItem) {
                         customSelect.innerText = selectedItem.innerText;
                     }
@@ -1521,7 +1479,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 // Click handler
                 items.forEach(item => {
-                    item.addEventListener('click', function () {
+                    item.addEventListener('click', function() {
                         hiddenInput.value = this.dataset.value;
                         customSelect.innerText = this.innerText;
                     });
@@ -1529,9 +1487,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
             });
 
-        }); 
+        });
     </script>
-
-
-
 @endsection

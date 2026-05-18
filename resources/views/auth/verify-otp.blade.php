@@ -6,9 +6,15 @@
 @section('content')
 
     <div class="form-heading mb-5 pb-lg-4">
-        <h1 class="">Check your Email</h1>
-        <p class="font-small">We’ve sent a 6-digit verification code to your registered email address. Please enter the
-            code below to securely log in to your Fundink account.</p>
+        <div class="with-back d-flex justify-content-between align-items-center mb-4" >
+        <div class="gradient-icon ">
+            <img src="{{ asset('img/direction.png') }}" alt="direction icon" width="25.228912353515625"
+                height="18.28917694091797" fetchpriority="high">
+        </div>
+        <a href="#" class="back-btn">Go Back</a>
+        </div>
+        <h1 class="">Verify your Email</h1>
+        <p class="font-small">We've sent a 6-digit verification code to your email ID. Please enter the verification code to login.</p>
     </div>
 
     <form id="otpForm" method="POST" action="{{ route('verify.otp.submit') }}"
@@ -16,17 +22,17 @@
 
         <div class="fields-wrap">
             @csrf
-                @if (session('success'))
-                            <div class="alert alert-success">
-                                {{ session('success') }}
-                            </div>
-                        @endif
+            @if (session('success'))
+                <div class="alert alert-success">
+                    {{ session('success') }}
+                </div>
+            @endif
 
-                        @if (session('error'))
-                            <div class="alert alert-danger">
-                                {{ session('error') }}
-                            </div>
-                        @endif
+            @if (session('error'))
+                <div class="alert alert-danger">
+                    {{ session('error') }}
+                </div>
+            @endif
 
             <div class="otp-container">
 
@@ -78,7 +84,7 @@
     </form>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
+        document.addEventListener("DOMContentLoaded", function() {
 
             const inputs = document.querySelectorAll(".otp-input");
             const otpValue = document.getElementById("otpValue");
@@ -87,7 +93,7 @@
 
             inputs.forEach((input, index) => {
 
-                input.addEventListener("input", function () {
+                input.addEventListener("input", function() {
 
                     this.value = this.value.replace(/[^0-9]/g, '');
 
@@ -98,7 +104,7 @@
                     updateOTP();
                 });
 
-                input.addEventListener("keydown", function (e) {
+                input.addEventListener("keydown", function(e) {
 
                     if (e.key === "Backspace" && !this.value && index > 0) {
                         inputs[index - 1].focus();
@@ -108,7 +114,7 @@
 
             });
 
-            inputs[0].addEventListener("paste", function (e) {
+            inputs[0].addEventListener("paste", function(e) {
 
                 let paste = e.clipboardData.getData("text").trim();
 
@@ -135,7 +141,7 @@
                 submitBtn.disabled = !/^\d{6}$/.test(otp);
             }
 
-            form.addEventListener("submit", function (e) {
+            form.addEventListener("submit", function(e) {
 
                 let otp = otpValue.value;
 
@@ -153,34 +159,34 @@
     </script>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
+        document.addEventListener("DOMContentLoaded", function() {
 
             const resendBtn = document.getElementById("resendOtpBtn");
 
-            resendBtn.addEventListener("click", function (e) {
+            resendBtn.addEventListener("click", function(e) {
 
                 e.preventDefault();
 
                 fetch("{{ route('resend.otp') }}", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "X-CSRF-TOKEN": "{{ csrf_token() }}"
-                    },
-                    body: JSON.stringify({
-                        work_email: "{{ session('email') }}"
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                        },
+                        body: JSON.stringify({
+                            work_email: "{{ session('email') }}"
+                        })
                     })
-                })
-                .then(res => res.json())
-                .then(data => {
+                    .then(res => res.json())
+                    .then(data => {
 
-                    if (data.res === "success") {
-                        alert("OTP sent again to your email");
-                    } else {
-                        alert(data.msg);
-                    }
+                        if (data.res === "success") {
+                            alert("OTP sent again to your email");
+                        } else {
+                            alert(data.msg);
+                        }
 
-                });
+                    });
 
             });
 

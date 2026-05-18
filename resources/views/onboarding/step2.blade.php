@@ -7,12 +7,13 @@
         </div>
         <div
             class="step-wrapper d-flex flex-wrap justify-content-center justify-content-sm-between align-items-center py-3 py-md-4 py-xl-5 px-2 row-gap-2">
-            <div class="col-6 col-sm-4 step bold position-relative">
+            <div class="col-6 col-sm-4 step bold active position-relative done">
                 <div class="step-inner">
-                    <div class="step-circle active next d-flex justify-content-center align-items-center">
-                        <span></span>
+                    <div class="step-circle active d-flex justify-content-center align-items-center done">
+                        <img src="{{ asset('img/checkmark.png') }}" class="object-fit-contain" alt="steps section"
+                            width="15px" height="11px">
                     </div>
-                    <p>1. Organization Details</p>
+                    <p>1. Basic Details</p>
                 </div>
                 <div class="progress-dots position-absolute">
                     <span class="dot one"></span>
@@ -29,9 +30,9 @@
                     <span class="dot"></span>
                 </div>
             </div>
-            <div class="col-6 col-sm-4 step bold">
+            <div class="col-6 col-sm-4 step bold active">
                 <div class="step-inner">
-                    <div class="step-circle active  d-flex justify-content-center align-items-center">
+                    <div class="step-circle active d-flex justify-content-center align-items-center active">
                         <img src="{{ asset('img/direction.png') }}" class="object-fit-contain" alt="steps section"
                             width="15px" height="11px">
                     </div>
@@ -58,7 +59,7 @@
                 <div class="step-circle d-flex justify-content-center align-items-center">
                     <span></span>
                 </div>
-                <p>3. Organization Type</p>
+                <p>3. Organization Details</p>
             </div>
 
         </div>
@@ -68,14 +69,14 @@
             @csrf
             <div class="card p-3 p-md-4 border-0 mb-3 rounded-3">
                 <div class="mb-4">
-                    <h1 class="top-heading mb-0">Corporate Office Address</h1>
+                    <h1 class="top-heading mb-0">Head Office Address</h1>
                 </div>
                 <div class="row mb-3 flex-wrap row-gap-3 row-gap-md-4 px-md-1">
-                    <div class="col-12 col-md-6 col-xl-4 px-md-2">
+                    {{-- <div class="col-12 col-md-6 col-xl-4 px-md-2">
                         <label class="form-label">Town<span>*</span></label>
                         <input type="text" name="office_town" class="form-control" placeholder="Enter town" required
                             value="{{ old('office_town', $address?->office_town) }}">
-                    </div>
+                    </div> --}}
 
                     <div class="col-12 col-md-6 col-xl-4 px-md-2">
                         <label class="form-label">Address Line 1<span>*</span></label>
@@ -88,54 +89,19 @@
                         <input type="text" name="office_address_line_2" class="form-control" placeholder="Enter Address"
                             value="{{ old('office_address_line_2', $address?->office_address_line_2) }}">
                     </div>
-                    <hr class="mb-0">
                     <div class="col-12 col-md-6 col-xl-4 px-md-2">
                         <label class="form-label">City<span>*</span></label>
                         <input type="text" name="office_city" class="form-control" placeholder="Enter Your City"
                             value="">
-                        {{-- 
-                        <div class="select-wrapper w-100 position-relative">
-                            <div class="custom-select form-control">
-                                {{ old('office_city', $address->office_city ?? 'Select an option') }}
-                            </div>
-                            <input type="hidden" name="office_city"
-                                value="{{ old('office_city', $address->office_city ?? '') }}">
 
-                            <ul class="select-list">
-                                <li data-value="Delhi">Delhi</li>
-                                <li data-value="Mumbai">Mumbai</li>
-                                <li data-value="Bengaluru">Bengaluru</li>
-                                <li data-value="Hyderabad">Hyderabad</li>
-                                <li data-value="Chennai">Chennai</li>
-                                <li data-value="Kolkata">Kolkata</li>
-                                <li data-value="Pune">Pune</li>
-                                <li data-value="Ahmedabad">Ahmedabad</li>
-                                <li data-value="Jaipur">Jaipur</li>
-                                <li data-value="Chandigarh">Chandigarh</li>
-                                <li data-value="Lucknow">Lucknow</li>
-                                <li data-value="Kanpur">Kanpur</li>
-                                <li data-value="Nagpur">Nagpur</li>
-                                <li data-value="Indore">Indore</li>
-                                <li data-value="Bhopal">Bhopal</li>
-                                <li data-value="Patna">Patna</li>
-                                <li data-value="Ludhiana">Ludhiana</li>
-                                <li data-value="Amritsar">Amritsar</li>
-                                <li data-value="Surat">Surat</li>
-                                <li data-value="Vadodara">Vadodara</li>
-                                <li data-value="Rajkot">Rajkot</li>
-                                <li data-value="Coimbatore">Coimbatore</li>
-                                <li data-value="Madurai">Madurai</li>
-                                <li data-value="Visakhapatnam">Visakhapatnam</li>
-                                <li data-value="Vijayawada">Vijayawada</li>
-                                <li data-value="Thiruvananthapuram">Thiruvananthapuram</li>
-                                <li data-value="Kochi">Kochi</li>
-                                <li data-value="Guwahati">Guwahati</li>
-                                <li data-value="Ranchi">Ranchi</li>
-                                <li data-value="Dehradun">Dehradun</li>
-                            </ul>
-                        </div> --}}
                     </div>
+                    <hr class="mb-0">
 
+                    <div class="col-12 col-md-6 col-xl-4 px-md-2">
+                        <label class="form-label">Pin Code<span>*</span></label>
+                        <input type="text" name="office_pin_code" class="form-control" placeholder="110001" required
+                            value="{{ old('office_pin_code', $address?->office_pin_code) }}">
+                    </div>
 
                     <div class="col-12 col-md-6 col-xl-4 px-md-2">
                         <label class="form-label">District<span>*</span></label>
@@ -201,16 +167,11 @@
                     </div>
                     <div class="col-12 col-md-6 col-xl-4 px-md-2">
                         <label class="form-label">State<span>*</span></label>
-                        <input type="text" name="office_state" class="form-control" placeholder="Type here" required
+                        <input type="text" name="office_state" class="form-control" placeholder="Delhi" required
                             value="{{ old('office_state', $address?->office_state) }}">
                     </div>
-                    <hr class="mb-0">
 
-                    <div class="col-12 col-md-6 col-xl-4 px-md-2">
-                        <label class="form-label">Pin Code<span>*</span></label>
-                        <input type="text" name="office_pin_code" class="form-control" placeholder="Enter pin code"
-                            required value="{{ old('office_pin_code', $address?->office_pin_code) }}">
-                    </div>
+
                 </div>
             </div>
 
@@ -223,18 +184,18 @@
                                 id="sameAsOffice" value="1"
                                 {{ old('is_portal_same_as_office', $address?->is_portal_same_as_office) ? 'checked' : '' }}>
                             <label class="form-check-label" for="sameAsOffice">
-                                Same as Registered Address
+                                Same as Head Office Address
                             </label>
                         </div>
                     </div>
 
                     <div id="portal-address-fields" class="row flex-wrap row-gap-4">
 
-                        <div class="col-12 col-md-6 col-xl-4 px-md-2">
+                        {{-- <div class="col-12 col-md-6 col-xl-4 px-md-2">
                             <label class="form-label">Town<span>*</span></label>
                             <input type="text" name="portal_house_floor_no" class="form-control" class="form-control"
                                 placeholder="Enter town" value="">
-                        </div>
+                        </div> --}}
 
                         <div class="col-12 col-md-6 col-xl-4 px-md-2">
                             <label class="form-label">Address Line 1<span>*</span></label>
@@ -249,14 +210,20 @@
                                 placeholder="Enter Address"
                                 value="{{ old('portal_address_line_2', $address?->portal_address_line_2) }}">
                         </div>
+                        <div class="col-12 col-md-6 col-xl-4 px-md-2">
+                            <label class="form-label">City<span>*</span></label>
+                            <input type="text" name="office_city" class="form-control" placeholder="Enter Your City"
+                                value="">
+
+                        </div>
 
                         <hr class="mb-0">
 
-                        <div class="col-12 col-md-6 col-xl-4 px-md-2">
+                        {{-- <div class="col-12 col-md-6 col-xl-4 px-md-2">
                             <label class="form-label">Town<span>*</span></label>
                             <input type="text" name="portal_town" class="form-control" placeholder="Enter town"
                                 value="{{ old('portal_town', $address?->portal_town) }}">
-                        </div>
+                        </div> --}}
 
                         {{-- <div class="col-12 col-md-6 col-xl-4 px-md-2">
                             <label class="form-label">City<span>*</span></label>
@@ -303,6 +270,11 @@
                                 </ul>
                             </div>
                         </div> --}}
+                        <div class="col-12 col-md-6 col-xl-4 px-md-2">
+                            <label class="form-label">Pin Code<span>*</span></label>
+                            <input type="text" name="portal_pin_code" class="form-control" placeholder="110001"
+                                value="{{ old('portal_pin_code', $address?->portal_pin_code) }}">
+                        </div>
 
                         <div class="col-12 col-md-6 col-xl-4 px-md-2">
                             <label class="form-label">District<span>*</span></label>
@@ -372,23 +344,20 @@
                             <input type="text" name="portal_state" class="form-control" placeholder="Type here"
                                 value="{{ old('portal_state', $address?->portal_state) }}">
                         </div>
-                        <hr class="mb-0">
-                        <div class="col-12 col-md-6 col-xl-4 px-md-2">
-                            <label class="form-label">Pin Code<span>*</span></label>
-                            <input type="text" name="portal_pin_code" class="form-control"
-                                placeholder="Enter pin code"
-                                value="{{ old('portal_pin_code', $address?->portal_pin_code) }}">
-                        </div>
                     </div>
                 </div>
             </div>
             <div
                 class="d-flex justify-content-center justify-content-md-end gap-2 gap-md-3 mt-4 steps-btn pe-lg-4 flex-wrap">
                 <div class="btn-wrap">
-                    <button type="button" class="btn simple-btn">Back</button>
+                    <button type="button" class="btn simple-btn"><img src="/img/back.png" class="me-2" width="15" height="6.25">Back</button>
                 </div>
                 <div class="btn-wrap">
-                    <button type="submit" class="btn btn-primary">Next</button>
+                    <button type="submit" class="btn gradient-btn">Next <svg xmlns="http://www.w3.org/2000/svg"
+                            width="17" height="8" viewBox="0 0 17 8" fill="none">
+                            <path d="M12.625 7L15.75 3.875L12.625 0.75M15.75 3.875H0.75" stroke="white" stroke-width="1.5"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg></button>
                 </div>
             </div>
 
