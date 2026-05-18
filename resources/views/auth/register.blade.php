@@ -6,6 +6,10 @@
 @section('content')
 
     <div class="form-heading mb-4">
+        <div class="direction-icon">
+            <img src="{{ asset('img/direction.png') }}" alt="direction icon" width="25.228912353515625"
+                height="18.28917694091797" fetchpriority="high">
+        </div>
         <h2 class="h1 mb-2">Welcome to Fundink</h2>
         <p class="font-small">Register your organization to start funding journey</p>
     </div>
@@ -84,7 +88,8 @@
                         <li data-value="Other Social Media">Other Social Media</li>
                     </ul>
 
-                    <input type="hidden" name="referral_source" class="hidden-select" value="{{ old('referral_source') }}">
+                    <input type="hidden" name="referral_source" class="hidden-select"
+                        value="{{ old('referral_source') }}">
                 </div>
 
                 @error('referral_source')
@@ -110,7 +115,7 @@
             </div>
 
             <div class="col-12 mb-md-3 mb-2 position-relative">
-                <label class="form-label">Re-enter Password<span>*</span></label>
+                <label class="form-label">Confirm Password<span>*</span></label>
 
                 <input type="password" name="password_confirmation" id="confirmPassword"
                     class="form-control @error('password_confirmation') is-invalid @enderror" placeholder="Confirm Password"
@@ -151,8 +156,9 @@
             </div>
 
             <div class="col-12 login-text text-center mt-3">
-                <p class="text-decoration-none">By continuing you agree to our <a href="#">privacy policy</a> and <a href="#">terms of use</a></p>
-                <p>Already have an account? <a href="/login">Log in</a></p>
+                <p class="text-decoration-none">By continuing you agree to our <a href="#">privacy policy</a> and <a
+                        href="#">terms of use</a></p>
+                <p class="already-text">Already have an account? <a href="/login">Log in</a></p>
             </div>
 
         </div>
