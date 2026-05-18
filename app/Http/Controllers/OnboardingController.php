@@ -22,16 +22,18 @@ class OnboardingController extends Controller
 
     public function storeStepOne(Request $request)
     {
+        // return $request->all();
         // Validate the request
         $validated = $request->validate([
-            'pan_number' => 'required|string|max:10',
+            'pan_number' => 'required|string|size:10',
             'legal_name' => 'required|string|max:255',
             'date_of_incorporation' => 'required|date',
             'brand_name' => 'nullable|string|max:255',
-
-            // Allow long URLs + proper URL format validation
             'website_url' => 'nullable|url|max:2000',
             'linkedin_url' => 'nullable|url|max:2000',
+            'contact_name' => 'required|string|max:255',
+            'designation' => 'required|string|max:255',
+            'mobile_no' => 'required|digits:10',
         ]);
 
         // Get authenticated organization
@@ -58,48 +60,47 @@ class OnboardingController extends Controller
         return view('onboarding.step2', compact('address'));
     }
 
-
     public function storeStepTwo(Request $request)
     {
-      $validator = Validator::make($request->all(), [
-    'office_house_floor_no' => 'required|string|max:100',
-    'office_address_line_1' => 'required|string|max:255',
-    'office_address_line_2' => 'nullable|string|max:255',
-    'office_town' => 'required|string|max:100',
-    'office_city' => 'required|string|max:100',
-    'office_district' => 'required|string|max:100',
-    'office_state' => 'required|string|max:100',
-    'office_pin_code' => 'required|digits:6',
+        $validator = Validator::make($request->all(), [
+            'office_house_floor_no' => 'required|string|max:100',
+            'office_address_line_1' => 'required|string|max:255',
+            'office_address_line_2' => 'nullable|string|max:255',
+            'office_town' => 'required|string|max:100',
+            'office_city' => 'required|string|max:100',
+            'office_district' => 'required|string|max:100',
+            'office_state' => 'required|string|max:100',
+            'office_pin_code' => 'required|digits:6',
 
-    'portal_house_floor_no' => 'required|string|max:100',
-    'portal_address_line_1' => 'required|string|max:255',
-    'portal_address_line_2' => 'nullable|string|max:255',
-    'portal_town' => 'required|string|max:100',
-    'portal_city' => 'required|string|max:100',
-    'portal_district' => 'required|string|max:100',
-    'portal_state' => 'required|string|max:100',
-    'portal_pin_code' => 'required|digits:6',
-], [
-    // OFFICE ERRORS (Registered Address)
-    'office_house_floor_no.required' => 'Registered address house/floor is required.',
-    'office_address_line_1.required' => 'Registered address line 1 is required.',
-    'office_town.required' => 'Registered address town is required.',
-    'office_city.required' => 'Registered address city is required.',
-    'office_district.required' => 'Registered address district is required.',
-    'office_state.required' => 'Registered address state is required.',
-    'office_pin_code.required' => 'Registered address postal code is required.',
-    'office_pin_code.digits' => 'Registered address postal code must be exactly 6 digits.',
+            'portal_house_floor_no' => 'required|string|max:100',
+            'portal_address_line_1' => 'required|string|max:255',
+            'portal_address_line_2' => 'nullable|string|max:255',
+            'portal_town' => 'required|string|max:100',
+            'portal_city' => 'required|string|max:100',
+            'portal_district' => 'required|string|max:100',
+            'portal_state' => 'required|string|max:100',
+            'portal_pin_code' => 'required|digits:6',
+        ], [
+            // OFFICE ERRORS (Registered Address)
+            'office_house_floor_no.required' => 'Registered address house/floor is required.',
+            'office_address_line_1.required' => 'Registered address line 1 is required.',
+            'office_town.required' => 'Registered address town is required.',
+            'office_city.required' => 'Registered address city is required.',
+            'office_district.required' => 'Registered address district is required.',
+            'office_state.required' => 'Registered address state is required.',
+            'office_pin_code.required' => 'Registered address postal code is required.',
+            'office_pin_code.digits' => 'Registered address postal code must be exactly 6 digits.',
 
-    // PORTAL ERRORS (Office Address wording as you want)
-    'portal_house_floor_no.required' => 'Office address house/floor is required.',
-    'portal_address_line_1.required' => 'Office address line 1 is required.',
-    'portal_town.required' => 'Office address town is required.',
-    'portal_city.required' => 'Office address city is required.',
-    'portal_district.required' => 'Office address district is required.',
-    'portal_state.required' => 'Office address state is required.',
-    'portal_pin_code.required' => 'Office address postal code is required.',
-    'portal_pin_code.digits' => 'Office address postal code must be exactly 6 digits.',
-]);
+            // PORTAL ERRORS (Office Address wording as you want)
+            'portal_house_floor_no.required' => 'Office address house/floor is required.',
+            'portal_address_line_1.required' => 'Office address line 1 is required.',
+            'portal_town.required' => 'Office address town is required.',
+            'portal_city.required' => 'Office address city is required.',
+            'portal_district.required' => 'Office address district is required.',
+            'portal_state.required' => 'Office address state is required.',
+            'portal_pin_code.required' => 'Office address postal code is required.',
+            'portal_pin_code.digits' => 'Office address postal code must be exactly 6 digits.',
+        ]);
 
         if ($validator->fails()) {
 

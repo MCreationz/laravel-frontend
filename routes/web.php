@@ -5,6 +5,7 @@ use App\Http\Controllers\API\Auth\RegisterController;
 use App\Http\Controllers\OnboardingController;
 use App\Http\Controllers\OrganizationFunderController;
 use App\Http\Controllers\ProjectController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -14,6 +15,26 @@ Route::get('/', function () {
 // Route::get('/login', function () {
 //     return view('auth.login');
 // })->name('login');
+
+// Step 1: Ask user to choose organization type
+Route::get('/organization-type', function () {
+    return view('auth.organization-type');
+})->name('organization.type');
+
+// Step 2: Store selected organization type in session
+Route::post('/organization-type', function (Request $request) {
+    $request->validate([
+        'organization_type' => 'required|in:fund_seeker,funder',
+    ]);
+
+    // Store in session for now
+    session([
+        'organization_type' => $request->organization_type,
+    ]);
+
+    // Redirect to normal register page
+    return redirect()->route('register');
+})->name('organization.type.store');
 
 // Register page
 Route::get('/register', function () {

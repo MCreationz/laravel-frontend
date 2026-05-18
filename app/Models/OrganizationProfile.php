@@ -13,7 +13,10 @@ class OrganizationProfile extends Model
         'date_of_incorporation',
         'brand_name',
         'website_url',
-        'linkedin_url'
+        'linkedin_url',
+        'contact_name',     // new
+        'designation',      // new
+        'mobile_no',        // new
     ];
 
     public function organization()
