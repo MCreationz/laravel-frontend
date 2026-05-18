@@ -104,6 +104,18 @@
                 @enderror
             </div>
 
+            {{-- Google reCAPTCHA --}}
+<div class="col-12 mb-md-3 mb-2">
+    <div class="g-recaptcha" data-sitekey="{{ config('services.recaptcha.site_key') }}"></div>
+
+    {{-- Store a dummy value so your existing captcha validation can still work if needed --}}
+    <input type="hidden" name="captcha" id="captcha">
+
+    @error('captcha')
+        <div class="text-danger small mt-1">{{ $message }}</div>
+    @enderror
+</div>
+
 
             <!-- temporary captcha placeholder -->
             <input type="hidden" name="captcha" value="123456">
@@ -130,6 +142,39 @@
             border-color: #dc3545;
         }
     </style>
+
+    {{-- Add this before @endsection --}}
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+<script>
+    function togglePasswordField(inputId, iconId) {
+        const field = document.getElementById(inputId);
+        const icon = document.getElementById(iconId);
+
+        if (field.type === "password") {
+            field.type = "text";
+            icon.classList.remove('bi-eye');
+            icon.classList.add('bi-eye-slash');
+        } else {
+            field.type = "password";
+            icon.classList.remove('bi-eye-slash');
+            icon.classList.add('bi-eye');
+        }
+    }
+
+    document.querySelector('form').addEventListener('submit', function(e) {
+        const response = grecaptcha.getResponse();
+
+        if (!response) {
+            e.preventDefault();
+            alert('Please complete the reCAPTCHA.');
+            return;
+        }
+
+        // Put token into hidden field so it is sent as "captcha"
+        document.getElementById('captcha').value = response;
+    });
+</script>
     <script>
         function togglePasswordField(inputId, iconId) {
             const field = document.getElementById(inputId);
