@@ -7,9 +7,9 @@
     --primary-color: #282828;
     --primary-gray: rgba(40, 40, 40, 0.3);
     --secondary-color: #2B2B2B;
-    --accent-color: #0A66C2;
+    --accent-color: #0160D6;
     --white-color: #fff;
-    --primary-btn: linear-gradient(66.53deg, #0160D6 29%, #07CCB5 67.08%);
+    --primary-btn: linear-gradient(65.16deg, #0160D6 8.71%, #07CCB5 61.19%);
 }
 body, p, span, ul li, ol li, div {
     font-family: 'Inter' !important;
@@ -25,7 +25,7 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
     color: var(--primary-color) !important;
 }
 .h1, h1 {
-    font-size: 28px !important;
+    font-size: 31px !important;
 }
 p {
     margin: 0 0 15px;
@@ -55,12 +55,12 @@ label {
     /* background: linear-gradient(66.53deg, #07CCB5 29%, #0160D6 67.08%); */
     background: #0a66c2e6;
 }
-.btn { 
+.btn {
     border: none !important;
     font-weight: 700 !important;
     font-size: 0.875rem !important;
-    padding: 9.5px 17px !important;
-    border-radius: 8px !important;
+    padding: 17px 24px !important;
+    border-radius: 55px !important;
     transition: background 0.3s ease!important;
     min-width: 124px;
 }
@@ -89,6 +89,16 @@ label {
     color: var(--white-color);
 }
 /* register page css */
+.direction-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 7px;
+    background: var(--primary-btn);
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
 .auth-wrapper {
     background-color: #000;
     min-height: 100vh;
@@ -114,7 +124,7 @@ label {
     flex: 0 0 67.626%;
 }
 .form-col-wrap {
-    padding: 30px 38px;
+    padding: 30px;
     background: var(--white-color);
     border-radius: 21px;
     display: flex;
@@ -182,13 +192,16 @@ button.btn.show-password {
     color: #6c757d !important;
     outline: none !important;
     box-shadow: unset !important;
-    top: 47px;
+    top: 53px;
 }
 .login-text p {
     text-decoration: underline;
     font-size: 14px !important;
-    color: rgba(40, 40, 40, 0.6) !important;
-    /* font-weight: 600; */
+    color: #7E7E7E !important;
+}
+.already-text {
+    font-weight: 600;
+    color: #282828 !important;
 }
 .auth-wrapper:after {
     content: '';
@@ -462,7 +475,9 @@ input.form-control.pan-card {
     text-transform: uppercase;
 }
 .invalid-feedback {
-  color: #dc3545 !important
+  color: #dc3545 !important;
+  font-size: 14px !important;
+
 }
 .inner-fields.small-label label {
     font-size: 11px;

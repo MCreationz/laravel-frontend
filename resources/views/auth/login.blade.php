@@ -6,6 +6,10 @@
 @section('content')
 
     <div class="form-heading mb-4">
+        <div class="direction-icon">
+            <img src="{{ asset('img/direction.png') }}" alt="direction icon" width="25.228912353515625"
+                height="18.28917694091797" fetchpriority="high">
+        </div>
         <h1>Welcome to Fundink</h1>
         <p class="font-small">Login with your registered email</p>
     </div>
@@ -51,7 +55,8 @@
             </div>
 
             <div class="col-12 login-text text-center mt-3">
-                <p class="text-decoration-none">By continuing you agree to our <a href="#">privacy policy</a> and <a href="#">terms of use</a></p>
+                <p class="text-decoration-none">By continuing you agree to our <a href="#">privacy policy</a> and <a
+                        href="#">terms of use</a></p>
                 <p>
                     Don’t have an account?
                     <a href="{{ route('register') }}">Register</a>

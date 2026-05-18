@@ -38,8 +38,8 @@
     </div>
     <div class="auth-wrapper position-relative">
         <div class="bg-image position-absolute top-0 end-0 bottm-0 start-0 w-100">
-            <img src="{{ asset('img/beautiful-girl-works-office.webp') }}" alt="FundInk graphic image"
-                class="rounded-0 img-fluid" width="100%" height="100%" fetchpriority="high">
+            <img src="{{ asset('img/bg-image.png') }}" alt="FundInk graphic image" class="rounded-0 img-fluid"
+                width="100%" height="100%" fetchpriority="high">
         </div>
         <div class="auth-inner d-flex justify-content-between gap-4 gap-lg-2 align-items-stretch position-relative ">
             <div class="col-lg-7 left-logo-col d-flex flex-column justify-content-between gap-2">
@@ -49,7 +49,7 @@
                 </div>
                 <div class="bottom-content pb-lg-4">
                     <h1 class="mb-3 pb-1">Join India’s first AI-powered funding platform.</h1>
-                    <div class="row icon-with-text gap-2 gap-lg-4">
+                    <div class="row icon-with-text gap-1">
                         <div class="col-auto">
                             <div class="d-flex align-items-center">
                                 <div class="flex-shrink-0">
@@ -137,11 +137,11 @@
                         </div>
                     @endif
 
-@if (session('error'))
-    <div class="alert alert-danger">
-        {{ session('error') }}
-    </div>
-@endif
+                    @if (session('error'))
+                        <div class="alert alert-danger">
+                            {{ session('error') }}
+                        </div>
+                    @endif
 
                     {{-- Page Content --}}
                     @yield('content')
