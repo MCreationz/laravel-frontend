@@ -11,7 +11,7 @@
                 height="18.28917694091797" fetchpriority="high">
         </div>
         <h2 class="h1 mb-2">Welcome to Fundink</h2>
-        <p class="font-small">Register your organization to start funding journey</p>
+        <p class="font-small">Few basic details about your organization.</p>
     </div>
     <form action="{{ route('register.step1') }}" method="POST"
         class="register-form row form-fields-wrap d-flex flex-wrap justify-content-between flex-column gap-3">

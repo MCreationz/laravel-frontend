@@ -6,12 +6,12 @@
 @section('content')
 
     <div class="form-heading mb-4">
-        <div class="direction-icon">
+        <div class="gradient-icon mb-4">
             <img src="{{ asset('img/direction.png') }}" alt="direction icon" width="25.228912353515625"
                 height="18.28917694091797" fetchpriority="high">
         </div>
         <h1>Welcome to Fundink</h1>
-        <p class="font-small">Login with your registered email</p>
+        <p class="font-small">Enter your registered email and password to login.</p>
     </div>
 
     <form method="POST" action="{{ route('login.password') }}"
@@ -21,11 +21,11 @@
 
         <div class="fields-wrap">
             <div class="col-12 mb-md-3 mb-2">
-                <label class="form-label">Your Email address<span>*</span></label>
+                <label class="form-label">Email<span>*</span></label>
                 <input type="email" name="email" class="form-control" placeholder="Email address" required>
             </div>
             <div class="col-12 position-relative">
-                <label class="form-label">Enter Password<span>*</span></label>
+                <label class="form-label">Password<span>*</span></label>
                 <input type="password" name="password" id="password" class="form-control" placeholder="Password" required>
                 <button type="button"
                     class="btn show-password btn-outline-secondary position-absolute bottom-0 end-0 translate-middle-y me-2 p-0"
