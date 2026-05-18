@@ -593,6 +593,7 @@ table th {
     background: rgba(217, 217, 217, 12%) !important;
     color: rgb(40 40 40 / 80%) !important;
     padding: 5px 20px !important;
+    font-size: 14px;
 }
 table td {
     padding: 7px 20px !important;
@@ -602,8 +603,11 @@ table th, table td {
 }
 .btn.btn-primary.add-fund {
     font-size: 12px !important;
-    min-width: 115px;
+    min-width: 133px;
     padding: 7px 12px !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .toggle-container {
   display: flex;
