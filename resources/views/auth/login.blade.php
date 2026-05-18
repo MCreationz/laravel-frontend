@@ -59,7 +59,7 @@
                         href="#">terms of use</a></p>
                 <p>
                     Don’t have an account?
-                    <a href="{{ route('register') }}">Register</a>
+                    <a href="{{ route('organization.type') }}">Register</a>
                 </p>
             </div>
 
