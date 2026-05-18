@@ -6,24 +6,19 @@
 @section('content')
 
     <div class="form-heading mb-4">
-        <div class="direction-icon">
+        <div class="gradient-icon mb-4">
             <img src="{{ asset('img/direction.png') }}" alt="direction icon" width="25.228912353515625"
                 height="18.28917694091797" fetchpriority="high">
         </div>
         <h2 class="h1 mb-2">Welcome to Fundink</h2>
         <p class="font-small">Register your organization to start funding journey</p>
     </div>
-
     <form action="{{ route('register.step1') }}" method="POST"
         class="register-form row form-fields-wrap d-flex flex-wrap justify-content-between flex-column gap-3">
-
         @csrf
-
         <div class="fields-wrap">
-
             <div class="col-12">
                 <div class="row mb-md-3 mb-2">
-
                     <div class="col-6 pe-md-2 pe-1">
                         <label class="form-label">Organization Name<span>*</span></label>
 
@@ -35,7 +30,6 @@
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
-
                     <div class="col-6 ps-md-2 ps-1">
                         <label class="form-label">Work Email<span>*</span></label>
 
@@ -47,30 +41,8 @@
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
-
                 </div>
             </div>
-
-            {{-- <div class="col-12 mb-md-3 mb-2">
-                <label class="form-label">Are you a<span>*</span></label>
-
-                <div class="select-wrapper w-100 position-relative">
-                    <div class="custom-select form-control @error('role') is-invalid @enderror">
-                        {{ old('role') ? ucfirst(str_replace('_', ' ', old('role'))) : 'Select an option' }}
-                    </div>
-                    <ul class="select-list">
-                        <li data-value="fund_seeker">NPO</li>
-                        <li data-value="funder">Startup</li>
-                    </ul>
-
-                    <input type="hidden" name="role" class="hidden-select" value="{{ old('role') }}">
-                </div>
-
-                @error('role')
-                    <div class="text-danger small">{{ $message }}</div>
-                @enderror
-            </div> --}}
-
             <div class="col-12 mb-md-3 mb-2">
                 <label class="form-label">How did you hear about Fundink?<span>*</span></label>
 
