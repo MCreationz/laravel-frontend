@@ -36,6 +36,16 @@ p {
 p:last-child {
     margin: 0;
 }
+.text-gray{
+    color:#B3B3B3 !important;
+}
+form .form-control::placeholder {
+    color: #C6D4E2; /* Your desired color */
+    opacity: 1; /* Ensures full visibility in some browsers */
+}
+.custom-select.form-control {
+    color: #C6D4E2; /* Change to your desired color */
+}
 .font-sm {
     font-size: 12px !important;
 }

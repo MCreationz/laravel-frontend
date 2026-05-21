@@ -71,7 +71,7 @@
             <div style="border-radius:0px;" class="card p-3 p-md-4 border-0 mb-3 rounded-3">
                 <div class="mb-4">
                     <h1 class="top-heading mb-2">NPO Credentials</h1>
-                    <p>Tell us about your organisation's legal structure and financial track record</p>
+                    <p class="text-gray">Tell us about your organisation's legal structure and financial track record</p>
                 </div>
                 <div class="row mb-3 flex-wrap row-gap-3 row-gap-md-4 px-md-1">
                     <!-- State -->
