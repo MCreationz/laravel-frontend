@@ -68,7 +68,7 @@
     <div class="card-body p-0">
 
         <form id="onboardingForm" method="POST" action="{{ route('onboarding.step3.store') }}"> @csrf
-            <div class="card p-3 p-md-4 border-0 mb-3 rounded-3">
+            <div style="border-radius:0px;" class="card p-3 p-md-4 border-0 mb-3 rounded-3">
                 <div class="mb-4">
                     <h1 class="top-heading mb-2">NPO Credentials</h1>
                     <p>Tell us about your organisation's legal structure and financial track record</p>
@@ -833,7 +833,7 @@
 
             </div>
            <div
-                class="d-flex justify-content-center justify-content-md-end gap-2 gap-md-3 mt-4 steps-btn pe-lg-4 flex-wrap">
+                class="d-flex justify-content-center justify-content-md-end gap-2 gap-md-3 steps-btn pe-lg-4 flex-wrap">
                 <div class="btn-wrap">
                     <button type="button" class="btn simple-btn"><img src="/img/back.png" class="me-2" width="15" height="6.25">Back</button>
                 </div>

@@ -69,7 +69,7 @@
         <div class="card-body p-0">
             <form id="step1Form" method="POST" action="{{ route('onboarding.step1.store') }}">
                 @csrf
-                <div class="card p-3 p-md-4 border-0 rounded-3">
+                <div style="border-radius:0px;" class="card p-3 p-md-4 border-0">
                     <div class="mb-4">
                         <h1 class="top-heading mb-0">Organization Details</h1>
                     </div>
@@ -150,7 +150,7 @@
                 </div>
 
                 <div
-                    class="d-flex justify-content-center justify-content-md-end gap-2 gap-md-3 mt-4 steps-btn pe-lg-4 flex-wrap">
+                    class="d-flex justify-content-center justify-content-md-end gap-2 gap-md-3 steps-btn pe-lg-4 flex-wrap">
                     <div class="btn-wrap">
                         <button type="submit" class="btn gradient-btn">Next <svg xmlns="http://www.w3.org/2000/svg"
                                 width="17" height="8" viewBox="0 0 17 8" fill="none">

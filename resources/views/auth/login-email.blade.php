@@ -39,20 +39,13 @@
                 <button type="submit" class="btn btn-primary w-100">
                     Send OTP
                 </button>
-                <p class="text-center my-2">or</p>
-                <a href="{{ route('login.password') }}" class="btn btn-primary w-100">
-                    Login with Password
-                </a>
             </div>
-
-
-        </div>
-
-        <div class="col-12 login-text text-center mt-3">
-            <p class="text-decoration-none">By continuing you agree to our <a href="#">privacy policy</a> and <a
-                    href="#">terms of use</a></p>
-            <p>Don’t have an account? <a href="{{ route('organization.type') }}">Register</a>
+            <div class=" login-text text-center mt-3">
+            <p> <a style="color:#282828 !important;" href="{{ route('login.password') }}">Log in with password instead</a>
             </p>
+            
+         </div>
+         
         </div>
 
         </div>

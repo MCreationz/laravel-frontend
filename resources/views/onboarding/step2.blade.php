@@ -67,7 +67,7 @@
     <div class="card-body p-0">
         <form method="POST" action="{{ route('onboarding.step2.store') }}">
             @csrf
-            <div class="card p-3 p-md-4 border-0 mb-3 rounded-3">
+            <div style="border-radius:0px;" class="card p-3 p-md-4 border-0 mb-3 rounded-3">
                 <div class="mb-4">
                     <h1 class="top-heading mb-0">Head Office Address</h1>
                 </div>
@@ -175,7 +175,7 @@
                 </div>
             </div>
 
-            <div class="card p-3 p-md-4 border-0 rounded-3">
+            <div style="border-radius:0px;" class="card p-3 p-md-4 border-0 rounded-3">
                 <div>
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <h2 class="col top-heading mb-0">Registered Office Address</h2>
@@ -348,7 +348,7 @@
                 </div>
             </div>
             <div
-                class="d-flex justify-content-center justify-content-md-end gap-2 gap-md-3 mt-4 steps-btn pe-lg-4 flex-wrap">
+                class="d-flex justify-content-center justify-content-md-end gap-2 gap-md-3 steps-btn pe-lg-4 flex-wrap">
                 <div class="btn-wrap">
                     <button type="button" class="btn simple-btn"><img src="/img/back.png" class="me-2" width="15" height="6.25">Back</button>
                 </div>
