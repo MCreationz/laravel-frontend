@@ -89,12 +89,12 @@
                         <input type="text" name="office_address_line_2" class="form-control" placeholder="Enter Address"
                             value="{{ old('office_address_line_2', $address?->office_address_line_2) }}">
                     </div>
-                    <div class="col-12 col-md-6 col-xl-4 px-md-2">
-                        <label class="form-label">City<span>*</span></label>
-                        <input type="text" name="office_city" class="form-control" placeholder="Enter Your City"
-                            value="">
-
-                    </div>
+                  <div class="col-12 col-md-6 col-xl-4 px-md-2">
+    <label class="form-label">City<span>*</span></label>
+    <input type="text" name="office_city" class="form-control"
+        placeholder="Enter Your City"
+        value="{{ old('office_city', $address?->office_city) }}">
+</div>
                     <hr class="mb-0">
 
                     <div class="col-12 col-md-6 col-xl-4 px-md-2">
@@ -210,12 +210,12 @@
                                 placeholder="Enter Address"
                                 value="{{ old('portal_address_line_2', $address?->portal_address_line_2) }}">
                         </div>
-                        <div class="col-12 col-md-6 col-xl-4 px-md-2">
-                            <label class="form-label">City<span>*</span></label>
-                            <input type="text" name="office_city" class="form-control" placeholder="Enter Your City"
-                                value="">
-
-                        </div>
+                      <div class="col-12 col-md-6 col-xl-4 px-md-2">
+    <label class="form-label">City<span>*</span></label>
+    <input type="text" name="portal_city" class="form-control"
+        placeholder="Enter Your City"
+        value="{{ old('portal_city', $address?->portal_city) }}">
+</div>
 
                         <hr class="mb-0">
 
