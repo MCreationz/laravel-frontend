@@ -126,6 +126,7 @@
                             <ul class="select-list">
                                 <li data-value="school-Education">School Education (Primary & Secondary)</li>
                                 <li data-value="Higher-Education">Higher Education Support</li>
+                                <li data-value="Scholarships">Scholarships & Fellowships</li>
                                 <li data-value="Digital">Digital Education</li>
                                 <li data-value="STEM">STEM Education</li>
                                 <li data-value="Special">Special Education (Children with Disabilities)</li>
@@ -195,6 +196,7 @@
                             </div>
 
                             <ul class="select-list">
+                                <li data-value="Pan India">Pan India</li>
                                 <li data-value="Andhra pradesh">Andhra Pradesh</li>
                                 <li data-value="Arunachal Pradesh">Arunachal Pradesh</li>
                                 <li data-value="Assam">Assam</li>
@@ -244,8 +246,8 @@
                     @endphp
                 </div>
                 <div class="inner-fields">
-                    <div class="mb-4">
-                        <h2 class="inner-title">Applicable Registration & Certification</h2>
+                    <div class="mb-2">
+                    <label class="form-label">Applicable Registration & Certification</label>
                     </div>
                     <div class="row toggle-container mb-3 justify-content-start gap-0 row-gap-3">
                         <div class="col-12 col-sm-6 col-md-auto toggle-item">
@@ -478,7 +480,7 @@
                 <div class="inner-fields mt-4">
 
                     <div class="mb-4">
-                        <h2 class="inner-title mb-0">Track Record</h2>
+                        <h2 class="top-heading mb-0">Track Record</h2>
                     </div>
 
                     @php
@@ -521,7 +523,7 @@
                             <div class="textarea-label d-flex justify-content-between gap-1">
                                 <label class="form-label">Key Achievements<span>*</span></label>
                                 <p class="font-small">
-                                    <span id="wordCount">0</span>/100 words
+                                    Word Limit: 100
                                 </p>
                             </div>
 
@@ -535,12 +537,14 @@
                     </div>
 
                 </div>
-                <hr class="mb-0">
-                {{-- --}}
+                
+                
+            </div>
+            <div class="card p-3 p-md-4 border-0 mb-3 rounded-3">
                 <div class="inner-fields mt-4 small-label">
 
                     <div class="mb-4">
-                        <h2 class="inner-title mb-0">Financial Record</h2>
+                        <h2 class="top-heading mb-0">Financial Record</h2>
                     </div>
 
                     @php
@@ -565,7 +569,7 @@
                             <input type="number" name="lifetime_revenue_lakh"
                                 class="form-control @error('lifetime_revenue_lakh') is-invalid @enderror"
                                 value="{{ $lifetime }}"
-                                placeholder="Enter amount, if you have zero turnover just put 0" required>
+                                placeholder="Enter amount" required>
 
                             @error('lifetime_revenue_lakh')
                                 <div class="text-danger small">{{ $message }}</div>
@@ -615,8 +619,7 @@
                     </div>
 
                 </div>
-
-            </div>
+                </div>
             {{-- second card --}}
             {{-- <div class="card p-3 mb-3 p-md-4 border-0 rounded-3" id="non_profit_donation">
 
@@ -802,7 +805,7 @@
             <div class="card p-0 border-0 rounded-3">
                 <div class="inner-fields d-flex justify-content-between align-items-center p-3 p-md-4">
                     <div class="">
-                        <h2 class="inner-title mb-0">Major Funders</h2>
+                        <h2 class="top-heading mb-0">Major Funders</h2>
                     </div>
                     <div class="btn-wrap">
                         <button type="button" class="btn btn-primary add-fund gradient-btn" id="addFunderBtn" data-bs-toggle="modal"
@@ -813,21 +816,31 @@
                         </button>
                     </div>
                 </div>
-                <div class="table-wrap">
-                    <table class="table">
+                <div class="table-wrap major-funders-table-wrap">
+                    <table class="table major-funders-table mb-0">
                         <thead>
                             <tr>
                                 <th scope="col">SN</th>
                                 <th scope="col">Funder Name</th>
+                                <th scope="col" class="major-funders-table__sortable">
+                                    <span>Category</span>
+                                    <svg class="major-funders-table__caret" width="8" height="5" viewBox="0 0 8 5"
+                                        fill="none" aria-hidden="true">
+                                        <path d="M1 1L4 4L7 1" fill="#5C6B7A" />
+                                    </svg>
+                                </th>
                                 <th scope="col">Year</th>
+                                <th scope="col" class="major-funders-table__sortable">
+                                    <span>Purpose</span>
+                                    <svg class="major-funders-table__caret" width="8" height="5" viewBox="0 0 8 5"
+                                        fill="none" aria-hidden="true">
+                                        <path d="M1 1L4 4L7 1" fill="#5C6B7A" />
+                                    </svg>
+                                </th>
                                 <th scope="col">Amount (₹00.00 Lakh)</th>
-                                <th scope="col" class="">Actions</th>
-
                             </tr>
                         </thead>
-                        <tbody id="fundersTable">
-
-                        </tbody>
+                        <tbody id="fundersTable"></tbody>
                     </table>
                 </div>
 
@@ -851,31 +864,69 @@
     <div class="modal fade" id="funderModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered modal-md">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h3 class="modal-title mb-0">Add Funder</h3>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                <div class="modal-headers">
+                    <h3 class="top-heading mb-0">Major Founder Details</h3>
+                    <button type="button" class="btn-close major-close" data-bs-dismiss="modal"></button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-bodys">
                     <form id="funderForm">
                         <input type="hidden" id="funder_id">
                         <div class="mb-3">
-                            <label>Funder Name</label>
-                            <input type="text" class="form-control" id="funder_name">
+                            <label class="form-label">Funder Name<span>*</span></label>
+                            <input type="text" class="form-control" id="funder_name" placeholder="Enter Name of Director/Partner">
                         </div>
                         <div class="mb-3">
-                            <label>Year</label>
-                            <select class="form-control" id="funder_year">
-                                <option value="">Select Year</option>
-                            </select>
+                            <label class="form-label">Category<span>*</span></label>
+                            <div class="select-wrapper w-100 position-relative">
+                            <div class="custom-select form-control ">
+                            Select an option
+                            </div>
+
+                            <ul class="select-list" style="display: block;">
+                                <li data-value="Government">Government</li>
+                                <li data-value="CSR-Corporate">CSR-Corporate</li>
+                                <li data-value="CSR- PSU">CSR- PSU</li>
+                                <li data-value="Foreign Institutions">Foreign Institutions</li>
+                                <li data-value="Individual Donor">Individual Donor</li>
+                                <li data-value="Promoter Money">Promoter Money</li>
+                            </ul>
+
+                            <input type="hidden" name="state" class="hidden-select" value="">
+                        </div>
                         </div>
                         <div class="mb-3">
-                            <label>Amount</label>
-                            <input type="number" class="form-control" id="funder_amount">
+                            <label class="form-label">Year<span>*</span></label>
+                            <input type="number" class="form-control" id="funder_year" placeholder="Enter Year">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Purpose<span>*</span></label>
+                            <div class="select-wrapper w-100 position-relative">
+                            <div class="custom-select form-control ">
+                            Select an option
+                            </div>
+
+                            <ul class="select-list" style="display: block;">
+                                <li data-value="Project">Project</li>
+                                <li data-value="Program">Program</li>
+                                <li data-value="Organization Development">Organization Development</li>
+                                <li data-value="Infrastructure">Infrastructure</li>
+                                <li data-value="Staff Training">Staff Training</li>
+                                <li data-value="Technology">Technology</li>
+                                <li data-value="Others">Others</li>
+                            </ul>
+
+                            <input type="hidden" name="state" class="hidden-select" value="">
+                        </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Amount<span>*</span></label>
+                            <input type="number" class="form-control" id="funder_amount" placeholder="Enter Name of Director/Partner">
                         </div>
                     </form>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" id="saveFunder">Save</button>
+                <div class="modal-footers">
+                    <button type="button" class="btn simple-btn" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn gradient-btn" id="saveFunder">Add</button>
                 </div>
 
             </div>
@@ -1301,17 +1352,26 @@
                         fundersTable.innerHTML = '';
 
                         res.data.forEach((funder, index) => {
+                            const category = funder.category || '—';
+                            const purpose = funder.purpose || '—';
+                            const amount = Number(funder.amount).toLocaleString('en-IN', {
+                                minimumFractionDigits: 2,
+                                maximumFractionDigits: 2
+                            });
+
                             fundersTable.innerHTML += `
                                 <tr data-id="${funder.id}">
                                     <td>${index + 1}</td>
                                     <td>${funder.name}</td>
+                                    <td>${category}</td>
                                     <td>${funder.year}</td>
-                                    <td>${Number(funder.amount).toLocaleString()}</td>
-                                    <td>
-                                        <button type='button' class="edit editFunder">
+                                    <td>${purpose}</td>
+                                    <td class="text-end">${amount}</td>
+                                    <td class="text-end major-funders-table__actions-col">
+                                        <button type="button" class="edit editFunder" aria-label="Edit funder">
                                             <i class="bi bi-pencil-square"></i>
                                         </button>
-                                        <button type='button' class="trash deleteFunder">
+                                        <button type="button" class="trash deleteFunder" aria-label="Delete funder">
                                             <i class="bi bi-trash3"></i>
                                         </button>
                                     </td>
@@ -1421,10 +1481,10 @@
                     let row = e.target.closest('tr');
 
                     document.getElementById('funder_id').value = row.dataset.id;
-                    document.getElementById('funder_name').value = row.children[1].innerText;
-                    document.getElementById('funder_year').value = row.children[2].innerText;
+                    document.getElementById('funder_name').value = row.children[1].innerText.trim();
+                    document.getElementById('funder_year').value = row.children[3].innerText.trim();
                     document.getElementById('funder_amount').value =
-                        row.children[3].innerText.replace(/,/g, '');
+                        row.children[5].innerText.replace(/,/g, '').trim();
 
                     funderModal.show();
                 }

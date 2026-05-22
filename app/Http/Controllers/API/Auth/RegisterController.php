@@ -144,7 +144,7 @@ class RegisterController extends Controller
 
         if ($organization->otp_code != $request->otp) {
             return redirect()->back()
-                ->with('error', 'Invalid OTP.')
+                ->with('error', 'Incorrect verification code. Enter the correct code to complete verification.')
                 ->withInput()
                 ->with('email', $email);
         }

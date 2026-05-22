@@ -69,7 +69,7 @@
         <div class="card-body p-0">
             <form id="step1Form" method="POST" action="{{ route('onboarding.step1.store') }}">
                 @csrf
-                <div style="border-radius:0px;" class="card p-3 p-md-4 border-0">
+                <div style="border-radius:8px 8px 0px 0px;" class="card p-3 p-md-4 border-0">
                     <div class="mb-4">
                         <h1 class="top-heading mb-0">Organization Details</h1>
                     </div>
@@ -94,9 +94,37 @@
 
                         <div class="col-12 col-md-6 col-xl-4 px-md-2">
                             <label class="form-label">Date of Incorporation as per PAN<span>*</span></label>
-                            <input type="date" name="date_of_incorporation" class="form-control"
-                                value="{{ old('date_of_incorporation', optional($profile)->date_of_incorporation) }}"
-                                max="{{ date('Y-m-d') }}" required>
+                            <div class="date-input-wrap">
+                                <input type="date" name="date_of_incorporation" id="date_of_incorporation"
+                                    class="form-control date-input-field"
+                                    value="{{ old('date_of_incorporation', optional($profile)->date_of_incorporation) }}"
+                                    max="{{ date('Y-m-d') }}" required>
+                                <span class="date-input-placeholder" aria-hidden="true">mm/dd/yyyy</span>
+                                <button type="button" class="date-input-icon-btn" tabindex="-1"
+                                    aria-label="Open calendar">
+                                    <svg class="date-input-icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                        <g opacity="0.6">
+                                            <path d="M8 2V5" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10"
+                                                stroke-linecap="round" stroke-linejoin="round" />
+                                            <path d="M16 2V5" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10"
+                                                stroke-linecap="round" stroke-linejoin="round" />
+                                            <path opacity="0.4" d="M3.5 9.09009H20.5" stroke="#292D32" stroke-width="1.5"
+                                                stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+                                            <path
+                                                d="M21 8.5V17C21 20 19.5 22 16 22H8C4.5 22 3 20 3 17V8.5C3 5.5 4.5 3.5 8 3.5H16C19.5 3.5 21 5.5 21 8.5Z"
+                                                stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10"
+                                                stroke-linecap="round" stroke-linejoin="round" />
+                                            <path opacity="0.4" d="M11.9945 13.7H12.0035" stroke="#292D32"
+                                                stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                            <path opacity="0.4" d="M8.29138 13.7H8.30036" stroke="#292D32"
+                                                stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                            <path opacity="0.4" d="M8.29688 16.7H8.30586" stroke="#292D32"
+                                                stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                        </g>
+                                    </svg>
+                                </button>
+                            </div>
                             <div class="error-message text-danger" style="display:none;"></div>
                         </div>
 
@@ -149,7 +177,7 @@
                     </div>
                 </div>
 
-                <div
+                <div style="border-radius:0px 0px 8px 8px;"
                     class="d-flex justify-content-center justify-content-md-end gap-2 gap-md-3 steps-btn pe-lg-4 flex-wrap">
                     <div class="btn-wrap">
                         <button type="submit" class="btn gradient-btn">Next <svg xmlns="http://www.w3.org/2000/svg"
@@ -169,9 +197,32 @@
             const form = document.getElementById('step1Form');
             const inputs = form.querySelectorAll('input[required], input[pattern]');
 
+            const dateWrap = form.querySelector('.date-input-wrap');
+            const dateInput = document.getElementById('date_of_incorporation');
+            const dateIconBtn = dateWrap?.querySelector('.date-input-icon-btn');
+
+            function updateDatePlaceholder() {
+                if (!dateWrap || !dateInput) return;
+                dateWrap.classList.toggle('has-value', Boolean(dateInput.value));
+            }
+
+            if (dateInput && dateWrap) {
+                updateDatePlaceholder();
+                dateInput.addEventListener('input', updateDatePlaceholder);
+                dateInput.addEventListener('change', updateDatePlaceholder);
+                dateIconBtn?.addEventListener('click', function() {
+                    if (typeof dateInput.showPicker === 'function') {
+                        dateInput.showPicker();
+                    } else {
+                        dateInput.focus();
+                    }
+                });
+            }
+
             // Live error check on input
             inputs.forEach(input => {
-                const errorDiv = input.nextElementSibling;
+                const errorDiv = input.closest('.col-12, .col-md-6, .col-xl-4')
+                    ?.querySelector('.error-message');
                 input.addEventListener('input', () => {
                     validateInput(input, errorDiv);
                 });
@@ -184,7 +235,8 @@
             form.addEventListener('submit', function(e) {
                 let valid = true;
                 inputs.forEach(input => {
-                    const errorDiv = input.nextElementSibling;
+                    const errorDiv = input.closest('.col-12, .col-md-6, .col-xl-4')
+                        ?.querySelector('.error-message');
                     if (!validateInput(input, errorDiv)) {
                         valid = false;
                     }

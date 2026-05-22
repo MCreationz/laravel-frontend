@@ -13,7 +13,7 @@
                         <img src="{{ asset('img/checkmark.png') }}" class="object-fit-contain" alt="steps section"
                             width="15px" height="11px">
                     </div>
-                    <p>1. Basic Details</p>
+                    <p>1.  Basic Details</p>
                 </div>
                 <div class="progress-dots position-absolute">
                     <span class="dot one"></span>
@@ -36,7 +36,7 @@
                         <img src="{{ asset('img/direction.png') }}" class="object-fit-contain" alt="steps section"
                             width="15px" height="11px">
                     </div>
-                    <p>2. Address</p>
+                    <p>2.  Address</p>
                 </div>
 
                 <div class="progress-dots position-absolute">
@@ -59,15 +59,15 @@
                 <div class="step-circle d-flex justify-content-center align-items-center">
                     <span></span>
                 </div>
-                <p>3. Organization Details</p>
+                <p>3.  Organization Details</p>
             </div>
 
         </div>
     </div>
     <div class="card-body p-0">
-        <form method="POST" action="{{ route('onboarding.step2.store') }}">
+        <form class="step2Form" method="POST" action="{{ route('onboarding.step2.store') }}">
             @csrf
-            <div style="border-radius:0px;" class="card p-3 p-md-4 border-0 mb-3 rounded-3">
+            <div style="border-radius:8px;" class="card p-3 p-md-4 border-0 mb-3">
                 <div class="mb-4">
                     <h1 class="top-heading mb-0">Head Office Address</h1>
                 </div>
@@ -175,11 +175,11 @@
                 </div>
             </div>
 
-            <div style="border-radius:0px;" class="card p-3 p-md-4 border-0 rounded-3">
+            <div style="border-radius:8px 8px 0px 0px;" class="card p-3 p-md-4 border-0">
                 <div>
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <h2 class="col top-heading mb-0">Registered Office Address</h2>
-                        <div class="col-auto form-check">
+                        <div class="col-auto form-check only-checkbox">
                             <input class="form-check-input" type="checkbox" name="is_portal_same_as_office"
                                 id="sameAsOffice" value="1"
                                 {{ old('is_portal_same_as_office', $address?->is_portal_same_as_office) ? 'checked' : '' }}>
@@ -211,11 +211,11 @@
                                 value="{{ old('portal_address_line_2', $address?->portal_address_line_2) }}">
                         </div>
                       <div class="col-12 col-md-6 col-xl-4 px-md-2">
-    <label class="form-label">City<span>*</span></label>
-    <input type="text" name="portal_city" class="form-control"
-        placeholder="Enter Your City"
-        value="{{ old('portal_city', $address?->portal_city) }}">
-</div>
+                        <label class="form-label">City<span>*</span></label>
+                        <input type="text" name="portal_city" class="form-control"
+                            placeholder="Enter Your City"
+                            value="{{ old('portal_city', $address?->portal_city) }}">
+                    </div>
 
                         <hr class="mb-0">
 
@@ -341,13 +341,13 @@
                         </div>
                         <div class="col-12 col-md-6 col-xl-4 px-md-2">
                             <label class="form-label">State<span>*</span></label>
-                            <input type="text" name="portal_state" class="form-control" placeholder="Type here"
+                            <input type="text" name="portal_state" class="form-control" placeholder="Delhi"
                                 value="{{ old('portal_state', $address?->portal_state) }}">
                         </div>
                     </div>
                 </div>
             </div>
-            <div
+            <div style="border-radius:0px 0px 8px 8px;"
                 class="d-flex justify-content-center justify-content-md-end gap-2 gap-md-3 steps-btn pe-lg-4 flex-wrap">
                 <div class="btn-wrap">
                     <button type="button" class="btn simple-btn"><img src="/img/back.png" class="me-2" width="15" height="6.25">Back</button>
