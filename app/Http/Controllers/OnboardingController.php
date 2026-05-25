@@ -60,78 +60,79 @@ class OnboardingController extends Controller
         return view('onboarding.step2', compact('address'));
     }
 
-public function storeStepTwo(Request $request)
-{
-    // Copy Head Office Address to Registered Office Address
-    if ($request->is_portal_same_as_office == "1") {
+    public function storeStepTwo(Request $request)
+    {
+        // Copy Head Office Address to Registered Office Address
+        if ($request->is_portal_same_as_office == '1') {
 
-        $request->merge([
-            'portal_address_line_1' => $request->office_address_line_1,
-            'portal_address_line_2' => $request->office_address_line_2,
-            'portal_city'          => $request->office_city,
-            'portal_district'      => $request->office_district,
-            'portal_state'         => $request->office_state,
-            'portal_pin_code'      => $request->office_pin_code,
+            $request->merge([
+                'portal_address_line_1' => $request->office_address_line_1,
+                'portal_address_line_2' => $request->office_address_line_2,
+                'portal_city' => $request->office_city,
+                'portal_district' => $request->office_district,
+                'portal_state' => $request->office_state,
+                'portal_pin_code' => $request->office_pin_code,
+            ]);
+        }
+
+        // Validation
+        $validator = Validator::make($request->all(), [
+
+            // Head Office Address
+            'office_address_line_1' => 'required|string|max:255',
+            'office_address_line_2' => 'nullable|string|max:255',
+            'office_city' => 'required|string|max:100',
+            'office_district' => 'required|string|max:100',
+            'office_state' => 'required|string|max:100',
+            'office_pin_code' => 'required|digits:6',
+
+            // Registered Office Address
+            'portal_address_line_1' => 'required|string|max:255',
+            'portal_address_line_2' => 'nullable|string|max:255',
+            'portal_city' => 'required|string|max:100',
+            'portal_district' => 'required|string|max:100',
+            'portal_state' => 'required|string|max:100',
+            'portal_pin_code' => 'required|digits:6',
+
+        ], [
+
+            // Head Office Errors
+            'office_address_line_1.required' => 'Head office address line 1 is required.',
+            'office_city.required' => 'Head office city is required.',
+            'office_district.required' => 'Head office district is required.',
+            'office_state.required' => 'Head office state is required.',
+            'office_pin_code.required' => 'Head office pin code is required.',
+            'office_pin_code.digits' => 'Head office pin code must be exactly 6 digits.',
+
+            // Registered Office Errors
+            'portal_address_line_1.required' => 'Registered office address line 1 is required.',
+            'portal_city.required' => 'Registered office city is required.',
+            'portal_district.required' => 'Registered office district is required.',
+            'portal_state.required' => 'Registered office state is required.',
+            'portal_pin_code.required' => 'Registered office pin code is required.',
+            'portal_pin_code.digits' => 'Registered office pin code must be exactly 6 digits.',
         ]);
+
+        if ($validator->fails()) {
+
+            return redirect()
+                ->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $validated = $validator->validated();
+
+        $validated['organization_id'] = Auth::guard('organization')->id();
+
+        OrganizationAddress::updateOrCreate(
+            ['organization_id' => $validated['organization_id']],
+            $validated
+        );
+
+        return redirect()->route('onboarding.step3');
     }
 
-    // Validation
-    $validator = Validator::make($request->all(), [
-
-        // Head Office Address
-        'office_address_line_1' => 'required|string|max:255',
-        'office_address_line_2' => 'nullable|string|max:255',
-        'office_city'           => 'required|string|max:100',
-        'office_district'       => 'required|string|max:100',
-        'office_state'          => 'required|string|max:100',
-        'office_pin_code'       => 'required|digits:6',
-
-        // Registered Office Address
-        'portal_address_line_1' => 'required|string|max:255',
-        'portal_address_line_2' => 'nullable|string|max:255',
-        'portal_city'           => 'required|string|max:100',
-        'portal_district'       => 'required|string|max:100',
-        'portal_state'          => 'required|string|max:100',
-        'portal_pin_code'       => 'required|digits:6',
-
-    ], [
-
-        // Head Office Errors
-        'office_address_line_1.required' => 'Head office address line 1 is required.',
-        'office_city.required'           => 'Head office city is required.',
-        'office_district.required'       => 'Head office district is required.',
-        'office_state.required'          => 'Head office state is required.',
-        'office_pin_code.required'       => 'Head office pin code is required.',
-        'office_pin_code.digits'         => 'Head office pin code must be exactly 6 digits.',
-
-        // Registered Office Errors
-        'portal_address_line_1.required' => 'Registered office address line 1 is required.',
-        'portal_city.required'           => 'Registered office city is required.',
-        'portal_district.required'       => 'Registered office district is required.',
-        'portal_state.required'          => 'Registered office state is required.',
-        'portal_pin_code.required'       => 'Registered office pin code is required.',
-        'portal_pin_code.digits'         => 'Registered office pin code must be exactly 6 digits.',
-    ]);
-
-    if ($validator->fails()) {
-
-        return redirect()
-            ->back()
-            ->withErrors($validator)
-            ->withInput();
-    }
-
-    $validated = $validator->validated();
-
-    $validated['organization_id'] = Auth::guard('organization')->id();
-
-    OrganizationAddress::updateOrCreate(
-        ['organization_id' => $validated['organization_id']],
-        $validated
-    );
-
-    return redirect()->route('onboarding.step3');
-}
     public function stepThree()
     {
         $organization = Auth::guard('organization')->user();

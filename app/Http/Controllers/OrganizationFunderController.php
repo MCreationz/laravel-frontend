@@ -56,14 +56,18 @@ class OrganizationFunderController extends Controller
 
         $request->validate([
             'name' => 'required|string|max:255',
+            'category' => 'required|string|max:255', // Added
             'year' => 'required|digits:4',
+            'purpose' => 'required|string',          // Added
             'amount' => 'required|numeric|min:0'
         ]);
 
         $funder = OrganizationFunder::create([
             'organization_id' => $organization->id,
             'name' => $request->name,
+            'category' => $request->category,        // Added
             'year' => $request->year,
+            'purpose' => $request->purpose,          // Added
             'amount' => $request->amount,
         ]);
 
@@ -94,13 +98,17 @@ class OrganizationFunderController extends Controller
 
         $request->validate([
             'name' => 'required|string|max:255',
+            'category' => 'required|string|max:255', // Added
             'year' => 'required|digits:4',
+            'purpose' => 'required|string',          // Added
             'amount' => 'required|numeric|min:0'
         ]);
 
         $funder->update([
             'name' => $request->name,
+            'category' => $request->category,        // Added
             'year' => $request->year,
+            'purpose' => $request->purpose,          // Added
             'amount' => $request->amount
         ]);
 
@@ -137,3 +145,4 @@ class OrganizationFunderController extends Controller
         ]);
     }
 }
+
