@@ -862,14 +862,14 @@
                                 <path d="M5.125 0.75V9.5M9.5 5.125H0.75" stroke="white" stroke-width="1.5"
                                     stroke-linecap="round" stroke-linejoin="round" />
                             </svg> Add Funders
-                        <button type="button" class="btn btn-primary add-fund gradient-btn" id="addFunderBtn"
+                        {{-- <button type="button" class="btn btn-primary add-fund gradient-btn" id="addFunderBtn"
                             data-bs-toggle="modal" data-bs-target="#funderModal">
                             <svg xmlns="http://www.w3.org/2000/svg" class="ms-0 me-2" width="11" height="11"
                                 viewBox="0 0 11 11" fill="none">
                                 <path d="M5.125 0.75V9.5M9.5 5.125H0.75" stroke="white" stroke-width="1.5"
                                     stroke-linecap="round" stroke-linejoin="round" />
                             </svg> Add Funders
-                        </button>
+                        </button> --}}
                     </div>
                 </div>
                 <div class="table-wrap">
@@ -932,8 +932,12 @@
 
                                 <input type="hidden" name="category" value="category">
                                 <ul class="select-list" style="display: none;">
-                                    <li data-value="Amritsar">cate 1</li>
-                                    <li data-value="Ludhiana">cate 1</li>
+                                    <li data-value="Amritsar">Government</li>
+                                    <li data-value="Ludhiana">CSR-Corporate</li>
+                                    <li data-value="Ludhiana">CSR- PSU</li>
+                                    <li data-value="Ludhiana">Foreign Institutions</li>
+                                    <li data-value="Ludhiana">Individual Donor</li>
+                                   <li data-value="Ludhiana">Promoter Money</li>
                                 </ul>
                             </div>
                         </div>
@@ -950,8 +954,13 @@
 
                                 <input type="hidden" name="category" value="category">
                                 <ul class="select-list" style="display: none;">
-                                    <li data-value="Amritsar">Purpose 1</li>
-                                    <li data-value="Ludhiana">Purpose 1</li>
+                                    <li data-value="Amritsar">Project</li>
+                                    <li data-value="Ludhiana">Program</li>
+                                    <li data-value="Ludhiana">Organization Development</li>
+                                    <li data-value="Ludhiana">Infrastructure</li>
+                                    <li data-value="Ludhiana">Staff Training</li>
+                                    <li data-value="Ludhiana">Technology</li>
+                                    <li data-value="Ludhiana">Others</li>
                                 </ul>
                             </div>
                         </div>
