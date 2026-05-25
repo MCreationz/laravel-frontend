@@ -3,7 +3,7 @@
         <div class="logo ps-3 mb-4 pb-2">
             <img src="{{ asset('img/FundInk-logo.svg') }}" alt="FundInk site logo" width="164px" height="34">
         </div>
-        @unless (auth('organization')->user()->profile)
+        @unless (auth('organization')->user()->isProfileComplete())
             <div class="expert-sec  position-relative mt-5">
                 <div class="expert-content p-3 p-lg-4">
                     <p class="font-sm  gradient-text fw-semibold mb-2">

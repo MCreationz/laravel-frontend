@@ -9,7 +9,9 @@ class OrganizationFunder extends Model
     protected $fillable = [
         'organization_id',
         'name',
+        'category',  // Added
         'year',
+        'purpose',   // Added
         'amount',
     ];
 

@@ -47,4 +47,14 @@ class Organization extends Authenticatable
     {
         return $this->hasMany(OrganizationFunder::class);
     }
+
+    public function isProfileComplete(): bool
+{
+    return $this->profile()
+        ->exists()
+        && $this->address()
+        ->exists()
+        && $this->operationalDetail()
+        ->exists();
+}
 }

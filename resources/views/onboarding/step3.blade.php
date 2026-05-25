@@ -57,8 +57,8 @@
 
             <div class="col-6 col-sm-4 step active">
                 <div class="step-circle active d-flex justify-content-center align-items-center active">
-                    <img src="{{ asset('img/direction.png') }}" class="object-fit-contain" alt="steps section"
-                        width="15px" height="11px">
+                    <img src="{{ asset('img/direction.png') }}" class="object-fit-contain" alt="steps section" width="15px"
+                        height="11px">
                 </div>
                 <p>3. Organization Details</p>
             </div>
@@ -173,8 +173,7 @@
                                 <li data-value="Emergency">Emergency Response & Humanitarian Aid</li>
                             </ul>
 
-                            <input type="hidden" name="domain_of_expertise" class="hidden-select"
-                                value="{{ $domain }}">
+                            <input type="hidden" name="domain_of_expertise" class="hidden-select" value="{{ $domain }}">
                         </div>
 
                         @error('domain_of_expertise')
@@ -310,8 +309,7 @@
                                 <span class="font-small">12A Registration</span>
                                 <label class="switch mb-0">
                                     <input type="hidden" name="status_12a" value="0">
-                                    <input type="checkbox" name="status_12a" value="1"
-                                        {{ $status12a ? 'checked' : '' }}>
+                                    <input type="checkbox" name="status_12a" value="1" {{ $status12a ? 'checked' : '' }}>
                                     <span class="slider"></span>
                                 </label>
                             </div>
@@ -321,8 +319,7 @@
                                 <span class="font-small">80G Registration</span>
                                 <label class="switch mb-0">
                                     <input type="hidden" name="status_80g" value="0">
-                                    <input type="checkbox" name="status_80g" value="1"
-                                        {{ $status80g ? 'checked' : '' }}>
+                                    <input type="checkbox" name="status_80g" value="1" {{ $status80g ? 'checked' : '' }}>
                                     <span class="slider"></span>
                                 </label>
                             </div>
@@ -332,8 +329,7 @@
                                 <span class="font-small">FCRA Registration</span>
                                 <label class="switch mb-0">
                                     <input type="hidden" name="status_fcra" value="0">
-                                    <input type="checkbox" name="status_fcra" value="1"
-                                        {{ $statusFcra ? 'checked' : '' }}>
+                                    <input type="checkbox" name="status_fcra" value="1" {{ $statusFcra ? 'checked' : '' }}>
                                     <span class="slider"></span>
                                 </label>
                             </div>
@@ -343,8 +339,7 @@
                                 <span class="font-small">CSR-1 Registration</span>
                                 <label class="switch mb-0">
                                     <input type="hidden" name="csr_1_registration" value="0">
-                                    <input type="checkbox" name="csr_1_registration" value="1"
-                                        {{ $csr1 ? 'checked' : '' }}>
+                                    <input type="checkbox" name="csr_1_registration" value="1" {{ $csr1 ? 'checked' : '' }}>
                                     <span class="slider"></span>
                                 </label>
                             </div>
@@ -407,8 +402,7 @@
                                     <li data-value="Scale-up">Scale-up</li>
                                 </ul>
 
-                                <input type="hidden" name="current_stage" class="hidden-select"
-                                    value="{{ $stage }}">
+                                <input type="hidden" name="current_stage" class="hidden-select" value="{{ $stage }}">
                             </div>
 
                             @error('current_stage')
@@ -477,8 +471,7 @@
                                     <li data-value="Biotechnology">Biotechnology</li>
                                 </ul>
 
-                                <input type="hidden" name="product_category" class="hidden-select"
-                                    value="{{ $category }}">
+                                <input type="hidden" name="product_category" class="hidden-select" value="{{ $category }}">
                             </div>
 
                             @error('product_category')
@@ -501,8 +494,7 @@
                             <span>DPIIT Recognition</span>
                             <label class="switch">
                                 <input type="hidden" name="dpiit_recognition" value="0">
-                                <input type="checkbox" name="dpiit_recognition" value="1"
-                                    {{ $dpiit ? 'checked' : '' }}>
+                                <input type="checkbox" name="dpiit_recognition" value="1" {{ $dpiit ? 'checked' : '' }}>
                                 <span class="slider"></span>
                             </label>
                         </div>
@@ -511,8 +503,7 @@
                             <span>MSME Registered</span>
                             <label class="switch">
                                 <input type="hidden" name="msme_registered" value="0">
-                                <input type="checkbox" name="msme_registered" value="1"
-                                    {{ $msme ? 'checked' : '' }}>
+                                <input type="checkbox" name="msme_registered" value="1" {{ $msme ? 'checked' : '' }}>
                                 <span class="slider"></span>
                             </label>
                         </div>
@@ -521,8 +512,7 @@
                             <span>GSTIN Registration</span>
                             <label class="switch">
                                 <input type="hidden" name="gstin_registration" value="0">
-                                <input type="checkbox" name="gstin_registration" value="1"
-                                    {{ $gstin ? 'checked' : '' }}>
+                                <input type="checkbox" name="gstin_registration" value="1" {{ $gstin ? 'checked' : '' }}>
                                 <span class="slider"></span>
                             </label>
                         </div>
@@ -565,8 +555,7 @@
 
                             <input type="number" name="total_beneficiaries"
                                 class="form-control @error('total_beneficiaries') is-invalid @enderror"
-                                value="{{ $beneficiaries }}" placeholder="Only numbers shall be taken as input..."
-                                required>
+                                value="{{ $beneficiaries }}" placeholder="Only numbers shall be taken as input..." required>
 
                             @error('total_beneficiaries')
                                 <div class="text-danger small">{{ $message }}</div>
@@ -582,7 +571,8 @@
                                 </p>
                             </div>
 
-                            <textarea name="key_achievements" rows="5" class="form-control" placeholder="Enter Achievements">{{ $achievements }}</textarea>
+                            <textarea name="key_achievements" rows="5" class="form-control"
+                                placeholder="Enter Achievements">{{ $achievements }}</textarea>
 
                             @error('key_achievements')
                                 <div class="text-danger small">{{ $message }}</div>
@@ -622,8 +612,8 @@
 
                             <input type="number" name="lifetime_revenue_lakh"
                                 class="form-control @error('lifetime_revenue_lakh') is-invalid @enderror"
-                                value="{{ $lifetime }}"
-                                placeholder="Enter amount, if you have zero turnover just put 0" required>
+                                value="{{ $lifetime }}" placeholder="Enter amount, if you have zero turnover just put 0"
+                                required>
 
                             @error('lifetime_revenue_lakh')
                                 <div class="text-danger small">{{ $message }}</div>
@@ -664,11 +654,11 @@
 
                             <input type="number" name="last_to_last_year_revenue_lakh"
                                 class="form-control @error('last_to_last_year_revenue_lakh') is-invalid @enderror"
-                                value="{{ $lastToLast }}"
-                                placeholder="Enter amount, if you have zero donation just put 0" required>
+                                value="{{ $lastToLast }}" placeholder="Enter amount, if you have zero donation just put 0"
+                                required>
 
                             @error('last_to_last_year_revenue_lakh')
-                                <div class="text-danger small">{{ $message }}</div>
+                            <div class="text-danger small">{{ $message }}</div>
                             @enderror
                         </div> --}}
 
@@ -686,15 +676,15 @@
                     </div>
 
                     @php
-                        $govt = old('govt_grants', $operationalDetail->govt_grants ?? 0);
-                        $foreign = old(
-                            'foreign_donations_institutional',
-                            $operationalDetail->foreign_donations_institutional ?? 0,
-                        );
-                        $promoters = old('promoters_money', $operationalDetail->promoters_money ?? 0);
-                        $individual = old('individual_donations', $operationalDetail->individual_donations ?? 0);
+                    $govt = old('govt_grants', $operationalDetail->govt_grants ?? 0);
+                    $foreign = old(
+                    'foreign_donations_institutional',
+                    $operationalDetail->foreign_donations_institutional ?? 0,
+                    );
+                    $promoters = old('promoters_money', $operationalDetail->promoters_money ?? 0);
+                    $individual = old('individual_donations', $operationalDetail->individual_donations ?? 0);
 
-                        $total = old('total_funding_lakh', $govt + $foreign + $promoters + $individual);
+                    $total = old('total_funding_lakh', $govt + $foreign + $promoters + $individual);
                     @endphp
 
                     <div class="row mb-md-2 flex-wrap row-gap-3 row-gap-md-4 px-md-1">
@@ -708,7 +698,7 @@
                                 value="{{ $govt }}" placeholder="Enter Amount" required>
 
                             @error('govt_grants')
-                                <div class="text-danger small">{{ $message }}</div>
+                            <div class="text-danger small">{{ $message }}</div>
                             @enderror
                         </div>
 
@@ -721,7 +711,7 @@
                                 value="{{ $foreign }}" placeholder="Enter Amount" required>
 
                             @error('foreign_donations_institutional')
-                                <div class="text-danger small">{{ $message }}</div>
+                            <div class="text-danger small">{{ $message }}</div>
                             @enderror
                         </div>
 
@@ -734,7 +724,7 @@
                                 value="{{ $promoters }}" placeholder="Enter Amount" required>
 
                             @error('promoters_money')
-                                <div class="text-danger small">{{ $message }}</div>
+                            <div class="text-danger small">{{ $message }}</div>
                             @enderror
                         </div>
 
@@ -747,7 +737,7 @@
                                 value="{{ $individual }}" placeholder="Enter Amount" required>
 
                             @error('individual_donations')
-                                <div class="text-danger small">{{ $message }}</div>
+                            <div class="text-danger small">{{ $message }}</div>
                             @enderror
                         </div>
 
@@ -775,15 +765,15 @@
                     </div>
 
                     @php
-                        $grants = old('grants_received', $operationalDetail->grants_received ?? 0);
-                        $equity = old('equity_raised', $operationalDetail->equity_raised ?? 0);
-                        $bootstrapped = old(
-                            'bootstrapped_friends_family',
-                            $operationalDetail->bootstrapped_friends_family ?? 0,
-                        );
-                        $debt = old('debt', $operationalDetail->debt ?? 0);
+                    $grants = old('grants_received', $operationalDetail->grants_received ?? 0);
+                    $equity = old('equity_raised', $operationalDetail->equity_raised ?? 0);
+                    $bootstrapped = old(
+                    'bootstrapped_friends_family',
+                    $operationalDetail->bootstrapped_friends_family ?? 0,
+                    );
+                    $debt = old('debt', $operationalDetail->debt ?? 0);
 
-                        $total = old('total_funding_lakh', $grants + $equity + $bootstrapped + $debt);
+                    $total = old('total_funding_lakh', $grants + $equity + $bootstrapped + $debt);
                     @endphp
 
                     <div class="row mb-md-2 flex-wrap row-gap-3 row-gap-md-4 px-md-1">
@@ -797,7 +787,7 @@
                                 value="{{ $grants }}" placeholder="Enter Amount" required>
 
                             @error('grants_received')
-                                <div class="text-danger small">{{ $message }}</div>
+                            <div class="text-danger small">{{ $message }}</div>
                             @enderror
                         </div>
 
@@ -810,7 +800,7 @@
                                 value="{{ $equity }}" placeholder="Enter Amount" required>
 
                             @error('equity_raised')
-                                <div class="text-danger small">{{ $message }}</div>
+                            <div class="text-danger small">{{ $message }}</div>
                             @enderror
                         </div>
 
@@ -823,7 +813,7 @@
                                 value="{{ $bootstrapped }}" placeholder="Enter Amount" required>
 
                             @error('bootstrapped_friends_family')
-                                <div class="text-danger small">{{ $message }}</div>
+                            <div class="text-danger small">{{ $message }}</div>
                             @enderror
                         </div>
 
@@ -832,11 +822,11 @@
                             <label class="form-label">Debt<span>*</span></label>
 
                             <input type="number" name="debt"
-                                class="form-control funding-input @error('debt') is-invalid @enderror"
-                                value="{{ $debt }}" placeholder="Enter Amount" required>
+                                class="form-control funding-input @error('debt') is-invalid @enderror" value="{{ $debt }}"
+                                placeholder="Enter Amount" required>
 
                             @error('debt')
-                                <div class="text-danger small">{{ $message }}</div>
+                            <div class="text-danger small">{{ $message }}</div>
                             @enderror
                         </div>
 
@@ -872,6 +862,13 @@
                                 <path d="M5.125 0.75V9.5M9.5 5.125H0.75" stroke="white" stroke-width="1.5"
                                     stroke-linecap="round" stroke-linejoin="round" />
                             </svg> Add Funders
+                        <button type="button" class="btn btn-primary add-fund gradient-btn" id="addFunderBtn"
+                            data-bs-toggle="modal" data-bs-target="#funderModal">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="ms-0 me-2" width="11" height="11"
+                                viewBox="0 0 11 11" fill="none">
+                                <path d="M5.125 0.75V9.5M9.5 5.125H0.75" stroke="white" stroke-width="1.5"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                            </svg> Add Funders
                         </button>
                     </div>
                 </div>
@@ -895,14 +892,15 @@
 
             </div>
             <div
+            <div
                 class="d-flex justify-content-center justify-content-md-end gap-2 gap-md-3 mt-4 steps-btn pe-lg-4 flex-wrap">
                 <div class="btn-wrap">
                     <button type="button" class="btn simple-btn"><img src="/img/back.png" class="me-2"
                             width="15" height="6.25">Back</button>
                 </div>
                 <div class="btn-wrap">
-                    <button type="submit" class="btn gradient-btn">Next <svg xmlns="http://www.w3.org/2000/svg"
-                            width="17" height="8" viewBox="0 0 17 8" fill="none">
+                    <button type="submit" class="btn gradient-btn">Next <svg xmlns="http://www.w3.org/2000/svg" width="17"
+                            height="8" viewBox="0 0 17 8" fill="none">
                             <path d="M12.625 7L15.75 3.875L12.625 0.75M15.75 3.875H0.75" stroke="white" stroke-width="1.5"
                                 stroke-linecap="round" stroke-linejoin="round" />
                         </svg></button>
@@ -1066,8 +1064,7 @@
                         <button type="button" class="btn simple-btn" data-bs-dismiss="modal">Cancel</button>
                     </div>
                     <div class="btn-wrap">
-                        <button type="submit" form="onboardingForm" id="finalSubmit" class="btn btn-primary"
-                            disabled>Submit
+                        <button type="submit" form="onboardingForm" id="finalSubmit" class="btn btn-primary" disabled>Submit
                         </button>
                     </div>
                 </div>
@@ -1100,7 +1097,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
 
             function calculateTotal(sectionId, displayId, inputId) {
                 const section = document.getElementById(sectionId);
@@ -1160,7 +1157,7 @@
         });
     </script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
 
             let textarea = document.querySelector('textarea[name="key_achievements"]');
             let counter = document.getElementById('wordCount');
@@ -1201,7 +1198,7 @@
         var myModal = document.getElementById('staticBackdrop')
         var myInput = document.getElementById('myInput')
 
-        myModal.addEventListener('shown.bs.modal', function() {
+        myModal.addEventListener('shown.bs.modal', function () {
             if (myInput) {
                 myInput.focus()
             }
@@ -1219,7 +1216,7 @@
     </script>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             //console.warn("loaded form script")
 
 
@@ -1296,7 +1293,7 @@
             }
 
             orgItems.forEach(item => {
-                item.addEventListener('click', function(e) {
+                item.addEventListener('click', function (e) {
 
                     e.stopPropagation();
 
@@ -1316,7 +1313,7 @@
     </script>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
+        document.addEventListener("DOMContentLoaded", function () {
             console.log("loaded form script")
             const form = document.querySelector("form");
             const continueBtn = document.getElementById("continueBtn");
@@ -1330,7 +1327,7 @@
 
                 // Continue button validation
                 if (continueBtn) {
-                    continueBtn.addEventListener("click", function() {
+                    continueBtn.addEventListener("click", function () {
                         if (!form.checkValidity()) {
                             form.reportValidity();
                             return;
@@ -1341,7 +1338,7 @@
 
                 // Enable submit only if all checkboxes checked
                 consentCheckboxes.forEach(cb => {
-                    cb.addEventListener("change", function() {
+                    cb.addEventListener("change", function () {
                         const allChecked = [...consentCheckboxes].every(c => c.checked);
                         if (submitBtn) {
                             submitBtn.disabled = !allChecked;
@@ -1355,7 +1352,7 @@
 
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
 
             let funderModal = new bootstrap.Modal(document.getElementById('funderModal'));
             let fundersTable = document.getElementById('fundersTable');
@@ -1393,20 +1390,20 @@
 
                         res.data.forEach((funder, index) => {
                             fundersTable.innerHTML += `
-                                <tr data-id="${funder.id}">
-                                    <td>${index + 1}</td>
-                                    <td>${funder.name}</td>
-                                    <td>${funder.year}</td>
-                                    <td>${Number(funder.amount).toLocaleString()}</td>
-                                    <td>
-                                        <button type='button' class="edit editFunder">
-                                            <i class="bi bi-pencil-square"></i>
-                                        </button>
-                                        <button type='button' class="trash deleteFunder">
-                                            <i class="bi bi-trash3"></i>
-                                        </button>
-                                    </td>
-                                </tr>`;
+                                    <tr data-id="${funder.id}">
+                                        <td>${index + 1}</td>
+                                        <td>${funder.name}</td>
+                                        <td>${funder.year}</td>
+                                        <td>${Number(funder.amount).toLocaleString()}</td>
+                                        <td>
+                                            <button type='button' class="edit editFunder">
+                                                <i class="bi bi-pencil-square"></i>
+                                            </button>
+                                            <button type='button' class="trash deleteFunder">
+                                                <i class="bi bi-trash3"></i>
+                                            </button>
+                                        </td>
+                                    </tr>`;
                         });
                     })
                     .catch(() => {
@@ -1551,7 +1548,7 @@
 
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
 
             document.querySelectorAll('.select-wrapper').forEach(wrapper => {
 
@@ -1570,7 +1567,7 @@
 
                 // Click handler
                 items.forEach(item => {
-                    item.addEventListener('click', function() {
+                    item.addEventListener('click', function () {
                         hiddenInput.value = this.dataset.value;
                         customSelect.innerText = this.innerText;
                     });
