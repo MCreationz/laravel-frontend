@@ -189,43 +189,100 @@
                             $state = old('state', $operationalDetail->state ?? '');
                         @endphp
 
-                        <div class="select-wrapper w-100 position-relative">
-                            <div class="custom-select form-control @error('state') is-invalid @enderror">
-                                {{ $state ? $state : 'Select State' }}
+                        <div class="select-wrapper w-100 position-relative checkbox-wrap">
+
+                            <!-- Selected Items -->
+                            <div id="selectedStatesBox"
+                                class="custom-select form-control d-flex flex-wrap gap-2 align-items-center">
+                                <span class="placeholder">Select State</span>
                             </div>
 
-                            <ul class="select-list">
-                                <li data-value="Andhra pradesh">Andhra Pradesh</li>
-                                <li data-value="Arunachal Pradesh">Arunachal Pradesh</li>
-                                <li data-value="Assam">Assam</li>
-                                <li data-value="Bihar">Bihar</li>
-                                <li data-value="Chhattisgarh">Chhattisgarh</li>
-                                <li data-value="Goa">Goa</li>
-                                <li data-value="Gujarat">Gujarat</li>
-                                <li data-value="Haryana">Haryana</li>
-                                <li data-value="Himachal Pradesh">Himachal Pradesh</li>
-                                <li data-value="Jharkhand">Jharkhand</li>
-                                <li data-value="Karnataka">Karnataka</li>
-                                <li data-value="Kerala">Kerala</li>
-                                <li data-value="Madhya Pradesh">Madhya Pradesh</li>
-                                <li data-value="Maharashtra">Maharashtra</li>
-                                <li data-value="Manipur">Manipur</li>
-                                <li data-value="Meghalaya">Meghalaya</li>
-                                <li data-value="Mizoram">Mizoram</li>
-                                <li data-value="Nagaland">Nagaland</li>
-                                <li data-value="Odisha">Odisha</li>
-                                <li data-value="Punjab">Punjab</li>
-                                <li data-value="Rajasthan">Rajasthan</li>
-                                <li data-value="Sikkim">Sikkim</li>
-                                <li data-value="Tamil Nadu">Tamil Nadu</li>
-                                <li data-value="Telangana">Telangana</li>
-                                <li data-value="Tripura">Tripura</li>
-                                <li data-value="Uttar Pradesh">Uttar Pradesh</li>
-                                <li data-value="Uttarakhand">Uttarakhand</li>
-                                <li data-value="West Bengal">West Bengal</li>
+                            <!-- Dropdown -->
+                            {{-- <ul class="select-list checkbox-list">
+
+                                <li>
+                                    <input type="checkbox" value="Andhra Pradesh" id="s1">
+                                    <label for="s1">Andhra Pradesh</label>
+                                </li>
+
+                                <li>
+                                    <input type="checkbox" value="Arunachal Pradesh" id="s2">
+                                    <label for="s2">Arunachal Pradesh</label>
+                                </li>
+
+                                <li>
+                                    <input type="checkbox" value="Punjab" id="s3">
+                                    <label for="s3">Punjab</label>
+                                </li>
+
+                                <li>
+                                    <input type="checkbox" value="Goa" id="s4">
+                                    <label for="s4">Goa</label>
+                                </li>
+
+                            </ul> --}}
+                            <ul class="select-list checkbox-list">
+
+                                <li><input type="checkbox" value="Andhra Pradesh" id="s1"><label
+                                        for="s1">Andhra Pradesh</label></li>
+                                <li><input type="checkbox" value="Arunachal Pradesh" id="s2"><label
+                                        for="s2">Arunachal Pradesh</label></li>
+                                <li><input type="checkbox" value="Assam" id="s3"><label
+                                        for="s3">Assam</label></li>
+                                <li><input type="checkbox" value="Bihar" id="s4"><label
+                                        for="s4">Bihar</label></li>
+                                <li><input type="checkbox" value="Chhattisgarh" id="s5"><label
+                                        for="s5">Chhattisgarh</label></li>
+                                <li><input type="checkbox" value="Goa" id="s6"><label
+                                        for="s6">Goa</label></li>
+                                <li><input type="checkbox" value="Gujarat" id="s7"><label
+                                        for="s7">Gujarat</label></li>
+                                <li><input type="checkbox" value="Haryana" id="s8"><label
+                                        for="s8">Haryana</label></li>
+                                <li><input type="checkbox" value="Himachal Pradesh" id="s9"><label
+                                        for="s9">Himachal Pradesh</label></li>
+                                <li><input type="checkbox" value="Jharkhand" id="s10"><label
+                                        for="s10">Jharkhand</label></li>
+                                <li><input type="checkbox" value="Karnataka" id="s11"><label
+                                        for="s11">Karnataka</label></li>
+                                <li><input type="checkbox" value="Kerala" id="s12"><label
+                                        for="s12">Kerala</label></li>
+                                <li><input type="checkbox" value="Madhya Pradesh" id="s13"><label
+                                        for="s13">Madhya Pradesh</label></li>
+                                <li><input type="checkbox" value="Maharashtra" id="s14"><label
+                                        for="s14">Maharashtra</label></li>
+                                <li><input type="checkbox" value="Manipur" id="s15"><label
+                                        for="s15">Manipur</label></li>
+                                <li><input type="checkbox" value="Meghalaya" id="s16"><label
+                                        for="s16">Meghalaya</label></li>
+                                <li><input type="checkbox" value="Mizoram" id="s17"><label
+                                        for="s17">Mizoram</label></li>
+                                <li><input type="checkbox" value="Nagaland" id="s18"><label
+                                        for="s18">Nagaland</label></li>
+                                <li><input type="checkbox" value="Odisha" id="s19"><label
+                                        for="s19">Odisha</label></li>
+                                <li><input type="checkbox" value="Punjab" id="s20"><label
+                                        for="s20">Punjab</label></li>
+                                <li><input type="checkbox" value="Rajasthan" id="s21"><label
+                                        for="s21">Rajasthan</label></li>
+                                <li><input type="checkbox" value="Sikkim" id="s22"><label
+                                        for="s22">Sikkim</label></li>
+                                <li><input type="checkbox" value="Tamil Nadu" id="s23"><label for="s23">Tamil
+                                        Nadu</label></li>
+                                <li><input type="checkbox" value="Telangana" id="s24"><label
+                                        for="s24">Telangana</label></li>
+                                <li><input type="checkbox" value="Tripura" id="s25"><label
+                                        for="s25">Tripura</label></li>
+                                <li><input type="checkbox" value="Uttar Pradesh" id="s26"><label
+                                        for="s26">Uttar Pradesh</label></li>
+                                <li><input type="checkbox" value="Uttarakhand" id="s27"><label
+                                        for="s27">Uttarakhand</label></li>
+                                <li><input type="checkbox" value="West Bengal" id="s28"><label for="s28">West
+                                        Bengal</label></li>
+
                             </ul>
 
-                            <input type="hidden" name="state" class="hidden-select" value="{{ $state }}">
+                            <input type="hidden" name="state" id="hiddenStates">
                         </div>
 
                         @error('state')
@@ -560,7 +617,8 @@
 
                         <!-- Lifetime Revenue -->
                         <div class="col-12 col-md-6 col-lg-4 px-md-2">
-                            <label class="form-label">Ongoing Year Turnover (till last month) (₹ Lakh)<span>*</span></label>
+                            <label class="form-label">Ongoing Year Turnover (till last month) (₹
+                                Lakh)<span>*</span></label>
 
                             <input type="number" name="lifetime_revenue_lakh"
                                 class="form-control @error('lifetime_revenue_lakh') is-invalid @enderror"
@@ -578,7 +636,8 @@
 
                             <input type="number" name="ongoing_year_revenue_lakh"
                                 class="form-control @error('ongoing_year_revenue_lakh') is-invalid @enderror"
-                                value="{{ $ongoing }}" placeholder="Enter amount, if you have zero turnover just put 0" required>
+                                value="{{ $ongoing }}"
+                                placeholder="Enter amount, if you have zero turnover just put 0" required>
 
                             @error('ongoing_year_revenue_lakh')
                                 <div class="text-danger small">{{ $message }}</div>
@@ -591,7 +650,8 @@
 
                             <input type="number" name="last_year_revenue_lakh"
                                 class="form-control @error('last_year_revenue_lakh') is-invalid @enderror"
-                                value="{{ $lastYear }}" placeholder="Enter amount, If you have zero turnover then put 0" required>
+                                value="{{ $lastYear }}"
+                                placeholder="Enter amount, If you have zero turnover then put 0" required>
 
                             @error('last_year_revenue_lakh')
                                 <div class="text-danger small">{{ $message }}</div>
@@ -805,11 +865,13 @@
                         <h2 class="inner-title mb-0">Major Funders</h2>
                     </div>
                     <div class="btn-wrap">
-                        <button type="button" class="btn btn-primary add-fund gradient-btn" id="addFunderBtn" data-bs-toggle="modal"
-                            data-bs-target="#funderModal">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="ms-0 me-2" width="11" height="11" viewBox="0 0 11 11" fill="none">
-<path d="M5.125 0.75V9.5M9.5 5.125H0.75" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-</svg> Add Funders
+                        <button type="button" class="btn btn-primary add-fund gradient-btn" id="addFunderBtn"
+                            data-bs-toggle="modal" data-bs-target="#funderModal">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="ms-0 me-2" width="11" height="11"
+                                viewBox="0 0 11 11" fill="none">
+                                <path d="M5.125 0.75V9.5M9.5 5.125H0.75" stroke="white" stroke-width="1.5"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                            </svg> Add Funders
                         </button>
                     </div>
                 </div>
@@ -832,10 +894,11 @@
                 </div>
 
             </div>
-           <div
+            <div
                 class="d-flex justify-content-center justify-content-md-end gap-2 gap-md-3 mt-4 steps-btn pe-lg-4 flex-wrap">
                 <div class="btn-wrap">
-                    <button type="button" class="btn simple-btn"><img src="/img/back.png" class="me-2" width="15" height="6.25">Back</button>
+                    <button type="button" class="btn simple-btn"><img src="/img/back.png" class="me-2"
+                            width="15" height="6.25">Back</button>
                 </div>
                 <div class="btn-wrap">
                     <button type="submit" class="btn gradient-btn">Next <svg xmlns="http://www.w3.org/2000/svg"
@@ -849,33 +912,61 @@
     </div>
 
     <div class="modal fade" id="funderModal" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered modal-md">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h3 class="modal-title mb-0">Add Funder</h3>
+                <div class="modal-header border-0">
+                    <h2 class="modal-title mb-0 inner-title">Major Funder Details</h2>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body py-0">
                     <form id="funderForm">
                         <input type="hidden" id="funder_id">
                         <div class="mb-3">
                             <label>Funder Name</label>
-                            <input type="text" class="form-control" id="funder_name">
+                            <input type="text" class="form-control" id="funder_name"
+                                placeholder="Enter Name of Director/Partner">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Category<span>*</span></label>
+
+                            <div class="select-wrapper w-100 position-relative">
+                                <div class="custom-select form-control">Select an option</div>
+
+                                <input type="hidden" name="category" value="category">
+                                <ul class="select-list" style="display: none;">
+                                    <li data-value="Amritsar">cate 1</li>
+                                    <li data-value="Ludhiana">cate 1</li>
+                                </ul>
+                            </div>
                         </div>
                         <div class="mb-3">
                             <label>Year</label>
-                            <select class="form-control" id="funder_year">
-                                <option value="">Select Year</option>
-                            </select>
+                            <input type="number" class="form-control" id="funder_year"
+                                placeholder="Enter Name of Director/Partner">
                         </div>
                         <div class="mb-3">
-                            <label>Amount</label>
-                            <input type="number" class="form-control" id="funder_amount">
+                            <label class="form-label">Purpose<span>*</span></label>
+
+                            <div class="select-wrapper w-100 position-relative">
+                                <div class="custom-select form-control">Select an option</div>
+
+                                <input type="hidden" name="category" value="category">
+                                <ul class="select-list" style="display: none;">
+                                    <li data-value="Amritsar">Purpose 1</li>
+                                    <li data-value="Ludhiana">Purpose 1</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label>Amount (₹00.00 Lakh)</label>
+                            <input type="number" class="form-control" id="funder_amount"
+                                placeholder="Enter Name of Director/Partner">
                         </div>
                     </form>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" id="saveFunder">Save</button>
+                <div class="modal-footer border-0 d-flex justify-content-center justify-content-md-end gap-2 steps-btn pe-lg-4 flex-wrap">
+                    <button type="button" class="btn simple-btn m-0">Back</button>
+                    <button type="button" class="btn gradient-btn m-0" id="saveFunder">Add</button>
                 </div>
 
             </div>
@@ -1485,6 +1576,89 @@
                     });
                 });
 
+            });
+
+        });
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+
+            const selectedBox = document.getElementById('selectedStatesBox');
+            const dropdown = document.querySelector('.checkbox-list');
+            const checkboxes = document.querySelectorAll('.checkbox-list input[type="checkbox"]');
+            const hiddenInput = document.getElementById('hiddenStates');
+
+            // 🔽 open/close dropdown
+            selectedBox.addEventListener('click', function(e) {
+                if (e.target.classList.contains('remove-tag')) return;
+                e.stopPropagation();
+                dropdown.classList.toggle('show');
+            });
+
+            // ❌ close outside
+            document.addEventListener('click', function() {
+                dropdown.classList.remove('show');
+            });
+
+            // 🚫 prevent inside click close
+            dropdown.addEventListener('click', function(e) {
+                e.stopPropagation();
+            });
+
+            // ✅ checkbox select
+            checkboxes.forEach(cb => {
+                cb.addEventListener('change', updateSelected);
+            });
+
+            // 🔁 update UI
+            function updateSelected() {
+
+                let selected = [];
+                selectedBox.innerHTML = '';
+
+                checkboxes.forEach(cb => {
+
+                    if (cb.checked) {
+
+                        selected.push(cb.value);
+
+                        const tag = document.createElement('div');
+                        tag.className = 'state-tag';
+
+                        tag.innerHTML = `
+                    <span>${cb.value}</span>
+                    <span class="remove-tag" data-value="${cb.value}">&times;</span>
+                `;
+
+                        selectedBox.appendChild(tag);
+                    }
+                });
+
+                // placeholder
+                if (selected.length === 0) {
+                    selectedBox.innerHTML = '<span class="placeholder">Select State</span>';
+                }
+
+                hiddenInput.value = selected.join(',');
+            }
+
+            // ❌ CROSS CLICK FIX (MAIN LOGIC)
+            selectedBox.addEventListener('click', function(e) {
+
+                if (e.target.classList.contains('remove-tag')) {
+
+                    e.stopPropagation();
+
+                    const value = e.target.getAttribute('data-value');
+
+                    checkboxes.forEach(cb => {
+                        if (cb.value === value) {
+                            cb.checked = false;
+                        }
+                    });
+
+                    updateSelected();
+                }
             });
 
         });

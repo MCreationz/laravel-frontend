@@ -1018,6 +1018,121 @@ button.edit:hover {
     background: var(--accent-color);
     color: #fff;
 }
+ul.select-list label {
+    margin-bottom: 0 !important;
+    width: 100%;
+    position: relative;
+    cursor: pointer;
+}
+.select-list.checkbox-list {
+    display: none;
+}
+.select-list.show {
+    display: block;
+}
+ul.select-list input[type="checkbox"] {
+    appearance: none;
+}
+ul.select-list.checkbox-list li:hover {
+    background: transparent;
+}
+ul.select-list.checkbox-list li:hover label {
+    color: var(--accent-color) !important;
+}
+ul.select-list label:before {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border: 1px solid #E2E2E2;
+    right: 0;
+    top: 0;
+    border-radius: 4px;
+    cursor: pointer;
+    opacity: 0;
+}
+ul.select-list label:after {
+    content: '';
+    position: absolute;
+    width: 6px;
+    height: 11px;
+    border: solid #fff;
+    border-width: 0px 2px 2px 0px;
+    right: 7px;
+    top: 3px;
+    transform: rotate(45deg);
+    opacity: 0;
+}
+ul.select-list input[type="checkbox"]:checked ~ label:after {
+    opacity: 1;
+}
+ul.select-list input[type="checkbox"]:checked ~ label:before {
+    background: var(--accent-color);
+    border-color: var(--accent-color);
+    opacity: 1;
+}
+.custom-select {
+    min-height: 45px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.select-box {
+    min-height: 45px;
+    border: 1px solid #ccc;
+    padding: 6px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    cursor: pointer;
+}
+.checkbox-list {
+    display: none;
+    border: 1px solid #ccc;
+    margin-top: 5px;
+    padding: 5px;
+    list-style: none;
+}
+.checkbox-list.show {
+    display: block;
+}
+.state-tag {
+    background: #fff;
+    border-radius: 10px;
+    padding: 4px 8px;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+.state-tag span {
+    color: #878787 !important;
+    font-size: 12px !important;
+}
+.state-tag .remove-tag {
+    cursor: pointer;
+    font-size: 18px !important;
+    padding: 2px;
+    width: 18px;
+    height: 18px;
+    display: inline-flex;
+    border-radius: 20px;
+    justify-content: center;
+    align-items: center;
+}
+.remove-tag:hover {
+    background: #ddd;
+}
+.select-list.checkbox-list li {
+    display: inline-flex;
+    width: 100%;
+}
+.placeholder {
+    background: transparent !important;
+    opacity: 1 !important;
+    font-size: 12px !important;
+    min-height: min-content !important;
+}
 /* responsive */
 @media(max-width:1440px){
 .left-logo-col .bg-image img {
