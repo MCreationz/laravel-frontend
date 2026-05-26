@@ -673,33 +673,22 @@
                         
                     </div>
                 </div>
-                <div class="table-wrap major-funders-table-wrap">
-                    <table class="table major-funders-table mb-0">
-                        <thead>
-                            <tr>
-                                <th scope="col">SN</th>
-                                <th scope="col">Funder Name</th>
-                                <th scope="col" class="major-funders-table__sortable">
-                                    <span>Category</span>
-                                    <svg class="major-funders-table__caret" width="8" height="5" viewBox="0 0 8 5"
-                                        fill="none" aria-hidden="true">
-                                        <path d="M1 1L4 4L7 1" fill="#5C6B7A" />
-                                    </svg>
-                                </th>
-                                <th scope="col">Year</th>
-                                <th scope="col" class="major-funders-table__sortable">
-                                    <span>Purpose</span>
-                                    <svg class="major-funders-table__caret" width="8" height="5" viewBox="0 0 8 5"
-                                        fill="none" aria-hidden="true">
-                                        <path d="M1 1L4 4L7 1" fill="#5C6B7A" />
-                                    </svg>
-                                </th>
-                                <th scope="col">Amount (₹00.00 Lakh)</th>
-                            </tr>
-                        </thead>
-                        <tbody id="fundersTable"></tbody>
-                    </table>
-                </div>
+               <div class="table-wrap major-funders-table-wrap">
+    <table class="table major-funders-table mb-0">
+     <thead>
+    <tr>
+        <th scope="col">SN</th>
+        <th scope="col">Funder Name</th>
+        <th scope="col">Category</th>
+        <th scope="col">Year</th>
+        <th scope="col">Purpose</th>
+        <th scope="col">Amount (₹ Lakh)</th>
+        <th scope="col">Actions</th>
+    </tr>
+</thead>
+        <tbody id="fundersTable"></tbody>
+    </table>
+</div>
 
             </div>
             <div>
@@ -742,6 +731,18 @@
             pointer-events: none;
             /* ensures clicks go to button, not icon */
         }
+        .major-funders-table td:last-child {
+    white-space: nowrap;
+}
+
+.major-funders-table td:last-child .edit,
+.major-funders-table td:last-child .trash {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+        
     </style>
 @endsection
 
@@ -1034,11 +1035,19 @@
             /* =========================
                LOAD
             ========================= */
+            function formatLabel(value) {
+    if (!value) return '-';
+
+    return value
+        .replace(/[_-]/g, ' ')
+        .replace(/\b\w/g, char => char.toUpperCase());
+}
             function loadFunders() {
                 fetch(API.list)
                     .then(handleResponse)
                     .then(res => {
                         fundersTable.innerHTML = '';
+                        
 
                         res.data.forEach((funder, index) => {
                             const category = funder.category || '—';
@@ -1048,25 +1057,27 @@
                                 maximumFractionDigits: 2
                             });
 
-                            fundersTable.innerHTML += `
-                                                                <tr 
-                            data-id="${funder.id}"
-                            data-category="${funder.category}"
-                            data-purpose="${funder.purpose}"
-                        >
-                                                                        <td>${index + 1}</td>
-                                                                        <td>${funder.name}</td>
-                                                                        <td>${funder.year}</td>
-                                                                        <td>${Number(funder.amount).toLocaleString()}</td>
-                                                                        <td>
-                                                                            <button type='button' class="edit editFunder">
-                                                                                <i class="bi bi-pencil-square"></i>
-                                                                            </button>
-                                                                            <button type='button' class="trash deleteFunder">
-                                                                                <i class="bi bi-trash3"></i>
-                                                                            </button>
-                                                                        </td>
-                                                                    </tr>`;
+         fundersTable.innerHTML += `
+<tr
+    data-id="${funder.id}"
+    data-category="${funder.category}"
+    data-purpose="${funder.purpose}"
+>
+    <td>${index + 1}</td>
+    <td>${funder.name}</td>
+    <td>${formatLabel(funder.category)}</td>
+    <td>${funder.year}</td>
+    <td>${formatLabel(funder.purpose)}</td>
+    <td>₹ ${Number(funder.amount).toLocaleString()}</td>
+    <td>
+        <button type="button" class="edit editFunder">
+            <i class="bi bi-pencil-square"></i>
+        </button>
+        <button type="button" class="trash deleteFunder">
+            <i class="bi bi-trash3"></i>
+        </button>
+    </td>
+</tr>`;
                         });
                     })
                     .catch(() => {
