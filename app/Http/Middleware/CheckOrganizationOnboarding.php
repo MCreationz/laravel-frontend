@@ -11,13 +11,13 @@ class CheckOrganizationOnboarding
     public function handle(Request $request, Closure $next)
     {
         $organization = Auth::guard('organization')->user();
-       // dd($organization);
-//
+
         if (!$organization) {
-            return redirect()->route('login'); 
+            return redirect()->route('login');
         }
 
-        // Skip middleware if already on onboarding routes
+        $routeName = optional($request->route())->getName();
+
         $onboardingRoutes = [
             'onboarding.step1',
             'onboarding.step1.store',
@@ -27,18 +27,28 @@ class CheckOrganizationOnboarding
             'onboarding.step3.store',
         ];
 
-        if (in_array($request->route()->getName(), $onboardingRoutes)) {
+        if (in_array($routeName, $onboardingRoutes)) {
             return $next($request);
         }
 
-        // Check if profile exists
-        if (!$organization->profile) {
+        // If everything is complete, allow access
+        if ($organization->isProfileComplete()) {
+            return $next($request);
+        }
+
+        // Step 1: Profile
+        if (!$organization->profile()->exists()) {
             return redirect()->route('onboarding.step1');
         }
 
-        // Check if address exists
-        if (!$organization->address) {
+        // Step 2: Address
+        if (!$organization->address()->exists()) {
             return redirect()->route('onboarding.step2');
+        }
+
+        // Step 3: Operational Details
+        if (!$organization->operationalDetail()->exists()) {
+            return redirect()->route('onboarding.step3');
         }
 
         return $next($request);

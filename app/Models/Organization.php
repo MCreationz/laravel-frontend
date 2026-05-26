@@ -57,4 +57,7 @@ class Organization extends Authenticatable
         && $this->operationalDetail()
         ->exists();
 }
+
+
+
 }

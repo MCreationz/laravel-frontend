@@ -53,7 +53,6 @@ class OrganizationFunderController extends Controller
                 'message' => 'Unauthorized'
             ], 401);
         }
-
         $request->validate([
             'name' => 'required|string|max:255',
             'category' => 'required|string|max:255', // Added
