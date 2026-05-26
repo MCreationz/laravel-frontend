@@ -1133,6 +1133,22 @@ ul.select-list input[type="checkbox"]:checked ~ label:before {
     font-size: 12px !important;
     min-height: min-content !important;
 }
+.modal-header .btn-close {
+    background-color: #fff;
+    color: #000;
+    opacity: 1;
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    border-radius: 50px;
+    filter: unset;
+    right: -12px;
+    top: -8px;
+    display: inline-block !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    background-size: 12px;
+}
 /* responsive */
 @media(max-width:1440px){
 .left-logo-col .bg-image img {
