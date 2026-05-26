@@ -35,17 +35,28 @@ class LoginController extends Controller
             'password' => 'required',
         ]);
 
-        if (Auth::guard('organization')->attempt([
-            'work_email' => $request->email,
-            'password' => $request->password,
-        ])) {
+      if (Auth::guard('organization')->attempt([
+    'work_email' => $request->email,
+    'password' => $request->password,
+])) {
 
-            $request->session()->regenerate();
+    $organization = Auth::guard('organization')->user();
 
-            return redirect()
-                ->route('dashboard')
-                ->with('success', 'Login successful');
-        }
+    // BLOCK UNVERIFIED EMAIL
+    if (! $organization->email_verified_at) {
+        Auth::guard('organization')->logout();
+
+        return back()
+            ->withInput($request->only('email'))
+            ->with('error', 'Please verify your email before logging in.');
+    }
+
+    $request->session()->regenerate();
+
+    return redirect()
+        ->route('dashboard')
+        ->with('success', 'Login successful');
+}
 
         return back()
             ->withInput($request->only('email')) // keeps email in form
@@ -76,11 +87,21 @@ class LoginController extends Controller
             'email' => 'required|email',
         ]);
 
+        
+
         $organization = Organization::where('work_email', $request->email)->first();
+
+
 
         if (! $organization) {
             return back()->with('error', 'Account not found.');
         }
+
+        if (! $organization->email_verified_at) {
+    return redirect()
+        ->route('login')
+        ->with('error', 'Please verify your email before logging in.');
+}
 
         $otp = random_int(100000, 999999);
         $expiryMinutes = 10;

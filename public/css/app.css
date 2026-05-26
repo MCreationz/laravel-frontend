@@ -1180,66 +1180,137 @@ button.edit:hover {
     background: var(--accent-color);
     color: #fff;
 }
-.form-check-input[type=checkbox] {
-    height: 24px;
-    width: 24px;
-    border-radius: 7px !important;
-    margin-top: 0 !important;
-}
-.only-checkbox {
-    display: flex !important;
-    gap: 10px;
-    align-items: center;
-    justify-content: center;
-    padding-left: 0 !important;
-}
-.only-checkbox label {
+ul.select-list label {
     margin-bottom: 0 !important;
+    width: 100%;
+    position: relative;
+    cursor: pointer;
 }
-.form-check .form-check-input {
-    margin-left: 0 !important;
+.select-list.checkbox-list {
+    display: none;
 }
-#onboardingForm .form-control {
-    background: #ffffff;
+.select-list.show {
+    display: block;
 }
-.major-close {
-    fill: #FFF;
-    filter: drop-shadow(0 4px 20px rgba(0, 0, 0, 0.08));
-    width: 25px !important;
-    height: 25px !important;
-    border-radius: 50% !important;
-    background-color: #fff !important;
-    opacity: 1 !important;
-    top: -10px;
+ul.select-list input[type="checkbox"] {
+    appearance: none;
+}
+ul.select-list.checkbox-list li:hover {
+    background: transparent;
+}
+ul.select-list.checkbox-list li:hover label {
+    color: var(--accent-color) !important;
+}
+ul.select-list label:before {
+    content: '';
     position: absolute;
-    right: -10px;
+    width: 20px;
+    height: 20px;
+    border: 1px solid #E2E2E2;
+    right: 0;
+    top: 0;
+    border-radius: 4px;
+    cursor: pointer;
+    opacity: 0;
 }
-.modal.show .modal-dialog {
-    max-width: 800px;
-    border-radius: 8px;
+ul.select-list label:after {
+    content: '';
+    position: absolute;
+    width: 6px;
+    height: 11px;
+    border: solid #fff;
+    border-width: 0px 2px 2px 0px;
+    right: 7px;
+    top: 3px;
+    transform: rotate(45deg);
+    opacity: 0;
 }
-.modal.show .modal-dialog .modal-content {
-    padding: 32px 28px 28px 22px !important;
+ul.select-list input[type="checkbox"]:checked ~ label:after {
+    opacity: 1;
 }
-.modal-headers {
-    padding-bottom: 27px;
+ul.select-list input[type="checkbox"]:checked ~ label:before {
+    background: var(--accent-color);
+    border-color: var(--accent-color);
+    opacity: 1;
 }
-.modal-footers {
-    padding-top: 26px;
-    align-self: flex-end;
+.custom-select {
+    min-height: 45px;
+    cursor: pointer;
     display: flex;
-    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
 }
-#funderForm .form-control {
-    background: #ffffff;
+.select-box {
+    min-height: 45px;
+    border: 1px solid #ccc;
+    padding: 6px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    cursor: pointer;
 }
-
-
-
-
-
-
-
+.checkbox-list {
+    display: none;
+    border: 1px solid #ccc;
+    margin-top: 5px;
+    padding: 5px;
+    list-style: none;
+}
+.checkbox-list.show {
+    display: block;
+}
+.state-tag {
+    background: #fff;
+    border-radius: 10px;
+    padding: 4px 8px;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+.state-tag span {
+    color: #878787 !important;
+    font-size: 12px !important;
+}
+.state-tag .remove-tag {
+    cursor: pointer;
+    font-size: 18px !important;
+    padding: 2px;
+    width: 18px;
+    height: 18px;
+    display: inline-flex;
+    border-radius: 20px;
+    justify-content: center;
+    align-items: center;
+}
+.remove-tag:hover {
+    background: #ddd;
+}
+.select-list.checkbox-list li {
+    display: inline-flex;
+    width: 100%;
+}
+.placeholder {
+    background: transparent !important;
+    opacity: 1 !important;
+    font-size: 12px !important;
+    min-height: min-content !important;
+}
+.modal-header .btn-close {
+    background-color: #fff;
+    color: #000;
+    opacity: 1;
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    border-radius: 50px;
+    filter: unset;
+    right: -12px;
+    top: -8px;
+    display: inline-block !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    background-size: 12px;
+}
 /* responsive */
 @media(max-width:1440px){
 .left-logo-col .bg-image img {
