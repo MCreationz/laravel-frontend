@@ -695,10 +695,16 @@
                 
                 <div
                 class="d-flex justify-content-center justify-content-md-end gap-2 gap-md-3 mt-4 steps-btn pe-lg-4 flex-wrap">
-                <div class="btn-wrap">
-                    <button type="button" class="btn simple-btn"><img src="/img/back.png" class="me-2" width="15"
-                            height="6.25">Back</button>
-                </div>
+              <div class="btn-wrap">
+    <button 
+        type="button"
+        class="btn simple-btn"
+        onclick="window.location.href='{{ route('onboarding.step2') }}'"
+    >
+        <img src="/img/back.png" class="me-2" width="15" height="6.25">
+        Back
+    </button>
+</div>
                 <div class="btn-wrap">
                     <button type="button" class="btn gradient-btn" id="continueBtn">Next <svg xmlns="http://www.w3.org/2000/svg" width="17"
                             height="8" viewBox="0 0 17 8" fill="none">
