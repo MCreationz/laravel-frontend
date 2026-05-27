@@ -151,6 +151,7 @@ class OnboardingController extends Controller
 
         $data = [
             'organization_id' => $organization->id,
+            'organization_type' => $role === 'fund_seeker' ? 'profit' : 'non_profit',
             'registration_type' => $request->registration_type,
             'state' => $request->state,
             'years_of_operation_months' => $request->years_of_operation_months,

@@ -846,7 +846,7 @@ border-radius:12px;
     display: flex;
     gap: 12px;
 }
-.consent-box input[type="checkbox"] {
+.final-check input[type="checkbox"] {
     width: 24px;
     flex: 0 0 24px;
     height: 24px;
@@ -857,7 +857,7 @@ border-radius:12px;
     border-radius: 6px;
     position: relative;
 }
-.consent-box input[type="checkbox"]:after {
+.final-check input[type="checkbox"]:after {
     content: '';
     position: absolute;
     left: 8px;
@@ -872,11 +872,11 @@ border-radius:12px;
     z-index: 1;
     opacity: 0;
 }
-.consent-box input[type="checkbox"]:checked {
+.final-check input[type="checkbox"]:checked {
     background: var(--accent-color);
     border-color: var(--accent-color);
 }
-.consent-box input[type="checkbox"]:checked:after {
+.final-check input[type="checkbox"]:checked:after {
     opacity: 1;
 }
 label.check-item.final-check {
@@ -898,7 +898,7 @@ ul.sub-list {
     margin-top: 0;
 }
 .modal-body p, .modal-body li, .modal-body div {
-    font-size: 12px !important;
+    font-size: 12px;
 }
 /* dashboard page */
 .project-status-sec {
@@ -1311,6 +1311,30 @@ ul.select-list input[type="checkbox"]:checked ~ label:before {
     margin: 0 !important;
     background-size: 12px;
 }
+.consent .modal-header{
+    padding: 35px 0px 25px 0px;
+    margin-left: 28px;
+    margin-right: 28px;
+}
+.consent .modal-body{
+    padding: 35px 16px 20px 35px;
+}
+.consent ul.sub-list{
+    padding-left: 27px;
+    margin-bottom: 20px;
+}
+.consent .final-check {
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+}
+.consent .modal-footer {
+    padding: 0px 20px 22px 20px;
+}
+
+
+
+
 /* responsive */
 @media(max-width:1440px){
 .left-logo-col .bg-image img {
@@ -1423,6 +1447,9 @@ ul.select-list input[type="checkbox"]:checked ~ label:before {
     .form-col-wrap {
         max-height: max-content;
     }
+    .table-wrap {
+        overflow-x: auto;
+    }
 }
 @media(max-width: 767px){
     h1, .h1 {
@@ -1507,9 +1534,6 @@ ul.select-list input[type="checkbox"]:checked ~ label:before {
     .two-col-text p {
         font-size: 14px;
     }
-    .table-wrap {
-        overflow-x: auto;
-    }
     .gradient-icon {
         width: 45px;
         height: 45px;
@@ -1519,7 +1543,7 @@ ul.select-list input[type="checkbox"]:checked ~ label:before {
     .check-item {
         gap: 8px;
     }
-    .consent-box input[type="checkbox"] {
+    .final-check input[type="checkbox"] {
         width: 20px;
         flex: 0 0 20px;
         height: 20px;
@@ -1602,5 +1626,12 @@ ul.select-list input[type="checkbox"]:checked ~ label:before {
     .toggle-wrap {
         padding: 9px 15px;
         justify-content: flex-start;
+    }
+    .consent .modal-body {
+        padding: 30px 16px 20px 25px;
+    }
+    .consent .modal-header {
+        margin-left: 25px;
+        margin-right: 25px;
     }
 }
