@@ -8,7 +8,7 @@ class OrganizationOperationalDetail extends Model
 {
     protected $fillable = [
         'organization_id',
-        'organization_type',
+        // 'organization_type',
         'state',
 
         // Common
