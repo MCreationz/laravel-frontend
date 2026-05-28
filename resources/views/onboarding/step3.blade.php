@@ -1,4 +1,4 @@
-@extends('layouts.dashboard')
+﻿@extends('layouts.dashboard')
 
 @section('content')
     <div class="step-section position-relative mb-3">
@@ -594,8 +594,7 @@
 
                         <!-- Lifetime Revenue -->
                         <div class="col-12 col-md-6 col-lg-4 px-md-2">
-                            <label class="form-label">Ongoing Year Turnover (till last month) (₹
-                                Lakh)<span>*</span></label>
+                            <label class="form-label">Ongoing Year Turnover (till last month) (₹ Lakh)<span>*</span></label>
 
                             <input type="number" name="lifetime_revenue_lakh"
                                 class="form-control @error('lifetime_revenue_lakh') is-invalid @enderror"
@@ -682,8 +681,7 @@
         <th scope="col">Category</th>
         <th scope="col">Year</th>
         <th scope="col">Purpose</th>
-        <th scope="col">Amount (₹ Lakh)</th>
-        <th scope="col">Actions</th>
+        <th scope="col">Amount (₹00.00 Lakh)</th>
     </tr>
 </thead>
         <tbody id="fundersTable"></tbody>
@@ -695,10 +693,16 @@
                 
                 <div
                 class="d-flex justify-content-center justify-content-md-end gap-2 gap-md-3 mt-4 steps-btn pe-lg-4 flex-wrap">
-                <div class="btn-wrap">
-                    <button type="button" class="btn simple-btn"><img src="/img/back.png" class="me-2" width="15"
-                            height="6.25">Back</button>
-                </div>
+              <div class="btn-wrap">
+    <button 
+        type="button"
+        class="btn simple-btn"
+        onclick="window.location.href='{{ route('onboarding.step2') }}'"
+    >
+        <img src="/img/back.png" class="me-2" width="15" height="6.25">
+        Back
+    </button>
+</div>
                 <div class="btn-wrap">
                     <button type="button" class="btn gradient-btn" id="continueBtn">Next <svg xmlns="http://www.w3.org/2000/svg" width="17"
                             height="8" viewBox="0 0 17 8" fill="none">
@@ -710,8 +714,178 @@
         </form>
     </div>
 
-    
+    {{-- Major Funder modal --}}
+    <div class="modal fade" id="funderModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header border-0">
+                    <h2 class="modal-title mb-0 inner-title">Major Funder Details</h2>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
 
+                <div class="modal-body py-0">
+                    <form id="funderForm">
+                        <input type="hidden" id="funder_id">
+
+                        <div class="mb-3">
+                            <label>Funder Name</label>
+                            <input type="text" class="form-control" id="funder_name" placeholder="Enter Funder Name">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Category<span>*</span></label>
+
+                            <div class="select-wrapper w-100 position-relative">
+                                <div class="custom-select form-control">Select an option</div>
+
+                                <input type="hidden" name="category" id="funder_category">
+
+                                <ul class="select-list" style="display: none;">
+                                    <li data-value="government">Government</li>
+                                    <li data-value="csr_corporate">CSR - Corporate</li>
+                                    <li data-value="csr_psu">CSR - PSU</li>
+                                    <li data-value="foreign_institutions">Foreign Institutions</li>
+                                    <li data-value="individual_donor">Individual Donor</li>
+                                    <li data-value="promoter_money">Promoter Money</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label>Year</label>
+                            <input type="number" class="form-control" id="funder_year" placeholder="Enter Year (e.g. 2026)">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Purpose<span>*</span></label>
+
+                            <div class="select-wrapper w-100 position-relative">
+                                <div class="custom-select form-control">Select an option</div>
+
+                                <input type="hidden" name="purpose" id="funder_purpose">
+
+                                <ul class="select-list" style="display: none;">
+                                    <li data-value="project">Project</li>
+                                    <li data-value="program">Program</li>
+                                    <li data-value="org_development">Organization Development</li>
+                                    <li data-value="infrastructure">Infrastructure</li>
+                                    <li data-value="staff_training">Staff Training</li>
+                                    <li data-value="technology">Technology</li>
+                                    <li data-value="others">Others</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label>Amount (₹00.00 Lakh)</label>
+                            <input type="number" class="form-control" id="funder_amount" placeholder="Enter Amount">
+                        </div>
+                    </form>
+                </div>
+
+                <div
+                    class="modal-footer border-0 d-flex justify-content-center justify-content-md-end gap-2 steps-btn pe-lg-4 flex-wrap">
+                    <button type="button" class="btn simple-btn m-0">Back</button>
+                    <button type="button" class="btn gradient-btn m-0" id="saveFunder">Add</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- Consent & Declaration modal --}}
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content border-0 consent">
+                <div class="modal-header">
+                    <h3 class="modal-title mb-0">Consent & Declaration</h3>
+                </div>
+                <div class="modal-body">
+                    <p>By registering and submitting information on Fundink, I hereby declare and agree that:</p>
+                    <div class="consent-box">
+                        <p>All information provided by our organization - including organization details, PAN, statutory
+                            registrations, governance structure, geographical coverage, domain expertise, project track
+                            record, and financial records (including institutional, foreign, and individual donations,
+                            and total turnover) - is true, accurate, and complete to the best of my knowledge.</p>
+
+                        <p>I authorize Fundink to collect, store, process, analyze, and present this information to
+                            verified funders, CSR entities, philanthropies, impact investors, financial institutions,
+                            and ecosystem partners for the purpose of fundraising, due diligence, evaluation, and
+                            collaboration.</p>
+
+                        <p>I expressly consent to Fundink conducting verification and due diligence checks, including
+                            but not limited to:</p>
+                        <ul class="sub-list">
+                            <li>PAN validation</li>
+                            <li>Statutory registration verification</li>
+                            <li>Background and compliance checks</li>
+                            <li>Credit bureau checks using the organization's PAN, where applicable, for the purpose
+                                of financial assessment and risk evaluation</li>
+                        </ul>
+
+                        <p>I grant Fundink the right to use our organization's details for:</p>
+                        <ul class="sub-list">
+                            <li>Fundraising campaigns and curated funding calls</li>
+                            <li>Promotional materials, website listings, newsletters, and social media communication</li>
+                            <li>Investor/funder presentations and ecosystem reports</li>
+                            <li>Showcasing case studies and impact highlights</li>
+                        </ul>
+
+                        <p>I consent to receive communication from Fundink regarding funding opportunities, partnership
+                            introductions, events, workshops, ecosystem updates, and promotional announcements via
+                            email, phone, or other digital channels.</p>
+
+                        <p>I acknowledge that registration on Fundink does not guarantee funding, grants, investment, or
+                            partnership confirmation.</p>
+
+                        <p>I confirm that I am an authorized representative of the organization and legally empowered to
+                            provide this declaration and consent on behalf of the organization.</p>
+
+                        <p>I understand that Fundink will take reasonable measures to safeguard sensitive information
+                            and will share confidential data strictly with relevant stakeholders for legitimate
+                            evaluation, risk assessment, and fundraising purposes.</p>
+                    </div>
+                </div>
+                <label class="check-item bg-light p-2 rounded-3 final-check align-items-center">
+                    <input type="checkbox" id="consentAgree" required>
+                    <p class="mb-0">I have read, understood, and agree to the above Consent & Declaration.</p>
+                </label>
+                <div
+                    class="modal-footer d-flex justify-content-center justify-content-md-end gap-2 gap-md-2 steps-btn flex-wrap border-0">
+                    <div class="btn-wrap">
+                        <button type="button" class="btn simple-btn" data-bs-dismiss="modal">Cancel</button>
+                    </div>
+                    <div class="btn-wrap">
+                        <button type="button" id="finalSubmit" class="btn gradient-btn" disabled>Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- Confirm â€œno registrationsâ€ modal (Startup / NPO) --}}
+    <div class="modal fade" id="registrationsConfirmModal" data-bs-backdrop="static" data-bs-keyboard="false"
+        tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-md">
+            <div class="modal-content border-0 registrations-confirm">
+                <div class="modal-body p-4 text-center">
+                    <div class="registrations-confirm__icon mx-auto mb-3" aria-hidden="true"><img src="{{ asset('img/question-svg.svg') }}" class="img-fluid"></div>
+                    <h3 class="registrations-confirm__title mb-3">Are Your Sure?</h3>
+                    <p class="registrations-confirm__desc mb-4" id="registrationsConfirmText"></p>
+
+                    <div class="d-flex flex-column gap-3">
+                        <button type="button" class="btn registrations-confirm__secondary"
+                            id="registrationsConfirmBack">
+                            I have some of these registrations/certification
+                        </button>
+                        <button type="button" class="btn gradient-btn registrations-confirm__primary"
+                            id="registrationsConfirmProceed">
+                            <span id="registrationsConfirmProceedText">Confirm, I don't have any of the above registrations/certifications</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <style>
         .editFunder,
@@ -741,6 +915,51 @@
     align-items: center;
     justify-content: center;
 }
+
+        .registrations-confirm {
+            border-radius: 18px;
+        }
+
+
+        .registrations-confirm__title {
+            font-size: 36px !important;
+            font-weight: 600;
+            color: #000 !important;
+            font-family: 'Inter';
+            letter-spacing: -1.08px;
+        }
+
+        .registrations-confirm__desc {
+            opacity: 0.55;
+            font-size: 14px !important;
+            line-height: 1.5;
+            max-width: 520px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .registrations-confirm__secondary {
+            border-radius: 30px !important;
+            border: 1px solid rgba(43, 43, 43, 0.20) !important;
+            padding: 14px 18px !important;
+            background: #fff;
+            color: #2B2B2B !important;
+            font-family: 'Inter';
+            font-size: 12px !important;
+            font-weight: 600 !important;
+        }
+
+        .registrations-confirm__primary {
+            color: #FFF !important;
+            font-family: 'Inter';
+            font-size: 12px !important;
+            font-weight: 600 !important;
+            padding: 14px 18px !important;
+        }
+
+        #registrationsConfirmProceedText {
+            color: #fff !important;
+        }
 
         
     </style>
@@ -816,18 +1035,18 @@
             let counter = document.getElementById('wordCount');
 
             let maxWords = 100;
-            let maxChars = 800; // 🔥 control total length properly
+            let maxChars = 800; // ðŸ”¥ control total length properly
 
             function handleLimits() {
                 let value = textarea.value;
 
-                // 🔹 Character limit
+                // ðŸ”¹ Character limit
                 if (value.length > maxChars) {
                     textarea.value = value.substring(0, maxChars);
                     toastr.warning("Maximum character limit reached");
                 }
 
-                // 🔹 Word limit
+                // ðŸ”¹ Word limit
                 let words = textarea.value.trim().split(/\s+/).filter(w => w.length > 0);
 
                 if (words.length > maxWords) {
@@ -910,7 +1129,7 @@
                     el.querySelectorAll('input,select,textarea').forEach(i => {
                         i.disabled = true;
 
-                        // 🔥 reset value
+                        // ðŸ”¥ reset value
                         if (i.type === 'hidden' || i.type === 'text' || i.tagName === 'SELECT') {
                             i.value = '';
                         }
@@ -926,7 +1145,7 @@
                     });
                 });
 
-                // 🔥 set default for active section
+                // ðŸ”¥ set default for active section
                 let activeSection = sections[active][0];
                 if (activeSection) {
                     let firstOption = activeSection.querySelector('.select-list li');
@@ -968,15 +1187,25 @@
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             console.log("loaded form script")
-            const form = document.querySelector("form");
+            const form = document.getElementById("onboardingForm");
             const continueBtn = document.getElementById("continueBtn");
             const modalElement = document.getElementById("staticBackdrop");
 
             // Use a safe check so the script doesn't crash if the element is missing
             if (modalElement) {
                 const modal = new bootstrap.Modal(modalElement);
-                const consentCheckboxes = document.querySelectorAll(".consent-checkbox");
                 const submitBtn = document.getElementById("finalSubmit");
+                const consentCheckbox = document.getElementById("consentAgree");
+
+                const registrationsConfirmEl = document.getElementById("registrationsConfirmModal");
+                const registrationsConfirmText = document.getElementById("registrationsConfirmText");
+                const registrationsConfirmProceedText = document.getElementById("registrationsConfirmProceedText");
+                const registrationsConfirmBack = document.getElementById("registrationsConfirmBack");
+                const registrationsConfirmProceed = document.getElementById("registrationsConfirmProceed");
+                const registrationsConfirmModal = registrationsConfirmEl ? new bootstrap.Modal(registrationsConfirmEl) : null;
+
+                const userRole = @json($role);
+                let skipConsentReset = false;
 
                 // Continue button validation
                 if (continueBtn) {
@@ -989,15 +1218,95 @@
                     });
                 }
 
-                // Enable submit only if all checkboxes checked
-                consentCheckboxes.forEach(cb => {
-                    cb.addEventListener("change", function () {
-                        const allChecked = [...consentCheckboxes].every(c => c.checked);
-                        if (submitBtn) {
-                            submitBtn.disabled = !allChecked;
-                        }
+                if (consentCheckbox && submitBtn) {
+                    consentCheckbox.addEventListener("change", function () {
+                        submitBtn.disabled = !consentCheckbox.checked;
                     });
-                });
+
+                    modalElement.addEventListener("hidden.bs.modal", function () {
+                        if (skipConsentReset) {
+                            skipConsentReset = false;
+                            return;
+                        }
+                        consentCheckbox.checked = false;
+                        submitBtn.disabled = true;
+                    });
+                }
+
+                function hasAnyStartupRegistrationChecked() {
+                    const dpiit = document.querySelector('input[name="dpiit_registration"][value="1"]');
+                    const msme = document.querySelector('input[name="msme_registration"][value="1"]');
+                    const gstin = document.querySelector('input[name="gstin_registration"][value="1"]');
+                    const patent = document.querySelector('input[name="patent_available"][value="1"]');
+                    return Boolean(dpiit?.checked || msme?.checked || gstin?.checked || patent?.checked);
+                }
+
+                function hasAnyNpoRegistrationChecked() {
+                    const a12 = document.querySelector('input[name="status_12a"][value="1"]');
+                    const g80 = document.querySelector('input[name="status_80g"][value="1"]');
+                    const fcra = document.querySelector('input[name="status_fcra"][value="1"]');
+                    const csr1 = document.querySelector('input[name="csr_1_registration"][value="1"]');
+                    return Boolean(a12?.checked || g80?.checked || fcra?.checked || csr1?.checked);
+                }
+
+                function shouldShowRegistrationsConfirm() {
+                    if (userRole === 'fund_seeker') return !hasAnyStartupRegistrationChecked();
+                    return !hasAnyNpoRegistrationChecked();
+                }
+
+                function setRegistrationsConfirmCopy() {
+                    if (!registrationsConfirmText || !registrationsConfirmProceedText) return;
+
+                    if (userRole === 'fund_seeker') {
+                        registrationsConfirmText.textContent =
+                            "Are you sure your organization doesn't have DPIIT Certificate / MSME Registration / GSTIN Registration / Patent Certificate? Adding these registration/certification increases chances of selection.";
+                    } else {
+                        registrationsConfirmText.textContent =
+                            "Are you sure your organization doesn't have 12A, 80G, FCRA, CSR-1 registration/certification? Adding these registration/certification increases chances of selection.";
+                    }
+
+                    registrationsConfirmProceedText.textContent =
+                        "Confirm, I don't have any of the above registrations/certifications";
+                }
+
+                // Intercept submit click: show confirmation popup if user selected none
+                if (submitBtn && form && registrationsConfirmModal) {
+                    submitBtn.addEventListener("click", function (e) {
+                        e.preventDefault();
+
+                        if (consentCheckbox && !consentCheckbox.checked) return;
+
+                        if (!shouldShowRegistrationsConfirm()) {
+                            form.submit();
+                            return;
+                        }
+
+                        setRegistrationsConfirmCopy();
+
+                        const showConfirmAfterConsent = function () {
+                            modalElement.removeEventListener('hidden.bs.modal', showConfirmAfterConsent);
+                            registrationsConfirmModal.show();
+                        };
+
+                        skipConsentReset = true;
+                        modalElement.addEventListener('hidden.bs.modal', showConfirmAfterConsent);
+                        modal.hide();
+                    });
+                }
+
+                if (registrationsConfirmBack && registrationsConfirmModal && modal) {
+                    registrationsConfirmBack.addEventListener("click", function () {
+                        registrationsConfirmModal.hide();
+                        modal.show();
+                    });
+                }
+
+                if (registrationsConfirmProceed && registrationsConfirmModal && form) {
+                    registrationsConfirmProceed.addEventListener("click", function () {
+                        registrationsConfirmModal.hide();
+                        form.submit();
+                    });
+                }
             } // <--- You were likely missing this closing brace for the 'if'
         });
     </script>
@@ -1050,8 +1359,8 @@
                         
 
                         res.data.forEach((funder, index) => {
-                            const category = funder.category || '—';
-                            const purpose = funder.purpose || '—';
+                            const category = funder.category || 'â€”';
+                            const purpose = funder.purpose || 'â€”';
                             const amount = Number(funder.amount).toLocaleString('en-IN', {
                                 minimumFractionDigits: 2,
                                 maximumFractionDigits: 2
@@ -1068,7 +1377,7 @@
     <td>${formatLabel(funder.category)}</td>
     <td>${funder.year}</td>
     <td>${formatLabel(funder.purpose)}</td>
-    <td>₹ ${Number(funder.amount).toLocaleString()}</td>
+    <td>â‚¹ ${Number(funder.amount).toLocaleString()}</td>
     <td>
         <button type="button" class="edit editFunder">
             <i class="bi bi-pencil-square"></i>
@@ -1254,7 +1563,7 @@
                 const customSelect = wrapper.querySelector('.custom-select');
                 const items = wrapper.querySelectorAll('.select-list li');
 
-                // ✅ FIX: Set correct label on page load
+                // âœ… FIX: Set correct label on page load
                 if (hiddenInput.value) {
                     const selectedItem = wrapper.querySelector(
                         `.select-list li[data-value="${hiddenInput.value}"]`);
@@ -1283,29 +1592,29 @@
             const checkboxes = document.querySelectorAll('.checkbox-list input[type="checkbox"]');
             const hiddenInput = document.getElementById('hiddenStates');
 
-            // 🔽 open/close dropdown
+            // ðŸ”½ open/close dropdown
             selectedBox.addEventListener('click', function (e) {
                 if (e.target.classList.contains('remove-tag')) return;
                 e.stopPropagation();
                 dropdown.classList.toggle('show');
             });
 
-            // ❌ close outside
+            // âŒ close outside
             document.addEventListener('click', function () {
                 dropdown.classList.remove('show');
             });
 
-            // 🚫 prevent inside click close
+            // ðŸš« prevent inside click close
             dropdown.addEventListener('click', function (e) {
                 e.stopPropagation();
             });
 
-            // ✅ checkbox select
+            // âœ… checkbox select
             checkboxes.forEach(cb => {
                 cb.addEventListener('change', updateSelected);
             });
 
-            // 🔁 update UI
+            // ðŸ” update UI
             function updateSelected() {
 
                 let selected = [];
@@ -1337,7 +1646,7 @@
                 hiddenInput.value = selected.join(',');
             }
 
-            // ❌ CROSS CLICK FIX (MAIN LOGIC)
+            // âŒ CROSS CLICK FIX (MAIN LOGIC)
             selectedBox.addEventListener('click', function (e) {
 
                 if (e.target.classList.contains('remove-tag')) {
@@ -1358,195 +1667,4 @@
 
         });
     </script>
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="modal fade" id="funderModal" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content">
-                <div class="modal-header border-0">
-                    <h2 class="modal-title mb-0 inner-title">Major Funder Details</h2>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-
-                <div class="modal-body py-0">
-                    <form id="funderForm">
-                        <input type="hidden" id="funder_id">
-
-                        <div class="mb-3">
-                            <label>Funder Name</label>
-                            <input type="text" class="form-control" id="funder_name" placeholder="Enter Funder Name">
-                        </div>
-
-                        <!-- CATEGORY -->
-                        <div class="mb-3">
-                            <label class="form-label">Category<span>*</span></label>
-
-                            <div class="select-wrapper w-100 position-relative">
-                                <div class="custom-select form-control">Select an option</div>
-
-                                <input type="hidden" name="category" id="funder_category">
-
-                                <ul class="select-list" style="display: none;">
-                                    <li data-value="government">Government</li>
-                                    <li data-value="csr_corporate">CSR - Corporate</li>
-                                    <li data-value="csr_psu">CSR - PSU</li>
-                                    <li data-value="foreign_institutions">Foreign Institutions</li>
-                                    <li data-value="individual_donor">Individual Donor</li>
-                                    <li data-value="promoter_money">Promoter Money</li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <div class="mb-3">
-                            <label>Year</label>
-                            <input type="number" class="form-control" id="funder_year" placeholder="Enter Year (e.g. 2026)">
-                        </div>
-
-                        <!-- PURPOSE -->
-                        <div class="mb-3">
-                            <label class="form-label">Purpose<span>*</span></label>
-
-                            <div class="select-wrapper w-100 position-relative">
-                                <div class="custom-select form-control">Select an option</div>
-
-                                <input type="hidden" name="purpose" id="funder_purpose">
-
-                                <ul class="select-list" style="display: none;">
-                                    <li data-value="project">Project</li>
-                                    <li data-value="program">Program</li>
-                                    <li data-value="org_development">Organization Development</li>
-                                    <li data-value="infrastructure">Infrastructure</li>
-                                    <li data-value="staff_training">Staff Training</li>
-                                    <li data-value="technology">Technology</li>
-                                    <li data-value="others">Others</li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <div class="mb-3">
-                            <label>Amount (₹ in Lakh)</label>
-                            <input type="number" class="form-control" id="funder_amount" placeholder="Enter Amount">
-                        </div>
-                    </form>
-                </div>
-
-                <div
-                    class="modal-footer border-0 d-flex justify-content-center justify-content-md-end gap-2 steps-btn pe-lg-4 flex-wrap">
-                    <button type="button" class="btn simple-btn m-0">Back</button>
-                    <button type="button" class="btn gradient-btn m-0" id="saveFunder">Add</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content border-0">
-                <div class="modal-header">
-                    <h3 class="modal-title mb-0">Consent & Declaration</h3>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body p-3 p-md-4">
-                    <p>By registering and submitting information on Fundink, I hereby declare and agree that:</p>
-                    <div class="consent-box">
-
-                        <label class="check-item">
-                            <input type="checkbox" class="consent-checkbox">
-                            <p>All information provided by our organization — including organization details, PAN, statutory
-                                registrations, governance structure, geographical coverage, domain expertise, project track
-                                record, and financial records (including institutional, foreign, and individual donations,
-                                and total turnover) — is true, accurate, and complete to the best of my knowledge.</p>
-                        </label>
-
-                        <label class="check-item">
-                            <input type="checkbox" class="consent-checkbox">
-                            <p>I authorize Fundink to collect, store, process, analyze, and present this information to
-                                verified funders, CSR entities, philanthropies, impact investors, financial institutions,
-                                and ecosystem partners for the purpose of fundraising, due diligence, evaluation, and
-                                collaboration.</p>
-                        </label>
-
-                        <div class="check-item">
-                            <input type="checkbox" class="consent-checkbox">
-                            <div>I expressly consent to Fundink conducting verification and due diligence checks, including
-                                but not limited to:
-
-                                <ul class="sub-list">
-                                    <li>PAN validation</li>
-                                    <li>Statutory registration verification</li>
-                                    <li>Background and compliance checks</li>
-                                    <li>Credit bureau checks using the organization’s PAN, where applicable, for the purpose
-                                        of financial assessment and risk evaluation</li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <div class="check-item">
-                            <input type="checkbox" class="consent-checkbox">
-                            <div>I grant Fundink the right to use our organization’s details for:
-
-                                <ul class="sub-list">
-                                    <li>Fundraising campaigns and curated funding calls</li>
-                                    <li>Promotional materials, website listings, newsletters, and social media communication
-                                    </li>
-                                    <li>Investor/funder presentations and ecosystem reports</li>
-                                    <li>Showcasing case studies and impact highlights</li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <label class="check-item">
-                            <input type="checkbox" class="consent-checkbox">
-                            <p>I consent to receive communication from Fundink regarding funding opportunities, partnership
-                                introductions, events, workshops, ecosystem updates, and promotional announcements via
-                                email, phone, or other digital channels.</p>
-                        </label>
-
-                        <label class="check-item">
-                            <input type="checkbox" class="consent-checkbox">
-                            <p>I acknowledge that registration on Fundink does not guarantee funding, grants, investment, or
-                                partnership confirmation.</p>
-                        </label>
-
-                        <label class="check-item">
-                            <input type="checkbox" class="consent-checkbox">
-                            <p>I confirm that I am an authorized representative of the organization and legally empowered to
-                                provide this declaration and consent on behalf of the organization.</p>
-                        </label>
-
-                        <label class="check-item">
-                            <input type="checkbox" class="consent-checkbox">
-                            <p>I understand that Fundink will take reasonable measures to safeguard sensitive information
-                                and will share confidential data strictly with relevant stakeholders for legitimate
-                                evaluation, risk assessment, and fundraising purposes.</p>
-                        </label>
-                        <label class="check-item bg-light p-2 rounded-3 final-check align-items-center">
-                            <input type="checkbox" class="consent-checkbox">
-                            <p>I have read, understood, and agree to the above Consent & Declaration.</p>
-                        </label>
-                    </div>
-                </div>
-                <div
-                    class="modal-footer d-flex justify-content-center justify-content-md-end gap-2 gap-md-2 pt-0 p-4 steps-btn flex-wrap border-0">
-                    <div class="btn-wrap">
-                        <button type="button" class="btn simple-btn" data-bs-dismiss="modal">Cancel</button>
-                    </div>
-                    <div class="btn-wrap">
-                        <button type="submit" form="onboardingForm" id="finalSubmit" class="btn btn-primary" disabled>Submit
-                        </button>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
 @endsection
