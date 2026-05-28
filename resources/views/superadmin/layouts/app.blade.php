@@ -31,9 +31,7 @@
 
             <!-- Navbar -->
             <nav class="navbar navbar-light bg-white border-bottom px-4">
-                <span class="navbar-brand mb-0 h5">
-                    @yield('page-title', 'Dashboard')
-                </span>
+              
 
             
             </nav>

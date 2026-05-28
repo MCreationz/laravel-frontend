@@ -7,7 +7,6 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-
 class LoginController extends Controller
 {
     public function showLoginForm()
@@ -27,10 +26,12 @@ class LoginController extends Controller
             $user = Auth::user();
             if ($user->role()->where('role_id', 1)->exists()) {
                 $request->session()->regenerate();
+
                 return redirect()->intended(route('superadmin.dashboard'));
             }
 
             Auth::logout();
+
             return back()->withErrors(['email' => 'Unauthorized.']);
         }
 
