@@ -8,8 +8,7 @@
             <a href="{{ route('superadmin.dashboard') }}"
                 class="d-flex align-items-center text-decoration-none sidebar-links  {{ request()->routeIs('superadmin.dashboard') ? 'active' : '' }}">
                 <div class="flex-shrink-0">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" viewBox="0 0 23 23"
-                        fill="none">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" viewBox="0 0 23 23" fill="none">
                         <path
                             d="M21.0833 8.16484V3.814C21.0833 2.46275 20.47 1.9165 18.9463 1.9165H15.0746C13.5508 1.9165 12.9375 2.46275 12.9375 3.814V8.15525C12.9375 9.51609 13.5508 10.0528 15.0746 10.0528H18.9463C20.47 10.0623 21.0833 9.51609 21.0833 8.16484Z"
                             stroke="#8FA1B3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
@@ -26,10 +25,10 @@
                 </div>
                 <div class="flex-grow-1 ms-3 text">Dashboard</div>
             </a>
-            <a href="{{ route('superadmin.client-admins.index') }}" class="d-flex align-items-center text-decoration-none sidebar-links  {{ request()->routeIs('superadmin.client-admins.index') ? 'active' : '' }}">
+            <a href="{{ route('superadmin.client-admins.index') }}"
+                class="d-flex align-items-center text-decoration-none sidebar-links  {{ request()->routeIs('superadmin.client-admins.index') ? 'active' : '' }}">
                 <div class="flex-shrink-0">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                        fill="none">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                         <path
                             d="M21.0763 8.58003V15.42C21.0763 16.54 20.4763 17.58 19.5063 18.15L13.5662 21.58C12.5962 22.14 11.3963 22.14 10.4163 21.58L4.47625 18.15C3.50625 17.59 2.90625 16.55 2.90625 15.42V8.58003C2.90625 7.46003 3.50625 6.41999 4.47625 5.84999L10.4163 2.42C11.3863 1.86 12.5862 1.86 13.5662 2.42L19.5063 5.84999C20.4763 6.41999 21.0763 7.45003 21.0763 8.58003Z"
                             stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
@@ -44,8 +43,7 @@
             </a>
             <a href="{{ route('dashboard') }}" class="d-flex align-items-center text-decoration-none sidebar-links">
                 <div class="flex-shrink-0">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                        fill="none">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                         <path d="M22 10V15C22 20 20 22 15 22H9C4 22 2 20 2 15V9C2 4 4 2 9 2H14" stroke="white"
                             stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                         <path d="M22 10H18C15 10 14 9 14 6V2L22 10Z" stroke="white" stroke-width="1.5"
@@ -60,8 +58,7 @@
             </a>
             <a href="{{ route('dashboard') }}" class="d-flex align-items-center text-decoration-none sidebar-links">
                 <div class="flex-shrink-0">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                        fill="none">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                         <path d="M11 2H9C4 2 2 4 2 9V15C2 20 4 22 9 22H15C20 22 22 20 22 15V13" stroke="white"
                             stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                         <path
@@ -76,8 +73,7 @@
             </a>
             <a href="{{ route('dashboard') }}" class="d-flex align-items-center text-decoration-none sidebar-links">
                 <div class="flex-shrink-0">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="23" height="19" viewBox="0 0 23 19"
-                        fill="none">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="23" height="19" viewBox="0 0 23 19" fill="none">
                         <path
                             d="M18.34 5.14996V10.3C18.34 13.38 16.58 14.7 13.94 14.7H5.14999C4.69999 14.7 4.27 14.66 3.87 14.57C3.62 14.53 3.38 14.46 3.16 14.38C1.66 13.82 0.75 12.52 0.75 10.3V5.14996C0.75 2.06996 2.50999 0.75 5.14999 0.75H13.94C16.18 0.75 17.79 1.7 18.22 3.87C18.29 4.27 18.34 4.67996 18.34 5.14996Z"
                             stroke="white" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"

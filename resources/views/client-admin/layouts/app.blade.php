@@ -7,7 +7,7 @@
     <title>@yield('title', 'Client Admin Panel')</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <style>
         body {
             background: #f5f7fb;
@@ -41,6 +41,8 @@
 <body>
 
     <div class="d-flex">
+                    @include('client-admin.partials.navbar')
+
 
         {{-- Sidebar --}}
         @include('client-admin.partials.sidebar')
@@ -48,7 +50,6 @@
         <div class="main-content">
 
             {{-- Navbar --}}
-            @include('client-admin.partials.navbar')
 
             <div class="container-fluid p-4">
 
