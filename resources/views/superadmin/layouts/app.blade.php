@@ -16,9 +16,12 @@
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 </head>
 
-<body class="bg-light">
+<body class="bg-light dashboard">
 
     <div class="d-flex min-vh-100">
+
+            @include('superadmin.layouts.header')
+      
 
         <!-- Sidebar -->
         @include('superadmin.layouts.sidebar')
