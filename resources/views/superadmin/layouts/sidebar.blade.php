@@ -5,8 +5,8 @@
         </div>
 
         <div class="btn-wrap d-flex flex-column">
-            <a href="{{ route('dashboard') }}"
-                class="d-flex align-items-center text-decoration-none sidebar-links active {{ request()->routeIs('dashboard') ? 'active' : '' }}">
+            <a href="{{ route('superadmin.dashboard') }}"
+                class="d-flex align-items-center text-decoration-none sidebar-links active {{ request()->routeIs('superadmin.dashboard') ? 'active' : '' }}">
                 <div class="flex-shrink-0">
                     <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" viewBox="0 0 23 23"
                         fill="none">
@@ -26,7 +26,7 @@
                 </div>
                 <div class="flex-grow-1 ms-3 text">Dashboard</div>
             </a>
-            <a href="{{ route('dashboard') }}" class="d-flex align-items-center text-decoration-none sidebar-links">
+            <a href="{{ route('superadmin.client-admins.index') }}" class="d-flex align-items-center text-decoration-none sidebar-links">
                 <div class="flex-shrink-0">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                         fill="none">
