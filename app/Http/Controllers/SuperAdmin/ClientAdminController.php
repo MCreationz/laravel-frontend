@@ -5,6 +5,8 @@ namespace App\Http\Controllers\SuperAdmin;
 use App\Http\Controllers\Controller;
 use App\Models\ClientAdmin;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class ClientAdminController extends Controller
 {
@@ -24,18 +26,44 @@ class ClientAdminController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'organization_name'    => 'required|string|max:255',
-            'organization_type'    => 'required|string|max:255',
+            'organization_name' => 'required|string|max:255',
+            'organization_type' => 'required|string|max:255',
             'primary_contact_name' => 'required|string|max:255',
-            'phone_number'         => 'required|string|max:20',
-            'email'                => 'required|email|unique:client_admins,email',
-            'state'                => 'required|string|max:255',
-            'status'               => 'nullable|string|max:255',
+            'phone_number' => 'required|string|max:20',
+            'email' => 'required|email|unique:client_admins,email',
+            'state' => 'required|string|max:255',
+            'status' => 'nullable|string|max:255',
+            'password' => 'nullable|string|min:8',
         ]);
 
         $validated['status'] = $validated['status'] ?? 'verified';
 
-        ClientAdmin::create($validated);
+        /*
+        |--------------------------------------------------------------------------
+        | Password Handling
+        |--------------------------------------------------------------------------
+        |
+        | If super admin does not provide password,
+        | generate a temporary one automatically.
+        |
+        */
+
+        $plainPassword = $validated['password'] ?? Str::random(10);
+
+        $validated['password'] = Hash::make($plainPassword);
+
+        $clientAdmin = ClientAdmin::create($validated);
+
+        /*
+        |--------------------------------------------------------------------------
+        | Optional:
+        |--------------------------------------------------------------------------
+        |
+        | Send email with temporary password here.
+        |
+        */
+
+        // Mail::to($clientAdmin->email)->send(new ClientAdminCredentialsMail($plainPassword));
 
         return redirect()
             ->route('super-admin.client-admins.index')
@@ -56,14 +84,27 @@ class ClientAdminController extends Controller
     public function update(Request $request, ClientAdmin $clientAdmin)
     {
         $validated = $request->validate([
-            'organization_name'    => 'required|string|max:255',
-            'organization_type'    => 'required|string|max:255',
+            'organization_name' => 'required|string|max:255',
+            'organization_type' => 'required|string|max:255',
             'primary_contact_name' => 'required|string|max:255',
-            'phone_number'         => 'required|string|max:20',
-            'email'                => 'required|email|unique:client_admins,email,' . $clientAdmin->id,
-            'state'                => 'required|string|max:255',
-            'status'               => 'required|string|max:255',
+            'phone_number' => 'required|string|max:20',
+            'email' => 'required|email|unique:client_admins,email,'.$clientAdmin->id,
+            'state' => 'required|string|max:255',
+            'status' => 'required|string|max:255',
+            'password' => 'nullable|string|min:8',
         ]);
+
+        /*
+        |--------------------------------------------------------------------------
+        | Update password only if provided
+        |--------------------------------------------------------------------------
+        */
+
+        if (! empty($validated['password'])) {
+            $validated['password'] = Hash::make($validated['password']);
+        } else {
+            unset($validated['password']);
+        }
 
         $clientAdmin->update($validated);
 

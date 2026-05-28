@@ -47,6 +47,11 @@ return [
         'provider' => 'organizations',
     ],
 
+    'client_admin' => [
+        'driver' => 'session',
+        'provider' => 'client_admins',
+    ],
+
 ],
 
     /*
@@ -66,6 +71,7 @@ return [
     |
     */
 
+
 'providers' => [
 
     'users' => [
@@ -76,6 +82,11 @@ return [
     'organizations' => [
         'driver' => 'eloquent',
         'model' => App\Models\Organization::class,
+    ],
+
+    'client_admins' => [
+        'driver' => 'eloquent',
+        'model' => App\Models\ClientAdmin::class,
     ],
 
 ],

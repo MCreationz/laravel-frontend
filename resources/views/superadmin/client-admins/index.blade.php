@@ -1,3 +1,12 @@
-<div>
-    <!-- Simplicity is an acquired taste. - Katharine Gerould -->
-</div>
+@extends('superadmin.layouts.app')
+
+@section('title', 'Client Admin')
+
+@section('content')
+
+
+
+
+
+
+@endsection
