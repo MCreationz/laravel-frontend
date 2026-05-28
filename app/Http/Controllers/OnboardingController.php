@@ -146,71 +146,39 @@ class OnboardingController extends Controller
 
     public function storeStepThree(Request $request)
     {
-        // return $request->all();
         $organization = Auth::guard('organization')->user();
+        $role = $organization->role;
 
-        // Base data
         $data = [
             'organization_id' => $organization->id,
-            'organization_type' => $request->organization_type,
+           // 'organization_type' => $role === 'fund_seeker' ? 'profit' : 'non_profit',
+            'registration_type' => $request->registration_type,
             'state' => $request->state,
             'years_of_operation_months' => $request->years_of_operation_months,
             'key_achievements' => $request->key_achievements,
             'total_beneficiaries' => $request->total_beneficiaries,
         ];
 
-        /*
-        |------------------------------------------------------------------
-        | PROFIT
-        |------------------------------------------------------------------
-        */
-        if ($request->organization_type === 'profit') {
-
-            // calculate total (DON’T trust frontend)
-            $totalFunding =
-                ($request->grants_received ?? 0) +
-                ($request->equity_raised ?? 0) +
-                ($request->bootstrapped_friends_family ?? 0) +
-                ($request->debt ?? 0);
+        if ($role === 'fund_seeker') {
 
             $data = array_merge($data, [
-                'registration_type' => $request->registration_type,
+                'idea_falls_in' => $request->idea_falls_in,
                 'current_stage' => $request->current_stage,
-                'product_category' => $request->product_category,
 
-                'dpiit_recognition' => $request->dpiit_recognition ?? 0,
-                'msme_registered' => $request->msme_registered ?? 0,
+                'dpiit_registration' => $request->dpiit_registration ?? 0,
+                'msme_registration' => $request->msme_registration ?? 0,
                 'gstin_registration' => $request->gstin_registration ?? 0,
+                'patent_available' => $request->patent_available ?? 0,
 
                 'lifetime_revenue_lakh' => $request->lifetime_revenue_lakh,
                 'ongoing_year_revenue_lakh' => $request->ongoing_year_revenue_lakh,
                 'last_year_revenue_lakh' => $request->last_year_revenue_lakh,
-                'last_to_last_year_revenue_lakh' => $request->last_to_last_year_revenue_lakh,
-
-                'grants_received' => $request->grants_received,
-                'equity_raised' => $request->equity_raised,
-                'bootstrapped_friends_family' => $request->bootstrapped_friends_family,
-                'debt' => $request->debt,
-
-                'total_funding_lakh' => $totalFunding,
             ]);
         }
 
-        /*
-        |------------------------------------------------------------------
-        | NON PROFIT
-        |------------------------------------------------------------------
-        */
-        if ($request->organization_type === 'non_profit') {
-
-            $totalFunding =
-                ($request->govt_grants ?? 0) +
-                ($request->foreign_donations_institutional ?? 0) +
-                ($request->promoters_money ?? 0) +
-                ($request->individual_donations ?? 0);
+        if ($role === 'funder') {
 
             $data = array_merge($data, [
-                'registration_type' => $request->registration_type,
                 'domain_of_expertise' => $request->domain_of_expertise,
 
                 'status_12a' => $request->status_12a ?? 0,
@@ -221,14 +189,6 @@ class OnboardingController extends Controller
                 'lifetime_revenue_lakh' => $request->lifetime_revenue_lakh,
                 'ongoing_year_revenue_lakh' => $request->ongoing_year_revenue_lakh,
                 'last_year_revenue_lakh' => $request->last_year_revenue_lakh,
-                'last_to_last_year_revenue_lakh' => $request->last_to_last_year_revenue_lakh,
-
-                'govt_grants' => $request->govt_grants,
-                'foreign_donations_institutional' => $request->foreign_donations_institutional,
-                'promoters_money' => $request->promoters_money,
-                'individual_donations' => $request->individual_donations,
-
-                'total_funding_lakh' => $totalFunding,
             ]);
         }
 

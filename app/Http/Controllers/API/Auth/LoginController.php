@@ -167,7 +167,7 @@ class LoginController extends Controller
         }
 
         if ($organization->otp_code != $request->otp) {
-            return back()->with('error', 'Invalid OTP.');
+            return back()->with('error', 'Incorrect verification code. Enter the correct code to complete verification.');
         }
 
         if (Carbon::now()->gt($organization->otp_expires_at)) {

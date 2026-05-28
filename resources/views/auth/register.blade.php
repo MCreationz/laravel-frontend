@@ -57,6 +57,8 @@
                         <li data-value="Networking Event">Networking Event</li>
                         <li data-value="Fundink Website">Fundink Website</li>
                         <li data-value="News Article">News Article</li>
+                        <li data-value="Internet">Internet</li>
+                        <li data-value="Advertising">Advertising</li>
                         <li data-value="Other Social Media">Other Social Media</li>
                     </ul>
 
@@ -90,7 +92,7 @@
                 <label class="form-label">Confirm Password<span>*</span></label>
 
                 <input type="password" name="password_confirmation" id="confirmPassword"
-                    class="form-control @error('password_confirmation') is-invalid @enderror" placeholder="Confirm Password"
+                    class="form-control @error('password_confirmation') is-invalid @enderror" placeholder="Re-enter Password"
                     required>
 
                 <button type="button"

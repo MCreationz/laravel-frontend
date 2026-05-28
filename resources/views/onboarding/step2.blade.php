@@ -65,9 +65,9 @@
         </div>
     </div>
     <div class="card-body p-0">
-        <form method="POST" action="{{ route('onboarding.step2.store') }}">
+        <form class="step2Form" method="POST" action="{{ route('onboarding.step2.store') }}">
             @csrf
-            <div class="card p-3 p-md-4 border-0 mb-3 rounded-3">
+            <div style="border-radius:8px;" class="card p-3 p-md-4 border-0 mb-3">
                 <div class="mb-4">
                     <h1 class="top-heading mb-0">Head Office Address</h1>
                 </div>
@@ -89,12 +89,11 @@
                         <input type="text" name="office_address_line_2" class="form-control" placeholder="Enter Address"
                             value="{{ old('office_address_line_2', $address?->office_address_line_2) }}">
                     </div>
-                  <div class="col-12 col-md-6 col-xl-4 px-md-2">
-    <label class="form-label">City<span>*</span></label>
-    <input type="text" name="office_city" class="form-control"
-        placeholder="Enter Your City"
-        value="{{ old('office_city', $address?->office_city) }}">
-</div>
+                    <div class="col-12 col-md-6 col-xl-4 px-md-2">
+                        <label class="form-label">City<span>*</span></label>
+                        <input type="text" name="office_city" class="form-control" placeholder="Enter Your City"
+                            value="{{ old('office_city', $address?->office_city) }}">
+                    </div>
                     <hr class="mb-0">
 
                     <div class="col-12 col-md-6 col-xl-4 px-md-2">
@@ -102,87 +101,41 @@
                         <input type="text" name="office_pin_code" class="form-control" placeholder="110001" required
                             value="{{ old('office_pin_code', $address?->office_pin_code) }}">
                     </div>
+                    <div class="col-12 col-md-6 col-xl-4 px-md-2 position-relative">
+
+                        <label class="form-label">State<span>*</span></label>
+
+                        <input type="text" name="office_state" id="office_state" class="form-control"
+                            placeholder="Enter State" autocomplete="off"
+                            value="{{ old('office_state', $address?->office_state) }}">
+
+                        <div id="office_state_suggestions" class="list-group position-absolute w-100 shadow bg-white"
+                            style="z-index:1000; max-height:200px; overflow-y:auto;">
+                        </div>
+
+                    </div>
 
                     <div class="col-12 col-md-6 col-xl-4 px-md-2">
+
                         <label class="form-label">District<span>*</span></label>
 
-                        <div class="select-wrapper w-100 position-relative">
-                            <div class="custom-select form-control">
-                                {{ old('office_district', $address->office_district ?? 'Select an option') }}
-                            </div>
+                        <select name="office_district" id="office_district" class="form-control">
+                            <option value="">Select District</option>
+                        </select>
 
-                            <input type="hidden" name="office_district"
-                                value="{{ old('office_district', $address->office_district ?? '') }}">
-
-                            <ul class="select-list">
-                                <!-- Punjab -->
-                                <li data-value="Amritsar">Amritsar</li>
-                                <li data-value="Ludhiana">Ludhiana</li>
-                                <li data-value="Patiala">Patiala</li>
-                                <li data-value="Jalandhar">Jalandhar</li>
-                                <li data-value="Sahibzada Ajit Singh Nagar">Sahibzada Ajit Singh Nagar (Mohali)</li>
-                                <li data-value="Bathinda">Bathinda</li>
-                                <li data-value="Firozpur">Firozpur</li>
-                                <li data-value="Hoshiarpur">Hoshiarpur</li>
-                                <li data-value="Kapurthala">Kapurthala</li>
-                                <li data-value="Moga">Moga</li>
-                                <li data-value="Faridkot">Faridkot</li>
-                                <li data-value="Sri Muktsar Sahib">Sri Muktsar Sahib</li>
-                                <li data-value="Gurdaspur">Gurdaspur</li>
-                                <li data-value="Pathankot">Pathankot</li>
-                                <li data-value="Tarn Taran">Tarn Taran</li>
-                                <li data-value="Barnala">Barnala</li>
-                                <li data-value="Mansa">Mansa</li>
-                                <li data-value="Sangrur">Sangrur</li>
-                                <li data-value="Fatehgarh Sahib">Fatehgarh Sahib</li>
-                                <li data-value="Rupnagar">Rupnagar</li>
-                                <li data-value="Shaheed Bhagat Singh Nagar">Shaheed Bhagat Singh Nagar</li>
-                                <li data-value="Malerkotla">Malerkotla</li>
-
-                                <!-- Haryana -->
-                                <li data-value="Ambala">Ambala</li>
-                                <li data-value="Bhiwani">Bhiwani</li>
-                                <li data-value="Charkhi Dadri">Charkhi Dadri</li>
-                                <li data-value="Faridabad">Faridabad</li>
-                                <li data-value="Fatehabad">Fatehabad</li>
-                                <li data-value="Gurugram">Gurugram</li>
-                                <li data-value="Hisar">Hisar</li>
-                                <li data-value="Jhajjar">Jhajjar</li>
-                                <li data-value="Jind">Jind</li>
-                                <li data-value="Kaithal">Kaithal</li>
-                                <li data-value="Karnal">Karnal</li>
-                                <li data-value="Kurukshetra">Kurukshetra</li>
-                                <li data-value="Mahendragarh">Mahendragarh</li>
-                                <li data-value="Nuh">Nuh</li>
-                                <li data-value="Palwal">Palwal</li>
-                                <li data-value="Panchkula">Panchkula</li>
-                                <li data-value="Panipat">Panipat</li>
-                                <li data-value="Rewari">Rewari</li>
-                                <li data-value="Rohtak">Rohtak</li>
-                                <li data-value="Sirsa">Sirsa</li>
-                                <li data-value="Sonipat">Sonipat</li>
-                                <li data-value="Yamunanagar">Yamunanagar</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-6 col-xl-4 px-md-2">
-                        <label class="form-label">State<span>*</span></label>
-                        <input type="text" name="office_state" class="form-control" placeholder="Delhi" required
-                            value="{{ old('office_state', $address?->office_state) }}">
                     </div>
 
 
                 </div>
             </div>
 
-            <div class="card p-3 p-md-4 border-0 rounded-3">
+            <div style="border-radius:8px 8px 0px 0px;" class="card p-3 p-md-4 border-0">
                 <div>
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <h2 class="col top-heading mb-0">Registered Office Address</h2>
-                        <div class="col-auto form-check">
+                        <div class="col-auto form-check only-checkbox">
                             <input class="form-check-input" type="checkbox" name="is_portal_same_as_office"
-                                id="sameAsOffice" value="1"
-                                {{ old('is_portal_same_as_office', $address?->is_portal_same_as_office) ? 'checked' : '' }}>
+                                id="sameAsOffice" value="1" {{ old('is_portal_same_as_office', $address?->is_portal_same_as_office) ? 'checked' : '' }}>
                             <label class="form-check-label" for="sameAsOffice">
                                 Same as Head Office Address
                             </label>
@@ -191,170 +144,75 @@
 
                     <div id="portal-address-fields" class="row flex-wrap row-gap-4">
 
-                        {{-- <div class="col-12 col-md-6 col-xl-4 px-md-2">
-                            <label class="form-label">Town<span>*</span></label>
-                            <input type="text" name="portal_house_floor_no" class="form-control" class="form-control"
-                                placeholder="Enter town" value="">
-                        </div> --}}
+
 
                         <div class="col-12 col-md-6 col-xl-4 px-md-2">
                             <label class="form-label">Address Line 1<span>*</span></label>
-                            <input type="text" name="portal_address_line_1" class="form-control"
-                                placeholder="Enter Address"
+                            <input type="text" name="portal_address_line_1" class="form-control" placeholder="Enter Address"
                                 value="{{ old('portal_address_line_1', $address?->portal_address_line_1) }}">
                         </div>
 
                         <div class="col-12 col-md-6 col-xl-4 px-md-2">
                             <label class="form-label">Address Line 2</label>
-                            <input type="text" name="portal_address_line_2" class="form-control"
-                                placeholder="Enter Address"
+                            <input type="text" name="portal_address_line_2" class="form-control" placeholder="Enter Address"
                                 value="{{ old('portal_address_line_2', $address?->portal_address_line_2) }}">
                         </div>
-                      <div class="col-12 col-md-6 col-xl-4 px-md-2">
-    <label class="form-label">City<span>*</span></label>
-    <input type="text" name="portal_city" class="form-control"
-        placeholder="Enter Your City"
-        value="{{ old('portal_city', $address?->portal_city) }}">
-</div>
+                        <div class="col-12 col-md-6 col-xl-4 px-md-2">
+                            <label class="form-label">City<span>*</span></label>
+                            <input type="text" name="portal_city" class="form-control" placeholder="Enter Your City"
+                                value="{{ old('portal_city', $address?->portal_city) }}">
+                        </div>
 
                         <hr class="mb-0">
 
-                        {{-- <div class="col-12 col-md-6 col-xl-4 px-md-2">
-                            <label class="form-label">Town<span>*</span></label>
-                            <input type="text" name="portal_town" class="form-control" placeholder="Enter town"
-                                value="{{ old('portal_town', $address?->portal_town) }}">
-                        </div> --}}
 
-                        {{-- <div class="col-12 col-md-6 col-xl-4 px-md-2">
-                            <label class="form-label">City<span>*</span></label>
-
-                            <div class="select-wrapper w-100 position-relative">
-                                <div class="custom-select form-control">
-                                    {{ old('portal_city', $address?->portal_city ?? 'Select an option') }}
-                                </div>
-
-                                <input type="hidden" name="portal_city"
-                                    value="{{ old('portal_city', $address?->portal_city) }}">
-
-                                <ul class="select-list">
-                                    <li data-value="Delhi">Delhi</li>
-                                    <li data-value="Mumbai">Mumbai</li>
-                                    <li data-value="Bengaluru">Bengaluru</li>
-                                    <li data-value="Hyderabad">Hyderabad</li>
-                                    <li data-value="Chennai">Chennai</li>
-                                    <li data-value="Kolkata">Kolkata</li>
-                                    <li data-value="Pune">Pune</li>
-                                    <li data-value="Ahmedabad">Ahmedabad</li>
-                                    <li data-value="Jaipur">Jaipur</li>
-                                    <li data-value="Chandigarh">Chandigarh</li>
-                                    <li data-value="Lucknow">Lucknow</li>
-                                    <li data-value="Kanpur">Kanpur</li>
-                                    <li data-value="Nagpur">Nagpur</li>
-                                    <li data-value="Indore">Indore</li>
-                                    <li data-value="Bhopal">Bhopal</li>
-                                    <li data-value="Patna">Patna</li>
-                                    <li data-value="Ludhiana">Ludhiana</li>
-                                    <li data-value="Amritsar">Amritsar</li>
-                                    <li data-value="Surat">Surat</li>
-                                    <li data-value="Vadodara">Vadodara</li>
-                                    <li data-value="Rajkot">Rajkot</li>
-                                    <li data-value="Coimbatore">Coimbatore</li>
-                                    <li data-value="Madurai">Madurai</li>
-                                    <li data-value="Visakhapatnam">Visakhapatnam</li>
-                                    <li data-value="Vijayawada">Vijayawada</li>
-                                    <li data-value="Thiruvananthapuram">Thiruvananthapuram</li>
-                                    <li data-value="Kochi">Kochi</li>
-                                    <li data-value="Guwahati">Guwahati</li>
-                                    <li data-value="Ranchi">Ranchi</li>
-                                    <li data-value="Dehradun">Dehradun</li>
-                                </ul>
-                            </div>
-                        </div> --}}
                         <div class="col-12 col-md-6 col-xl-4 px-md-2">
                             <label class="form-label">Pin Code<span>*</span></label>
                             <input type="text" name="portal_pin_code" class="form-control" placeholder="110001"
                                 value="{{ old('portal_pin_code', $address?->portal_pin_code) }}">
                         </div>
 
+                        <div class="col-12 col-md-6 col-xl-4 px-md-2 position-relative">
+
+                            <label class="form-label">State<span>*</span></label>
+
+                            <input type="text" name="portal_state" id="portal_state" class="form-control"
+                                placeholder="Enter State" autocomplete="off"
+                                value="{{ old('portal_state', $address?->portal_state) }}">
+
+                            <div id="portal_state_suggestions" class="list-group position-absolute w-100 shadow bg-white"
+                                style="z-index:1000; max-height:200px; overflow-y:auto;">
+                            </div>
+
+                        </div>
+
                         <div class="col-12 col-md-6 col-xl-4 px-md-2">
+
                             <label class="form-label">District<span>*</span></label>
 
-                            <div class="select-wrapper w-100 position-relative">
-                                <div class="custom-select form-control">
-                                    {{ old('portal_district', $address?->portal_district ?? 'Select an option') }}
-                                </div>
+                            <select name="portal_district" id="portal_district" class="form-control">
+                                <option value="">Select District</option>
+                            </select>
 
-                                <input type="hidden" name="portal_district"
-                                    value="{{ old('portal_district', $address?->portal_district) }}">
-
-                                <ul class="select-list">
-                                    <!-- same list unchanged -->
-                                    <!-- Punjab -->
-                                    <li data-value="Amritsar">Amritsar</li>
-                                    <li data-value="Ludhiana">Ludhiana</li>
-                                    <li data-value="Patiala">Patiala</li>
-                                    <li data-value="Jalandhar">Jalandhar</li>
-                                    <li data-value="Sahibzada Ajit Singh Nagar">Sahibzada Ajit Singh Nagar (Mohali)</li>
-                                    <li data-value="Bathinda">Bathinda</li>
-                                    <li data-value="Firozpur">Firozpur</li>
-                                    <li data-value="Hoshiarpur">Hoshiarpur</li>
-                                    <li data-value="Kapurthala">Kapurthala</li>
-                                    <li data-value="Moga">Moga</li>
-                                    <li data-value="Faridkot">Faridkot</li>
-                                    <li data-value="Sri Muktsar Sahib">Sri Muktsar Sahib</li>
-                                    <li data-value="Gurdaspur">Gurdaspur</li>
-                                    <li data-value="Pathankot">Pathankot</li>
-                                    <li data-value="Tarn Taran">Tarn Taran</li>
-                                    <li data-value="Barnala">Barnala</li>
-                                    <li data-value="Mansa">Mansa</li>
-                                    <li data-value="Sangrur">Sangrur</li>
-                                    <li data-value="Fatehgarh Sahib">Fatehgarh Sahib</li>
-                                    <li data-value="Rupnagar">Rupnagar</li>
-                                    <li data-value="Shaheed Bhagat Singh Nagar">Shaheed Bhagat Singh Nagar</li>
-                                    <li data-value="Malerkotla">Malerkotla</li>
-
-                                    <!-- Haryana -->
-                                    <li data-value="Ambala">Ambala</li>
-                                    <li data-value="Bhiwani">Bhiwani</li>
-                                    <li data-value="Charkhi Dadri">Charkhi Dadri</li>
-                                    <li data-value="Faridabad">Faridabad</li>
-                                    <li data-value="Fatehabad">Fatehabad</li>
-                                    <li data-value="Gurugram">Gurugram</li>
-                                    <li data-value="Hisar">Hisar</li>
-                                    <li data-value="Jhajjar">Jhajjar</li>
-                                    <li data-value="Jind">Jind</li>
-                                    <li data-value="Kaithal">Kaithal</li>
-                                    <li data-value="Karnal">Karnal</li>
-                                    <li data-value="Kurukshetra">Kurukshetra</li>
-                                    <li data-value="Mahendragarh">Mahendragarh</li>
-                                    <li data-value="Nuh">Nuh</li>
-                                    <li data-value="Palwal">Palwal</li>
-                                    <li data-value="Panchkula">Panchkula</li>
-                                    <li data-value="Panipat">Panipat</li>
-                                    <li data-value="Rewari">Rewari</li>
-                                    <li data-value="Rohtak">Rohtak</li>
-                                    <li data-value="Sirsa">Sirsa</li>
-                                    <li data-value="Sonipat">Sonipat</li>
-                                    <li data-value="Yamunanagar">Yamunanagar</li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-6 col-xl-4 px-md-2">
-                            <label class="form-label">State<span>*</span></label>
-                            <input type="text" name="portal_state" class="form-control" placeholder="Type here"
-                                value="{{ old('portal_state', $address?->portal_state) }}">
                         </div>
                     </div>
                 </div>
             </div>
-            <div
-                class="d-flex justify-content-center justify-content-md-end gap-2 gap-md-3 mt-4 steps-btn pe-lg-4 flex-wrap">
+            <div style="border-radius:0px 0px 8px 8px;"
+                class="d-flex justify-content-center justify-content-md-end gap-2 gap-md-3 steps-btn pe-lg-4 flex-wrap">
+             <div class="btn-wrap">
+    <button 
+        type="button"
+        class="btn simple-btn"
+        onclick="window.location.href='{{ route('onboarding.step1') }}'"
+    >
+        <img src="/img/back.png" class="me-2" width="15" height="6.25">
+        Back
+    </button>
+</div>
                 <div class="btn-wrap">
-                    <button type="button" class="btn simple-btn"><img src="/img/back.png" class="me-2" width="15" height="6.25">Back</button>
-                </div>
-                <div class="btn-wrap">
-                    <button type="submit" class="btn gradient-btn">Next <svg xmlns="http://www.w3.org/2000/svg"
-                            width="17" height="8" viewBox="0 0 17 8" fill="none">
+                    <button type="submit" class="btn gradient-btn">Next <svg xmlns="http://www.w3.org/2000/svg" width="17"
+                            height="8" viewBox="0 0 17 8" fill="none">
                             <path d="M12.625 7L15.75 3.875L12.625 0.75M15.75 3.875H0.75" stroke="white" stroke-width="1.5"
                                 stroke-linecap="round" stroke-linejoin="round" />
                         </svg></button>
@@ -365,7 +223,7 @@
     </div>
 
     <script>
-        document.getElementById('sameAsOffice').addEventListener('change', function() {
+        document.getElementById('sameAsOffice').addEventListener('change', function () {
 
             const fields = [
                 ['office_house_floor_no', 'portal_house_floor_no'],
@@ -402,4 +260,271 @@
 
         });
     </script>
+
+  <script>
+
+    document.addEventListener('DOMContentLoaded', async function () {
+
+        // =========================
+        // Fetch JSON
+        // =========================
+
+        const response = await fetch('/states.json');
+        const statesData = await response.json();
+
+        // =========================
+        // Office Elements
+        // =========================
+
+        const officeStateInput =
+            document.getElementById('office_state');
+
+        const officeDistrictDropdown =
+            document.getElementById('office_district');
+
+        const officeSuggestionsBox =
+            document.getElementById('office_state_suggestions');
+
+        // =========================
+        // Portal Elements
+        // =========================
+
+        const portalStateInput =
+            document.getElementById('portal_state');
+
+        const portalDistrictDropdown =
+            document.getElementById('portal_district');
+
+        const portalSuggestionsBox =
+            document.getElementById('portal_state_suggestions');
+
+        // =====================================================
+        // OFFICE STATE AUTOCOMPLETE
+        // =====================================================
+
+        officeStateInput.addEventListener('input', function () {
+
+            const value = this.value.toLowerCase();
+
+            officeSuggestionsBox.innerHTML = '';
+
+            officeDistrictDropdown.innerHTML =
+                '<option value="">Select District</option>';
+
+            if (!value) return;
+
+            const filteredStates = statesData.filter(item =>
+                item.state.toLowerCase().includes(value)
+            );
+
+            filteredStates.forEach(item => {
+
+                const button = document.createElement('button');
+
+                button.type = 'button';
+
+                button.className =
+                    'list-group-item list-group-item-action';
+
+                button.textContent = item.state;
+
+                button.addEventListener('click', function () {
+
+                    officeStateInput.value = item.state;
+
+                    officeSuggestionsBox.innerHTML = '';
+
+                    populateDistricts(
+                        item.state,
+                        officeDistrictDropdown
+                    );
+
+                });
+
+                officeSuggestionsBox.appendChild(button);
+
+            });
+
+        });
+
+        // =====================================================
+        // PORTAL STATE AUTOCOMPLETE
+        // =====================================================
+
+        portalStateInput.addEventListener('input', function () {
+
+            const value = this.value.toLowerCase();
+
+            portalSuggestionsBox.innerHTML = '';
+
+            portalDistrictDropdown.innerHTML =
+                '<option value="">Select District</option>';
+
+            if (!value) return;
+
+            const filteredStates = statesData.filter(item =>
+                item.state.toLowerCase().includes(value)
+            );
+
+            filteredStates.forEach(item => {
+
+                const button = document.createElement('button');
+
+                button.type = 'button';
+
+                button.className =
+                    'list-group-item list-group-item-action';
+
+                button.textContent = item.state;
+
+                button.addEventListener('click', function () {
+
+                    portalStateInput.value = item.state;
+
+                    portalSuggestionsBox.innerHTML = '';
+
+                    populateDistricts(
+                        item.state,
+                        portalDistrictDropdown
+                    );
+
+                });
+
+                portalSuggestionsBox.appendChild(button);
+
+            });
+
+        });
+
+        // =====================================================
+        // POPULATE DISTRICTS
+        // =====================================================
+
+        function populateDistricts(
+            stateName,
+            dropdown,
+            selectedDistrict = ''
+        ) {
+
+            dropdown.innerHTML =
+                '<option value="">Select District</option>';
+
+            const stateData = statesData.find(
+                item => item.state === stateName
+            );
+
+            if (!stateData) return;
+
+            stateData.districts.forEach(district => {
+
+                const selected =
+                    district === selectedDistrict
+                        ? 'selected'
+                        : '';
+
+                dropdown.innerHTML += `
+                    <option value="${district}" ${selected}>
+                        ${district}
+                    </option>
+                `;
+
+            });
+
+        }
+
+        // =====================================================
+        // PAGE LOAD EXISTING VALUES
+        // =====================================================
+
+        const officeSavedDistrict =
+            `{{ old('office_district', $address?->office_district) }}`;
+
+        const portalSavedDistrict =
+            `{{ old('portal_district', $address?->portal_district) }}`;
+
+        if (officeStateInput.value) {
+
+            populateDistricts(
+                officeStateInput.value,
+                officeDistrictDropdown,
+                officeSavedDistrict
+            );
+
+        }
+
+        if (portalStateInput.value) {
+
+            populateDistricts(
+                portalStateInput.value,
+                portalDistrictDropdown,
+                portalSavedDistrict
+            );
+
+        }
+
+        // =====================================================
+        // HIDE SUGGESTIONS ON OUTSIDE CLICK
+        // =====================================================
+
+        document.addEventListener('click', function (e) {
+
+            if (
+                !officeStateInput.contains(e.target) &&
+                !officeSuggestionsBox.contains(e.target)
+            ) {
+                officeSuggestionsBox.innerHTML = '';
+            }
+
+            if (
+                !portalStateInput.contains(e.target) &&
+                !portalSuggestionsBox.contains(e.target)
+            ) {
+                portalSuggestionsBox.innerHTML = '';
+            }
+
+        });
+
+        // =====================================================
+        // SAME AS OFFICE
+        // =====================================================
+
+        document.getElementById('sameAsOffice')
+            .addEventListener('change', function () {
+
+                if (this.checked) {
+
+                    // Copy fields
+                    document.querySelector('[name="portal_address_line_1"]').value =
+                        document.querySelector('[name="office_address_line_1"]').value;
+
+                    document.querySelector('[name="portal_address_line_2"]').value =
+                        document.querySelector('[name="office_address_line_2"]').value;
+
+                    document.querySelector('[name="portal_city"]').value =
+                        document.querySelector('[name="office_city"]').value;
+
+                    document.querySelector('[name="portal_pin_code"]').value =
+                        document.querySelector('[name="office_pin_code"]').value;
+
+                    // Copy state
+                    portalStateInput.value =
+                        officeStateInput.value;
+
+                    // Populate districts
+                    populateDistricts(
+                        officeStateInput.value,
+                        portalDistrictDropdown,
+                        officeDistrictDropdown.value
+                    );
+
+                }
+
+            });
+
+    });
+
+</script>
+
+
+
 @endsection

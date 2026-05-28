@@ -129,7 +129,7 @@
                     </div>
                 </div>
                 <div
-                    class="d-flex justify-content-center justify-content-md-end gap-2 mt-4 pt-md-2 steps-btn flex-wrap">
+                    class="d-flex justify-content-center justify-content-md-end gap-2  pt-md-2 steps-btn flex-wrap">
                     <div class="btn-wrap">
                         <button type="submit" class="btn btn-primary">Apply</button>
                     </div>
