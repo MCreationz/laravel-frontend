@@ -12,11 +12,11 @@ Route::prefix('client-admin')->group(function () {
     | Guest Routes
     |--------------------------------------------------------------------------
     */
-          Route::get('/login', [AuthController::class, 'showLoginForm'])
-            ->name('client-admin.login');
+    Route::get('/login', [AuthController::class, 'showLoginForm'])
+        ->name('client-admin.login');
 
-        Route::post('/login', [AuthController::class, 'login'])
-            ->name('client-admin.login.submit');
+    Route::post('/login', [AuthController::class, 'login'])
+        ->name('client-admin.login.submit');
 
     Route::middleware('guest:client_admin')->group(function () {
 
@@ -26,7 +26,6 @@ Route::prefix('client-admin')->group(function () {
         |--------------------------------------------------------------------------
         */
 
-  
     });
 
     /*
