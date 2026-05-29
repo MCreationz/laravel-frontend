@@ -16,9 +16,12 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $credentials = $request->validate([
-            'email'    => ['required', 'email'],
+            'email' => ['required', 'email'],
             'password' => ['required'],
         ]);
+
+        // Only verified users can login
+        $credentials['status'] = 'verified';
 
         if (Auth::guard('client_admin')->attempt($credentials, $request->remember)) {
 
@@ -28,7 +31,7 @@ class AuthController extends Controller
         }
 
         return back()->withErrors([
-            'email' => 'Invalid credentials.',
+            'email' => 'Invalid credentials or account not verified.',
         ])->onlyInput('email');
     }
 

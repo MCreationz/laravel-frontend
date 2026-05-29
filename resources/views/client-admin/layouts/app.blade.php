@@ -4,85 +4,248 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'Client Admin Panel')</title>
+    <title>@yield('title', 'Super Admin Dashboard')</title>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-    <style>
-        body {
-            background: #f5f7fb;
-        }
-
-        .sidebar {
-            width: 250px;
-            min-height: 100vh;
-            background: #111827;
-        }
-
-        .sidebar a {
-            color: #fff;
-            text-decoration: none;
-            display: block;
-            padding: 12px 20px;
-        }
-
-        .sidebar a:hover {
-            background: #1f2937;
-        }
-
-        .main-content {
-            flex: 1;
-        }
-    </style>
-
-    @stack('styles')
 </head>
 
-<body>
+<body class="bg-light dashboard light-bg">
 
-    <div class="d-flex">
-                    @include('client-admin.partials.navbar')
+    @include('client-admin.partials.header')
 
 
-        {{-- Sidebar --}}
-        @include('client-admin.partials.sidebar')
+    <!-- Sidebar -->
+    @include('client-admin.partials.sidebar')
 
-        <div class="main-content">
+    <!-- Main Content -->
+    <div class="flex-grow-1 d-flex flex-column">
 
-            {{-- Navbar --}}
+        <!-- Page Content -->
+        <main class="flex-grow-1 p-3">
+            @if (session('success'))
+                <div class="alert alert-success alert-dismissible fade show">
+                    {{ session('success') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            @endif
 
-            <div class="container-fluid p-4">
+            @yield('content')
+        </main>
 
-                @if(session('success'))
-                    <div class="alert alert-success">
-                        {{ session('success') }}
-                    </div>
-                @endif
-
-                @if($errors->any())
-                    <div class="alert alert-danger">
-                        <ul class="mb-0">
-                            @foreach($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
-
-                @yield('content')
-
-            </div>
-
-            {{-- Footer --}}
-            @include('client-admin.partials.footer')
-
-        </div>
+        <!-- Footer -->
+        <footer class="text-center py-3 border-top bg-light">
+            &copy; {{ date('Y') }} Super Admin Panel. All rights reserved.
+        </footer>
 
     </div>
+    <style>
+    #toast-container>div {
+        position: relative;
+    }
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    /* Fix close (×) button */
+    .toast-close-button {
+        position: absolute;
+        top: 6px;
+        right: 10px;
+        font-size: 18px;
+        color: #fff !important;
+        opacity: 0.8;
+    }
 
-    @stack('scripts')
+    /* Better hover */
+    .toast-close-button:hover {
+        opacity: 1;
+    }
+
+    #toast-container>div {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 14px 16px 14px 50px !important;
+        /* space for icon */
+        position: relative;
+    }
+
+    /* Fix icon position */
+    #toast-container>div::before {
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    /* Force white text globally inside toast */
+    #toast-container>div,
+    #toast-container>div * {
+        color: #fff !important;
+    }
+
+    /* Also ensure base toast class doesn't override */
+    .toast {
+        color: #fff !important;
+    }
+
+    /* Toast container spacing */
+    #toast-container>div {
+        border-radius: 10px;
+        padding: 14px 18px;
+        font-size: 14px;
+        font-weight: 500;
+        opacity: 1 !important;
+        /* REMOVE transparency */
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    /* Success */
+    .toast-success {
+        background-color: #16a34a !important;
+        color: #fff !important;
+    }
+
+    /* Error */
+    .toast-error {
+        background-color: #dc2626 !important;
+        color: #fff !important;
+    }
+
+    /* Warning */
+    .toast-warning {
+        background-color: #f59e0b !important;
+        color: #fff !important;
+    }
+
+    /* Info */
+    .toast-info {
+        background-color: #2563eb !important;
+        color: #fff !important;
+    }
+
+    /* Remove default background image (icons) */
+    .toast {
+        background-image: none !important;
+    }
+
+    /* Close button */
+    .toast-close-button {
+        color: #fff !important;
+        opacity: 0.8;
+    }
+
+    .toast-close-button:hover {
+        opacity: 1;
+    }
+</style>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<script>
+    document.querySelectorAll(".select-wrapper").forEach(function (wrapper) {
+
+        const selectBox = wrapper.querySelector(".custom-select");
+        const optionsList = wrapper.querySelector(".select-list");
+        const hiddenInput = wrapper.querySelector(".hidden-select");
+
+        selectBox.addEventListener("click", function (e) {
+            e.stopPropagation();
+
+            document.querySelectorAll(".select-list").forEach(list => {
+                if (list !== optionsList) list.style.display = "none";
+            });
+
+            optionsList.style.display =
+                optionsList.style.display === "block" ? "none" : "block";
+        });
+
+        optionsList.querySelectorAll("li").forEach(function (option) {
+
+            option.addEventListener("click", function () {
+
+                selectBox.textContent = this.textContent;
+                hiddenInput.value = this.getAttribute("data-value");
+
+                optionsList.style.display = "none";
+            });
+
+        });
+
+    });
+
+    document.addEventListener("click", function () {
+        document.querySelectorAll(".select-list").forEach(list => {
+            list.style.display = "none";
+        });
+    });
+</script>
+</script>
+<script>
+    document.querySelectorAll('.select-wrapper').forEach(wrapper => {
+
+        const display = wrapper.querySelector('.custom-select');
+        const hiddenInput = wrapper.querySelector('input[type="hidden"]');
+        const options = wrapper.querySelectorAll('.select-list li');
+
+        options.forEach(option => {
+
+            option.addEventListener('click', function () {
+
+                const value = this.getAttribute('data-value');
+
+                // update visible text
+                display.textContent = value;
+
+                // update hidden input (this is what gets submitted)
+                hiddenInput.value = value;
+
+            });
+
+        });
+
+    });
+</script>
+<script>
+    toastr.options = {
+        closeButton: true,
+        progressBar: true,
+        newestOnTop: true,
+        positionClass: "toast-top-right",
+        timeOut: "3500",
+        showDuration: "300",
+        hideDuration: "200",
+        showMethod: "fadeIn",
+        hideMethod: "fadeOut"
+    };
+    @if(session('success'))
+        toastr.success("{{ session('success') }}");
+    @endif
+
+    @if(session('error'))
+        toastr.error("{{ session('error') }}");
+    @endif
+
+    @if(session('warning'))
+        toastr.warning("{{ session('warning') }}");
+    @endif
+
+    @if(session('info'))
+        toastr.info("{{ session('info') }}");
+    @endif
+
+    @if ($errors->any())
+        @foreach ($errors->all() as $error)
+            toastr.error("{{ $error }}");
+        @endforeach
+    @endif
+</script>
+
 
 </body>
 

@@ -13,18 +13,53 @@ class ClientAdminController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        $clientAdmins = ClientAdmin::latest()->paginate(10);
+public function index(Request $request)
+{
+    $query = ClientAdmin::query();
 
-        return view('superadmin.client-admins.index', compact('clientAdmins'));
+    // Search
+    if ($request->filled('search')) {
+
+        $search = $request->search;
+
+        $query->where(function ($q) use ($search) {
+
+            $q->where('organization_name', 'like', "%{$search}%")
+                ->orWhere('primary_contact_name', 'like', "%{$search}%")
+                ->orWhere('email', 'like', "%{$search}%")
+                ->orWhere('phone_number', 'like', "%{$search}%");
+
+        });
     }
+
+    // Type Filter
+    if ($request->filled('type')) {
+
+        $query->where('organization_type', $request->type);
+
+    }
+
+    // Status Filter
+    if ($request->filled('status')) {
+
+        $query->where('status', $request->status);
+
+    }
+
+    $clientAdmins = $query
+        ->latest()
+        ->paginate(10)
+        ->withQueryString();
+
+    return view('superadmin.client-admins.index', compact('clientAdmins'));
+}
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
+        // return $request->all();
         $validated = $request->validate([
             'organization_name' => 'required|string|max:255',
             'organization_type' => 'required|string|max:255',
@@ -66,7 +101,7 @@ class ClientAdminController extends Controller
         // Mail::to($clientAdmin->email)->send(new ClientAdminCredentialsMail($plainPassword));
 
         return redirect()
-            ->route('super-admin.client-admins.index')
+            ->route('superadmin.client-admins.index')
             ->with('success', 'Client Admin created successfully.');
     }
 
@@ -109,7 +144,7 @@ class ClientAdminController extends Controller
         $clientAdmin->update($validated);
 
         return redirect()
-            ->route('super-admin.client-admins.index')
+            ->route('superadmin.client-admins.index')
             ->with('success', 'Client Admin updated successfully.');
     }
 
@@ -121,7 +156,7 @@ class ClientAdminController extends Controller
         $clientAdmin->delete();
 
         return redirect()
-            ->route('super-admin.client-admins.index')
+            ->route('superadmin.client-admins.index')
             ->with('success', 'Client Admin deleted successfully.');
     }
 }

@@ -46,8 +46,7 @@ Route::prefix('super-admin')
         | Applications
         |--------------------------------------------------------------------------
         */
-        
-        
+
         Route::get('/applications', [ApplicationController::class, 'index'])
             ->name('applications.index');
 
@@ -65,8 +64,6 @@ Route::prefix('super-admin')
 
         Route::delete('/applications/{application}', [ApplicationController::class, 'destroy'])
             ->name('applications.destroy');
-
-
 
         /*
         |--------------------------------------------------------------------------
