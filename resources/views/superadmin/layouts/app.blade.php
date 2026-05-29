@@ -27,13 +27,6 @@
     <!-- Main Content -->
     <div class="flex-grow-1 d-flex flex-column">
 
-        <!-- Navbar -->
-        <nav class="navbar navbar-light bg-white border-bottom px-4">
-
-
-
-        </nav>
-
         <!-- Page Content -->
         <main class="flex-grow-1 p-3">
             @if (session('success'))
