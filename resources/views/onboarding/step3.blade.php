@@ -121,7 +121,7 @@
     </ul>
 
     <input type="hidden" name="registration_type" class="hidden-select"
-        value="{{ $registrationType }}">
+        value="{{ $registrationType }}" required>
 </div>
 
                         @error('registration_type')
@@ -194,7 +194,7 @@
                                     <li data-value="Emergency">Emergency Response & Humanitarian Aid</li>
                                 </ul>
 
-                                <input type="hidden" name="domain_of_expertise" class="hidden-select" value="{{ $domain }}">
+                                <input type="hidden" name="domain_of_expertise" class="hidden-select" value="{{ $domain }}" required>
                             </div>
 
                             @error('domain_of_expertise')
@@ -272,7 +272,7 @@
 
                             </ul>
 
-                            <input type="hidden" name="state" id="hiddenStates">
+                            <input type="hidden" name="state" id="hiddenStates" required>
                         </div>
 
                         @error('state')
@@ -556,7 +556,7 @@
                                 </p>
                             </div>
 
-                            <textarea name="key_achievements" rows="5" class="form-control"
+                            <textarea name="key_achievements" rows="5" class="form-control" required
                                 placeholder="Enter Achievements">{{ $achievements }}</textarea>
 
                             @error('key_achievements')
@@ -1208,16 +1208,89 @@
                 let skipConsentReset = false;
 
                 // Continue button validation
-                if (continueBtn) {
-                    continueBtn.addEventListener("click", function () {
-                        if (!form.checkValidity()) {
-                            form.reportValidity();
-                            return;
+              // Continue button validation
+if (continueBtn) {
+    continueBtn.addEventListener("click", function () {
+
+        let isValid = true;
+        let firstInvalidField = null;
+
+        // validate all required fields
+        form.querySelectorAll("[required]").forEach(field => {
+
+            const value = field.value?.trim();
+
+            if (!value) {
+
+                isValid = false;
+
+                field.classList.add("is-invalid");
+
+                const wrapper = field.closest(".select-wrapper");
+
+                // for custom select UI
+                if (wrapper) {
+
+                    const customSelect = wrapper.querySelector(".custom-select");
+
+                    if (customSelect) {
+                        customSelect.classList.add("is-invalid");
+
+                        // store first invalid visible field
+                        if (!firstInvalidField) {
+                            firstInvalidField = customSelect;
                         }
-                        modal.show();
-                    });
+                    }
+
+                } else {
+
+                    // normal inputs / textarea
+                    if (!firstInvalidField) {
+                        firstInvalidField = field;
+                    }
                 }
 
+            } else {
+
+                field.classList.remove("is-invalid");
+
+                const wrapper = field.closest(".select-wrapper");
+
+                if (wrapper) {
+
+                    const customSelect = wrapper.querySelector(".custom-select");
+
+                    if (customSelect) {
+                        customSelect.classList.remove("is-invalid");
+                    }
+                }
+            }
+        });
+
+        // scroll to first invalid field
+        if (!isValid && firstInvalidField) {
+
+            firstInvalidField.scrollIntoView({
+                behavior: "smooth",
+                block: "center"
+            });
+
+            setTimeout(() => {
+                firstInvalidField.focus?.();
+            }, 400);
+
+            return;
+        }
+
+        // fallback native validation
+        if (!form.checkValidity()) {
+            form.reportValidity();
+            return;
+        }
+
+        modal.show();
+    });
+}
                 if (consentCheckbox && submitBtn) {
                     consentCheckbox.addEventListener("change", function () {
                         submitBtn.disabled = !consentCheckbox.checked;
