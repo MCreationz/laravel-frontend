@@ -16,44 +16,41 @@
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 </head>
 
-<body class="bg-light dashboard">
+<body class="bg-light dashboard light-bg">
 
-    <div class="d-flex min-vh-100">
+    @include('superadmin.layouts.header')
 
-            @include('superadmin.layouts.header')
-      
 
-        <!-- Sidebar -->
-        @include('superadmin.layouts.sidebar')
+    <!-- Sidebar -->
+    @include('superadmin.layouts.sidebar')
 
-        <!-- Main Content -->
-        <div class="flex-grow-1 d-flex flex-column">
+    <!-- Main Content -->
+    <div class="flex-grow-1 d-flex flex-column">
 
-            <!-- Navbar -->
-            <nav class="navbar navbar-light bg-white border-bottom px-4">
-              
+        <!-- Navbar -->
+        <nav class="navbar navbar-light bg-white border-bottom px-4">
 
-            
-            </nav>
 
-            <!-- Page Content -->
-            <main class="flex-grow-1 p-4">
-                @if (session('success'))
-                    <div class="alert alert-success alert-dismissible fade show">
-                        {{ session('success') }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                    </div>
-                @endif
 
-                @yield('content')
-            </main>
+        </nav>
 
-            <!-- Footer -->
-            <footer class="text-center py-3 border-top bg-light">
-                &copy; {{ date('Y') }} Super Admin Panel. All rights reserved.
-            </footer>
+        <!-- Page Content -->
+        <main class="flex-grow-1 p-3">
+            @if (session('success'))
+                <div class="alert alert-success alert-dismissible fade show">
+                    {{ session('success') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            @endif
 
-        </div>
+            @yield('content')
+        </main>
+
+        <!-- Footer -->
+        <footer class="text-center py-3 border-top bg-light">
+            &copy; {{ date('Y') }} Super Admin Panel. All rights reserved.
+        </footer>
+
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>

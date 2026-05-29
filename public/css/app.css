@@ -58,6 +58,9 @@ a {
     font-weight: 500 !important;
     transition: all .3s ease;
 }
+button {
+    transition: all .3s ease;
+}
 .alert.alert-success{
     color: #17bc71 !important;
     border: none;
@@ -120,10 +123,16 @@ label {
 .btn.simple-btn:hover img {
     filter: invert(1) brightness(1);
 }
-.back-btn, .gradient-text {
+.back-btn, .gradient-text, td .gradient-text {
     background: var(--primary-btn);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+}
+td .gradient-text {
+    background: linear-gradient(66.53deg, #0160D6 29%, #07CCB5 67.08%);
+    -webkit-background-clip: text;
+    border: 0.35px solid #C5DFFF;
+    border-radius: 2.08px;
 }
 .btn.gradient-btn {
     background: var(--primary-btn);
@@ -1367,6 +1376,15 @@ ul.select-list input[type="checkbox"]:checked ~ label:before {
     justify-content: flex-end;
     min-height: 106.23970031738281px;
 }
+.arrow-icon {
+    background: #F6F6F6;
+    width: 45px;
+    height: 45px;
+    border-radius: 6px;
+}
+.dashboard main {
+    background: #9DC2E733;
+}
 .single-box .text {
     color: rgb(255 255 255 / 50%) !important;
 }
@@ -1413,8 +1431,105 @@ ul.select-list input[type="checkbox"]:checked ~ label:before {
     transform: translateY(-50%);
 }
 
-
-
+/*  */
+.search-bar:before {
+    content: '';
+    position: absolute;
+    background: url('/img/search-icon.svg');
+    left: 11px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 12.715372085571289px;
+    height: 12.715372085571289px;
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    z-index: 1;
+}
+.top-fields .custom-select {
+    min-height: 34px;
+    font-size: 11px !important;
+    color: #6A6A6A !important;
+}
+.top-fields .select-wrapper::after {
+    width: 7px;
+    height: 7px;
+    border: solid #6A6A6A;
+    border-width: 0 1px 1px 0;
+    transform: rotate(45deg) translateY(-50%);
+    top: 41%;
+}
+.search-input {
+    padding: 8px 10px 8px 30px;
+    font-size: 11px;
+    color: #BABABA;
+}
+.search-input::placeholder {
+    color: #BABABA;
+}
+.add-btn {
+    padding: 9.5px 20px !important;
+    min-width: 155.3828125px;
+}
+.table-heading {
+    font-size: 18px !important;
+    line-height: 1.2 !important;
+}
+.card-box table th {
+    background: #d9d9d933 !important;
+    letter-spacing: -0.4px;
+    padding: 5px 15px !important;
+    width: 100%;
+    min-width: 100px;
+    max-width: 100px;
+}
+.card-box table th.first-col {
+    max-width: 252px;
+    min-width: 252px;
+}
+.card-box table th.second-col, .card-box table th.third-col {
+    max-width: 140px;
+    min-width: 140px;
+}
+table td {
+    padding: 5px 15px !important;
+    width: 100%;
+    letter-spacing: -0.4px;
+    line-height: 1.35;
+}
+.table > tbody > tr:nth-of-type(even) td {
+    background-color: rgba(206 215 227 / 12%);
+}
+.action-btn button {
+    background: transparent;
+    width: 31.94px;
+    height: 31.94px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0px 2px 7px 0px #8F8F8F0A;
+    border: 1px solid #BFBFBF3D;
+    border-radius: 6px;
+}
+.action-btn button.view-btn:hover {
+    background: var(--accent-color);
+}
+.action-btn button.edit-btn:hover {
+    background: #07CCB5;
+}
+.action-btn button.trash-btn:hover {
+    background: #E74C3C;
+}
+.action-btn button:hover svg path {
+    stroke: var(--white-color);
+}
+.badge.text-success {
+    background: #07CCB51A;
+    color: #14A190 !important;
+    padding: 8px 10px;
+    font-weight: 500;
+    min-width: 78px;
+}
 /* responsive */
 @media(max-width:1440px){
 .left-logo-col .bg-image img {
@@ -1686,6 +1801,10 @@ ul.select-list input[type="checkbox"]:checked ~ label:before {
     .access-title {
         font-size: 14px !important;
     }
+    .add-btn {
+        padding: 8.5px 12px !important;
+        min-width: 134px;
+    }
 }
 @media(max-width: 575px){
     .progress-dots {
@@ -1725,6 +1844,13 @@ ul.select-list input[type="checkbox"]:checked ~ label:before {
     .consent .modal-header {
         margin-left: 25px;
         margin-right: 25px;
+    }
+    .search-bar.input-group {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+    .top-fields .select-wrapper {
+        max-width: calc(100% / 2 - 4px) !important;
     }
 }
 

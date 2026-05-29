@@ -1,6 +1,6 @@
 <header class="header px-3 px-lg-4 position-fixed top-0">
     <div class="row justify-content-between align-items-center">
-        {{-- <div class="col-auto d-flex gap-3 align-items-center">
+        <div class="col-auto d-flex gap-3 align-items-center">
             <div class="header-toggle">
                 <button class="nav-toggle" id="sidebar-toggle">
                     <span></span>
@@ -8,8 +8,13 @@
                     <span></span>
                 </button>
             </div>
-            <p class="mb-0 header-text">Set up your Profile</p>
-        </div> --}}
+            <p class="mb-0 header-text d-flex align-items-center gap-3">
+                <a href="#" class="arrow-icon d-flex align-items-center justify-content-center cursor-pointer"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="17"
+                    viewBox="0 0 20 17" fill="none">
+                    <path d="M8.25 0.75L0.75 8.25L8.25 15.75M0.75 8.25H18.75" stroke="black" stroke-width="1.5"
+                        stroke-linecap="round" stroke-linejoin="round" />
+                </svg></a>Client Admins</p>
+        </div>
         <div class="col-auto logo mobile d-none text-center flex-grow">
             <img src="{{ asset('img/FundInk-logo.svg') }}" alt="FundInk site logo" width="124px" height="">
         </div>
