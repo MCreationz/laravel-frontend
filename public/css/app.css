@@ -1530,6 +1530,27 @@ table td {
     font-weight: 500;
     min-width: 78px;
 }
+
+/*  */
+.upload-box {
+    width: 100%;
+}
+.upload-label {
+    display: block;
+    border: 1px solid #E2E2E2;
+    border-radius: 7px;
+    padding: 21px 14px;
+    text-align: center;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.upload-label:hover {
+    border-color: #999;
+}
+.upload-content p {
+    color: rgba(40, 40, 40, 0.5) !important;
+    font-weight: 400 !important;
+}
 /* responsive */
 @media(max-width:1440px){
 .left-logo-col .bg-image img {
