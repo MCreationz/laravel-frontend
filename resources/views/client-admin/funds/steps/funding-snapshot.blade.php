@@ -69,9 +69,28 @@
 
     <div class="">
         <div class="card-body p-0">
-            <form id="step1Form" method="POST">
+            <form method="POST" action="{{ route('client-admin.funds.funding-snapshot.store') }}">
                 @csrf
                 <div style="border-radius:8px 8px 0px 0px;" class="card border-0">
+  
+                 @php
+    $selectedStates = old(
+        'eligible_states',
+        $fundSnapshot?->eligible_states ?? ''
+    );
+
+    if (is_string($selectedStates)) {
+        $selectedStates = array_filter(
+            array_map('trim', explode(',', $selectedStates))
+        );
+    }
+
+    if (!is_array($selectedStates)) {
+        $selectedStates = [];
+    }
+@endphp
+
+ 
                     <div class="p-3 p-md-4">
                         <div class="mb-4">
                             <h1 class="top-heading mb-0">Eligibility</h1>
@@ -85,86 +104,156 @@
                                         class="custom-select form-control d-flex flex-wrap gap-2 align-items-center">
                                         <span class="placeholder">Select States</span>
                                     </div>
+
                                     <ul class="select-list checkbox-list">
-                                        <li><input type="checkbox" value="Pan India" id="s0"><label
-                                                for="s0">Pan
-                                                India</label></li>
+                                        <li>
+                                            <input type="checkbox" value="Pan India" id="s0" {{ in_array('Pan India', $selectedStates) ? 'checked' : '' }}>
+                                            <label for="s0">Pan India</label>
+                                        </li>
 
-                                        <li><input type="checkbox" value="Andhra Pradesh" id="s1"><label
-                                                for="s1">Andhra
-                                                Pradesh</label></li>
-                                        <li><input type="checkbox" value="Arunachal Pradesh" id="s2"><label
-                                                for="s2">Arunachal
-                                                Pradesh</label></li>
-                                        <li><input type="checkbox" value="Assam" id="s3"><label
-                                                for="s3">Assam</label></li>
-                                        <li><input type="checkbox" value="Bihar" id="s4"><label
-                                                for="s4">Bihar</label></li>
-                                        <li><input type="checkbox" value="Chhattisgarh" id="s5"><label
-                                                for="s5">Chhattisgarh</label>
+                                        <li>
+                                            <input type="checkbox" value="Andhra Pradesh" id="s1" {{ in_array('Andhra Pradesh', $selectedStates) ? 'checked' : '' }}>
+                                            <label for="s1">Andhra Pradesh</label>
                                         </li>
-                                        <li><input type="checkbox" value="Goa" id="s6"><label
-                                                for="s6">Goa</label></li>
-                                        <li><input type="checkbox" value="Gujarat" id="s7"><label
-                                                for="s7">Gujarat</label></li>
-                                        <li><input type="checkbox" value="Haryana" id="s8"><label
-                                                for="s8">Haryana</label></li>
-                                        <li><input type="checkbox" value="Himachal Pradesh" id="s9"><label
-                                                for="s9">Himachal
-                                                Pradesh</label></li>
-                                        <li><input type="checkbox" value="Jharkhand" id="s10"><label
-                                                for="s10">Jharkhand</label>
-                                        </li>
-                                        <li><input type="checkbox" value="Karnataka" id="s11"><label
-                                                for="s11">Karnataka</label>
-                                        </li>
-                                        <li><input type="checkbox" value="Kerala" id="s12"><label
-                                                for="s12">Kerala</label></li>
-                                        <li><input type="checkbox" value="Madhya Pradesh" id="s13"><label
-                                                for="s13">Madhya
-                                                Pradesh</label></li>
-                                        <li><input type="checkbox" value="Maharashtra" id="s14"><label
-                                                for="s14">Maharashtra</label>
-                                        </li>
-                                        <li><input type="checkbox" value="Manipur" id="s15"><label
-                                                for="s15">Manipur</label></li>
-                                        <li><input type="checkbox" value="Meghalaya" id="s16"><label
-                                                for="s16">Meghalaya</label>
-                                        </li>
-                                        <li><input type="checkbox" value="Mizoram" id="s17"><label
-                                                for="s17">Mizoram</label></li>
-                                        <li><input type="checkbox" value="Nagaland" id="s18"><label
-                                                for="s18">Nagaland</label></li>
-                                        <li><input type="checkbox" value="Odisha" id="s19"><label
-                                                for="s19">Odisha</label></li>
-                                        <li><input type="checkbox" value="Punjab" id="s20"><label
-                                                for="s20">Punjab</label></li>
-                                        <li><input type="checkbox" value="Rajasthan" id="s21"><label
-                                                for="s21">Rajasthan</label>
-                                        </li>
-                                        <li><input type="checkbox" value="Sikkim" id="s22"><label
-                                                for="s22">Sikkim</label></li>
-                                        <li><input type="checkbox" value="Tamil Nadu" id="s23"><label
-                                                for="s23">Tamil
-                                                Nadu</label></li>
-                                        <li><input type="checkbox" value="Telangana" id="s24"><label
-                                                for="s24">Telangana</label>
-                                        </li>
-                                        <li><input type="checkbox" value="Tripura" id="s25"><label
-                                                for="s25">Tripura</label></li>
-                                        <li><input type="checkbox" value="Uttar Pradesh" id="s26"><label
-                                                for="s26">Uttar
-                                                Pradesh</label></li>
-                                        <li><input type="checkbox" value="Uttarakhand" id="s27"><label
-                                                for="s27">Uttarakhand</label>
-                                        </li>
-                                        <li><input type="checkbox" value="West Bengal" id="s28"><label
-                                                for="s28">West
-                                                Bengal</label></li>
 
+                                        <li>
+                                            <input type="checkbox" value="Arunachal Pradesh" id="s2" {{ in_array('Arunachal Pradesh', $selectedStates) ? 'checked' : '' }}>
+                                            <label for="s2">Arunachal Pradesh</label>
+                                        </li>
+
+                                        <li>
+                                            <input type="checkbox" value="Assam" id="s3" {{ in_array('Assam', $selectedStates) ? 'checked' : '' }}>
+                                            <label for="s3">Assam</label>
+                                        </li>
+
+                                        <li>
+                                            <input type="checkbox" value="Bihar" id="s4" {{ in_array('Bihar', $selectedStates) ? 'checked' : '' }}>
+                                            <label for="s4">Bihar</label>
+                                        </li>
+
+                                        <li>
+                                            <input type="checkbox" value="Chhattisgarh" id="s5" {{ in_array('Chhattisgarh', $selectedStates) ? 'checked' : '' }}>
+                                            <label for="s5">Chhattisgarh</label>
+                                        </li>
+
+                                        <li>
+                                            <input type="checkbox" value="Goa" id="s6" {{ in_array('Goa', $selectedStates) ? 'checked' : '' }}>
+                                            <label for="s6">Goa</label>
+                                        </li>
+
+                                        <li>
+                                            <input type="checkbox" value="Gujarat" id="s7" {{ in_array('Gujarat', $selectedStates) ? 'checked' : '' }}>
+                                            <label for="s7">Gujarat</label>
+                                        </li>
+
+                                        <li>
+                                            <input type="checkbox" value="Haryana" id="s8" {{ in_array('Haryana', $selectedStates) ? 'checked' : '' }}>
+                                            <label for="s8">Haryana</label>
+                                        </li>
+
+                                        <li>
+                                            <input type="checkbox" value="Himachal Pradesh" id="s9" {{ in_array('Himachal Pradesh', $selectedStates) ? 'checked' : '' }}>
+                                            <label for="s9">Himachal Pradesh</label>
+                                        </li>
+
+                                        <li>
+                                            <input type="checkbox" value="Jharkhand" id="s10" {{ in_array('Jharkhand', $selectedStates) ? 'checked' : '' }}>
+                                            <label for="s10">Jharkhand</label>
+                                        </li>
+
+                                        <li>
+                                            <input type="checkbox" value="Karnataka" id="s11" {{ in_array('Karnataka', $selectedStates) ? 'checked' : '' }}>
+                                            <label for="s11">Karnataka</label>
+                                        </li>
+
+                                        <li>
+                                            <input type="checkbox" value="Kerala" id="s12" {{ in_array('Kerala', $selectedStates) ? 'checked' : '' }}>
+                                            <label for="s12">Kerala</label>
+                                        </li>
+
+                                        <li>
+                                            <input type="checkbox" value="Madhya Pradesh" id="s13" {{ in_array('Madhya Pradesh', $selectedStates) ? 'checked' : '' }}>
+                                            <label for="s13">Madhya Pradesh</label>
+                                        </li>
+
+                                        <li>
+                                            <input type="checkbox" value="Maharashtra" id="s14" {{ in_array('Maharashtra', $selectedStates) ? 'checked' : '' }}>
+                                            <label for="s14">Maharashtra</label>
+                                        </li>
+
+                                        <li>
+                                            <input type="checkbox" value="Manipur" id="s15" {{ in_array('Manipur', $selectedStates) ? 'checked' : '' }}>
+                                            <label for="s15">Manipur</label>
+                                        </li>
+
+                                        <li>
+                                            <input type="checkbox" value="Meghalaya" id="s16" {{ in_array('Meghalaya', $selectedStates) ? 'checked' : '' }}>
+                                            <label for="s16">Meghalaya</label>
+                                        </li>
+
+                                        <li>
+                                            <input type="checkbox" value="Mizoram" id="s17" {{ in_array('Mizoram', $selectedStates) ? 'checked' : '' }}>
+                                            <label for="s17">Mizoram</label>
+                                        </li>
+
+                                        <li>
+                                            <input type="checkbox" value="Nagaland" id="s18" {{ in_array('Nagaland', $selectedStates) ? 'checked' : '' }}>
+                                            <label for="s18">Nagaland</label>
+                                        </li>
+
+                                        <li>
+                                            <input type="checkbox" value="Odisha" id="s19" {{ in_array('Odisha', $selectedStates) ? 'checked' : '' }}>
+                                            <label for="s19">Odisha</label>
+                                        </li>
+
+                                        <li>
+                                            <input type="checkbox" value="Punjab" id="s20" {{ in_array('Punjab', $selectedStates) ? 'checked' : '' }}>
+                                            <label for="s20">Punjab</label>
+                                        </li>
+
+                                        <li>
+                                            <input type="checkbox" value="Rajasthan" id="s21" {{ in_array('Rajasthan', $selectedStates) ? 'checked' : '' }}>
+                                            <label for="s21">Rajasthan</label>
+                                        </li>
+
+                                        <li>
+                                            <input type="checkbox" value="Sikkim" id="s22" {{ in_array('Sikkim', $selectedStates) ? 'checked' : '' }}>
+                                            <label for="s22">Sikkim</label>
+                                        </li>
+
+                                        <li>
+                                            <input type="checkbox" value="Tamil Nadu" id="s23" {{ in_array('Tamil Nadu', $selectedStates) ? 'checked' : '' }}>
+                                            <label for="s23">Tamil Nadu</label>
+                                        </li>
+
+                                        <li>
+                                            <input type="checkbox" value="Telangana" id="s24" {{ in_array('Telangana', $selectedStates) ? 'checked' : '' }}>
+                                            <label for="s24">Telangana</label>
+                                        </li>
+
+                                        <li>
+                                            <input type="checkbox" value="Tripura" id="s25" {{ in_array('Tripura', $selectedStates) ? 'checked' : '' }}>
+                                            <label for="s25">Tripura</label>
+                                        </li>
+
+                                        <li>
+                                            <input type="checkbox" value="Uttar Pradesh" id="s26" {{ in_array('Uttar Pradesh', $selectedStates) ? 'checked' : '' }}>
+                                            <label for="s26">Uttar Pradesh</label>
+                                        </li>
+
+                                        <li>
+                                            <input type="checkbox" value="Uttarakhand" id="s27" {{ in_array('Uttarakhand', $selectedStates) ? 'checked' : '' }}>
+                                            <label for="s27">Uttarakhand</label>
+                                        </li>
+
+                                        <li>
+                                            <input type="checkbox" value="West Bengal" id="s28" {{ in_array('West Bengal', $selectedStates) ? 'checked' : '' }}>
+                                            <label for="s28">West Bengal</label>
+                                        </li>
                                     </ul>
 
-                                    <input type="hidden" name="state" id="hiddenStates" required>
+                                    <input type="hidden" name="eligible_states" id="hiddenStates"
+                                        value="{{ implode(',', $selectedStates) }}" required>
                                 </div>
 
                                 @error('state')
@@ -174,7 +263,9 @@
 
                             <div class="col-12 px-md-2">
                                 <label class="form-label">Eligibility Instruction<span>*</span></label>
-                                <textarea placeholder="Enter Eligibility Instruction" class="form-control" style="min-height: 99px"></textarea>
+                                <textarea name="eligibility_instruction" placeholder="Enter Eligibility Instruction"
+                                    class="form-control"
+                                    style="min-height: 99px">{{ old('eligibility_instruction', $fundSnapshot->eligibility_instruction ?? '') }}</textarea>
                             </div>
                         </div>
                         <div class="toggle-container d-flex mb-3 justify-content-start gap-2">
@@ -182,8 +273,9 @@
                                 <div class="toggle-wrap">
                                     <span class="font-small">NPO</span>
                                     <label class="switch mb-0">
-                                        <input type="hidden" name="dpiit_registration" value="0">
-                                        <input type="checkbox" name="dpiit_registration" value="1">
+                                        <input type="hidden" name="is_npo" value="0">
+
+                                        <input type="checkbox" name="is_npo" value="1" {{ old('is_npo', $fundSnapshot->is_npo ?? 0) ? 'checked' : '' }}>
 
                                         <span class="slider"></span>
                                     </label>
@@ -193,35 +285,38 @@
                                 <div class="toggle-wrap">
                                     <span class="font-small">Startup</span>
                                     <label class="switch mb-0">
-                                        <input type="hidden" name="dpiit_registration" value="0">
-                                        <input type="checkbox" name="dpiit_registration" value="1">
+                                        <input type="hidden" name="is_startup" value="0">
+
+                                        <input type="checkbox" name="is_startup" value="1" {{ old('is_startup', $fundSnapshot->is_startup ?? 0) ? 'checked' : '' }}>
 
                                         <span class="slider"></span>
                                     </label>
                                 </div>
                             </div>
                         </div>
-                        {{--  --}}
+                        {{-- --}}
                         <div class="mt-4 mb-4">
                             <h2 class="top-heading mb-0">Funds Snapshot</h2>
                         </div>
                         <div class="row mb-3 flex-wrap row-gap-3 row-gap-md-4 px-md-1">
                             <div class="col-12 col-md-6 px-md-2">
                                 <label class="form-label">Fund Outlay (₹ Crore)<span>*</span></label>
-                                <input type="text" name="" class="form-control"
-                                    placeholder="Enter Fund Outlay (₹ Crore)" value="">
+                                <input type="text" name="fund_outlay" class="form-control"
+                                    placeholder="Enter Fund Outlay (₹ Crore)"
+                                    value="{{ old('fund_outlay', $fundSnapshot->fund_outlay ?? '') }}">
                                 <div class="error-message text-danger" style="display:none;"></div>
                             </div>
                             <div class="col-12 col-md-6 px-md-2">
                                 <label class="form-label">Fund Type<span>*</span></label>
-                                <input type="text" name="" class="form-control" placeholder="Enter Fund Type"
-                                    value="" required>
+                                <input type="text" name="fund_type" class="form-control" placeholder="Enter Fund Type"
+                                    value="{{ old('fund_type', $fundSnapshot->fund_type ?? '') }}" required>
                                 <div class="error-message text-danger" style="display:none;"></div>
                             </div>
                             <div class="col-12 px-md-2">
                                 <label class="form-label">Single Entity Cap (₹ Crore)<span>*</span></label>
-                                <input type="text" name="" class="form-control"
-                                    placeholder="Enter Single Entity Cap (₹ Crore)" value="" required>
+                                <input type="text" name="single_entity_cap" class="form-control"
+                                    placeholder="Enter Single Entity Cap (₹ Crore)"
+                                    value="{{ old('single_entity_cap', $fundSnapshot->single_entity_cap ?? '') }}" required>
                                 <div class="error-message text-danger" style="display:none;"></div>
                             </div>
                         </div>
@@ -235,8 +330,8 @@
                             <div class="btn-wrap">
                                 <button type="button" class="btn btn-primary add-fund gradient-btn" id="addThemeBtn"
                                     data-bs-toggle="modal" data-bs-target="#documentModal">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="ms-0 me-2" width="11"
-                                        height="11" viewBox="0 0 11 11" fill="none">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="ms-0 me-2" width="11" height="11"
+                                        viewBox="0 0 11 11" fill="none">
                                         <path d="M5.125 0.75V9.5M9.5 5.125H0.75" stroke="white" stroke-width="1.5"
                                             stroke-linecap="round" stroke-linejoin="round" />
                                     </svg> Add Documents
@@ -281,8 +376,8 @@
                             <div class="btn-wrap">
                                 <button type="button" class="btn btn-primary add-fund gradient-btn" id="addDocumentsBtn"
                                     data-bs-toggle="modal" data-bs-target="#themeModal">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="ms-0 me-2" width="11"
-                                        height="11" viewBox="0 0 11 11" fill="none">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="ms-0 me-2" width="11" height="11"
+                                        viewBox="0 0 11 11" fill="none">
                                         <path d="M5.125 0.75V9.5M9.5 5.125H0.75" stroke="white" stroke-width="1.5"
                                             stroke-linecap="round" stroke-linejoin="round" />
                                     </svg> Add Theme
@@ -330,179 +425,181 @@
         </div>
     </div>
 
- <div class="modal fade" id="themeModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
-        <div class="modal-content">
-            <div class="modal-header border-0 pb-0">
-                <div>
-                    <h2 class="modal-title mb-2 inner-title" id="themeModalTitle">
-                        Add Theme
-                    </h2>
-                    <p class="text-muted small mb-0">
-                        Create a new category theme for the platform
-                    </p>
+    <div class="modal fade" id="themeModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header border-0 pb-0">
+                    <div>
+                        <h2 class="modal-title mb-2 inner-title" id="themeModalTitle">
+                            Add Theme
+                        </h2>
+                        <p class="text-muted small mb-0">
+                            Create a new category theme for the platform
+                        </p>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    </button>
                 </div>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                </button>
-            </div>
-            <div class="modal-body p-0">
-                <form id="themeForm" action="" method="POST">
-                    @csrf
-                    <div class="p-3">
-                        <input type="hidden" name="theme_id" id="theme_id">
-                        
-                        <div class="row g-3 mb-3">
-                            <div class="col-md-6">
-                                <label class="form-label fw-semibold">
-                                    Theme Name
-                                    <span class="text-danger">*</span>
-                                </label>
-                                <input type="text" class="form-control py-2" id="theme_name"
-                                    name="theme_name" placeholder="Enter here" required>
+                <div class="modal-body p-0">
+                    <form id="themeForm" action="" method="POST">
+                        @csrf
+                        <div class="p-3">
+                            <input type="hidden" name="theme_id" id="theme_id">
+
+                            <div class="row g-3 mb-3">
+                                <div class="col-md-6">
+                                    <label class="form-label fw-semibold">
+                                        Theme Name
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <input type="text" class="form-control py-2" id="theme_name" name="theme_name"
+                                        placeholder="Enter here" required>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label class="form-label fw-semibold">
+                                        Theme Code
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <input type="text" class="form-control py-2" id="theme_code" name="theme_code"
+                                        placeholder="Enter here" required>
+                                </div>
                             </div>
 
-                            <div class="col-md-6">
-                                <label class="form-label fw-semibold">
-                                    Theme Code
-                                    <span class="text-danger">*</span>
-                                </label>
-                                <input type="text" class="form-control py-2" id="theme_code"
-                                    name="theme_code" placeholder="Enter here" required>
-                            </div>
-                        </div>
+                            <div class="row g-3 mb-3">
+                                <div class="col-md-6">
+                                    <label class="form-label fw-semibold">
+                                        Description
+                                    </label>
+                                    <input type="text" class="form-control py-2" id="theme_description" name="description"
+                                        placeholder="Enter description">
+                                </div>
 
-                        <div class="row g-3 mb-3">
-                            <div class="col-md-6">
-                                <label class="form-label fw-semibold">
-                                    Description
-                                </label>
-                                <input type="text" class="form-control py-2" id="theme_description"
-                                    name="description" placeholder="Enter description">
-                            </div>
-
-                            <div class="col-md-6">
-                                <label class="form-label fw-semibold">
-                                    Status
-                                    <span class="text-danger">*</span>
-                                </label>
-                                <div class="select-wrapper w-100 position-relative">
-                                    <div class="custom-select form-control py-2 d-flex justify-content-between align-items-center">
-                                        <span class="text-muted">Select Status</span>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-semibold">
+                                        Status
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <div class="select-wrapper w-100 position-relative">
+                                        <div
+                                            class="custom-select form-control py-2 d-flex justify-content-between align-items-center">
+                                            <span class="text-muted">Select Status</span>
+                                        </div>
+                                        <input type="hidden" name="status" id="theme_status" required>
+                                        <ul class="select-list" style="display: none;">
+                                            <li data-value="active">Active</li>
+                                            <li data-value="inactive">Inactive</li>
+                                        </ul>
                                     </div>
-                                    <input type="hidden" name="status" id="theme_status" required>
-                                    <ul class="select-list" style="display: none;">
-                                        <li data-value="active">Active</li>
-                                        <li data-value="inactive">Inactive</li>
-                                    </ul>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div style="border-radius:0px 0px 8px 8px;"
-                        class="modal-footer border-0 d-flex justify-content-center justify-content-md-end gap-2 steps-btn pe-lg-4 flex-wrap">
-                        <button type="button" class="btn simple-btn m-0" data-bs-dismiss="modal">Cancel</button>
-                        <button type="submit" id="themeSubmitBtn" class="btn gradient-btn m-0">Save Theme</button>
-                    </div>
-                </form>
+                        <div style="border-radius:0px 0px 8px 8px;"
+                            class="modal-footer border-0 d-flex justify-content-center justify-content-md-end gap-2 steps-btn pe-lg-4 flex-wrap">
+                            <button type="button" class="btn simple-btn m-0" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" id="themeSubmitBtn" class="btn gradient-btn m-0">Save Theme</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<div class="modal fade" id="documentModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
-        <div class="modal-content">
-            <div class="modal-header border-0 pb-0">
-                <div>
-                    <h2 class="modal-title mb-2 inner-title" id="documentModalTitle">
-                        Add Document
-                    </h2>
-                    <p class="text-muted small mb-0">
-                        Upload and assign system verification documents
-                    </p>
+    <div class="modal fade" id="documentModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header border-0 pb-0">
+                    <div>
+                        <h2 class="modal-title mb-2 inner-title" id="documentModalTitle">
+                            Add Document
+                        </h2>
+                        <p class="text-muted small mb-0">
+                            Upload and assign system verification documents
+                        </p>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    </button>
                 </div>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                </button>
-            </div>
-            <div class="modal-body p-0">
-                <form id="documentForm" action="" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    <div class="p-3">
-                        <input type="hidden" name="document_id" id="document_id">
-                        
-                        <div class="row g-3 mb-3">
-                            <div class="col-md-6">
-                                <label class="form-label fw-semibold">
-                                    Document Title
-                                    <span class="text-danger">*</span>
-                                </label>
-                                <input type="text" class="form-control py-2" id="document_title"
-                                    name="title" placeholder="Enter here" required>
+                <div class="modal-body p-0">
+                    <form id="documentForm" action="" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <div class="p-3">
+                            <input type="hidden" name="document_id" id="document_id">
+
+                            <div class="row g-3 mb-3">
+                                <div class="col-md-6">
+                                    <label class="form-label fw-semibold">
+                                        Document Title
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <input type="text" class="form-control py-2" id="document_title" name="title"
+                                        placeholder="Enter here" required>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label class="form-label fw-semibold">
+                                        Document Type
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <div class="select-wrapper w-100 position-relative">
+                                        <div
+                                            class="custom-select form-control py-2 d-flex justify-content-between align-items-center">
+                                            <span class="text-muted">Select Type</span>
+                                        </div>
+                                        <input type="hidden" name="document_type" id="document_type" required>
+                                        <ul class="select-list" style="display: none;">
+                                            <li data-value="pdf">PDF File</li>
+                                            <li data-value="image">Image (PNG/JPG)</li>
+                                            <li data-value="excel">Excel Sheet</li>
+                                            <li data-value="word">Word Document</li>
+                                        </ul>
+                                    </div>
+                                </div>
                             </div>
 
-                            <div class="col-md-6">
-                                <label class="form-label fw-semibold">
-                                    Document Type
-                                    <span class="text-danger">*</span>
-                                </label>
-                                <div class="select-wrapper w-100 position-relative">
-                                    <div class="custom-select form-control py-2 d-flex justify-content-between align-items-center">
-                                        <span class="text-muted">Select Type</span>
+                            <div class="row g-3 mb-3">
+                                <div class="col-md-6">
+                                    <label class="form-label fw-semibold">
+                                        Choose File
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <input type="file" class="form-control py-2" id="document_file" name="file" required>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label class="form-label fw-semibold">
+                                        Status
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <div class="select-wrapper w-100 position-relative">
+                                        <div
+                                            class="custom-select form-control py-2 d-flex justify-content-between align-items-center">
+                                            <span class="text-muted">Select Status</span>
+                                        </div>
+                                        <input type="hidden" name="status" id="document_status" required>
+                                        <ul class="select-list" style="display: none;">
+                                            <li data-value="published">Published</li>
+                                            <li data-value="draft">Draft</li>
+                                        </ul>
                                     </div>
-                                    <input type="hidden" name="document_type" id="document_type" required>
-                                    <ul class="select-list" style="display: none;">
-                                        <li data-value="pdf">PDF File</li>
-                                        <li data-value="image">Image (PNG/JPG)</li>
-                                        <li data-value="excel">Excel Sheet</li>
-                                        <li data-value="word">Word Document</li>
-                                    </ul>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="row g-3 mb-3">
-                            <div class="col-md-6">
-                                <label class="form-label fw-semibold">
-                                    Choose File
-                                    <span class="text-danger">*</span>
-                                </label>
-                                <input type="file" class="form-control py-2" id="document_file"
-                                    name="file" required>
-                            </div>
-
-                            <div class="col-md-6">
-                                <label class="form-label fw-semibold">
-                                    Status
-                                    <span class="text-danger">*</span>
-                                </label>
-                                <div class="select-wrapper w-100 position-relative">
-                                    <div class="custom-select form-control py-2 d-flex justify-content-between align-items-center">
-                                        <span class="text-muted">Select Status</span>
-                                    </div>
-                                    <input type="hidden" name="status" id="document_status" required>
-                                    <ul class="select-list" style="display: none;">
-                                        <li data-value="published">Published</li>
-                                        <li data-value="draft">Draft</li>
-                                    </ul>
-                                </div>
-                            </div>
+                        <div style="border-radius:0px 0px 8px 8px;"
+                            class="modal-footer border-0 d-flex justify-content-center justify-content-md-end gap-2 steps-btn pe-lg-4 flex-wrap">
+                            <button type="button" class="btn simple-btn m-0" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" id="documentSubmitBtn" class="btn gradient-btn m-0">Save Document</button>
                         </div>
-                    </div>
-
-                    <div style="border-radius:0px 0px 8px 8px;"
-                        class="modal-footer border-0 d-flex justify-content-center justify-content-md-end gap-2 steps-btn pe-lg-4 flex-wrap">
-                        <button type="button" class="btn simple-btn m-0" data-bs-dismiss="modal">Cancel</button>
-                        <button type="submit" id="documentSubmitBtn" class="btn gradient-btn m-0">Save Document</button>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
+        document.addEventListener("DOMContentLoaded", function () {
 
             const form = document.getElementById("clientAdminForm");
 
@@ -520,7 +617,7 @@
 
             document.querySelectorAll(".edit-client-admin").forEach(button => {
 
-                button.addEventListener("click", function() {
+                button.addEventListener("click", function () {
 
                     const id = this.dataset.id;
 
@@ -620,7 +717,7 @@
 
             const modal = document.getElementById("clientAdminModal");
 
-            modal.addEventListener("hidden.bs.modal", function() {
+            modal.addEventListener("hidden.bs.modal", function () {
 
                 form.reset();
 
@@ -709,8 +806,8 @@
         });
     </script>
 
-        <script>
-        document.addEventListener("DOMContentLoaded", function() {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
 
             const selectedBox = document.getElementById('selectedStatesBox');
             const dropdown = document.querySelector('.checkbox-list');
@@ -718,19 +815,19 @@
             const hiddenInput = document.getElementById('hiddenStates');
 
             // ðŸ”½ open/close dropdown
-            selectedBox.addEventListener('click', function(e) {
+            selectedBox.addEventListener('click', function (e) {
                 if (e.target.classList.contains('remove-tag')) return;
                 e.stopPropagation();
                 dropdown.classList.toggle('show');
             });
 
             // âŒ close outside
-            document.addEventListener('click', function() {
+            document.addEventListener('click', function () {
                 dropdown.classList.remove('show');
             });
 
             // ðŸš« prevent inside click close
-            dropdown.addEventListener('click', function(e) {
+            dropdown.addEventListener('click', function (e) {
                 e.stopPropagation();
             });
 
@@ -738,6 +835,7 @@
             checkboxes.forEach(cb => {
                 cb.addEventListener('change', updateSelected);
             });
+             updateSelected();
 
             // ðŸ” update UI
             function updateSelected() {
@@ -755,9 +853,9 @@
                         tag.className = 'state-tag';
 
                         tag.innerHTML = `
-                                                    <span>${cb.value}</span>
-                                                    <span class="remove-tag" data-value="${cb.value}">&times;</span>
-                                                `;
+                                                                    <span>${cb.value}</span>
+                                                                    <span class="remove-tag" data-value="${cb.value}">&times;</span>
+                                                                `;
 
                         selectedBox.appendChild(tag);
                     }
@@ -772,7 +870,7 @@
             }
 
             // âŒ CROSS CLICK FIX (MAIN LOGIC)
-            selectedBox.addEventListener('click', function(e) {
+            selectedBox.addEventListener('click', function (e) {
 
                 if (e.target.classList.contains('remove-tag')) {
 
@@ -789,7 +887,7 @@
                     updateSelected();
                 }
             });
-
+           
         });
     </script>
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\ClientAdmin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Fund;
+use App\Models\FundSnapshot;
 use Illuminate\Http\Request;
 
 class FundController extends Controller
@@ -172,7 +173,54 @@ public function fundingSnapshot()
 
     $fund = Fund::findOrFail($fundId);
 
-    return view('client-admin.funds.steps.funding-snapshot', compact('fund'));
+    $fundSnapshot = FundSnapshot::where('fund_id', $fundId)->first();
+
+    return view(
+        'client-admin.funds.steps.funding-snapshot',
+        compact('fund', 'fundSnapshot')
+    );
+}
+
+
+
+public function storeFundingSnapshot(Request $request)
+{
+    $fundId = session('current_fund_id');
+
+    if (!$fundId) {
+        return redirect()
+            ->route('client-admin.funds.overview')
+            ->with('error', 'Please complete the overview step first.');
+    }
+
+    $fund = Fund::findOrFail($fundId);
+
+    $validated = $request->validate([
+        'eligible_states'         => ['required', 'string'],
+        'eligibility_instruction' => ['required', 'string'],
+        'fund_outlay'             => ['required'],
+        'fund_type'               => ['required', 'string', 'max:255'],
+        'single_entity_cap'       => ['required'],
+    ]);
+
+    FundSnapshot::updateOrCreate(
+        [
+            'fund_id' => $fund->id,
+        ],
+        [
+            'eligible_states'         => $validated['eligible_states'],
+            'eligibility_instruction' => $validated['eligibility_instruction'],
+            'is_npo'                  => $request->boolean('is_npo'),
+            'is_startup'              => $request->boolean('is_startup'),
+            'fund_outlay'             => $validated['fund_outlay'],
+            'fund_type'               => $validated['fund_type'],
+            'single_entity_cap'       => $validated['single_entity_cap'],
+        ]
+    );
+
+    return redirect()
+        ->route('client-admin.funds.questionnaire')
+        ->with('success', 'Funding snapshot saved successfully.');
 }
 
 /**

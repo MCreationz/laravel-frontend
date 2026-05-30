@@ -35,4 +35,9 @@ class Fund extends Model
     {
         return $this->belongsTo(ClientAdmin::class);
     }
+
+    public function snapshot()
+    {
+        return $this->hasOne(FundSnapshot::class);
+    }
 }
