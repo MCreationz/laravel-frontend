@@ -76,21 +76,101 @@
                             <h1 class="top-heading mb-0">Eligibility</h1>
                         </div>
                         <div class="row mb-3 flex-wrap row-gap-3 row-gap-md-4 px-md-1">
-                            <div class="col-12 px-md-2">
+                            <div class="col-12-4 px-md-2">
                                 <label class="form-label">Eligible States<span>*</span></label>
-                                <div class="select-wrapper w-100 position-relative">
-                                    <div class="custom-select form-control d-flex flex-wrap gap-2 align-items-center">
-                                        Select States
+                                <div class="select-wrapper w-100 position-relative checkbox-wrap">
+                                    <!-- Selected Items -->
+                                    <div id="selectedStatesBox"
+                                        class="custom-select form-control d-flex flex-wrap gap-2 align-items-center">
+                                        <span class="placeholder">Select States</span>
                                     </div>
-                                    <ul class="select-list">
-                                        <li data-value="Idea">Idea</li>
-                                        <li data-value="Early-Revenue">Early Revenue</li>
-                                        <li data-value="Growth">Growth</li>
-                                        <li data-value="Scale-up">Scale-up</li>
+                                    <ul class="select-list checkbox-list">
+                                        <li><input type="checkbox" value="Pan India" id="s0"><label
+                                                for="s0">Pan
+                                                India</label></li>
+
+                                        <li><input type="checkbox" value="Andhra Pradesh" id="s1"><label
+                                                for="s1">Andhra
+                                                Pradesh</label></li>
+                                        <li><input type="checkbox" value="Arunachal Pradesh" id="s2"><label
+                                                for="s2">Arunachal
+                                                Pradesh</label></li>
+                                        <li><input type="checkbox" value="Assam" id="s3"><label
+                                                for="s3">Assam</label></li>
+                                        <li><input type="checkbox" value="Bihar" id="s4"><label
+                                                for="s4">Bihar</label></li>
+                                        <li><input type="checkbox" value="Chhattisgarh" id="s5"><label
+                                                for="s5">Chhattisgarh</label>
+                                        </li>
+                                        <li><input type="checkbox" value="Goa" id="s6"><label
+                                                for="s6">Goa</label></li>
+                                        <li><input type="checkbox" value="Gujarat" id="s7"><label
+                                                for="s7">Gujarat</label></li>
+                                        <li><input type="checkbox" value="Haryana" id="s8"><label
+                                                for="s8">Haryana</label></li>
+                                        <li><input type="checkbox" value="Himachal Pradesh" id="s9"><label
+                                                for="s9">Himachal
+                                                Pradesh</label></li>
+                                        <li><input type="checkbox" value="Jharkhand" id="s10"><label
+                                                for="s10">Jharkhand</label>
+                                        </li>
+                                        <li><input type="checkbox" value="Karnataka" id="s11"><label
+                                                for="s11">Karnataka</label>
+                                        </li>
+                                        <li><input type="checkbox" value="Kerala" id="s12"><label
+                                                for="s12">Kerala</label></li>
+                                        <li><input type="checkbox" value="Madhya Pradesh" id="s13"><label
+                                                for="s13">Madhya
+                                                Pradesh</label></li>
+                                        <li><input type="checkbox" value="Maharashtra" id="s14"><label
+                                                for="s14">Maharashtra</label>
+                                        </li>
+                                        <li><input type="checkbox" value="Manipur" id="s15"><label
+                                                for="s15">Manipur</label></li>
+                                        <li><input type="checkbox" value="Meghalaya" id="s16"><label
+                                                for="s16">Meghalaya</label>
+                                        </li>
+                                        <li><input type="checkbox" value="Mizoram" id="s17"><label
+                                                for="s17">Mizoram</label></li>
+                                        <li><input type="checkbox" value="Nagaland" id="s18"><label
+                                                for="s18">Nagaland</label></li>
+                                        <li><input type="checkbox" value="Odisha" id="s19"><label
+                                                for="s19">Odisha</label></li>
+                                        <li><input type="checkbox" value="Punjab" id="s20"><label
+                                                for="s20">Punjab</label></li>
+                                        <li><input type="checkbox" value="Rajasthan" id="s21"><label
+                                                for="s21">Rajasthan</label>
+                                        </li>
+                                        <li><input type="checkbox" value="Sikkim" id="s22"><label
+                                                for="s22">Sikkim</label></li>
+                                        <li><input type="checkbox" value="Tamil Nadu" id="s23"><label
+                                                for="s23">Tamil
+                                                Nadu</label></li>
+                                        <li><input type="checkbox" value="Telangana" id="s24"><label
+                                                for="s24">Telangana</label>
+                                        </li>
+                                        <li><input type="checkbox" value="Tripura" id="s25"><label
+                                                for="s25">Tripura</label></li>
+                                        <li><input type="checkbox" value="Uttar Pradesh" id="s26"><label
+                                                for="s26">Uttar
+                                                Pradesh</label></li>
+                                        <li><input type="checkbox" value="Uttarakhand" id="s27"><label
+                                                for="s27">Uttarakhand</label>
+                                        </li>
+                                        <li><input type="checkbox" value="West Bengal" id="s28"><label
+                                                for="s28">West
+                                                Bengal</label></li>
+
                                     </ul>
-                                    <input type="hidden" name="current_stage" class="hidden-select">
+
+                                    <input type="hidden" name="state" id="hiddenStates" required>
                                 </div>
+
+                                @error('state')
+                                    <div class="text-danger small">{{ $message }}</div>
+                                @enderror
                             </div>
+
                             <div class="col-12 px-md-2">
                                 <label class="form-label">Eligibility Instruction<span>*</span></label>
                                 <textarea placeholder="Enter Eligibility Instruction" class="form-control" style="min-height: 99px"></textarea>
@@ -679,6 +759,90 @@
                     textSpan.innerText = selectedOption.innerText;
                 }
             }
+
+        });
+    </script>
+
+        <script>
+        document.addEventListener("DOMContentLoaded", function() {
+
+            const selectedBox = document.getElementById('selectedStatesBox');
+            const dropdown = document.querySelector('.checkbox-list');
+            const checkboxes = document.querySelectorAll('.checkbox-list input[type="checkbox"]');
+            const hiddenInput = document.getElementById('hiddenStates');
+
+            // ðŸ”½ open/close dropdown
+            selectedBox.addEventListener('click', function(e) {
+                if (e.target.classList.contains('remove-tag')) return;
+                e.stopPropagation();
+                dropdown.classList.toggle('show');
+            });
+
+            // âŒ close outside
+            document.addEventListener('click', function() {
+                dropdown.classList.remove('show');
+            });
+
+            // ðŸš« prevent inside click close
+            dropdown.addEventListener('click', function(e) {
+                e.stopPropagation();
+            });
+
+            // âœ… checkbox select
+            checkboxes.forEach(cb => {
+                cb.addEventListener('change', updateSelected);
+            });
+
+            // ðŸ” update UI
+            function updateSelected() {
+
+                let selected = [];
+                selectedBox.innerHTML = '';
+
+                checkboxes.forEach(cb => {
+
+                    if (cb.checked) {
+
+                        selected.push(cb.value);
+
+                        const tag = document.createElement('div');
+                        tag.className = 'state-tag';
+
+                        tag.innerHTML = `
+                                                    <span>${cb.value}</span>
+                                                    <span class="remove-tag" data-value="${cb.value}">&times;</span>
+                                                `;
+
+                        selectedBox.appendChild(tag);
+                    }
+                });
+
+                // placeholder
+                if (selected.length === 0) {
+                    selectedBox.innerHTML = '<span class="placeholder">Select State</span>';
+                }
+
+                hiddenInput.value = selected.join(',');
+            }
+
+            // âŒ CROSS CLICK FIX (MAIN LOGIC)
+            selectedBox.addEventListener('click', function(e) {
+
+                if (e.target.classList.contains('remove-tag')) {
+
+                    e.stopPropagation();
+
+                    const value = e.target.getAttribute('data-value');
+
+                    checkboxes.forEach(cb => {
+                        if (cb.value === value) {
+                            cb.checked = false;
+                        }
+                    });
+
+                    updateSelected();
+                }
+            });
 
         });
     </script>
