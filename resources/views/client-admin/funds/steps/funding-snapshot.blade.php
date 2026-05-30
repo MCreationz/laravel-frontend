@@ -433,9 +433,6 @@
                         <h2 class="modal-title mb-2 inner-title" id="themeModalTitle">
                             Add Theme
                         </h2>
-                        <p class="text-muted small mb-0">
-                            Create a new category theme for the platform
-                        </p>
                     </div>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                     </button>
@@ -453,150 +450,148 @@
                                         <span class="text-danger">*</span>
                                     </label>
                                     <input type="text" class="form-control py-2" id="theme_name" name="theme_name"
-                                        placeholder="Enter here" required>
+                                        placeholder="Enter Theme Name" required>
                                 </div>
 
-                                <div class="col-md-6">
-                                    <label class="form-label fw-semibold">
-                                        Theme Code
-                                        <span class="text-danger">*</span>
-                                    </label>
-                                    <input type="text" class="form-control py-2" id="theme_code" name="theme_code"
-                                        placeholder="Enter here" required>
-                                </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">
+                                    Theme Code
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <input type="text" class="form-control py-2" id="theme_code"
+                                    name="theme_code" placeholder="Enter here" required>
+                            </div>
+                        </div>
+
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">
+                                    Description
+                                </label>
+                                <input type="text" class="form-control py-2" id="theme_description"
+                                    name="description" placeholder="Enter description">
                             </div>
 
-                            <div class="row g-3 mb-3">
-                                <div class="col-md-6">
-                                    <label class="form-label fw-semibold">
-                                        Description
-                                    </label>
-                                    <input type="text" class="form-control py-2" id="theme_description" name="description"
-                                        placeholder="Enter description">
-                                </div>
-
-                                <div class="col-md-6">
-                                    <label class="form-label fw-semibold">
-                                        Status
-                                        <span class="text-danger">*</span>
-                                    </label>
-                                    <div class="select-wrapper w-100 position-relative">
-                                        <div
-                                            class="custom-select form-control py-2 d-flex justify-content-between align-items-center">
-                                            <span class="text-muted">Select Status</span>
-                                        </div>
-                                        <input type="hidden" name="status" id="theme_status" required>
-                                        <ul class="select-list" style="display: none;">
-                                            <li data-value="active">Active</li>
-                                            <li data-value="inactive">Inactive</li>
-                                        </ul>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">
+                                    Status
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <div class="select-wrapper w-100 position-relative">
+                                    <div class="custom-select form-control py-2 d-flex justify-content-between align-items-center">
+                                        <span class="text-muted">Select Status</span>
                                     </div>
+                                    <input type="hidden" name="status" id="theme_status" required>
+                                    <ul class="select-list" style="display: none;">
+                                        <li data-value="active">Active</li>
+                                        <li data-value="inactive">Inactive</li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
-
-                        <div style="border-radius:0px 0px 8px 8px;"
-                            class="modal-footer border-0 d-flex justify-content-center justify-content-md-end gap-2 steps-btn pe-lg-4 flex-wrap">
-                            <button type="button" class="btn simple-btn m-0" data-bs-dismiss="modal">Cancel</button>
-                            <button type="submit" id="themeSubmitBtn" class="btn gradient-btn m-0">Save Theme</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="documentModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content">
-                <div class="modal-header border-0 pb-0">
-                    <div>
-                        <h2 class="modal-title mb-2 inner-title" id="documentModalTitle">
-                            Add Document
-                        </h2>
-                        <p class="text-muted small mb-0">
-                            Upload and assign system verification documents
-                        </p>
                     </div>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                    </button>
-                </div>
-                <div class="modal-body p-0">
-                    <form id="documentForm" action="" method="POST" enctype="multipart/form-data">
-                        @csrf
-                        <div class="p-3">
-                            <input type="hidden" name="document_id" id="document_id">
 
-                            <div class="row g-3 mb-3">
-                                <div class="col-md-6">
-                                    <label class="form-label fw-semibold">
-                                        Document Title
-                                        <span class="text-danger">*</span>
-                                    </label>
-                                    <input type="text" class="form-control py-2" id="document_title" name="title"
-                                        placeholder="Enter here" required>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <label class="form-label fw-semibold">
-                                        Document Type
-                                        <span class="text-danger">*</span>
-                                    </label>
-                                    <div class="select-wrapper w-100 position-relative">
-                                        <div
-                                            class="custom-select form-control py-2 d-flex justify-content-between align-items-center">
-                                            <span class="text-muted">Select Type</span>
-                                        </div>
-                                        <input type="hidden" name="document_type" id="document_type" required>
-                                        <ul class="select-list" style="display: none;">
-                                            <li data-value="pdf">PDF File</li>
-                                            <li data-value="image">Image (PNG/JPG)</li>
-                                            <li data-value="excel">Excel Sheet</li>
-                                            <li data-value="word">Word Document</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row g-3 mb-3">
-                                <div class="col-md-6">
-                                    <label class="form-label fw-semibold">
-                                        Choose File
-                                        <span class="text-danger">*</span>
-                                    </label>
-                                    <input type="file" class="form-control py-2" id="document_file" name="file" required>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <label class="form-label fw-semibold">
-                                        Status
-                                        <span class="text-danger">*</span>
-                                    </label>
-                                    <div class="select-wrapper w-100 position-relative">
-                                        <div
-                                            class="custom-select form-control py-2 d-flex justify-content-between align-items-center">
-                                            <span class="text-muted">Select Status</span>
-                                        </div>
-                                        <input type="hidden" name="status" id="document_status" required>
-                                        <ul class="select-list" style="display: none;">
-                                            <li data-value="published">Published</li>
-                                            <li data-value="draft">Draft</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div style="border-radius:0px 0px 8px 8px;"
-                            class="modal-footer border-0 d-flex justify-content-center justify-content-md-end gap-2 steps-btn pe-lg-4 flex-wrap">
-                            <button type="button" class="btn simple-btn m-0" data-bs-dismiss="modal">Cancel</button>
-                            <button type="submit" id="documentSubmitBtn" class="btn gradient-btn m-0">Save Document</button>
-                        </div>
-                    </form>
-                </div>
+                    <div style="border-radius:0px 0px 8px 8px;"
+                        class="modal-footer border-0 d-flex justify-content-center justify-content-md-end gap-2 steps-btn pe-lg-4 flex-wrap">
+                        <button type="button" class="btn simple-btn m-0" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" id="themeSubmitBtn" class="btn gradient-btn m-0">Save Theme</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
+</div>
+
+<div class="modal fade" id="documentModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header border-0 pb-0">
+                <div>
+                    <h2 class="modal-title mb-2 inner-title" id="documentModalTitle">
+                        Add Document
+                    </h2>
+                    <p class="text-muted small mb-0">
+                        Upload and assign system verification documents
+                    </p>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                </button>
+            </div>
+            <div class="modal-body p-0">
+                <form id="documentForm" action="" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="p-3">
+                        <input type="hidden" name="document_id" id="document_id">
+                        
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">
+                                    Document Title
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <input type="text" class="form-control py-2" id="document_title"
+                                    name="title" placeholder="Enter here" required>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">
+                                    Document Type
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <div class="select-wrapper w-100 position-relative">
+                                    <div class="custom-select form-control py-2 d-flex justify-content-between align-items-center">
+                                        <span class="text-muted">Select Type</span>
+                                    </div>
+                                    <input type="hidden" name="document_type" id="document_type" required>
+                                    <ul class="select-list" style="display: none;">
+                                        <li data-value="pdf">PDF File</li>
+                                        <li data-value="image">Image (PNG/JPG)</li>
+                                        <li data-value="excel">Excel Sheet</li>
+                                        <li data-value="word">Word Document</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">
+                                    Choose File
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <input type="file" class="form-control py-2" id="document_file"
+                                    name="file" required>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">
+                                    Status
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <div class="select-wrapper w-100 position-relative">
+                                    <div class="custom-select form-control py-2 d-flex justify-content-between align-items-center">
+                                        <span class="text-muted">Select Status</span>
+                                    </div>
+                                    <input type="hidden" name="status" id="document_status" required>
+                                    <ul class="select-list" style="display: none;">
+                                        <li data-value="published">Published</li>
+                                        <li data-value="draft">Draft</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="border-radius:0px 0px 8px 8px;"
+                        class="modal-footer border-0 d-flex justify-content-center justify-content-md-end gap-2 steps-btn pe-lg-4 flex-wrap">
+                        <button type="button" class="btn simple-btn m-0" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" id="documentSubmitBtn" class="btn gradient-btn m-0">Save Document</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
@@ -806,8 +801,8 @@
         });
     </script>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
+        <script>
+        document.addEventListener("DOMContentLoaded", function() {
 
             const selectedBox = document.getElementById('selectedStatesBox');
             const dropdown = document.querySelector('.checkbox-list');
@@ -890,6 +885,83 @@
            
         });
     </script>
+<script>
+let index = 1;
+
+// ADD DOCUMENT
+function addDoc() {
+    const wrapper = document.getElementById('docWrapper');
+    const first = wrapper.querySelector('.document');
+
+    const clone = first.cloneNode(true);
+
+    // Clear inputs
+    clone.querySelectorAll('input').forEach(input => {
+        if (input.type === 'file') {
+            input.value = '';
+        } else {
+            input.value = '';
+        }
+    });
+
+    // Reset selects
+    clone.querySelectorAll('select').forEach(select => {
+        select.selectedIndex = 0;
+    });
+
+    // Update index-based names
+    clone.querySelectorAll('input, select').forEach(el => {
+        if (el.name) {
+            el.name = el.name.replace(/\[\d+\]/, '[' + index + ']');
+        }
+    });
+
+    wrapper.appendChild(clone);
+
+    updateTitles();
+    index++;
+}
+
+
+// REMOVE DOCUMENT (event delegation)
+document.getElementById('docWrapper').addEventListener('click', function(e) {
+
+    if (e.target.classList.contains('remove-btn')) {
+
+        const allDocs = document.querySelectorAll('.document');
+
+        if (allDocs.length > 1) {
+            e.target.closest('.document').remove();
+        }
+
+        updateTitles();
+        resetIndexes();
+    }
+
+});
+
+
+// UPDATE TITLES (Document 1,2,3...)
+function updateTitles() {
+    document.querySelectorAll('.document').forEach((doc, i) => {
+        doc.querySelector('.doc-title').innerText = "Document " + (i + 1);
+    });
+}
+
+
+// RESET INPUT NAME INDEXES (important for Laravel)
+function resetIndexes() {
+    document.querySelectorAll('.document').forEach((doc, i) => {
+        doc.querySelectorAll('input, select').forEach(el => {
+            if (el.name) {
+                el.name = el.name.replace(/\[\d+\]/, '[' + i + ']');
+            }
+        });
+    });
+
+    index = document.querySelectorAll('.document').length;
+}
+</script>
 
 
 @endsection
