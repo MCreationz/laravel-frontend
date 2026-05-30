@@ -3,6 +3,8 @@
 use App\Http\Controllers\ClientAdmin\AuthController;
 use App\Http\Controllers\ClientAdmin\DashboardController;
 use App\Http\Controllers\ClientAdmin\FundController;
+use App\Http\Controllers\ClientAdmin\FundDocumentController;
+use App\Http\Controllers\ClientAdmin\FundThemeController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('client-admin')->group(function () {
@@ -101,6 +103,50 @@ Route::prefix('client-admin')->group(function () {
 
         Route::post('/funds/questionnaire', [FundController::class, 'storeQuestionnaire'])
             ->name('client-admin.funds.questionnaire.store');
+
+        /*
+        |--------------------------------------------------------------------------
+        | Fund Themes
+        |--------------------------------------------------------------------------
+        */
+
+        Route::get('/fund-themes', [FundThemeController::class, 'index'])
+            ->name('client-admin.fund-themes.index');
+
+        Route::post('/fund-themes/store', [FundThemeController::class, 'store'])
+            ->name('client-admin.fund-themes.store');
+
+        Route::get('/fund-themes/show/{id}', [FundThemeController::class, 'show'])
+            ->name('client-admin.fund-themes.show');
+
+        Route::get('/fund-themes/edit/{id}', [FundThemeController::class, 'edit'])
+            ->name('client-admin.fund-themes.edit');
+
+        Route::put('/fund-themes/update/{id}', [FundThemeController::class, 'update'])
+            ->name('client-admin.fund-themes.update');
+
+        Route::delete('/fund-themes/delete/{id}', [FundThemeController::class, 'destroy'])
+            ->name('client-admin.fund-themes.destroy');
+
+
+
+            Route::get('/fund-documents', [FundDocumentController::class, 'index'])
+    ->name('client-admin.fund-documents.index');
+
+Route::post('/fund-documents/store', [FundDocumentController::class, 'store'])
+    ->name('client-admin.fund-documents.store');
+
+Route::get('/fund-documents/show/{id}', [FundDocumentController::class, 'show'])
+    ->name('client-admin.fund-documents.show');
+
+Route::get('/fund-documents/edit/{id}', [FundDocumentController::class, 'edit'])
+    ->name('client-admin.fund-documents.edit');
+
+Route::put('/fund-documents/update/{id}', [FundDocumentController::class, 'update'])
+    ->name('client-admin.fund-documents.update');
+
+Route::delete('/fund-documents/delete/{id}', [FundDocumentController::class, 'destroy'])
+    ->name('client-admin.fund-documents.destroy');
 
         /*
         |--------------------------------------------------------------------------

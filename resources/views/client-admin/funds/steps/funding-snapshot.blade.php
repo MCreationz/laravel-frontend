@@ -72,25 +72,25 @@
             <form method="POST" action="{{ route('client-admin.funds.funding-snapshot.store') }}">
                 @csrf
                 <div style="border-radius:8px 8px 0px 0px;" class="card border-0">
-  
-                 @php
-    $selectedStates = old(
-        'eligible_states',
-        $fundSnapshot?->eligible_states ?? ''
-    );
 
-    if (is_string($selectedStates)) {
-        $selectedStates = array_filter(
-            array_map('trim', explode(',', $selectedStates))
-        );
-    }
+                    @php
+                        $selectedStates = old(
+                            'eligible_states',
+                            $fundSnapshot?->eligible_states ?? ''
+                        );
 
-    if (!is_array($selectedStates)) {
-        $selectedStates = [];
-    }
-@endphp
+                        if (is_string($selectedStates)) {
+                            $selectedStates = array_filter(
+                                array_map('trim', explode(',', $selectedStates))
+                            );
+                        }
 
- 
+                        if (!is_array($selectedStates)) {
+                            $selectedStates = [];
+                        }
+                    @endphp
+
+
                     <div class="p-3 p-md-4">
                         <div class="mb-4">
                             <h1 class="top-heading mb-0">Eligibility</h1>
@@ -348,19 +348,8 @@
                                         <th>Document Size (MB)</th>
                                     </tr>
                                 </thead>
-                                <tbody id="fundersTable">
-                                    <tr>
-                                        <td>12A Certificate</td>
-                                        <td>Upload upto 25MB</td>
-                                        <td>PDF</td>
-                                        <td>25 MB</td>
-                                    </tr>
-                                    <tr>
-                                        <td>80G Certificate</td>
-                                        <td>Upload upto 155MB</td>
-                                        <td>JPG/PNG</td>
-                                        <td>155 MB</td>
-                                    </tr>
+                                <tbody id="documentsTable">
+
 
                                 </tbody>
                             </table>
@@ -368,6 +357,8 @@
 
 
                     </div>
+
+
                     <div class="">
                         <div class="inner-fields d-flex justify-content-between align-items-center px-3 px-md-4 mb-3">
                             <div class="">
@@ -391,19 +382,11 @@
                                         <th>Theme Name</th>
                                         <th>Sub Theme</th>
                                         <th>Description</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
-                                <tbody id="fundersTable">
-                                    <tr>
-                                        <td>Business Loan</td>
-                                        <td>Loan Interests</td>
-                                        <td>Lorem ipsum dolor sit amet consectetur. Gravida malesuada sed...</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Financial Advices</td>
-                                        <td>Finance Advisory</td>
-                                        <td>Potter ipsum wand elf parchment wingardium. Dagger diddykins.</td>
-                                    </tr>
+                                <tbody id="themeTableBody">
+
 
                                 </tbody>
                             </table>
@@ -453,356 +436,784 @@
                                         placeholder="Enter Theme Name" required>
                                 </div>
 
-                            <div class="col-md-6">
-                                <label class="form-label fw-semibold">
-                                    Theme Code
-                                    <span class="text-danger">*</span>
-                                </label>
-                                <input type="text" class="form-control py-2" id="theme_code"
-                                    name="theme_code" placeholder="Enter here" required>
-                            </div>
-                        </div>
-
-                        <div class="row g-3 mb-3">
-                            <div class="col-md-6">
-                                <label class="form-label fw-semibold">
-                                    Description
-                                </label>
-                                <input type="text" class="form-control py-2" id="theme_description"
-                                    name="description" placeholder="Enter description">
+                                <div class="col-md-6">
+                                    <label class="form-label fw-semibold">
+                                        Sub Theme
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <input type="text" class="form-control py-2" id="sub_theme_name" name="sub_theme_name"
+                                        placeholder="Enter Sub Theme" required>
+                                </div>
                             </div>
 
-                            <div class="col-md-6">
-                                <label class="form-label fw-semibold">
-                                    Status
-                                    <span class="text-danger">*</span>
-                                </label>
-                                <div class="select-wrapper w-100 position-relative">
-                                    <div class="custom-select form-control py-2 d-flex justify-content-between align-items-center">
-                                        <span class="text-muted">Select Status</span>
-                                    </div>
-                                    <input type="hidden" name="status" id="theme_status" required>
-                                    <ul class="select-list" style="display: none;">
-                                        <li data-value="active">Active</li>
-                                        <li data-value="inactive">Inactive</li>
-                                    </ul>
+                            <div class="row g-3 mb-3">
+                                <div class="col-12">
+                                    <label class="form-label fw-semibold">
+                                        Description
+                                    </label>
+                                    <textarea type="text" class="form-control py-2" id="theme_description"
+                                        name="description" placeholder="Enter Description"
+                                        style="min-height:138px"></textarea>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div style="border-radius:0px 0px 8px 8px;"
-                        class="modal-footer border-0 d-flex justify-content-center justify-content-md-end gap-2 steps-btn pe-lg-4 flex-wrap">
-                        <button type="button" class="btn simple-btn m-0" data-bs-dismiss="modal">Cancel</button>
-                        <button type="submit" id="themeSubmitBtn" class="btn gradient-btn m-0">Save Theme</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="documentModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
-        <div class="modal-content">
-            <div class="modal-header border-0 pb-0">
-                <div>
-                    <h2 class="modal-title mb-2 inner-title" id="documentModalTitle">
-                        Add Document
-                    </h2>
-                    <p class="text-muted small mb-0">
-                        Upload and assign system verification documents
-                    </p>
+                        <div style="border-radius:0px 0px 8px 8px;"
+                            class="modal-footer border-0 d-flex justify-content-center justify-content-md-end gap-2 steps-btn pe-lg-4 flex-wrap">
+                            <button type="button" class="btn simple-btn m-0" data-bs-dismiss="modal">Cancel</button>
+                            <button type="button" id="themeSubmitBtn" class="btn gradient-btn m-0">Save Theme</button>
+                        </div>
+                    </form>
                 </div>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                </button>
             </div>
-            <div class="modal-body p-0">
-                <form id="documentForm" action="" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    <div class="p-3">
-                        <input type="hidden" name="document_id" id="document_id">
-                        
-                        <div class="row g-3 mb-3">
-                            <div class="col-md-6">
-                                <label class="form-label fw-semibold">
-                                    Document Title
-                                    <span class="text-danger">*</span>
-                                </label>
-                                <input type="text" class="form-control py-2" id="document_title"
-                                    name="title" placeholder="Enter here" required>
-                            </div>
+        </div>
+    </div>
 
-                            <div class="col-md-6">
-                                <label class="form-label fw-semibold">
-                                    Document Type
-                                    <span class="text-danger">*</span>
-                                </label>
-                                <div class="select-wrapper w-100 position-relative">
-                                    <div class="custom-select form-control py-2 d-flex justify-content-between align-items-center">
-                                        <span class="text-muted">Select Type</span>
+
+    {{-- document add modal --}}
+    <div class="modal fade" id="documentModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header border-0 pt-4 pb-3">
+                    <div>
+                        <h2 class="modal-title mb-2 inner-title" id="documentModalTitle">
+                            Add Multiple Documents
+                        </h2>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    </button>
+                </div>
+
+
+                <div class="modal-body p-0">
+                    <form method="POST" action="{{ url('/client-admin/funds/funding-snapshot') }}"
+                        enctype="multipart/form-data">
+                        @csrf
+                        <div id="docWrapper" class="px-3">
+                            <!-- Document Block -->
+                            <div class="doc-card mb-3 document">
+                                <div class="d-flex justify-content-between mb-3 align-items-center document-heading px-2">
+                                    <p class="doc-title fw-semibold mb-0">Document 1</p>
+                                    <button type="button" class="trash-btn bg-transparent border-0 p-2  remove-btn">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="15" viewBox="0 0 13 15"
+                                            fill="none">
+                                            <path
+                                                d="M7.91403 5.09124L7.68381 11.0796M4.498 11.0796L4.26778 5.09124M8.58606 2.69123C9.3604 2.75118 10.1323 2.83929 10.9002 2.95538C11.1278 2.98998 11.354 3.02658 11.5802 3.06584M10.9002 2.95538L10.1896 12.1928C10.1606 12.5689 9.99071 12.9201 9.71388 13.1764C9.43706 13.4326 9.07371 13.5749 8.69651 13.5748H3.4853C3.10809 13.5749 2.74475 13.4326 2.46792 13.1764C2.1911 12.9201 2.0212 12.5689 1.9922 12.1928L1.28158 2.95538M1.28158 2.95538C1.05402 2.98932 0.82779 3.02591 0.601562 3.06517M1.28158 2.95538C2.04951 2.83929 2.82141 2.75118 3.59575 2.69123M8.58606 2.69123V2.08175C8.58606 1.2966 7.98057 0.641875 7.19543 0.617256C6.45927 0.593727 5.72254 0.593727 4.98638 0.617256C4.20124 0.641875 3.59575 1.29727 3.59575 2.08175V2.69123M8.58606 2.69123C6.9251 2.56286 5.25671 2.56286 3.59575 2.69123"
+                                                stroke="#E74C3C" stroke-width="1.2" stroke-linecap="round"
+                                                stroke-linejoin="round"></path>
+                                        </svg>
+                                    </button>
+                                </div>
+                                <div class="px-3">
+                                    <div class="row mb-3 flex-wrap row-gap-3 row-gap-md-4 px-md-1">
+                                        <div class="col-12 col-md-6 px-md-2">
+                                            <label class="form-label">Document Name<span>*</span></label>
+                                            <input type="text" name="fund_name" class="form-control"
+                                                placeholder="Enter Document Name" value="Document Name">
+                                            <div class="error-message text-danger" style="display:none;"></div>
+                                        </div>
+                                        <div class="col-12 col-md-6 px-md-2">
+                                            <label class="form-label">Instruction<span>*</span></label>
+                                            <input type="text" name="fund_owner" class="form-control"
+                                                placeholder="Enter Instruction" value="Instruction" required>
+                                            <div class="error-message text-danger" style="display:none;"></div>
+                                        </div>
+                                        <div class="col-12 col-md-6 px-md-2"> <label class="form-label">Organization
+                                                Legal Type<span>*</span></label>
+
+
+                                            <div class="select-wrapper w-100 position-relative">
+                                                <div class="custom-select form-control">
+                                                    Document Type
+                                                </div>
+
+                                                <ul class="select-list">
+                                                    <li data-value="PDF">PDF</li>
+                                                    <li data-value="JPG">JPG</li>
+                                                    <li data-value="Docx">Docx</li>
+                                                    <li data-value="PPT">PPT</li>
+                                                    <li data-value="Excel">Excel</li>
+                                                </ul>
+
+                                                <input type="hidden" name="document_type" class="hidden-select">
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-12 col-md-6 px-md-2">
+                                            <label class="form-label">File Size <input type="hidden" name="document_type"
+                                                    class="hidden-select">(MB)<span>*</span></label>
+                                            <input type="number" name="about_fund" placeholder="Enter File Size (MB)"
+                                                class="form-control">
+                                        </div>
+                                        <div class="col-12 px-md-2">
+                                            <label class="form-label">Upload File<span>*</span></label>
+                                            <input type="file" id="fund_banner" name="fund_banner" hidden>
+                                            <label for="fund_banner" class="upload-label mb-0">
+                                                <div class="upload-content">
+                                                    <div class="upload-icon mb-2">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26"
+                                                            viewBox="0 0 26 26" fill="none">
+                                                            <g opacity="0.2">
+                                                                <path d="M9.75 11.916V18.416L11.9167 16.2493"
+                                                                    stroke="#292D32" stroke-width="1.5"
+                                                                    stroke-linecap="round" stroke-linejoin="round" />
+                                                                <path d="M9.7526 18.4167L7.58594 16.25" stroke="#292D32"
+                                                                    stroke-width="1.5" stroke-linecap="round"
+                                                                    stroke-linejoin="round" />
+                                                                <path
+                                                                    d="M23.8307 10.8327V16.2493C23.8307 21.666 21.6641 23.8327 16.2474 23.8327H9.7474C4.33073 23.8327 2.16406 21.666 2.16406 16.2493V9.74935C2.16406 4.33268 4.33073 2.16602 9.7474 2.16602H15.1641"
+                                                                    stroke="#292D32" stroke-width="1.5"
+                                                                    stroke-linecap="round" stroke-linejoin="round" />
+                                                                <path
+                                                                    d="M23.8307 10.8327H19.4974C16.2474 10.8327 15.1641 9.74935 15.1641 6.49935V2.16602L23.8307 10.8327Z"
+                                                                    stroke="#292D32" stroke-width="1.5"
+                                                                    stroke-linecap="round" stroke-linejoin="round" />
+                                                            </g>
+                                                        </svg>
+                                                    </div>
+                                                    <p class="">Upload PDF/JPG up to 5 MB</p>
+                                                    <small id="fund_banner_name" class="d-block mt-2"></small>
+                                                </div>
+                                            </label>
+                                        </div>
                                     </div>
-                                    <input type="hidden" name="document_type" id="document_type" required>
-                                    <ul class="select-list" style="display: none;">
-                                        <li data-value="pdf">PDF File</li>
-                                        <li data-value="image">Image (PNG/JPG)</li>
-                                        <li data-value="excel">Excel Sheet</li>
-                                        <li data-value="word">Word Document</li>
-                                    </ul>
                                 </div>
                             </div>
                         </div>
+                </div>
 
-                        <div class="row g-3 mb-3">
-                            <div class="col-md-6">
-                                <label class="form-label fw-semibold">
-                                    Choose File
-                                    <span class="text-danger">*</span>
-                                </label>
-                                <input type="file" class="form-control py-2" id="document_file"
-                                    name="file" required>
-                            </div>
 
-                            <div class="col-md-6">
-                                <label class="form-label fw-semibold">
-                                    Status
-                                    <span class="text-danger">*</span>
-                                </label>
-                                <div class="select-wrapper w-100 position-relative">
-                                    <div class="custom-select form-control py-2 d-flex justify-content-between align-items-center">
-                                        <span class="text-muted">Select Status</span>
-                                    </div>
-                                    <input type="hidden" name="status" id="document_status" required>
-                                    <ul class="select-list" style="display: none;">
-                                        <li data-value="published">Published</li>
-                                        <li data-value="draft">Draft</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div style="border-radius:0px 0px 8px 8px;"
-                        class="modal-footer border-0 d-flex justify-content-center justify-content-md-end gap-2 steps-btn pe-lg-4 flex-wrap">
-                        <button type="button" class="btn simple-btn m-0" data-bs-dismiss="modal">Cancel</button>
-                        <button type="submit" id="documentSubmitBtn" class="btn gradient-btn m-0">Save Document</button>
-                    </div>
+                <div class="btn-wrap px-3 mb-3">
+                    <button type="button" class="btn btn-primary mt-2" onclick="addDoc()">+ Add Another
+                        Document</button>
+                </div>
+                <div style="border-radius:0px 0px 8px 8px;"
+                    class="modal-footer border-0 d-flex justify-content-center justify-content-md-end gap-2 steps-btn pe-lg-4 flex-wrap">
+                    <button type="button" class="btn simple-btn m-0" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" id="docSubmitBtn" class="btn gradient-btn m-0">Save Documents</button>
+                </div>
                 </form>
             </div>
         </div>
     </div>
-</div>
+
+
+    </div>
+
 
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
+        document.addEventListener('DOMContentLoaded', function () {
 
-            const form = document.getElementById("clientAdminForm");
+            console.log('Fund Documents JS Loaded');
 
-            const modalTitle = document.getElementById("clientAdminModalTitle");
+            const tbody = document.getElementById('documentsTable');
+            if (!tbody) return;
 
-            const submitBtn = document.getElementById("clientAdminSubmitBtn");
+            const modalEl = document.getElementById('documentModal');
+            const modal = bootstrap.Modal.getOrCreateInstance(modalEl);
 
-            const clientAdminId = document.getElementById("client_admin_id");
+            const wrapper = document.getElementById('docWrapper');
+            const submitBtn = document.getElementById('docSubmitBtn');
 
-            /*
-            |--------------------------------------------------------------------------
-            | Edit Button Click
-            |--------------------------------------------------------------------------
-            */
+            const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
 
-            document.querySelectorAll(".edit-client-admin").forEach(button => {
-
-                button.addEventListener("click", function () {
-
-                    const id = this.dataset.id;
-
-                    /*
-                    |--------------------------------------------------------------------------
-                    | Change Form Action
-                    |--------------------------------------------------------------------------
-                    */
-
-                    form.action = this.dataset.updateUrl.replace(':id', id);
-
-                    /*
-                    |--------------------------------------------------------------------------
-                    | Add PUT Method
-                    |--------------------------------------------------------------------------
-                    */
-
-                    let methodInput = form.querySelector('input[name="_method"]');
-
-                    if (!methodInput) {
-
-                        methodInput = document.createElement("input");
-
-                        methodInput.type = "hidden";
-                        methodInput.name = "_method";
-
-                        form.appendChild(methodInput);
-                    }
-
-                    methodInput.value = "PUT";
-
-                    /*
-                    |--------------------------------------------------------------------------
-                    | Change Modal Content
-                    |--------------------------------------------------------------------------
-                    */
-
-                    modalTitle.innerText = "Edit Client Admin";
-
-                    submitBtn.innerText = "Update Client";
-
-                    /*
-                    |--------------------------------------------------------------------------
-                    | Fill Fields
-                    |--------------------------------------------------------------------------
-                    */
-
-                    clientAdminId.value = id;
-
-                    document.getElementById("organization_name").value =
-                        this.dataset.organization_name;
-
-                    document.getElementById("primary_contact_name").value =
-                        this.dataset.primary_contact_name;
-
-                    document.getElementById("email").value =
-                        this.dataset.email;
-
-                    document.getElementById("phone_number").value =
-                        this.dataset.phone_number;
-
-                    document.getElementById("state").value =
-                        this.dataset.state;
-
-                    document.getElementById("status").value =
-                        this.dataset.status;
-
-                    document.getElementById("organization_type").value =
-                        this.dataset.organization_type;
-
-                    /*
-                    |--------------------------------------------------------------------------
-                    | Update Custom Select Texts
-                    |--------------------------------------------------------------------------
-                    */
-
-                    updateCustomSelectText("organization_type", this.dataset.organization_type);
-                    updateCustomSelectText("state", this.dataset.state);
-                    updateCustomSelectText("status", this.dataset.status);
-
-                    /*
-                    |--------------------------------------------------------------------------
-                    | Password Optional On Edit
-                    |--------------------------------------------------------------------------
-                    */
-
-                    document.getElementById("password").required = false;
-                });
-
-            });
+            let editId = null;
 
             /*
-            |--------------------------------------------------------------------------
-            | Reset Modal On Close
-            |--------------------------------------------------------------------------
+            |-----------------------------------------
+            | DOCUMENT TYPE DROPDOWN (FIXED)
+            |-----------------------------------------
             */
 
-            const modal = document.getElementById("clientAdminModal");
 
-            modal.addEventListener("hidden.bs.modal", function () {
+            function initDocumentTypeDropdown(block) {
+                const wrapperEl = block.querySelector('.select-wrapper');
+                if (!wrapperEl) return;
 
-                form.reset();
+                const selectBox = wrapperEl.querySelector('.custom-select');
+                const list = wrapperEl.querySelector('.select-list');
+                const hidden = wrapperEl.querySelector('.hidden-select');
 
-                form.action = "{{ route('superadmin.client-admins.store') }}";
+                if (!selectBox || !list || !hidden) return;
 
-                modalTitle.innerText = "Add Client Admin";
+                // Force hide on init
+                list.style.display = 'none';
 
-                submitBtn.innerText = "Save Client";
+                // Clone to remove stale listeners
+                const newSelectBox = selectBox.cloneNode(true);
+                selectBox.parentNode.replaceChild(newSelectBox, selectBox);
 
-                clientAdminId.value = "";
+                newSelectBox.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    e.stopImmediatePropagation();
 
-                /*
-                |--------------------------------------------------------------------------
-                | Remove PUT Method
-                |--------------------------------------------------------------------------
-                */
-
-                const methodInput = form.querySelector('input[name="_method"]');
-
-                if (methodInput) {
-                    methodInput.remove();
-                }
-
-                /*
-                |--------------------------------------------------------------------------
-                | Reset Password Required
-                |--------------------------------------------------------------------------
-                */
-
-                document.getElementById("password").required = true;
-
-                /*
-                |--------------------------------------------------------------------------
-                | Reset Custom Select Labels
-                |--------------------------------------------------------------------------
-                */
-
-                document.querySelectorAll(".custom-select span:first-child")
-                    .forEach(span => {
-
-                        if (span.closest(".select-wrapper")
-                            .querySelector("#organization_type")) {
-
-                            span.innerText = "Select an option";
-                        }
-
-                        if (span.closest(".select-wrapper")
-                            .querySelector("#state")) {
-
-                            span.innerText = "Select State";
-                        }
-
-                        if (span.closest(".select-wrapper")
-                            .querySelector("#status")) {
-
-                            span.innerText = "Select Status";
-                        }
-
+                    // Close all other dropdowns
+                    document.querySelectorAll('.select-list').forEach(l => {
+                        if (l !== list) l.style.display = 'none';
                     });
 
+                    // Toggle this one
+                    list.style.display = (list.style.display === 'none' || list.style.display === '') ? 'block' : 'none';
+                });
+
+                // Clone lis to remove stale listeners
+                list.querySelectorAll('li').forEach(li => {
+                    const newLi = li.cloneNode(true);
+                    li.parentNode.replaceChild(newLi, li);
+
+                    newLi.addEventListener('click', function (e) {
+                        e.stopPropagation();
+                        newSelectBox.innerText = this.dataset.value;
+                        hidden.value = this.dataset.value;
+                        list.style.display = 'none';
+                    });
+                });
+            }
+
+            // close dropdown on outside click (once)
+            // Close dropdown when clicking outside — scope to modal to avoid Bootstrap conflicts
+            if (!document.__docTypeBound) {
+                document.getElementById('documentModal').addEventListener('click', function (e) {
+                    if (!e.target.closest('.select-wrapper')) {
+                        document.querySelectorAll('.select-list').forEach(l => l.style.display = 'none');
+                    }
+                });
+                document.__docTypeBound = true;
+            }
+            /*
+            |-----------------------------------------
+            | LOAD DOCUMENTS
+            |-----------------------------------------
+            */
+            function loadDocuments() {
+
+                fetch("{{ route('client-admin.fund-documents.index') }}")
+                    .then(res => res.json())
+                    .then(res => {
+
+                        tbody.innerHTML = '';
+
+                        if (!res.data || res.data.length === 0) {
+                            tbody.innerHTML = `<tr><td colspan="4" class="text-center">No documents found</td></tr>`;
+                            return;
+                        }
+
+                        res.data.forEach(doc => {
+
+                            tbody.innerHTML += `
+                                    <tr>
+                                        <td>${doc.document_name ?? ''}</td>
+                                        <td>${doc.instruction ?? ''}</td>
+                                        <td>${doc.document_type ?? ''}</td>
+                                        <td>${doc.max_file_size_mb ?? ''} MB</td>
+                                        <td>
+                                            <button type='button' class="btn edit-doc" data-id="${doc.id}"> <i class="bi bi-pencil-square"></i></button>
+                                            <button type='button'  class="btn delete-doc" data-id="${doc.id}"> <i class="bi bi-trash"></i></button>
+                                        </td>
+                                    </tr>
+                                `;
+                        });
+                    });
+            }
+
+            loadDocuments();
+
+            /*
+            |-----------------------------------------
+            | ADD BLOCK
+            |-----------------------------------------
+            */
+            window.addDoc = function () {
+                const first = wrapper.querySelector('.document');
+                const clone = first.cloneNode(true);
+
+                clone.querySelectorAll('input').forEach(i => i.value = '');
+                clone.querySelector('.custom-select').innerText = 'Document Type';
+                clone.querySelector('.hidden-select').value = '';
+                // No need to touch select-list display — initDocumentTypeDropdown handles it
+
+                wrapper.appendChild(clone);
+                updateTitles();
+                initDocumentTypeDropdown(clone);
+            };
+
+            function updateTitles() {
+                document.querySelectorAll('.document').forEach((el, i) => {
+                    const title = el.querySelector('.doc-title');
+                    if (title) title.innerText = `Document ${i + 1}`;
+                });
+            }
+
+            /*
+            |-----------------------------------------
+            | REMOVE BLOCK
+            |-----------------------------------------
+            */
+            document.getElementById('docWrapper').addEventListener('click', function (e) {
+
+                if (e.target.closest('.remove-btn')) {
+                    const blocks = document.querySelectorAll('.document');
+                    if (blocks.length > 1) {
+                        e.target.closest('.document').remove();
+                        updateTitles();
+                    }
+                }
             });
 
             /*
-            |--------------------------------------------------------------------------
-            | Helper Function
-            |--------------------------------------------------------------------------
+            |-----------------------------------------
+            | SAVE
+            |-----------------------------------------
             */
+            submitBtn.addEventListener('click', function () {
 
-            function updateCustomSelectText(inputId, value) {
+                const formData = new FormData();
 
-                const input = document.getElementById(inputId);
+                formData.append('_token', csrfToken);
 
-                const wrapper = input.closest(".select-wrapper");
+                let url = "{{ route('client-admin.fund-documents.store') }}";
 
-                const textSpan = wrapper.querySelector(".custom-select span");
-
-                const selectedOption = wrapper.querySelector(
-                    `.select-list li[data-value="${value}"]`
-                );
-
-                if (selectedOption) {
-                    textSpan.innerText = selectedOption.innerText;
+                if (editId) {
+                    url = "{{ route('client-admin.fund-documents.update', ':id') }}".replace(':id', editId);
+                    formData.append('_method', 'PUT');
                 }
-            }
+
+                document.querySelectorAll('.document').forEach((block, index) => {
+
+                    formData.append(`documents[${index}][document_name]`,
+                        block.querySelector('[name="fund_name"]').value
+                    );
+
+                    formData.append(`documents[${index}][instruction]`,
+                        block.querySelector('[name="fund_owner"]').value
+                    );
+
+                    // FIXED FIELD NAME
+                    formData.append(`documents[${index}][document_type]`,
+                        block.querySelector('[name="document_type"]').value
+                    );
+
+                    formData.append(`documents[${index}][max_file_size_mb]`,
+                        block.querySelector('[name="about_fund"]').value
+                    );
+
+                    const file = block.querySelector('[name="fund_banner"]').files[0];
+                    if (file) {
+                        formData.append(`documents[${index}][uploaded_file]`, file);
+                    }
+                });
+
+                fetch(url, {
+                    method: 'POST',
+                    body: formData
+                })
+                    .then(res => res.json())
+                    .then(res => {
+                        if (res.success) {
+                            modal.hide();
+                            loadDocuments();
+                        }
+                    });
+            });
+
+            /*
+            |-----------------------------------------
+            | EDIT
+            |-----------------------------------------
+            */
+            document.addEventListener('click', function (e) {
+
+                if (e.target.closest('.edit-doc')) {
+
+                    const id = e.target.closest('.edit-doc').dataset.id;
+
+                    fetch("{{ route('client-admin.fund-documents.edit', ':id') }}".replace(':id', id))
+                        .then(res => res.json())
+                        .then(res => {
+
+                            const doc = res.data;
+
+                            editId = doc.id;
+
+                            wrapper.innerHTML = '';
+
+                            const block = document.querySelector('.document').cloneNode(true);
+
+                            block.querySelector('[name="fund_name"]').value = doc.document_name;
+                            block.querySelector('[name="fund_owner"]').value = doc.instruction;
+
+                            block.querySelector('[name="document_type"]').value = doc.document_type;
+                            block.querySelector('.custom-select').innerText = doc.document_type;
+
+                            block.querySelector('[name="about_fund"]').value = doc.max_file_size_mb;
+
+                            wrapper.appendChild(block);
+
+                            submitBtn.innerText = 'Update Documents';
+
+                            modal.show();
+
+                            setTimeout(() => {
+                                initDocumentTypeDropdown(block);
+                            }, 0);
+                        });
+                }
+            });
+
+            /*
+            |-----------------------------------------
+            | DELETE
+            |-----------------------------------------
+            */
+            document.addEventListener('click', function (e) {
+
+                if (e.target.closest('.delete-doc')) {
+
+                    const id = e.target.closest('.delete-doc').dataset.id;
+
+                    if (!confirm('Delete this document?')) return;
+
+                    fetch("{{ route('client-admin.fund-documents.destroy', ':id') }}".replace(':id', id), {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': csrfToken,
+                            'Accept': 'application/json'
+                        },
+                        body: new URLSearchParams({ _method: 'DELETE' })
+                    })
+                        .then(res => res.json())
+                        .then(res => {
+                            if (res.success) loadDocuments();
+                        });
+                }
+            });
+
+            /*
+            |-----------------------------------------
+            | INIT EXISTING BLOCKS
+            |-----------------------------------------
+            */
+            document.querySelectorAll('.document').forEach(block => {
+                initDocumentTypeDropdown(block);
+            });
 
         });
     </script>
 
-        <script>
-        document.addEventListener("DOMContentLoaded", function() {
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+
+            console.log('==============================');
+            console.log('Funding Theme JS Loaded');
+            console.log('==============================');
+
+            const form = document.getElementById('themeForm');
+            const tbody = document.getElementById('themeTableBody');
+
+            const modalElement = document.getElementById('themeModal');
+            const modal = bootstrap.Modal.getOrCreateInstance(modalElement);
+
+            const themeId = document.getElementById('theme_id');
+            const themeName = document.getElementById('theme_name');
+            const subThemeName = document.getElementById('sub_theme_name');
+            const description = document.getElementById('theme_description');
+
+            const modalTitle = document.getElementById('themeModalTitle');
+            const submitBtn = document.getElementById('themeSubmitBtn');
+            const addThemeBtn = document.getElementById('addDocumentsBtn');
+
+            const csrfToken = document
+                .querySelector('meta[name="csrf-token"]')
+                .getAttribute('content');
+
+            console.log('Form:', form);
+            console.log('Submit Button:', submitBtn);
+            console.log('Table Body:', tbody);
+
+            /*
+            |--------------------------------------------------------------------------
+            | Load Themes
+            |--------------------------------------------------------------------------
+            */
+
+            loadThemes();
+
+            function loadThemes() {
+
+                console.log('Loading themes...');
+
+                fetch("{{ route('client-admin.fund-themes.index') }}")
+                    .then(response => response.json())
+                    .then(response => {
+
+                        console.log('Themes Response:', response);
+
+                        tbody.innerHTML = '';
+
+                        if (!response.data || response.data.length === 0) {
+
+                            tbody.innerHTML = `
+                                                    <tr>
+                                                        <td colspan="4" class="text-center">
+                                                            No themes found
+                                                        </td>
+                                                    </tr>
+                                                `;
+
+                            return;
+                        }
+
+                        response.data.forEach(theme => {
+
+                            tbody.innerHTML += `
+                                    <tr>
+                                        <td>${theme.theme_name ?? ''}</td>
+                                        <td>${theme.sub_theme_name ?? ''}</td>
+                                        <td>${theme.description ?? ''}</td>
+                                        <td>
+                                            <div class="d-flex align-items-center gap-2">
+
+                                                <button
+                                                    type="button"
+                                                    class="btn btn-sm btn-outline-primary edit-theme"
+                                                    data-id="${theme.id}"
+                                                    title="Edit">
+                                                    <i class="bi bi-pencil-square"></i>
+                                                </button>
+
+                                                <button
+                                                    type="button"
+                                                    class="btn btn-sm btn-outline-danger delete-theme"
+                                                    data-id="${theme.id}"
+                                                    title="Delete">
+                                                    <i class="bi bi-trash"></i>
+                                                </button>
+
+                                            </div>
+                                        </td>
+                                    </tr>
+                                `;
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Load Themes Error:', error);
+                    });
+            }
+
+
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | Open Add Modal
+            |--------------------------------------------------------------------------
+            */
+
+            addThemeBtn.addEventListener('click', function () {
+
+                console.log('Opening Add Theme Modal');
+
+                form.reset();
+
+                themeId.value = '';
+
+                modalTitle.innerText = 'Add Theme';
+
+                submitBtn.innerText = 'Save Theme';
+            });
+
+            /*
+            |--------------------------------------------------------------------------
+            | Create / Update Theme
+            |--------------------------------------------------------------------------
+            */
+
+            submitBtn.addEventListener('click', function () {
+
+                console.log('====================');
+                console.log('THEME BUTTON CLICKED');
+                console.log('====================');
+
+                const id = themeId.value;
+
+                console.log('Theme ID:', id);
+
+                const formData = new FormData();
+
+                formData.append('_token', csrfToken);
+                formData.append('theme_name', themeName.value);
+                formData.append('sub_theme_name', subThemeName.value);
+                formData.append('description', description.value);
+
+                let url = "{{ route('client-admin.fund-themes.store') }}";
+
+                if (id) {
+
+                    console.log('Mode: UPDATE');
+
+                    url = "{{ route('client-admin.fund-themes.update', ':id') }}"
+                        .replace(':id', id);
+
+                    formData.append('_method', 'PUT');
+
+                } else {
+
+                    console.log('Mode: CREATE');
+                }
+
+                console.log('Request URL:', url);
+
+                fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json'
+                    },
+                    body: formData
+                })
+                    .then(async response => {
+
+                        console.log('HTTP Status:', response.status);
+
+                        const data = await response.json();
+
+                        console.log('Server Response:', data);
+
+                        if (data.success) {
+
+                            console.log('Theme saved successfully');
+
+                            modal.hide();
+
+                            form.reset();
+
+                            themeId.value = '';
+
+                            loadThemes();
+
+                        } else {
+
+                            console.error('Validation Error:', data);
+
+                            alert(data.message || 'Something went wrong');
+                        }
+                    })
+                    .catch(error => {
+
+                        console.error('SAVE ERROR');
+                        console.error(error);
+
+                    });
+            });
+
+            /*
+            |--------------------------------------------------------------------------
+            | Edit Theme
+            |--------------------------------------------------------------------------
+            */
+
+            document.addEventListener('click', function (e) {
+
+                const button = e.target.closest('.edit-theme');
+
+                if (!button) {
+                    return;
+                }
+
+                const id = button.dataset.id;
+
+                console.log('Editing Theme:', id);
+
+                const url = "{{ route('client-admin.fund-themes.edit', ':id') }}"
+                    .replace(':id', id);
+
+                fetch(url)
+                    .then(response => response.json())
+                    .then(response => {
+
+                        console.log('Edit Response:', response);
+
+                        const theme = response.data;
+
+                        themeId.value = theme.id;
+                        themeName.value = theme.theme_name;
+                        subThemeName.value = theme.sub_theme_name;
+                        description.value = theme.description;
+
+                        modalTitle.innerText = 'Edit Theme';
+                        submitBtn.innerText = 'Update Theme';
+
+                        modal.show();
+                    })
+                    .catch(error => {
+
+                        console.error('Edit Error:', error);
+
+                    });
+            });
+
+            /*
+            |--------------------------------------------------------------------------
+            | Delete Theme
+            |--------------------------------------------------------------------------
+            */
+
+            document.addEventListener('click', function (e) {
+
+                const button = e.target.closest('.delete-theme');
+
+                if (!button) {
+                    return;
+                }
+
+                const id = button.dataset.id;
+
+                console.log('Delete Theme:', id);
+
+                if (!confirm('Are you sure you want to delete this theme?')) {
+                    return;
+                }
+
+                const url = "{{ route('client-admin.fund-themes.destroy', ':id') }}"
+                    .replace(':id', id);
+
+                fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': csrfToken,
+                        'Accept': 'application/json'
+                    },
+                    body: new URLSearchParams({
+                        _method: 'DELETE'
+                    })
+                })
+                    .then(async response => {
+
+                        console.log('Delete Status:', response.status);
+
+                        const data = await response.json();
+
+                        console.log('Delete Response:', data);
+
+                        if (data.success) {
+
+                            console.log('Theme deleted');
+
+                            loadThemes();
+                        }
+                    })
+                    .catch(error => {
+
+                        console.error('Delete Error:', error);
+
+                    });
+            });
+
+        });
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
 
             const selectedBox = document.getElementById('selectedStatesBox');
             const dropdown = document.querySelector('.checkbox-list');
@@ -830,7 +1241,7 @@
             checkboxes.forEach(cb => {
                 cb.addEventListener('change', updateSelected);
             });
-             updateSelected();
+            updateSelected();
 
             // ðŸ” update UI
             function updateSelected() {
@@ -848,9 +1259,9 @@
                         tag.className = 'state-tag';
 
                         tag.innerHTML = `
-                                                                    <span>${cb.value}</span>
-                                                                    <span class="remove-tag" data-value="${cb.value}">&times;</span>
-                                                                `;
+                                                                                                                <span>${cb.value}</span>
+                                                                                                                <span class="remove-tag" data-value="${cb.value}">&times;</span>
+                                                                                                            `;
 
                         selectedBox.appendChild(tag);
                     }
@@ -882,86 +1293,89 @@
                     updateSelected();
                 }
             });
-           
+
         });
     </script>
-<script>
-let index = 1;
-
-// ADD DOCUMENT
-function addDoc() {
-    const wrapper = document.getElementById('docWrapper');
-    const first = wrapper.querySelector('.document');
-
-    const clone = first.cloneNode(true);
-
-    // Clear inputs
-    clone.querySelectorAll('input').forEach(input => {
-        if (input.type === 'file') {
-            input.value = '';
-        } else {
-            input.value = '';
-        }
-    });
-
-    // Reset selects
-    clone.querySelectorAll('select').forEach(select => {
-        select.selectedIndex = 0;
-    });
-
-    // Update index-based names
-    clone.querySelectorAll('input, select').forEach(el => {
-        if (el.name) {
-            el.name = el.name.replace(/\[\d+\]/, '[' + index + ']');
-        }
-    });
-
-    wrapper.appendChild(clone);
-
-    updateTitles();
-    index++;
-}
 
 
-// REMOVE DOCUMENT (event delegation)
-document.getElementById('docWrapper').addEventListener('click', function(e) {
+    {{--
+    <script>
+        let index = 1;
 
-    if (e.target.classList.contains('remove-btn')) {
+        // ADD DOCUMENT
+        function addDoc() {
+            const wrapper = document.getElementById('docWrapper');
+            const first = wrapper.querySelector('.document');
 
-        const allDocs = document.querySelectorAll('.document');
+            const clone = first.cloneNode(true);
 
-        if (allDocs.length > 1) {
-            e.target.closest('.document').remove();
+            // Clear inputs
+            clone.querySelectorAll('input').forEach(input => {
+                if (input.type === 'file') {
+                    input.value = '';
+                } else {
+                    input.value = '';
+                }
+            });
+
+            // Reset selects
+            clone.querySelectorAll('select').forEach(select => {
+                select.selectedIndex = 0;
+            });
+
+            // Update index-based names
+            clone.querySelectorAll('input, select').forEach(el => {
+                if (el.name) {
+                    el.name = el.name.replace(/\[\d+\]/, '[' + index + ']');
+                }
+            });
+
+            wrapper.appendChild(clone);
+
+            updateTitles();
+            index++;
         }
 
-        updateTitles();
-        resetIndexes();
-    }
 
-});
+        // REMOVE DOCUMENT (event delegation)
+        document.getElementById('docWrapper').addEventListener('click', function (e) {
 
+            if (e.target.classList.contains('remove-btn')) {
 
-// UPDATE TITLES (Document 1,2,3...)
-function updateTitles() {
-    document.querySelectorAll('.document').forEach((doc, i) => {
-        doc.querySelector('.doc-title').innerText = "Document " + (i + 1);
-    });
-}
+                const allDocs = document.querySelectorAll('.document');
 
+                if (allDocs.length > 1) {
+                    e.target.closest('.document').remove();
+                }
 
-// RESET INPUT NAME INDEXES (important for Laravel)
-function resetIndexes() {
-    document.querySelectorAll('.document').forEach((doc, i) => {
-        doc.querySelectorAll('input, select').forEach(el => {
-            if (el.name) {
-                el.name = el.name.replace(/\[\d+\]/, '[' + i + ']');
+                updateTitles();
+                resetIndexes();
             }
-        });
-    });
 
-    index = document.querySelectorAll('.document').length;
-}
-</script>
+        });
+
+
+        // UPDATE TITLES (Document 1,2,3...)
+        function updateTitles() {
+            document.querySelectorAll('.document').forEach((doc, i) => {
+                doc.querySelector('.doc-title').innerText = "Document " + (i + 1);
+            });
+        }
+
+
+        // RESET INPUT NAME INDEXES (important for Laravel)
+        function resetIndexes() {
+            document.querySelectorAll('.document').forEach((doc, i) => {
+                doc.querySelectorAll('input, select').forEach(el => {
+                    if (el.name) {
+                        el.name = el.name.replace(/\[\d+\]/, '[' + i + ']');
+                    }
+                });
+            });
+
+            index = document.querySelectorAll('.document').length;
+        }
+    </script> --}}
 
 
 @endsection
