@@ -1489,14 +1489,18 @@ ul.select-list input[type="checkbox"]:checked ~ label:before {
 .card-box table th.first-col {
     max-width: 252px;
     min-width: 252px;
+    width: auto;
 }
 .card-box table th.second-col, .card-box table th.third-col {
     max-width: 140px;
     min-width: 140px;
 }
+.card-box table th.description-col {
+    min-width: 400px;
+    max-width: 400px;
+}
 table td {
-    padding: 5px 15px !important;
-    /* width: 100%; */
+    padding: 5px 20px !important;
     letter-spacing: -0.4px;
     line-height: 1.35;
 }
