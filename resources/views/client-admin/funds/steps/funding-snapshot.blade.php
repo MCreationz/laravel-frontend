@@ -330,176 +330,190 @@
         </div>
     </div>
 
- <div class="modal fade" id="themeModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
-        <div class="modal-content">
-            <div class="modal-header border-0 pb-0">
-                <div>
-                    <h2 class="modal-title mb-2 inner-title" id="themeModalTitle">
-                        Add Theme
-                    </h2>
-                    <p class="text-muted small mb-0">
-                        Create a new category theme for the platform
-                    </p>
+    <div class="modal fade" id="themeModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header border-0 pb-0">
+                    <div>
+                        <h2 class="modal-title mb-2 inner-title" id="themeModalTitle">
+                            Add Theme
+                        </h2>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    </button>
                 </div>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                </button>
-            </div>
-            <div class="modal-body p-0">
-                <form id="themeForm" action="" method="POST">
-                    @csrf
-                    <div class="p-3">
-                        <input type="hidden" name="theme_id" id="theme_id">
-                        
-                        <div class="row g-3 mb-3">
-                            <div class="col-md-6">
-                                <label class="form-label fw-semibold">
-                                    Theme Name
-                                    <span class="text-danger">*</span>
-                                </label>
-                                <input type="text" class="form-control py-2" id="theme_name"
-                                    name="theme_name" placeholder="Enter here" required>
+                <div class="modal-body p-0">
+                    <form id="themeForm" action="" method="POST">
+                        @csrf
+                        <div class="p-3">
+                            <input type="hidden" name="theme_id" id="theme_id">
+
+                            <div class="row g-3 mb-3">
+                                <div class="col-md-6">
+                                    <label class="form-label fw-semibold">
+                                        Theme Name
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <input type="text" class="form-control py-2" id="theme_name" name="theme_name"
+                                        placeholder="Enter Theme Name" required>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label class="form-label fw-semibold">
+                                        Sub Theme
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <input type="text" class="form-control py-2" id="theme_code" name="theme_code"
+                                        placeholder="Enter Sub Theme" required>
+                                </div>
                             </div>
 
-                            <div class="col-md-6">
-                                <label class="form-label fw-semibold">
-                                    Theme Code
-                                    <span class="text-danger">*</span>
-                                </label>
-                                <input type="text" class="form-control py-2" id="theme_code"
-                                    name="theme_code" placeholder="Enter here" required>
-                            </div>
-                        </div>
-
-                        <div class="row g-3 mb-3">
-                            <div class="col-md-6">
-                                <label class="form-label fw-semibold">
-                                    Description
-                                </label>
-                                <input type="text" class="form-control py-2" id="theme_description"
-                                    name="description" placeholder="Enter description">
-                            </div>
-
-                            <div class="col-md-6">
-                                <label class="form-label fw-semibold">
-                                    Status
-                                    <span class="text-danger">*</span>
-                                </label>
-                                <div class="select-wrapper w-100 position-relative">
-                                    <div class="custom-select form-control py-2 d-flex justify-content-between align-items-center">
-                                        <span class="text-muted">Select Status</span>
-                                    </div>
-                                    <input type="hidden" name="status" id="theme_status" required>
-                                    <ul class="select-list" style="display: none;">
-                                        <li data-value="active">Active</li>
-                                        <li data-value="inactive">Inactive</li>
-                                    </ul>
+                            <div class="row g-3 mb-3">
+                                <div class="col-12">
+                                    <label class="form-label fw-semibold">
+                                        Description
+                                    </label>
+                                    <textarea type="text" class="form-control py-2" id="theme_description" name="description"
+                                        placeholder="Enter Description" style="min-height:138px"></textarea>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div style="border-radius:0px 0px 8px 8px;"
-                        class="modal-footer border-0 d-flex justify-content-center justify-content-md-end gap-2 steps-btn pe-lg-4 flex-wrap">
-                        <button type="button" class="btn simple-btn m-0" data-bs-dismiss="modal">Cancel</button>
-                        <button type="submit" id="themeSubmitBtn" class="btn gradient-btn m-0">Save Theme</button>
+                        <div style="border-radius:0px 0px 8px 8px;"
+                            class="modal-footer border-0 d-flex justify-content-center justify-content-md-end gap-2 steps-btn pe-lg-4 flex-wrap">
+                            <button type="button" class="btn simple-btn m-0" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" id="themeSubmitBtn" class="btn gradient-btn m-0">Save Theme</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{-- document add modal --}}
+    <div class="modal fade" id="documentModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header border-0 pt-4 pb-3">
+                    <div>
+                        <h2 class="modal-title mb-2 inner-title" id="documentModalTitle">
+                            Add Multiple Documents
+                        </h2>
                     </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    </button>
+                </div>
+                <div class="modal-body p-0">
+                    <form method="POST" action="{{ url('/client-admin/funds/funding-snapshot') }}"
+                        enctype="multipart/form-data">
+                        @csrf
+                        <div id="docWrapper" class="px-3">
+                            <!-- Document Block -->
+                            <div class="doc-card mb-3 document">
+                                <div
+                                    class="d-flex justify-content-between mb-3 align-items-center document-heading px-2">
+                                    <p class="doc-title fw-semibold mb-0">Document 1</p>
+                                    <button type="button" class="trash-btn bg-transparent border-0 p-2  remove-btn">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="15"
+                                            viewBox="0 0 13 15" fill="none">
+                                            <path
+                                                d="M7.91403 5.09124L7.68381 11.0796M4.498 11.0796L4.26778 5.09124M8.58606 2.69123C9.3604 2.75118 10.1323 2.83929 10.9002 2.95538C11.1278 2.98998 11.354 3.02658 11.5802 3.06584M10.9002 2.95538L10.1896 12.1928C10.1606 12.5689 9.99071 12.9201 9.71388 13.1764C9.43706 13.4326 9.07371 13.5749 8.69651 13.5748H3.4853C3.10809 13.5749 2.74475 13.4326 2.46792 13.1764C2.1911 12.9201 2.0212 12.5689 1.9922 12.1928L1.28158 2.95538M1.28158 2.95538C1.05402 2.98932 0.82779 3.02591 0.601562 3.06517M1.28158 2.95538C2.04951 2.83929 2.82141 2.75118 3.59575 2.69123M8.58606 2.69123V2.08175C8.58606 1.2966 7.98057 0.641875 7.19543 0.617256C6.45927 0.593727 5.72254 0.593727 4.98638 0.617256C4.20124 0.641875 3.59575 1.29727 3.59575 2.08175V2.69123M8.58606 2.69123C6.9251 2.56286 5.25671 2.56286 3.59575 2.69123"
+                                                stroke="#E74C3C" stroke-width="1.2" stroke-linecap="round"
+                                                stroke-linejoin="round"></path>
+                                        </svg>
+                                    </button>
+                                </div>
+                                <div class="px-3">
+                                    <div class="row mb-3 flex-wrap row-gap-3 row-gap-md-4 px-md-1">
+                                        <div class="col-12 col-md-6 px-md-2">
+                                            <label class="form-label">Document Name<span>*</span></label>
+                                            <input type="text" name="fund_name" class="form-control"
+                                                placeholder="Enter Document Name" value="Document Name">
+                                            <div class="error-message text-danger" style="display:none;"></div>
+                                        </div>
+                                        <div class="col-12 col-md-6 px-md-2">
+                                            <label class="form-label">Instruction<span>*</span></label>
+                                            <input type="text" name="fund_owner" class="form-control"
+                                                placeholder="Enter Instruction" value="Instruction" required>
+                                            <div class="error-message text-danger" style="display:none;"></div>
+                                        </div>
+                                        <div class="col-12 col-md-6 px-md-2"> <label class="form-label">Organization
+                                                Legal Type<span>*</span></label>
+
+
+                                            <div class="select-wrapper w-100 position-relative">
+                                                <div class="custom-select form-control">
+                                                    Document Type
+                                                </div>
+
+                                                <ul class="select-list" style="display: block;">
+                                                    <li data-value="PDF">PDF</li>
+                                                    <li data-value="JPG">JPG</li>
+                                                    <li data-value="Docx">Docx</li>
+                                                    <li data-value="PPT">PPT</li>
+                                                    <li data-value="Excel">Excel</li>
+                                                </ul>
+
+                                                <input type="hidden" name="registration_type" class="hidden-select"
+                                                    value="" required="">
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-12 col-md-6 px-md-2">
+                                            <label class="form-label">File Size (MB)<span>*</span></label>
+                                            <input type="number" name="about_fund" placeholder="Enter File Size (MB)"
+                                                class="form-control">
+                                        </div>
+                                        <div class="col-12 px-md-2">
+                                            <label class="form-label">Upload File<span>*</span></label>
+                                            <input type="file" id="fund_banner" name="fund_banner" hidden>
+                                            <label for="fund_banner" class="upload-label mb-0">
+                                                <div class="upload-content">
+                                                    <div class="upload-icon mb-2">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="26"
+                                                            height="26" viewBox="0 0 26 26" fill="none">
+                                                            <g opacity="0.2">
+                                                                <path d="M9.75 11.916V18.416L11.9167 16.2493"
+                                                                    stroke="#292D32" stroke-width="1.5"
+                                                                    stroke-linecap="round" stroke-linejoin="round" />
+                                                                <path d="M9.7526 18.4167L7.58594 16.25" stroke="#292D32"
+                                                                    stroke-width="1.5" stroke-linecap="round"
+                                                                    stroke-linejoin="round" />
+                                                                <path
+                                                                    d="M23.8307 10.8327V16.2493C23.8307 21.666 21.6641 23.8327 16.2474 23.8327H9.7474C4.33073 23.8327 2.16406 21.666 2.16406 16.2493V9.74935C2.16406 4.33268 4.33073 2.16602 9.7474 2.16602H15.1641"
+                                                                    stroke="#292D32" stroke-width="1.5"
+                                                                    stroke-linecap="round" stroke-linejoin="round" />
+                                                                <path
+                                                                    d="M23.8307 10.8327H19.4974C16.2474 10.8327 15.1641 9.74935 15.1641 6.49935V2.16602L23.8307 10.8327Z"
+                                                                    stroke="#292D32" stroke-width="1.5"
+                                                                    stroke-linecap="round" stroke-linejoin="round" />
+                                                            </g>
+                                                        </svg>
+                                                    </div>
+                                                    <p class="">Upload PDF/JPG up to 5 MB</p>
+                                                    <small id="fund_banner_name" class="d-block mt-2"></small>
+                                                </div>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+                <div class="btn-wrap px-3 mb-3">
+                    <button type="button" class="btn btn-primary mt-2" onclick="addDoc()">+ Add Another
+                        Document</button>
+                </div>
+                <div style="border-radius:0px 0px 8px 8px;"
+                    class="modal-footer border-0 d-flex justify-content-center justify-content-md-end gap-2 steps-btn pe-lg-4 flex-wrap">
+                    <button type="button" class="btn simple-btn m-0" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" id="themeSubmitBtn" class="btn gradient-btn m-0">Save Theme</button>
+                </div>
                 </form>
             </div>
         </div>
     </div>
-</div>
-
-<div class="modal fade" id="documentModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
-        <div class="modal-content">
-            <div class="modal-header border-0 pb-0">
-                <div>
-                    <h2 class="modal-title mb-2 inner-title" id="documentModalTitle">
-                        Add Document
-                    </h2>
-                    <p class="text-muted small mb-0">
-                        Upload and assign system verification documents
-                    </p>
-                </div>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                </button>
-            </div>
-            <div class="modal-body p-0">
-                <form id="documentForm" action="" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    <div class="p-3">
-                        <input type="hidden" name="document_id" id="document_id">
-                        
-                        <div class="row g-3 mb-3">
-                            <div class="col-md-6">
-                                <label class="form-label fw-semibold">
-                                    Document Title
-                                    <span class="text-danger">*</span>
-                                </label>
-                                <input type="text" class="form-control py-2" id="document_title"
-                                    name="title" placeholder="Enter here" required>
-                            </div>
-
-                            <div class="col-md-6">
-                                <label class="form-label fw-semibold">
-                                    Document Type
-                                    <span class="text-danger">*</span>
-                                </label>
-                                <div class="select-wrapper w-100 position-relative">
-                                    <div class="custom-select form-control py-2 d-flex justify-content-between align-items-center">
-                                        <span class="text-muted">Select Type</span>
-                                    </div>
-                                    <input type="hidden" name="document_type" id="document_type" required>
-                                    <ul class="select-list" style="display: none;">
-                                        <li data-value="pdf">PDF File</li>
-                                        <li data-value="image">Image (PNG/JPG)</li>
-                                        <li data-value="excel">Excel Sheet</li>
-                                        <li data-value="word">Word Document</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row g-3 mb-3">
-                            <div class="col-md-6">
-                                <label class="form-label fw-semibold">
-                                    Choose File
-                                    <span class="text-danger">*</span>
-                                </label>
-                                <input type="file" class="form-control py-2" id="document_file"
-                                    name="file" required>
-                            </div>
-
-                            <div class="col-md-6">
-                                <label class="form-label fw-semibold">
-                                    Status
-                                    <span class="text-danger">*</span>
-                                </label>
-                                <div class="select-wrapper w-100 position-relative">
-                                    <div class="custom-select form-control py-2 d-flex justify-content-between align-items-center">
-                                        <span class="text-muted">Select Status</span>
-                                    </div>
-                                    <input type="hidden" name="status" id="document_status" required>
-                                    <ul class="select-list" style="display: none;">
-                                        <li data-value="published">Published</li>
-                                        <li data-value="draft">Draft</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div style="border-radius:0px 0px 8px 8px;"
-                        class="modal-footer border-0 d-flex justify-content-center justify-content-md-end gap-2 steps-btn pe-lg-4 flex-wrap">
-                        <button type="button" class="btn simple-btn m-0" data-bs-dismiss="modal">Cancel</button>
-                        <button type="submit" id="documentSubmitBtn" class="btn gradient-btn m-0">Save Document</button>
-                    </div>
-                </form>
-            </div>
-        </div>
     </div>
-</div>
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
@@ -709,7 +723,7 @@
         });
     </script>
 
-        <script>
+    <script>
         document.addEventListener("DOMContentLoaded", function() {
 
             const selectedBox = document.getElementById('selectedStatesBox');
@@ -792,6 +806,83 @@
 
         });
     </script>
+<script>
+let index = 1;
+
+// ADD DOCUMENT
+function addDoc() {
+    const wrapper = document.getElementById('docWrapper');
+    const first = wrapper.querySelector('.document');
+
+    const clone = first.cloneNode(true);
+
+    // Clear inputs
+    clone.querySelectorAll('input').forEach(input => {
+        if (input.type === 'file') {
+            input.value = '';
+        } else {
+            input.value = '';
+        }
+    });
+
+    // Reset selects
+    clone.querySelectorAll('select').forEach(select => {
+        select.selectedIndex = 0;
+    });
+
+    // Update index-based names
+    clone.querySelectorAll('input, select').forEach(el => {
+        if (el.name) {
+            el.name = el.name.replace(/\[\d+\]/, '[' + index + ']');
+        }
+    });
+
+    wrapper.appendChild(clone);
+
+    updateTitles();
+    index++;
+}
+
+
+// REMOVE DOCUMENT (event delegation)
+document.getElementById('docWrapper').addEventListener('click', function(e) {
+
+    if (e.target.classList.contains('remove-btn')) {
+
+        const allDocs = document.querySelectorAll('.document');
+
+        if (allDocs.length > 1) {
+            e.target.closest('.document').remove();
+        }
+
+        updateTitles();
+        resetIndexes();
+    }
+
+});
+
+
+// UPDATE TITLES (Document 1,2,3...)
+function updateTitles() {
+    document.querySelectorAll('.document').forEach((doc, i) => {
+        doc.querySelector('.doc-title').innerText = "Document " + (i + 1);
+    });
+}
+
+
+// RESET INPUT NAME INDEXES (important for Laravel)
+function resetIndexes() {
+    document.querySelectorAll('.document').forEach((doc, i) => {
+        doc.querySelectorAll('input, select').forEach(el => {
+            if (el.name) {
+                el.name = el.name.replace(/\[\d+\]/, '[' + i + ']');
+            }
+        });
+    });
+
+    index = document.querySelectorAll('.document').length;
+}
+</script>
 
 
 @endsection
