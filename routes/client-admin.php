@@ -87,11 +87,20 @@ Route::prefix('client-admin')->group(function () {
         Route::get('/funds/overview', [FundController::class, 'overview'])
             ->name('client-admin.funds.overview');
 
+        Route::post('/funds/overview', [FundController::class, 'storeOverview'])
+            ->name('client-admin.funds.overview.store');
+
         Route::get('/funds/funding-snapshot', [FundController::class, 'fundingSnapshot'])
             ->name('client-admin.funds.funding-snapshot');
 
+        Route::post('/funds/funding-snapshot', [FundController::class, 'storeFundingSnapshot'])
+            ->name('client-admin.funds.funding-snapshot.store');
+
         Route::get('/funds/questionnaire', [FundController::class, 'questionnaire'])
             ->name('client-admin.funds.questionnaire');
+
+        Route::post('/funds/questionnaire', [FundController::class, 'storeQuestionnaire'])
+            ->name('client-admin.funds.questionnaire.store');
 
         /*
         |--------------------------------------------------------------------------

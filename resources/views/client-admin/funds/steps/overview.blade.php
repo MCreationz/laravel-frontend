@@ -70,7 +70,8 @@
 
     <div class="">
         <div class="card-body p-0">
-            <form id="step1Form" method="POST">
+            <form id="step1Form" method="POST" action="{{ route('client-admin.funds.overview.store') }}"
+                enctype="multipart/form-data">
                 @csrf
                 <div style="border-radius:8px 8px 0px 0px;" class="card p-3 p-md-4 border-0">
                     <div class="mb-4">
@@ -79,26 +80,41 @@
                     <div class="row mb-3 flex-wrap row-gap-3 row-gap-md-4 px-md-1">
                         <div class="col-12 px-md-2">
                             <label class="form-label">Fund Name<span>*</span></label>
-                            <input type="text" name="" class="form-control" placeholder="Enter Fund Name"
-                                value="">
-                            <div class="error-message text-danger" style="display:none;"></div>
+<input type="text"
+       name="fund_name"
+       class="form-control"
+       placeholder="Enter Fund Name"
+       value="{{ old('fund_name', $fund?->fund_name) }}">                            <div class="error-message text-danger" style="display:none;"></div>
                         </div>
                         <div class="col-12 col-md-6 px-md-2">
                             <label class="form-label">Fund Owner<span>*</span></label>
-                            <input type="text" name="" class="form-control" placeholder="Enter Fund Owner"
-                                value="" required>
+                          <input type="text"
+       name="fund_owner"
+       class="form-control"
+       placeholder="Enter Fund Owner"
+       value="{{ old('fund_owner', $fund?->fund_owner) }}"
+       required>
+
                             <div class="error-message text-danger" style="display:none;"></div>
                         </div>
                         <div class="col-12 col-md-6 px-md-2">
                             <label class="form-label">Fund Owner Email<span>*</span></label>
-                            <input type="text" name="" class="form-control" placeholder="Fund Owner Email"
-                                value="" required>
+                           <input type="email"
+       name="fund_owner_email"
+       class="form-control"
+       placeholder="Fund Owner Email"
+       value="{{ old('fund_owner_email', $fund?->fund_owner_email) }}"
+       required>
+
                             <div class="error-message text-danger" style="display:none;"></div>
                         </div>
 
                         <div class="col-12 px-md-2">
                             <label class="form-label">About Fund<span>*</span></label>
-                            <textarea placeholder="Write Fund description" class="form-control" style="min-height: 136px"></textarea>
+                            <textarea name="about_fund"
+          placeholder="Write Fund description"
+          class="form-control"
+          style="min-height: 136px">{{ old('about_fund', $fund?->about_fund) }}</textarea>
                         </div>
 
                     </div>
@@ -108,20 +124,31 @@
                     <div class="row mb-3 flex-wrap row-gap-3 row-gap-md-4 px-md-1">
                         <div class="col-12 col-md-6 px-md-2">
                             <label class="form-label">Project Start:<span>*</span></label>
-                            <input type="date" name="" class="form-control" placeholder="Enter project start date"
-                                value="" required>
+                           <input type="date"
+       name="project_start"
+       class="form-control"
+       placeholder="Enter project start date"
+       value="{{ old('project_start', $fund?->project_start?->format('Y-m-d')) }}"
+       required>
                             <div class="error-message text-danger" style="display:none;"></div>
                         </div>
                         <div class="col-12 col-md-6 px-md-2">
                             <label class="form-label">Project End:<span>*</span></label>
-                            <input type="date" name="" class="form-control"
-                                placeholder="Enter project end date" value="" required>
+                           <input type="date"
+       name="project_end"
+       class="form-control"
+       placeholder="Enter project end date"
+       value="{{ old('project_end', $fund?->project_end?->format('Y-m-d')) }}"
+       required>
                             <div class="error-message text-danger" style="display:none;"></div>
                         </div>
                         <div class="col-12 px-md-2">
                             <label class="form-label">Maximum Project Duration:<span>*</span></label>
-                            <input type="number" name="" class="form-control" placeholder="Enter in months"
-                                value="">
+                           <input type="number"
+       name="maximum_project_duration"
+       class="form-control"
+       placeholder="Enter in months"
+       value="{{ old('maximum_project_duration', $fund?->maximum_project_duration) }}">
                             <div class="error-message text-danger" style="display:none;"></div>
                         </div>
                     </div>
@@ -133,18 +160,19 @@
                         <div class="col-12 px-md-2">
                             <div class="upload-box">
                                 <label class="form-label">Fund Logo<span>*</span></label>
+
                                 <input type="file" id="fund_logo" name="fund_logo" hidden>
+
                                 <label for="fund_logo" class="upload-label mb-0">
                                     <div class="upload-content">
-                                        <div class="upload-icon mb-2"><svg xmlns="http://www.w3.org/2000/svg"
-                                                width="26" height="26" viewBox="0 0 26 26" fill="none">
+                                        <div class="upload-icon mb-2">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26"
+                                                viewBox="0 0 26 26" fill="none">
                                                 <g opacity="0.2">
                                                     <path d="M9.75 11.916V18.416L11.9167 16.2493" stroke="#292D32"
-                                                        stroke-width="1.5" stroke-linecap="round"
-                                                        stroke-linejoin="round" />
+                                                        stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                                                     <path d="M9.7526 18.4167L7.58594 16.25" stroke="#292D32"
-                                                        stroke-width="1.5" stroke-linecap="round"
-                                                        stroke-linejoin="round" />
+                                                        stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                                                     <path
                                                         d="M23.8307 10.8327V16.2493C23.8307 21.666 21.6641 23.8327 16.2474 23.8327H9.7474C4.33073 23.8327 2.16406 21.666 2.16406 16.2493V9.74935C2.16406 4.33268 4.33073 2.16602 9.7474 2.16602H15.1641"
                                                         stroke="#292D32" stroke-width="1.5" stroke-linecap="round"
@@ -154,8 +182,12 @@
                                                         stroke="#292D32" stroke-width="1.5" stroke-linecap="round"
                                                         stroke-linejoin="round" />
                                                 </g>
-                                            </svg></div>
-                                        <p class="">Upload pdf/JPG upto 5 MB</p>
+                                            </svg>
+                                        </div>
+
+                                        <p class="">Upload PDF/JPG up to 5 MB</p>
+
+                                        <small id="fund_logo_name" class="d-block mt-2"></small>
                                     </div>
                                 </label>
                             </div>
@@ -163,18 +195,19 @@
                         <div class="col-12 px-md-2">
                             <div class="upload-box">
                                 <label class="form-label">Fund Banner<span>*</span></label>
-                                <input type="file" id="fund_logo" name="fund_logo" hidden>
-                                <label for="fund_logo" class="upload-label mb-0">
+
+                                <input type="file" id="fund_banner" name="fund_banner" hidden>
+
+                                <label for="fund_banner" class="upload-label mb-0">
                                     <div class="upload-content">
-                                        <div class="upload-icon mb-2"><svg xmlns="http://www.w3.org/2000/svg"
-                                                width="26" height="26" viewBox="0 0 26 26" fill="none">
+                                        <div class="upload-icon mb-2">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26"
+                                                viewBox="0 0 26 26" fill="none">
                                                 <g opacity="0.2">
                                                     <path d="M9.75 11.916V18.416L11.9167 16.2493" stroke="#292D32"
-                                                        stroke-width="1.5" stroke-linecap="round"
-                                                        stroke-linejoin="round" />
+                                                        stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                                                     <path d="M9.7526 18.4167L7.58594 16.25" stroke="#292D32"
-                                                        stroke-width="1.5" stroke-linecap="round"
-                                                        stroke-linejoin="round" />
+                                                        stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                                                     <path
                                                         d="M23.8307 10.8327V16.2493C23.8307 21.666 21.6641 23.8327 16.2474 23.8327H9.7474C4.33073 23.8327 2.16406 21.666 2.16406 16.2493V9.74935C2.16406 4.33268 4.33073 2.16602 9.7474 2.16602H15.1641"
                                                         stroke="#292D32" stroke-width="1.5" stroke-linecap="round"
@@ -184,8 +217,12 @@
                                                         stroke="#292D32" stroke-width="1.5" stroke-linecap="round"
                                                         stroke-linejoin="round" />
                                                 </g>
-                                            </svg></div>
-                                        <p class="">Upload pdf/JPG upto 5 MB</p>
+                                            </svg>
+                                        </div>
+
+                                        <p class="">Upload PDF/JPG up to 5 MB</p>
+
+                                        <small id="fund_banner_name" class="d-block mt-2"></small>
                                     </div>
                                 </label>
                             </div>
@@ -197,10 +234,10 @@
                         <div class="btn-wrap">
                             <button type="button" class="btn btn-secondary"
                                 onclick="window.location.href='http://127.0.0.1:8000/onboarding/step-2'">
-                                
+
                                 Cancel
                             </button>
-                            <button type="submit" class="btn btn-primary">Next 
+                            <button type="submit" class="btn btn-primary">Next
                                 </svg></button>
                         </div>
                     </div>
@@ -210,10 +247,25 @@
     </div>
 
     <script>
-        document.getElementById("fund_logo").addEventListener("change", function() {
+        document.getElementById("fund_logo").addEventListener("change", function () {
             const fileName = this.files[0]?.name;
             document.getElementById("file-name").innerText = fileName || "";
         });
     </script>
+    <script>
+document.getElementById('fund_logo').addEventListener('change', function () {
+
+    const fileName = this.files[0]?.name || 'No file selected';
+
+    document.getElementById('fund_logo_name').textContent = fileName;
+});
+
+document.getElementById('fund_banner').addEventListener('change', function () {
+
+    const fileName = this.files[0]?.name || 'No file selected';
+
+    document.getElementById('fund_banner_name').textContent = fileName;
+});
+</script>
 
 @endsection

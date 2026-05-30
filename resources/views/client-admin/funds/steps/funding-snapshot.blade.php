@@ -66,6 +66,7 @@
 
         </div>
     </div>
+
     <div class="">
         <div class="card-body p-0">
             <form id="step1Form" method="POST">
@@ -152,13 +153,13 @@
                                 <h2 class="top-heading mb-0">Upload Documents:</h2>
                             </div>
                             <div class="btn-wrap">
-                                <button type="button" class="btn btn-primary add-fund gradient-btn" id="addFunderBtn"
-                                    data-bs-toggle="modal" data-bs-target="#funderModal">
+                                <button type="button" class="btn btn-primary add-fund gradient-btn" id="addThemeBtn"
+                                    data-bs-toggle="modal" data-bs-target="#documentModal">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="ms-0 me-2" width="11"
                                         height="11" viewBox="0 0 11 11" fill="none">
                                         <path d="M5.125 0.75V9.5M9.5 5.125H0.75" stroke="white" stroke-width="1.5"
                                             stroke-linecap="round" stroke-linejoin="round" />
-                                    </svg> Add Funders
+                                    </svg> Add Documents
 
                             </div>
                         </div>
@@ -189,6 +190,8 @@
                                 </tbody>
                             </table>
                         </div>
+
+
                     </div>
                     <div class="">
                         <div class="inner-fields d-flex justify-content-between align-items-center px-3 px-md-4 mb-3">
@@ -196,13 +199,13 @@
                                 <h2 class="top-heading mb-0">Funding Domain</h2>
                             </div>
                             <div class="btn-wrap">
-                                <button type="button" class="btn btn-primary add-fund gradient-btn" id="addFunderBtn"
-                                    data-bs-toggle="modal" data-bs-target="#funderModal">
+                                <button type="button" class="btn btn-primary add-fund gradient-btn" id="addDocumentsBtn"
+                                    data-bs-toggle="modal" data-bs-target="#themeModal">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="ms-0 me-2" width="11"
                                         height="11" viewBox="0 0 11 11" fill="none">
                                         <path d="M5.125 0.75V9.5M9.5 5.125H0.75" stroke="white" stroke-width="1.5"
                                             stroke-linecap="round" stroke-linejoin="round" />
-                                    </svg> Add Funders
+                                    </svg> Add Theme
 
                             </div>
                         </div>
@@ -247,233 +250,176 @@
         </div>
     </div>
 
-    <div class="modal fade" id="clientAdminModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content">
-                <!-- Header -->
-                <div class="modal-header border-0 pb-0">
-                    <div>
-                        <!-- MODAL TITLE -->
-                        <h2 class="modal-title mb-2 inner-title" id="clientAdminModalTitle">
-                            Add Client Admin
-                        </h2>
-                        <p class="text-muted small mb-0">
-                            CSR Foundation or VC Firm Account
-                        </p>
+ <div class="modal fade" id="themeModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header border-0 pb-0">
+                <div>
+                    <h2 class="modal-title mb-2 inner-title" id="themeModalTitle">
+                        Add Theme
+                    </h2>
+                    <p class="text-muted small mb-0">
+                        Create a new category theme for the platform
+                    </p>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                </button>
+            </div>
+            <div class="modal-body p-0">
+                <form id="themeForm" action="" method="POST">
+                    @csrf
+                    <div class="p-3">
+                        <input type="hidden" name="theme_id" id="theme_id">
+                        
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">
+                                    Theme Name
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <input type="text" class="form-control py-2" id="theme_name"
+                                    name="theme_name" placeholder="Enter here" required>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">
+                                    Theme Code
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <input type="text" class="form-control py-2" id="theme_code"
+                                    name="theme_code" placeholder="Enter here" required>
+                            </div>
+                        </div>
+
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">
+                                    Description
+                                </label>
+                                <input type="text" class="form-control py-2" id="theme_description"
+                                    name="description" placeholder="Enter description">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">
+                                    Status
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <div class="select-wrapper w-100 position-relative">
+                                    <div class="custom-select form-control py-2 d-flex justify-content-between align-items-center">
+                                        <span class="text-muted">Select Status</span>
+                                    </div>
+                                    <input type="hidden" name="status" id="theme_status" required>
+                                    <ul class="select-list" style="display: none;">
+                                        <li data-value="active">Active</li>
+                                        <li data-value="inactive">Inactive</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                    </button>
-                </div>
-                <!-- Body -->
-                <div class="modal-body p-0">
-                    <form id="clientAdminForm" action="{{ route('superadmin.client-admins.store') }}" method="POST">
-                        @csrf
-                        <div class="p-3">
-                            <input type="hidden" name="client_admin_id" id="client_admin_id">
-                            <!-- Organization -->
-                            <div class="row g-3 mb-3">
-                                <div class="col-md-6">
-                                    <label class="form-label fw-semibold">
-                                        Organization Name
-                                        <span class="text-danger">*</span>
-                                    </label>
 
-                                    <input type="text" class="form-control py-2" id="organization_name"
-                                        name="organization_name" placeholder="Enter here" required>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <label class="form-label fw-semibold">
-                                        Organization Type
-                                        <span class="text-danger">*</span>
-                                    </label>
-
-                                    <div class="select-wrapper w-100 position-relative">
-
-                                        <div
-                                            class="custom-select form-control py-2 d-flex justify-content-between align-items-center">
-                                            <span class="text-muted">Select an option</span>
-                                        </div>
-
-                                        <input type="hidden" name="organization_type" id="organization_type" required>
-
-                                        <ul class="select-list" style="display: none;">
-                                            <li data-value="csr_foundation">CSR Foundation</li>
-                                            <li data-value="vc_firm">VC Firm</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Contact -->
-                            <div class="row g-3 mb-3">
-                                <div class="col-md-6">
-                                    <label class="form-label fw-semibold">
-                                        Primary Contact Name
-                                        <span class="text-danger">*</span>
-                                    </label>
-
-                                    <input type="text" class="form-control py-2" id="primary_contact_name"
-                                        name="primary_contact_name" placeholder="Enter here" required>
-                                </div>
-                                <div class="col-md-6">
-                                    <label class="form-label fw-semibold">
-                                        Email Address
-                                        <span class="text-danger">*</span>
-                                    </label>
-
-                                    <input type="email" class="form-control py-2" id="email" name="email"
-                                        placeholder="Enter email address" required>
-                                </div>
-                            </div>
-                            <!-- Phone + Password -->
-                            <div class="row g-3 mb-3">
-
-                                <div class="col-md-6">
-                                    <label class="form-label fw-semibold">
-                                        Phone Number
-                                        <span class="text-danger">*</span>
-                                    </label>
-
-                                    <input type="text" class="form-control py-2" id="phone_number"
-                                        name="phone_number" placeholder="Enter here" required>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <label class="form-label fw-semibold">
-                                        Password
-                                        <span class="text-danger">*</span>
-                                    </label>
-
-                                    <input type="password" class="form-control py-2" id="password" name="password"
-                                        placeholder="Enter password" required>
-                                </div>
-
-                            </div>
-                            <!-- State + Status -->
-                            <div class="row g-3 mb-3">
-                                <!-- State -->
-                                <div class="col-md-6">
-                                    <label class="form-label fw-semibold">
-                                        State
-                                        <span class="text-danger">*</span>
-                                    </label>
-
-                                    <div class="select-wrapper w-100 position-relative">
-
-                                        <div
-                                            class="custom-select form-control py-2 d-flex justify-content-between align-items-center">
-                                            <span class="text-muted">Select State</span>
-                                        </div>
-
-                                        <input type="hidden" name="state" id="state" required>
-
-                                        <ul class="select-list"
-                                            style="display: none; max-height: 250px; overflow-y: auto;">
-
-                                            <li data-value="Andhra Pradesh">Andhra Pradesh</li>
-                                            <li data-value="Arunachal Pradesh">Arunachal Pradesh</li>
-                                            <li data-value="Assam">Assam</li>
-                                            <li data-value="Bihar">Bihar</li>
-                                            <li data-value="Chhattisgarh">Chhattisgarh</li>
-                                            <li data-value="Goa">Goa</li>
-                                            <li data-value="Gujarat">Gujarat</li>
-                                            <li data-value="Haryana">Haryana</li>
-                                            <li data-value="Himachal Pradesh">Himachal Pradesh</li>
-                                            <li data-value="Jharkhand">Jharkhand</li>
-                                            <li data-value="Karnataka">Karnataka</li>
-                                            <li data-value="Kerala">Kerala</li>
-                                            <li data-value="Madhya Pradesh">Madhya Pradesh</li>
-                                            <li data-value="Maharashtra">Maharashtra</li>
-                                            <li data-value="Manipur">Manipur</li>
-                                            <li data-value="Meghalaya">Meghalaya</li>
-                                            <li data-value="Mizoram">Mizoram</li>
-                                            <li data-value="Nagaland">Nagaland</li>
-                                            <li data-value="Odisha">Odisha</li>
-                                            <li data-value="Punjab">Punjab</li>
-                                            <li data-value="Rajasthan">Rajasthan</li>
-                                            <li data-value="Sikkim">Sikkim</li>
-                                            <li data-value="Tamil Nadu">Tamil Nadu</li>
-                                            <li data-value="Telangana">Telangana</li>
-                                            <li data-value="Tripura">Tripura</li>
-                                            <li data-value="Uttar Pradesh">Uttar Pradesh</li>
-                                            <li data-value="Uttarakhand">Uttarakhand</li>
-                                            <li data-value="West Bengal">West Bengal</li>
-
-                                            <li data-value="Andaman and Nicobar Islands">
-                                                Andaman and Nicobar Islands
-                                            </li>
-
-                                            <li data-value="Chandigarh">
-                                                Chandigarh
-                                            </li>
-
-                                            <li data-value="Dadra and Nagar Haveli and Daman and Diu">
-                                                Dadra and Nagar Haveli and Daman and Diu
-                                            </li>
-
-                                            <li data-value="Delhi">
-                                                Delhi
-                                            </li>
-
-                                            <li data-value="Jammu and Kashmir">
-                                                Jammu and Kashmir
-                                            </li>
-
-                                            <li data-value="Ladakh">
-                                                Ladakh
-                                            </li>
-
-                                            <li data-value="Lakshadweep">
-                                                Lakshadweep
-                                            </li>
-
-                                            <li data-value="Puducherry">
-                                                Puducherry
-                                            </li>
-
-                                        </ul>
-
-                                    </div>
-                                </div>
-
-                                <!-- Status -->
-                                <div class="col-md-6">
-                                    <label class="form-label fw-semibold">
-                                        Status
-                                        <span class="text-danger">*</span>
-                                    </label>
-
-                                    <div class="select-wrapper w-100 position-relative">
-
-                                        <div
-                                            class="custom-select form-control py-2 d-flex justify-content-between align-items-center">
-                                            <span class="text-muted">Select Status</span>
-                                        </div>
-
-                                        <input type="hidden" name="status" id="status" required>
-
-                                        <ul class="select-list" style="display: none;">
-                                            <li data-value="verified">Verified</li>
-                                            <li data-value="non_verified">Non-Verified</li>
-                                        </ul>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Footer -->
-                        <div style="border-radius:0px 0px 8px 8px;"
-                            class="modal-footer border-0 d-flex justify-content-center justify-content-md-end gap-2 steps-btn pe-lg-4 flex-wrap">
-                            <button type="button" class="btn simple-btn m-0" data-bs-dismiss="modal">Cancel</button>
-                            <button type="submit" id="clientAdminSubmitBtn" class="btn gradient-btn m-0">Save
-                                Client</button>
-                        </div>
-                    </form>
-                </div>
+                    <div style="border-radius:0px 0px 8px 8px;"
+                        class="modal-footer border-0 d-flex justify-content-center justify-content-md-end gap-2 steps-btn pe-lg-4 flex-wrap">
+                        <button type="button" class="btn simple-btn m-0" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" id="themeSubmitBtn" class="btn gradient-btn m-0">Save Theme</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
+</div>
+
+<div class="modal fade" id="documentModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header border-0 pb-0">
+                <div>
+                    <h2 class="modal-title mb-2 inner-title" id="documentModalTitle">
+                        Add Document
+                    </h2>
+                    <p class="text-muted small mb-0">
+                        Upload and assign system verification documents
+                    </p>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                </button>
+            </div>
+            <div class="modal-body p-0">
+                <form id="documentForm" action="" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="p-3">
+                        <input type="hidden" name="document_id" id="document_id">
+                        
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">
+                                    Document Title
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <input type="text" class="form-control py-2" id="document_title"
+                                    name="title" placeholder="Enter here" required>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">
+                                    Document Type
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <div class="select-wrapper w-100 position-relative">
+                                    <div class="custom-select form-control py-2 d-flex justify-content-between align-items-center">
+                                        <span class="text-muted">Select Type</span>
+                                    </div>
+                                    <input type="hidden" name="document_type" id="document_type" required>
+                                    <ul class="select-list" style="display: none;">
+                                        <li data-value="pdf">PDF File</li>
+                                        <li data-value="image">Image (PNG/JPG)</li>
+                                        <li data-value="excel">Excel Sheet</li>
+                                        <li data-value="word">Word Document</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">
+                                    Choose File
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <input type="file" class="form-control py-2" id="document_file"
+                                    name="file" required>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">
+                                    Status
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <div class="select-wrapper w-100 position-relative">
+                                    <div class="custom-select form-control py-2 d-flex justify-content-between align-items-center">
+                                        <span class="text-muted">Select Status</span>
+                                    </div>
+                                    <input type="hidden" name="status" id="document_status" required>
+                                    <ul class="select-list" style="display: none;">
+                                        <li data-value="published">Published</li>
+                                        <li data-value="draft">Draft</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="border-radius:0px 0px 8px 8px;"
+                        class="modal-footer border-0 d-flex justify-content-center justify-content-md-end gap-2 steps-btn pe-lg-4 flex-wrap">
+                        <button type="button" class="btn simple-btn m-0" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" id="documentSubmitBtn" class="btn gradient-btn m-0">Save Document</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
