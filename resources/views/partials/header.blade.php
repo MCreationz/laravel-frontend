@@ -1,5 +1,5 @@
 <header class="header px-3 px-lg-4 position-fixed top-0">
-    <div class="row justify-content-between align-items-center">
+    <div class="row justify-content-between align-items-center h-100">
         <div class="col-auto d-flex gap-3 align-items-center">
             <div class="header-toggle">
                 <button class="nav-toggle" id="sidebar-toggle">

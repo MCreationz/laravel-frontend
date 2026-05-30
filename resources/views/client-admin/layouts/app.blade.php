@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 </head>
 
-<body class="bg-light dashboard light-bg">
+<body class="bg-light dashboard">
 
     @include('client-admin.partials.header')
 

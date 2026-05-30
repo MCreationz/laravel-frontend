@@ -1,5 +1,5 @@
-<header class="header px-3 px-lg-4 position-fixed top-0">
-    <div class="row justify-content-between align-items-center">
+<header class="header px-3 px-lg-4 position-fixed top-0 small-header">
+    <div class="row justify-content-between align-items-center h-100">
         <div class="col-auto d-flex gap-3 align-items-center">
             <div class="header-toggle">
                 <button class="nav-toggle" id="sidebar-toggle">
@@ -8,8 +8,7 @@
                     <span></span>
                 </button>
             </div>
-            <p class="mb-0 header-text d-flex align-items-center gap-3">
-
+            <p class="mb-0 header-text d-flex align-items-center gap-2">
                 @hasSection('header_back')
                     <a href="@yield('header_back')" 
                        class="arrow-icon d-flex align-items-center justify-content-center cursor-pointer">
