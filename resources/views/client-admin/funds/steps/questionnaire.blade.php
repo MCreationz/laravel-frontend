@@ -127,7 +127,7 @@
                 onclick="window.location.href='{{ route('client-admin.funds.funding-snapshot') }}'">
                 Back
             </button>
-            <button type="button" class="btn btn-secondary"
+            <button type="button" class="btn btn-primary"
                 onclick="window.location.href='{{ route('client-admin.funds.index') }}'">
                 Continue
             </button>
