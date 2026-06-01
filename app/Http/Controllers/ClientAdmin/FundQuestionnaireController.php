@@ -11,8 +11,17 @@ class FundQuestionnaireController extends Controller
     public function index(Request $request)
     {
         $fundId = session('current_fund_id');
+        $search = $request->search;
 
         $questions = FundQuestionnaire::where('fund_id', $fundId)
+
+            ->when($search, function ($query) use ($search) {
+                $query->where(function ($q) use ($search) {
+                    $q->where('question', 'like', "%{$search}%")
+                        ->orWhere('description', 'like', "%{$search}%");
+                });
+            })
+
             ->latest()
             ->get();
 

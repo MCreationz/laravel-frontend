@@ -120,6 +120,21 @@
             </table>
         </div>
     </div>
+    <div style="border-radius:0px 0px 8px 8px;"
+        class="d-flex justify-content-center justify-content-md-end gap-2 gap-md-3 mt-4 steps-btn pe-lg-4 flex-wrap">
+        <div class="btn-wrap">
+            <button type="button" class="btn btn-secondary"
+                onclick="window.location.href='{{ route('client-admin.funds.funding-snapshot') }}'">
+                Back
+            </button>
+            <button type="button" class="btn btn-secondary"
+                onclick="window.location.href='{{ route('client-admin.funds.index') }}'">
+                Continue
+            </button>
+        </div>
+    </div>
+
+
 
     <div class="modal fade" id="clientAdminModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -207,6 +222,20 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
 
+            const searchInput = document.getElementById('searchInput');
+
+let searchTimer;
+
+searchInput.addEventListener('keyup', function () {
+
+    clearTimeout(searchTimer);
+
+    searchTimer = setTimeout(() => {
+        loadQuestions();
+    }, 300);
+
+});
+
             const form = document.getElementById('addQuestionForm');
             const tableBody = document.getElementById('questionTableBody');
 
@@ -222,32 +251,46 @@
             };
 
             // LOAD QUESTIONS
-            function loadQuestions() {
+           function loadQuestions() {
 
-                const fundId = document.getElementById('fund_id').value;
+    const fundId = document.getElementById('fund_id').value;
+    const search = document.getElementById('searchInput').value;
 
-                fetch(`${routes.index}?fund_id=${fundId}`)
-                    .then(res => res.json())
-                    .then(res => {
+    fetch(
+        `${routes.index}?fund_id=${fundId}&search=${encodeURIComponent(search)}`
+    )
+        .then(res => res.json())
+        .then(res => {
 
-                        tableBody.innerHTML = '';
+            tableBody.innerHTML = '';
 
-                        res.data.forEach(item => {
-                            tableBody.innerHTML += `
-                            <tr>
-                                <td>${item.question}</td>
-                                <td>${item.description ?? '-'}</td>
-                                <td>${item.word_limit}</td>
-                                <td>
-                                    <button class="btn btn-sm btn-primary" onclick="editQuestion(${item.id})">Edit</button>
-                                    <button class="btn btn-sm btn-danger" onclick="deleteQuestion(${item.id})">Delete</button>
-                                </td>
-                            </tr>
-                        `;
-                        });
+            res.data.forEach(item => {
+                tableBody.innerHTML += `
+                    <tr>
+                        <td>${item.question}</td>
+                        <td>${item.description ?? '-'}</td>
+                        <td>${item.word_limit}</td>
+                        <td>
+                            <div class="d-flex align-items-center gap-2">
+                                <a href="javascript:void(0)"
+                                   onclick="editQuestion(${item.id})"
+                                   title="Edit">
+                                    <i class="bi bi-pencil-square"></i>
+                                </a>
 
-                    });
-            }
+                                <a href="javascript:void(0)"
+                                   onclick="deleteQuestion(${item.id})"
+                                   title="Delete">
+                                    <i class="bi bi-trash"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            });
+
+        });
+}
 
             loadQuestions();
 

@@ -12,9 +12,45 @@ class FundController extends Controller
     /**
      * Fund Listing
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('client-admin.funds.index');
+        session()->forget('current_fund_id');
+
+        $funds = Fund::with('client')
+
+            ->when($request->filled('search'), function ($query) use ($request) {
+
+                $search = $request->search;
+
+                $query->where(function ($q) use ($search) {
+
+                    $q->where('fund_name', 'like', "%{$search}%")
+                        ->orWhere('fund_owner', 'like', "%{$search}%")
+                        ->orWhereHas('client', function ($client) use ($search) {
+                            $client->where('organization_name', 'like', "%{$search}%");
+                        });
+
+                });
+            })
+            ->when($request->fund_type === 'npo', function ($query) {
+                $query->whereHas('snapshot', function ($snapshot) {
+                    $snapshot->where('is_npo', 1);
+                });
+            })
+            ->when($request->fund_type === 'startup', function ($query) {
+                $query->whereHas('snapshot', function ($snapshot) {
+                    $snapshot->where('is_startup', 1);
+                });
+            })
+            ->when($request->filled('status'), function ($query) use ($request) {
+                $query->where('status', $request->status);
+            })
+
+            ->latest()
+            ->paginate(10)
+            ->withQueryString();
+
+        return view('client-admin.funds.index', compact('funds'));
     }
 
     /**
@@ -48,7 +84,18 @@ class FundController extends Controller
      */
     public function edit($id)
     {
-        return view('client-admin.funds.edit', compact('id'));
+        session([
+            'current_fund_id' => $id,
+        ]);
+
+        if (session()->has('current_fund_id')) {
+            $fund = Fund::where(
+                'client_id',
+                auth('client_admin')->id()
+            )->find(session('current_fund_id'));
+        }
+
+        return view('client-admin.funds.steps.overview', compact('id', 'fund'));
     }
 
     /**
