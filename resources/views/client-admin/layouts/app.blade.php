@@ -246,7 +246,21 @@
             @endforeach
         @endif
     </script>
+<script>
+        function closeModal(modalEl) {
+                    const modal = bootstrap.Modal.getOrCreateInstance(modalEl);
+                    modal.hide();
 
+                    // Force cleanup in case backdrop gets stuck
+                    modalEl.addEventListener('hidden.bs.modal', function handler() {
+                        document.body.classList.remove('modal-open');
+                        document.body.style.removeProperty('overflow');
+                        document.body.style.removeProperty('padding-right');
+                        document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+                        modalEl.removeEventListener('hidden.bs.modal', handler);
+                    }, { once: true });
+                }
+</script>
 
 </body>
 

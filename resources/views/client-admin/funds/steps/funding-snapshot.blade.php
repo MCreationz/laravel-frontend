@@ -702,40 +702,40 @@
                         res.data.forEach(doc => {
 
                             tbody.innerHTML += `
-                                        <tr>
-                                            <td>${doc.document_name ?? ''}</td>
-                                            <td>${doc.instruction ?? ''}</td>
-                                            <td>${doc.document_type ?? ''}</td>
-                                            <td>${doc.max_file_size_mb ?? ''} MB</td>
-                                          <td>
-        <div class="action-btn d-flex align-items-center gap-2">
-            <a href="javascript:void(0)" 
-               class="edit-btn edit-doc"
-               data-id="${doc.id}"
-               title="Edit">
+                                                    <tr>
+                                                        <td>${doc.document_name ?? ''}</td>
+                                                        <td>${doc.instruction ?? ''}</td>
+                                                        <td>${doc.document_type ?? ''}</td>
+                                                        <td>${doc.max_file_size_mb ?? ''} MB</td>
+                                                      <td>
+                    <div class="action-btn d-flex align-items-center gap-2">
+                        <a href="javascript:void(0)" 
+                           class="edit-btn edit-doc"
+                           data-id="${doc.id}"
+                           title="Edit">
 
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-                    <path d="M8.8 2.4L3.3 8.2C3.1 8.4 2.9 8.8 2.9 9.1L2.7 11.3C2.6 12.1 3.1 12.6 3.9 12.5L6.1 12.1C6.3 12 6.8 11.8 7 11.6L12.4 5.8C13.4 4.8 13.8 3.7 12.3 2.3C10.9 0.9 9.8 1.4 8.8 2.4Z"
-                          stroke="#07CCB5" stroke-width="1.2"></path>
-                </svg>
-            </a>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                <path d="M8.8 2.4L3.3 8.2C3.1 8.4 2.9 8.8 2.9 9.1L2.7 11.3C2.6 12.1 3.1 12.6 3.9 12.5L6.1 12.1C6.3 12 6.8 11.8 7 11.6L12.4 5.8C13.4 4.8 13.8 3.7 12.3 2.3C10.9 0.9 9.8 1.4 8.8 2.4Z"
+                                      stroke="#07CCB5" stroke-width="1.2"></path>
+                            </svg>
+                        </a>
 
-            <a href="javascript:void(0)"
-               class="trash-btn delete-doc"
-               data-id="${doc.id}"
-               title="Delete">
+                        <a href="javascript:void(0)"
+                           class="trash-btn delete-doc"
+                           data-id="${doc.id}"
+                           title="Delete">
 
-                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="15" viewBox="0 0 13 15" fill="none">
-                    <path d="M1.3 3L2 12.2C2.1 13 2.7 13.6 3.5 13.6H8.7C9.5 13.6 10.1 13 10.2 12.2L10.9 3"
-                          stroke="#E74C3C" stroke-width="1.2"></path>
-                    <path d="M0.6 3.1C4 2.5 8.2 2.5 11.6 3.1"
-                          stroke="#E74C3C" stroke-width="1.2"></path>
-                </svg>
-            </a>
-        </div>
-    </td>
-                                        </tr>
-                                    `;
+                            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="15" viewBox="0 0 13 15" fill="none">
+                                <path d="M1.3 3L2 12.2C2.1 13 2.7 13.6 3.5 13.6H8.7C9.5 13.6 10.1 13 10.2 12.2L10.9 3"
+                                      stroke="#E74C3C" stroke-width="1.2"></path>
+                                <path d="M0.6 3.1C4 2.5 8.2 2.5 11.6 3.1"
+                                      stroke="#E74C3C" stroke-width="1.2"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </td>
+                                                    </tr>
+                                                `;
                         });
 
 
@@ -792,6 +792,21 @@
             |-----------------------------------------
             */
             submitBtn.addEventListener('click', function () {
+                function closeModal(modalEl) {
+                    const modal = bootstrap.Modal.getOrCreateInstance(modalEl);
+                    modal.hide();
+
+                    // Force cleanup in case backdrop gets stuck
+                    modalEl.addEventListener('hidden.bs.modal', function handler() {
+                        document.body.classList.remove('modal-open');
+                        document.body.style.removeProperty('overflow');
+                        document.body.style.removeProperty('padding-right');
+                        document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+                        modalEl.removeEventListener('hidden.bs.modal', handler);
+                    }, { once: true });
+                }
+
+
 
                 const formData = new FormData();
 
@@ -836,7 +851,7 @@
                     .then(res => res.json())
                     .then(res => {
                         if (res.success) {
-                            modal.hide();
+                            closeModal(modalEl);
                             loadDocuments();
                         }
                     });
@@ -929,6 +944,21 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
 
+            function closeModal(modalEl) {
+                const modal = bootstrap.Modal.getOrCreateInstance(modalEl);
+                modal.hide();
+
+                // Force cleanup in case backdrop gets stuck
+                modalEl.addEventListener('hidden.bs.modal', function handler() {
+                    document.body.classList.remove('modal-open');
+                    document.body.style.removeProperty('overflow');
+                    document.body.style.removeProperty('padding-right');
+                    document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+                    modalEl.removeEventListener('hidden.bs.modal', handler);
+                }, { once: true });
+            }
+
+
             console.log('==============================');
             console.log('Funding Theme JS Loaded');
             console.log('==============================');
@@ -979,12 +1009,12 @@
                         if (!response.data || response.data.length === 0) {
 
                             tbody.innerHTML = `
-                                                        <tr>
-                                                            <td colspan="4" class="text-center">
-                                                                No themes found
-                                                            </td>
-                                                        </tr>
-                                                    `;
+                                                                    <tr>
+                                                                        <td colspan="4" class="text-center">
+                                                                            No themes found
+                                                                        </td>
+                                                                    </tr>
+                                                                `;
 
                             return;
                         }
@@ -992,44 +1022,44 @@
                         response.data.forEach(theme => {
 
                             tbody.innerHTML += `
-                                        <tr>
-                                            <td>${theme.theme_name ?? ''}</td>
-                                            <td>${theme.sub_theme_name ?? ''}</td>
-                                            <td>${theme.description ?? ''}</td>
-                                          <td>
-        <div class="action-btn d-flex align-items-center gap-2">
+                                                    <tr>
+                                                        <td>${theme.theme_name ?? ''}</td>
+                                                        <td>${theme.sub_theme_name ?? ''}</td>
+                                                        <td>${theme.description ?? ''}</td>
+                                                      <td>
+                    <div class="action-btn d-flex align-items-center gap-2">
 
-            <a href="javascript:void(0)"
-               class="edit-btn edit-theme"
-               data-id="${theme.id}"
-               title="Edit">
+                        <a href="javascript:void(0)"
+                           class="edit-btn edit-theme"
+                           data-id="${theme.id}"
+                           title="Edit">
 
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-                    <path d="M8.8 2.4L3.3 8.2C3.1 8.4 2.9 8.8 2.9 9.1L2.7 11.3C2.6 12.1 3.1 12.6 3.9 12.5L6.1 12.1C6.3 12 6.8 11.8 7 11.6L12.4 5.8C13.4 4.8 13.8 3.7 12.3 2.3C10.9 0.9 9.8 1.4 8.8 2.4Z"
-                          stroke="#07CCB5"
-                          stroke-width="1.2"></path>
-                </svg>
-            </a>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                <path d="M8.8 2.4L3.3 8.2C3.1 8.4 2.9 8.8 2.9 9.1L2.7 11.3C2.6 12.1 3.1 12.6 3.9 12.5L6.1 12.1C6.3 12 6.8 11.8 7 11.6L12.4 5.8C13.4 4.8 13.8 3.7 12.3 2.3C10.9 0.9 9.8 1.4 8.8 2.4Z"
+                                      stroke="#07CCB5"
+                                      stroke-width="1.2"></path>
+                            </svg>
+                        </a>
 
-            <a href="javascript:void(0)"
-               class="trash-btn delete-theme"
-               data-id="${theme.id}"
-               title="Delete">
+                        <a href="javascript:void(0)"
+                           class="trash-btn delete-theme"
+                           data-id="${theme.id}"
+                           title="Delete">
 
-                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="15" viewBox="0 0 13 15" fill="none">
-                    <path d="M1.3 3L2 12.2C2.1 13 2.7 13.6 3.5 13.6H8.7C9.5 13.6 10.1 13 10.2 12.2L10.9 3"
-                          stroke="#E74C3C"
-                          stroke-width="1.2"></path>
-                    <path d="M0.6 3.1C4 2.5 8.2 2.5 11.6 3.1"
-                          stroke="#E74C3C"
-                          stroke-width="1.2"></path>
-                </svg>
-            </a>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="15" viewBox="0 0 13 15" fill="none">
+                                <path d="M1.3 3L2 12.2C2.1 13 2.7 13.6 3.5 13.6H8.7C9.5 13.6 10.1 13 10.2 12.2L10.9 3"
+                                      stroke="#E74C3C"
+                                      stroke-width="1.2"></path>
+                                <path d="M0.6 3.1C4 2.5 8.2 2.5 11.6 3.1"
+                                      stroke="#E74C3C"
+                                      stroke-width="1.2"></path>
+                            </svg>
+                        </a>
 
-        </div>
-    </td>
-                                        </tr>
-                                    `;
+                    </div>
+                </td>
+                                                    </tr>
+                                                `;
                         });
                     })
                     .catch(error => {
@@ -1119,7 +1149,7 @@
 
                             console.log('Theme saved successfully');
 
-                            modal.hide();
+                            closeModal(modalElement);
 
                             form.reset();
 
@@ -1295,9 +1325,9 @@
                         tag.className = 'state-tag';
 
                         tag.innerHTML = `
-                                                                                                                    <span>${cb.value}</span>
-                                                                                                                    <span class="remove-tag" data-value="${cb.value}">&times;</span>
-                                                                                                                `;
+                                                                                                                                <span>${cb.value}</span>
+                                                                                                                                <span class="remove-tag" data-value="${cb.value}">&times;</span>
+                                                                                                                            `;
 
                         selectedBox.appendChild(tag);
                     }
