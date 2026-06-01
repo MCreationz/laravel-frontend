@@ -160,7 +160,7 @@ label {
 .btn.btn-primary {
     color: var(--white-color) !important;
     border-radius: 55px;
-    background: var(--Linear, linear-gradient(67deg, #0160D6 29%, #07CCB5 67.08%));
+    background: var(--primary-btn);
     padding: 10px 16px !important;
 }
 
@@ -2097,7 +2097,7 @@ table td {
     background-color: rgba(206 215 227 / 12%);
 }
 
-.action-btn button {
+.action-btn button, .action-btn a {
     background: transparent;
     width: 31.94px;
     height: 31.94px;
@@ -2109,19 +2109,19 @@ table td {
     border-radius: 6px;
 }
 
-.action-btn button.view-btn:hover {
+.action-btn button.view-btn:hover, .action-btn a.view-btn:hover {
     background: var(--accent-color);
 }
 
-.action-btn button.edit-btn:hover {
+.action-btn button.edit-btn:hover, .action-btn a.edit-btn:hover {
     background: #07CCB5;
 }
 
-.action-btn button.trash-btn:hover {
+.action-btn button.trash-btn:hover, .action-btn a.trash-btn:hover {
     background: #E74C3C;
 }
 
-.action-btn button:hover svg path {
+.action-btn button:hover svg path, .action-btn a:hover svg path {
     stroke: var(--white-color);
 }
 

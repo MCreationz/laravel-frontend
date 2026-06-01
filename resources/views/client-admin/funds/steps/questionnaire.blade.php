@@ -202,11 +202,11 @@
                         <div style="border-radius:0px 0px 8px 8px;"
                             class="modal-footer border-0 d-flex justify-content-center justify-content-md-end gap-2 steps-btn pe-lg-4 flex-wrap">
 
-                            <button type="button" class="btn simple-btn m-0" data-bs-dismiss="modal">
+                            <button type="button" class="btn btn-secondary m-0" data-bs-dismiss="modal">
                                 Cancel
-                            </button>
+                            </button> 
 
-                            <button type="submit" id="clientAdminSubmitBtn" class="btn gradient-btn m-0">
+                            <button type="submit" id="" class="btn btn-primary m-0">
                                 Submit
                             </button>
 
@@ -220,21 +220,21 @@
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
 
             const searchInput = document.getElementById('searchInput');
 
-let searchTimer;
+            let searchTimer;
 
-searchInput.addEventListener('keyup', function () {
+            searchInput.addEventListener('keyup', function() {
 
-    clearTimeout(searchTimer);
+                clearTimeout(searchTimer);
 
-    searchTimer = setTimeout(() => {
-        loadQuestions();
-    }, 300);
+                searchTimer = setTimeout(() => {
+                    loadQuestions();
+                }, 300);
 
-});
+            });
 
             const form = document.getElementById('addQuestionForm');
             const tableBody = document.getElementById('questionTableBody');
@@ -251,51 +251,56 @@ searchInput.addEventListener('keyup', function () {
             };
 
             // LOAD QUESTIONS
-           function loadQuestions() {
+            function loadQuestions() {
 
-    const fundId = document.getElementById('fund_id').value;
-    const search = document.getElementById('searchInput').value;
+                const fundId = document.getElementById('fund_id').value;
+                const search = document.getElementById('searchInput').value;
 
-    fetch(
-        `${routes.index}?fund_id=${fundId}&search=${encodeURIComponent(search)}`
-    )
-        .then(res => res.json())
-        .then(res => {
+                fetch(
+                        `${routes.index}?fund_id=${fundId}&search=${encodeURIComponent(search)}`
+                    )
+                    .then(res => res.json())
+                    .then(res => {
 
-            tableBody.innerHTML = '';
+                        tableBody.innerHTML = '';
 
-            res.data.forEach(item => {
-                tableBody.innerHTML += `
+                        res.data.forEach(item => {
+                            tableBody.innerHTML += `
                     <tr>
                         <td>${item.question}</td>
                         <td>${item.description ?? '-'}</td>
                         <td>${item.word_limit}</td>
                         <td>
-                            <div class="d-flex align-items-center gap-2">
-                                <a href="javascript:void(0)"
+                            <div class="action-btn d-flex align-items-center gap-2">
+                                <a href="javascript:void(0)" class="edit-btn"
                                    onclick="editQuestion(${item.id})"
                                    title="Edit">
-                                    <i class="bi bi-pencil-square"></i>
+                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                        <path d="M8.8 2.4L3.3 8.2C3.1 8.4 2.9 8.8 2.9 9.1L2.7 11.3C2.6 12.1 3.1 12.6 3.9 12.5L6.1 12.1C6.3 12 6.8 11.8 7 11.6L12.4 5.8C13.4 4.8 13.8 3.7 12.3 2.3C10.9 0.9 9.8 1.4 8.8 2.4Z" stroke="#07CCB5" stroke-width="1.2"></path>
+                                    </svg>
                                 </a>
 
-                                <a href="javascript:void(0)"
+                                <a href="javascript:void(0)" class="trash-btn"
                                    onclick="deleteQuestion(${item.id})"
                                    title="Delete">
-                                    <i class="bi bi-trash"></i>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="13" height="15" viewBox="0 0 13 15" fill="none">
+                                            <path d="M1.3 3L2 12.2C2.1 13 2.7 13.6 3.5 13.6H8.7C9.5 13.6 10.1 13 10.2 12.2L10.9 3" stroke="#E74C3C" stroke-width="1.2"></path>
+                                            <path d="M0.6 3.1C4 2.5 8.2 2.5 11.6 3.1" stroke="#E74C3C" stroke-width="1.2"></path>
+                                        </svg>
                                 </a>
                             </div>
                         </td>
                     </tr>
                 `;
-            });
+                        });
 
-        });
-}
+                    });
+            }
 
             loadQuestions();
 
             // CREATE / UPDATE SUBMIT
-            form.addEventListener('submit', function (e) {
+            form.addEventListener('submit', function(e) {
                 e.preventDefault();
 
                 const formData = new FormData(form);
@@ -309,12 +314,12 @@ searchInput.addEventListener('keyup', function () {
                 }
 
                 fetch(url, {
-                    method: method,
-                    headers: {
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-                    },
-                    body: formData
-                })
+                        method: method,
+                        headers: {
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                        },
+                        body: formData
+                    })
                     .then(res => res.json())
                     .then(res => {
 
@@ -328,7 +333,7 @@ searchInput.addEventListener('keyup', function () {
             });
 
             // EDIT
-            window.editQuestion = function (id) {
+            window.editQuestion = function(id) {
 
                 fetch(routes.edit(id))
                     .then(res => res.json())
@@ -345,17 +350,17 @@ searchInput.addEventListener('keyup', function () {
             }
 
             // DELETE
-            window.deleteQuestion = function (id) {
+            window.deleteQuestion = function(id) {
 
                 if (!confirm('Delete this question?')) return;
 
                 fetch(routes.delete(id), {
-                    method: 'POST',
-                    headers: {
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-                        'X-HTTP-Method-Override': 'DELETE'
-                    }
-                })
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                            'X-HTTP-Method-Override': 'DELETE'
+                        }
+                    })
                     .then(res => res.json())
                     .then(res => {
                         loadQuestions();
