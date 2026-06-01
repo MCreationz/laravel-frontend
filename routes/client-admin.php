@@ -4,6 +4,7 @@ use App\Http\Controllers\ClientAdmin\AuthController;
 use App\Http\Controllers\ClientAdmin\DashboardController;
 use App\Http\Controllers\ClientAdmin\FundController;
 use App\Http\Controllers\ClientAdmin\FundDocumentController;
+use App\Http\Controllers\ClientAdmin\FundQuestionnaireController;
 use App\Http\Controllers\ClientAdmin\FundThemeController;
 use Illuminate\Support\Facades\Route;
 
@@ -147,6 +148,25 @@ Route::put('/fund-documents/update/{id}', [FundDocumentController::class, 'updat
 
 Route::delete('/fund-documents/delete/{id}', [FundDocumentController::class, 'destroy'])
     ->name('client-admin.fund-documents.destroy');
+
+
+    Route::get('/fund-questionnaires', [FundQuestionnaireController::class, 'index'])
+    ->name('client-admin.fund-questionnaires.index');
+
+Route::post('/fund-questionnaires/store', [FundQuestionnaireController::class, 'store'])
+    ->name('client-admin.fund-questionnaires.store');
+
+Route::get('/fund-questionnaires/show/{id}', [FundQuestionnaireController::class, 'edit'])
+    ->name('client-admin.fund-questionnaires.show');
+
+Route::get('/fund-questionnaires/edit/{id}', [FundQuestionnaireController::class, 'edit'])
+    ->name('client-admin.fund-questionnaires.edit');
+
+Route::put('/fund-questionnaires/update/{id}', [FundQuestionnaireController::class, 'update'])
+    ->name('client-admin.fund-questionnaires.update');
+
+Route::delete('/fund-questionnaires/delete/{id}', [FundQuestionnaireController::class, 'destroy'])
+    ->name('client-admin.fund-questionnaires.destroy');
 
         /*
         |--------------------------------------------------------------------------
