@@ -302,9 +302,35 @@
                                         Highest Qualification
                                         <span class="text-danger">*</span>
                                     </label>
+                                    <div class="select-wrapper w-100 position-relative">
+                                        <div
+                                            class="custom-select form-control py-2 d-flex justify-content-between align-items-center">
+                                            <span class="text-muted">Select an option</span>
+                                        </div>
 
-                                    <input type="text" class="form-control py-2" id="highest_qualification"
-                                        name="highest_qualification" placeholder="Enter here" required>
+                                        <input type="hidden" name="organization_type" id="organization_type" required>
+
+                                        <ul class="select-list" style="display: none;">
+                                            <li data-value="Diploma">Diploma</li>
+                                            <li data-value="BA">BA</li>
+                                            <li data-value="BCom">BCom</li>
+                                            <li data-value="BSc">BSc</li>
+                                            <li data-value="BBA">BBA</li>
+                                            <li data-value="BTech">BTech</li>
+                                            <li data-value="MBBS">MBBS</li>
+                                            <li data-value="LLB">LLB</li>
+                                            <li data-value="BArch">BArch</li>
+                                            <li data-value="MA">MA</li>
+                                            <li data-value="MCom">MCom</li>
+                                            <li data-value="MSc">MSc</li>
+                                            <li data-value="MBA">MBA</li>
+                                            <li data-value="MTech">MTech</li>
+                                            <li data-value="Mphil">Mphil</li>
+                                            <li data-value="PhD">PhD</li>
+                                            <li data-value="Post-Doctorate">Post-Doctorate</li>
+                                            <li data-value="Others">Others</li>
+                                        </ul>
+                                    </div>
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label fw-semibold">
