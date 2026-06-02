@@ -372,13 +372,47 @@
         </div>
     </div>
 
-    <style>
-        .card-box table th {
-            min-width: min-content;
-            max-width: max-content;
-            width: auto;
-        }
-    </style>
+    <div class="modal fade" id="addAnotherPartner" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <!-- Header -->
+                <div class="modal-header border-0 pb-0 text-center">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    </button>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-@endsection
+                </div>
+                <!-- Body -->
+                <div class="modal-body p-0">
+                    <div>
+                        <div class="edit-top-icon text-center mb-3">
+                            <img src="img/edit-icon.png" alt="">
+                        </div>
+                        <h2 class="modal-title mb-2 inner-title" id="addAnotherPartnerLabel">
+                            Do you want to add another director/partner details?
+                        </h2>
+                        <p>You can add multiple directors or partners to this listing. If you're done, continue to the next
+                            step.</p>
+                    </div>
+
+                    <!-- Footer -->
+                    <div style="border-radius:0px 0px 8px 8px;"
+                        class="modal-footer border-0 d-flex justify-content-center justify-content-md-end gap-2 steps-btn pe-lg-4 flex-wrap">
+                        <button type="button" class="btn simple-btn m-0" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" id="addPartnerSubmitBtn" class="btn gradient-btn m-0">Save
+                            Partner</button>
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <style>
+            .card-box table th {
+                min-width: min-content;
+                max-width: max-content;
+                width: auto;
+            }
+        </style>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    @endsection
