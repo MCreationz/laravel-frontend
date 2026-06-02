@@ -172,7 +172,7 @@ label {
     border: none !important;
     font-weight: 700 !important;
     font-size: 14px !important;
-    padding: 11.5px 20px !important;
+    padding: 8.5px 20px !important;
     border-radius: 55px !important;
     transition: background 0.3s ease !important;
     min-width: 124px;
@@ -514,7 +514,7 @@ button.btn.show-password {
     color: #6c757d !important;
     outline: none !important;
     box-shadow: unset !important;
-    top: 53px;
+    top: 50px;
 }
 
 .login-text p {
@@ -1483,16 +1483,16 @@ button.tab.active {
 }
 
 /* project detail page */
-.project-detail {
+/* .project-detail {
     background: var(--white-color);
-}
+} */
 
-.single-project-details {
+/* .single-project-details {
     margin-top: -95px;
-}
+} */
 
 .project-title {
-    font-size: 21px !important;
+    font-size: 26px !important;
     font-weight: 700 !important;
     letter-spacing: -0.8px;
     font-family: 'Inter';
@@ -1527,7 +1527,7 @@ button.tab.active {
 }
 
 .sub-heading {
-    font-size: 18px;
+    font-size: 18px !important;
     font-weight: 500 !important;
     font-family: 'Inter';
     letter-spacing: -0.7px;
@@ -2177,7 +2177,59 @@ table td {
 .modal .custom-select.form-control {
     min-height: 40px;
 }
-
+/*  */
+.top-profile-bannner {
+    background: radial-gradient(97.57% 210.75% at 0.9% 2.98%, rgba(0, 224, 220, 0.9) 0%, rgba(1, 96, 214, 0.9) 100%);
+    border-radius: 10px;
+    min-height: 127px;
+}
+.profile-banner {
+    border: 0.67px solid #C5DFFF;
+    background: #FBFCFE;
+    width: 122.2829818725586px;
+    height: 115.9423828125px;
+    border-radius: 4.01px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;   
+}
+.project-detail-wrap {
+    border: 1px solid #1E27461A;
+    border-radius: 10px;
+}
+.project-content {
+    margin-top: -85px;
+}
+.project-detail-wrap .sub-heading {
+    color: var(--accent-color) !important;
+}
+.gray-box {
+    border: 1px solid #1E27461A;
+    background: #FEFEFE;
+    border-radius: 8px;
+    padding: 14px 12px;
+}
+.gray-box h4 {
+    font-family: 'Inter';
+    font-size: 18px;
+    font-weight: 500;
+    color: #1E2746;
+    letter-spacing: -0.7px;
+}
+.gray-box div {
+    font-size: 10px !important;
+    color: #6D6D6D !important;
+    margin: 0 0 5px;
+}
+.project-description {
+    background: #F9F9F98A;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 20px 0 0;
+}
+.profile-banner h1 {
+    font-size: 47.66px !important;
+}
 /* responsive */
 @media(max-width:1440px) {
     .left-logo-col .bg-image img {
@@ -2460,7 +2512,17 @@ table td {
         height: 45px;
         flex: 0 0 45px;
     }
+    .project-description {
+        padding: 12px;
+    }
+    .profile-banner {
+    width: 100px;
+    height: 89px;
+}
 
+.project-content {
+    margin-top: -60px;
+}
     /* modal */
     .check-item {
         gap: 8px;
@@ -2552,6 +2614,12 @@ table td {
     }
 }
 
+@media(min-width: 576px){
+.gray-box-outer .col {
+    max-width: max-content;
+    min-width: 179px;
+}
+}
 @media(max-width: 575px) {
     .progress-dots {
         display: none;
