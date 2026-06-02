@@ -2,9 +2,16 @@
 
 use App\Http\Controllers\API\Auth\LoginController as AuthLoginController;
 use App\Http\Controllers\API\Auth\RegisterController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\OnboardingController;
 use App\Http\Controllers\OrganizationFunderController;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\ProjectApplication\QuestionController;
+use App\Http\Controllers\ProjectApplication\SeniorManagementController;
+use App\Http\Controllers\ProjectApplication\DocumentController;
+use App\Http\Controllers\ProjectApplication\FinancialDocumentController;
+use App\Http\Controllers\ProjectApplication\AwardRecognitionController;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -70,9 +77,8 @@ Route::post('/logout', [AuthLoginController::class, 'logout'])
 
 Route::middleware(['check.onboarding', 'auth:organization'])->group(function () {
 
-    Route::get('/dashboard', function () {
-        return view('dashboard.index');
-    })->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'index'])
+    ->name('dashboard');
 
     Route::get('/onboarding/step-1', [OnboardingController::class, 'stepOne'])
         ->name('onboarding.step1');
@@ -92,14 +98,42 @@ Route::middleware(['check.onboarding', 'auth:organization'])->group(function () 
     Route::post('/onboarding/step-3', [OnboardingController::class, 'storeStepThree'])
         ->name('onboarding.step3.store');
 
-    Route::get('/projects', [ProjectController::class, 'index'])->name('projects.index');
     // routes/web.php
-    Route::get('/projects/details', function () {
-        // Returning a static view
-        return view('projects.detail');
-    })->name('projects.details');  // named "project details"
+Route::get('/projects', [ProjectController::class, 'index'])
+    ->name('projects.index');
+
+Route::get('/projects/{id}/details', [ProjectController::class, 'details'])
+    ->name('projects.details');
 
 });
+
+Route::prefix('projects/{fund}/apply')
+    ->name('projects.apply.')
+    ->group(function () {
+
+        // Step 1
+        Route::get('/questions', [QuestionController::class, 'index'])
+            ->name('questions');
+
+        // Step 2
+        Route::get('/senior-management', [SeniorManagementController::class, 'index'])
+            ->name('senior-management');
+
+        // Step 3
+        Route::get('/documents', [DocumentController::class, 'index'])
+            ->name('documents');
+
+        // Step 4
+        Route::get('/financial-documents', [FinancialDocumentController::class, 'index'])
+            ->name('financial-documents');
+
+        // Step 5
+        Route::get('/awards-recognition', [AwardRecognitionController::class, 'index'])
+            ->name('awards-recognition');
+    });
+
+
+
 
 Route::post('/funders/store', [OrganizationFunderController::class, 'store'])
     ->name('funders.store');
