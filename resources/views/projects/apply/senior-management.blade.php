@@ -196,7 +196,7 @@
             </div>
         </div>
     </div>
-        <div class="modal fade" id="addPartner" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="addPartner" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <!-- Header -->
@@ -204,11 +204,8 @@
                     <div>
                         <!-- MODAL TITLE -->
                         <h2 class="modal-title mb-2 inner-title" id="addPartnerLabel">
-                            Add Client Admin
+                            Senior Management Details
                         </h2>
-                        <p class="text-muted small mb-0">
-                            CSR Foundation or VC Firm Account
-                        </p>
                     </div>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                     </button>
@@ -220,25 +217,32 @@
                         <div class="p-3">
                             <input type="hidden" name="" id="">
                             <!-- Organization -->
+
                             <div class="row g-3 mb-3">
-                                <div class="col-md-6">
+                                <div class="col-12">
                                     <label class="form-label fw-semibold">
-                                        Organization Name
+                                        Name of Director/Partner
                                         <span class="text-danger">*</span>
                                     </label>
 
-                                    <input type="text" class="form-control py-2" id="organization_name"
-                                        name="organization_name" placeholder="Enter here" required>
+                                    <input type="text" class="form-control py-2" id="director_name"
+                                        name="director_name" placeholder="Enter Name of Director/Partner" required>
                                 </div>
-
-                                <div class="col-md-6">
+                                <div class="col-12 col-md-6">
                                     <label class="form-label fw-semibold">
-                                        Organization Type
+                                        Designation
                                         <span class="text-danger">*</span>
                                     </label>
 
+                                    <input type="text" class="form-control py-2" id="designation" name="designation"
+                                        placeholder="Enter here" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-semibold">
+                                        Nature of Engagement
+                                        <span class="text-danger">*</span>
+                                    </label>
                                     <div class="select-wrapper w-100 position-relative">
-
                                         <div
                                             class="custom-select form-control py-2 d-flex justify-content-between align-items-center">
                                             <span class="text-muted">Select an option</span>
@@ -257,160 +261,104 @@
                             <div class="row g-3 mb-3">
                                 <div class="col-md-6">
                                     <label class="form-label fw-semibold">
-                                        Primary Contact Name
+                                        Gender
                                         <span class="text-danger">*</span>
                                     </label>
-
-                                    <input type="text" class="form-control py-2" id="primary_contact_name"
-                                        name="primary_contact_name" placeholder="Enter here" required>
-                                </div>
-                                <div class="col-md-6">
-                                    <label class="form-label fw-semibold">
-                                        Email Address
-                                        <span class="text-danger">*</span>
-                                    </label>
-
-                                    <input type="email" class="form-control py-2" id="email" name="email"
-                                        placeholder="Enter email address" required>
-                                </div>
-                            </div>
-                            <!-- Phone + Password -->
-                            <div class="row g-3 mb-3">
-
-                                <div class="col-md-6">
-                                    <label class="form-label fw-semibold">
-                                        Phone Number
-                                        <span class="text-danger">*</span>
-                                    </label>
-
-                                    <input type="text" class="form-control py-2" id="phone_number"
-                                        name="phone_number" placeholder="Enter here" required>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <label class="form-label fw-semibold">
-                                        Password
-                                        <span class="text-danger">*</span>
-                                    </label>
-
-                                    <input type="password" class="form-control py-2" id="password" name="password"
-                                        placeholder="Enter password" required>
-                                </div>
-
-                            </div>
-                            <!-- State + Status -->
-                            <div class="row g-3 mb-3">
-                                <!-- State -->
-                                <div class="col-md-6">
-                                    <label class="form-label fw-semibold">
-                                        State
-                                        <span class="text-danger">*</span>
-                                    </label>
-
                                     <div class="select-wrapper w-100 position-relative">
-
                                         <div
                                             class="custom-select form-control py-2 d-flex justify-content-between align-items-center">
-                                            <span class="text-muted">Select State</span>
+                                            <span class="text-muted">Select an option</span>
                                         </div>
 
-                                        <input type="hidden" name="state" id="state" required>
-
-                                        <ul class="select-list"
-                                            style="display: none; max-height: 250px; overflow-y: auto;">
-
-                                            <li data-value="Andhra Pradesh">Andhra Pradesh</li>
-                                            <li data-value="Arunachal Pradesh">Arunachal Pradesh</li>
-                                            <li data-value="Assam">Assam</li>
-                                            <li data-value="Bihar">Bihar</li>
-                                            <li data-value="Chhattisgarh">Chhattisgarh</li>
-                                            <li data-value="Goa">Goa</li>
-                                            <li data-value="Gujarat">Gujarat</li>
-                                            <li data-value="Haryana">Haryana</li>
-                                            <li data-value="Himachal Pradesh">Himachal Pradesh</li>
-                                            <li data-value="Jharkhand">Jharkhand</li>
-                                            <li data-value="Karnataka">Karnataka</li>
-                                            <li data-value="Kerala">Kerala</li>
-                                            <li data-value="Madhya Pradesh">Madhya Pradesh</li>
-                                            <li data-value="Maharashtra">Maharashtra</li>
-                                            <li data-value="Manipur">Manipur</li>
-                                            <li data-value="Meghalaya">Meghalaya</li>
-                                            <li data-value="Mizoram">Mizoram</li>
-                                            <li data-value="Nagaland">Nagaland</li>
-                                            <li data-value="Odisha">Odisha</li>
-                                            <li data-value="Punjab">Punjab</li>
-                                            <li data-value="Rajasthan">Rajasthan</li>
-                                            <li data-value="Sikkim">Sikkim</li>
-                                            <li data-value="Tamil Nadu">Tamil Nadu</li>
-                                            <li data-value="Telangana">Telangana</li>
-                                            <li data-value="Tripura">Tripura</li>
-                                            <li data-value="Uttar Pradesh">Uttar Pradesh</li>
-                                            <li data-value="Uttarakhand">Uttarakhand</li>
-                                            <li data-value="West Bengal">West Bengal</li>
-
-                                            <li data-value="Andaman and Nicobar Islands">
-                                                Andaman and Nicobar Islands
-                                            </li>
-
-                                            <li data-value="Chandigarh">
-                                                Chandigarh
-                                            </li>
-
-                                            <li data-value="Dadra and Nagar Haveli and Daman and Diu">
-                                                Dadra and Nagar Haveli and Daman and Diu
-                                            </li>
-
-                                            <li data-value="Delhi">
-                                                Delhi
-                                            </li>
-
-                                            <li data-value="Jammu and Kashmir">
-                                                Jammu and Kashmir
-                                            </li>
-
-                                            <li data-value="Ladakh">
-                                                Ladakh
-                                            </li>
-
-                                            <li data-value="Lakshadweep">
-                                                Lakshadweep
-                                            </li>
-
-                                            <li data-value="Puducherry">
-                                                Puducherry
-                                            </li>
-
-                                        </ul>
-
-                                    </div>
-                                </div>
-
-                                <!-- Status -->
-                                <div class="col-md-6">
-                                    <label class="form-label fw-semibold">
-                                        Status
-                                        <span class="text-danger">*</span>
-                                    </label>
-
-                                    <div class="select-wrapper w-100 position-relative">
-
-                                        <div
-                                            class="custom-select form-control py-2 d-flex justify-content-between align-items-center">
-                                            <span class="text-muted">Select Status</span>
-                                        </div>
-
-                                        <input type="hidden" name="status" id="status" required>
+                                        <input type="hidden" name="gender" id="gender" required>
 
                                         <ul class="select-list" style="display: none;">
-                                            <li data-value="verified">Verified</li>
-                                            <li data-value="non_verified">Non-Verified</li>
+                                            <li data-value="male">Male</li>
+                                            <li data-value="female">Female</li>
+                                            <li data-value="other">Other</li>
                                         </ul>
-
                                     </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-semibold">
+                                        Date of Birth
+                                        <span class="text-danger">*</span>
+                                    </label>
+
+                                    <input type="date" class="form-control py-2" id="date_of_birth"
+                                        name="date_of_birth" placeholder="Select an option" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-semibold">
+                                        Date of Appointment
+                                        <span class="text-danger">*</span>
+                                    </label>
+
+                                    <input type="date" class="form-control py-2" id="date_of_appointment"
+                                        name="date_of_appointment" placeholder="Select an option" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-semibold">
+                                        Highest Qualification
+                                        <span class="text-danger">*</span>
+                                    </label>
+
+                                    <input type="text" class="form-control py-2" id="highest_qualification"
+                                        name="highest_qualification" placeholder="Enter here" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-semibold">
+                                        Roles & Responsibities
+                                        <span class="text-danger">*</span>
+                                    </label>
+
+                                    <input type="text" class="form-control py-2" id="roles_responsibilities"
+                                        name="roles_responsibilities" placeholder="Enter here" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-semibold">
+                                        Total Years of Experience
+                                        <span class="text-danger">*</span>
+                                    </label>
+
+                                    <input type="text" class="form-control py-2" id="total_experience"
+                                        name="total_experience" placeholder="Enter here" required>
+                                </div>
+                                <div class="col-12 px-md-2">
+                                    <label class="form-label">Upload Resume/CV<span>*</span></label>
+                                    <input type="file" id="resume_cv" name="resume_cv" hidden="">
+                                    <label for="resume_cv" class="upload-label mb-0">
+                                        <div class="upload-content">
+                                            <div class="upload-icon mb-2">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26"
+                                                    viewBox="0 0 26 26" fill="none">
+                                                    <g opacity="0.2">
+                                                        <path d="M9.75 11.916V18.416L11.9167 16.2493" stroke="#292D32"
+                                                            stroke-width="1.5" stroke-linecap="round"
+                                                            stroke-linejoin="round"></path>
+                                                        <path d="M9.7526 18.4167L7.58594 16.25" stroke="#292D32"
+                                                            stroke-width="1.5" stroke-linecap="round"
+                                                            stroke-linejoin="round"></path>
+                                                        <path
+                                                            d="M23.8307 10.8327V16.2493C23.8307 21.666 21.6641 23.8327 16.2474 23.8327H9.7474C4.33073 23.8327 2.16406 21.666 2.16406 16.2493V9.74935C2.16406 4.33268 4.33073 2.16602 9.7474 2.16602H15.1641"
+                                                            stroke="#292D32" stroke-width="1.5" stroke-linecap="round"
+                                                            stroke-linejoin="round"></path>
+                                                        <path
+                                                            d="M23.8307 10.8327H19.4974C16.2474 10.8327 15.1641 9.74935 15.1641 6.49935V2.16602L23.8307 10.8327Z"
+                                                            stroke="#292D32" stroke-width="1.5" stroke-linecap="round"
+                                                            stroke-linejoin="round"></path>
+                                                    </g>
+                                                </svg>
+                                            </div>
+
+                                            <p class="">Upload Resume/CV</p>
+
+                                            <small id="resume_cv_name" class="d-block mt-2"></small>
+                                        </div>
+                                    </label>
                                 </div>
                             </div>
                         </div>
-
                         <!-- Footer -->
                         <div style="border-radius:0px 0px 8px 8px;"
                             class="modal-footer border-0 d-flex justify-content-center justify-content-md-end gap-2 steps-btn pe-lg-4 flex-wrap">
@@ -432,5 +380,5 @@
         }
     </style>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 @endsection
