@@ -10,30 +10,35 @@ use Illuminate\Http\Request;
 
 class SeniorManagementController extends Controller
 {
-    public function index(Fund $fund)
-    {
-        $fund->load([
-            'client',
-            'snapshot',
-            'themes',
-        ]);
+public function index(Fund $fund)
+{
+    $fund->load([
+        'client',
+        'snapshot',
+        'themes',
+    ]);
 
-        $application = FundApplication::with('seniorManagement')
-            ->where('fund_id', $fund->id)
-            ->where('organization_id', auth('organization')->id())
-            ->firstOrFail();
+    $application = FundApplication::with('seniorManagement')
+        ->where('fund_id', $fund->id)
+        ->where('organization_id', auth('organization')->id())
+        ->firstOrFail();
 
-        return view(
-            'projects.apply.senior-management',
-            compact(
-                'fund',
-                'application'
-            )
-        );
-    }
+    $managements = $application->seniorManagement;
+
+    return view(
+        'projects.apply.senior-management',
+        compact(
+            'fund',
+            'application',
+            'managements'
+        )
+    );
+}
 
     public function store(Request $request, Fund $fund)
     {
+
+      //  return $request->all();
         $request->validate([
             'name' => 'required|string|max:255',
             'designation' => 'nullable|string|max:255',

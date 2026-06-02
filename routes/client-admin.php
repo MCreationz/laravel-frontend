@@ -129,44 +129,41 @@ Route::prefix('client-admin')->group(function () {
         Route::delete('/fund-themes/delete/{id}', [FundThemeController::class, 'destroy'])
             ->name('client-admin.fund-themes.destroy');
 
+        Route::get('/fund-documents', [FundDocumentController::class, 'index'])
+            ->name('client-admin.fund-documents.index');
 
+        Route::post('/fund-documents/store', [FundDocumentController::class, 'store'])
+            ->name('client-admin.fund-documents.store');
 
-            Route::get('/fund-documents', [FundDocumentController::class, 'index'])
-    ->name('client-admin.fund-documents.index');
+        Route::get('/fund-documents/show/{id}', [FundDocumentController::class, 'show'])
+            ->name('client-admin.fund-documents.show');
 
-Route::post('/fund-documents/store', [FundDocumentController::class, 'store'])
-    ->name('client-admin.fund-documents.store');
+        Route::get('/fund-documents/edit/{id}', [FundDocumentController::class, 'edit'])
+            ->name('client-admin.fund-documents.edit');
 
-Route::get('/fund-documents/show/{id}', [FundDocumentController::class, 'show'])
-    ->name('client-admin.fund-documents.show');
+        Route::put('/fund-documents/update/{id}', [FundDocumentController::class, 'update'])
+            ->name('client-admin.fund-documents.update');
 
-Route::get('/fund-documents/edit/{id}', [FundDocumentController::class, 'edit'])
-    ->name('client-admin.fund-documents.edit');
+        Route::delete('/fund-documents/delete/{id}', [FundDocumentController::class, 'destroy'])
+            ->name('client-admin.fund-documents.destroy');
 
-Route::put('/fund-documents/update/{id}', [FundDocumentController::class, 'update'])
-    ->name('client-admin.fund-documents.update');
+        Route::get('/fund-questionnaires', [FundQuestionnaireController::class, 'index'])
+            ->name('client-admin.fund-questionnaires.index');
 
-Route::delete('/fund-documents/delete/{id}', [FundDocumentController::class, 'destroy'])
-    ->name('client-admin.fund-documents.destroy');
+        Route::post('/fund-questionnaires/store', [FundQuestionnaireController::class, 'store'])
+            ->name('client-admin.fund-questionnaires.store');
 
+        Route::get('/fund-questionnaires/show/{id}', [FundQuestionnaireController::class, 'edit'])
+            ->name('client-admin.fund-questionnaires.show');
 
-    Route::get('/fund-questionnaires', [FundQuestionnaireController::class, 'index'])
-    ->name('client-admin.fund-questionnaires.index');
+        Route::get('/fund-questionnaires/edit/{id}', [FundQuestionnaireController::class, 'edit'])
+            ->name('client-admin.fund-questionnaires.edit');
 
-Route::post('/fund-questionnaires/store', [FundQuestionnaireController::class, 'store'])
-    ->name('client-admin.fund-questionnaires.store');
+        Route::put('/fund-questionnaires/update/{id}', [FundQuestionnaireController::class, 'update'])
+            ->name('client-admin.fund-questionnaires.update');
 
-Route::get('/fund-questionnaires/show/{id}', [FundQuestionnaireController::class, 'edit'])
-    ->name('client-admin.fund-questionnaires.show');
-
-Route::get('/fund-questionnaires/edit/{id}', [FundQuestionnaireController::class, 'edit'])
-    ->name('client-admin.fund-questionnaires.edit');
-
-Route::put('/fund-questionnaires/update/{id}', [FundQuestionnaireController::class, 'update'])
-    ->name('client-admin.fund-questionnaires.update');
-
-Route::delete('/fund-questionnaires/delete/{id}', [FundQuestionnaireController::class, 'destroy'])
-    ->name('client-admin.fund-questionnaires.destroy');
+        Route::delete('/fund-questionnaires/delete/{id}', [FundQuestionnaireController::class, 'destroy'])
+            ->name('client-admin.fund-questionnaires.destroy');
 
         /*
         |--------------------------------------------------------------------------
