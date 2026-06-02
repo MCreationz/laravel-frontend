@@ -40,4 +40,19 @@ class Fund extends Model
     {
         return $this->hasOne(FundSnapshot::class);
     }
+    public function themes()
+{
+    return $this->hasMany(FundTheme::class);
+}    public function documents()
+{
+    return $this->hasMany(FundDocument::class);
+}
+
+public function questionnaires()
+{
+    return $this->hasMany(FundQuestionnaire::class)
+        ->where('is_active', true);
+}
+
+
 }

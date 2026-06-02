@@ -115,6 +115,8 @@ Route::prefix('projects/{fund}/apply')
         Route::get('/questions', [QuestionController::class, 'index'])
             ->name('questions');
 
+            Route::post('/questions', [QuestionController::class, 'store'])
+    ->name('questions.store');
         // Step 2
         Route::get('/senior-management', [SeniorManagementController::class, 'index'])
             ->name('senior-management');

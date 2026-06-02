@@ -243,7 +243,12 @@
         });
     });
 </script>
-</script>
+
+
+
+
+
+{{--
 <script>
     document.querySelectorAll('.select-wrapper').forEach(wrapper => {
 
@@ -268,7 +273,7 @@
         });
 
     });
-</script>
+</script> --}}
 
 
 </html>

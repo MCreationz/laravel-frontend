@@ -79,10 +79,11 @@
     @endphp
 
     <div class="application-form-page">
-        <form method="POST" action="#" id="applicationForm">
-            @csrf
-
-            <div class="card application-form-card border-0 mb-3">
+       <form method="POST"
+      action="{{ route('projects.apply.questions.store', $fund) }}"
+      id="applicationForm">
+    @csrf   
+            {{-- <div class="card application-form-card border-0 mb-3">
                 <div class="application-hero">
                     <div class="application-hero-banner"></div>
                     <div class="application-hero-body px-3 px-md-4 pb-3">
@@ -145,30 +146,183 @@
                         </div>
                     </div>
                 </div>
+            </div> --}}
+
+            <div class="card application-form-card border-0 mb-3">
+                <div class="application-hero">
+                    <div class="application-hero-banner"></div>
+
+                    <div class="application-hero-body px-3 px-md-4 pb-3">
+                        <div class="row align-items-end g-3">
+                            <div class="col-auto">
+                                <div class="application-hero-logo">
+                                    <span class="application-hero-logo-text">
+                                        {{ strtoupper(substr($fund->fund_name, 0, 2)) }}
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="col">
+                                <h1 class="application-hero-title mb-1">
+                                    {{ $fund->fund_name }}
+
+                                    <img src="{{ asset('img/checkmark.png') }}" alt="Verified" class="verified-badge"
+                                        width="20" height="20">
+                                </h1>
+
+                                <p class="application-hero-org mb-0">
+                                    {{ $fund->client->organization_name }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="application-form-fields px-3 px-md-4 pb-4">
+
+                    <div class="row g-3 mb-3">
+
+                        <div class="col-12 col-md-6">
+                            <label class="form-label">
+                                Select Theme<span>*</span>
+                            </label>
+
+                            <div class="select-wrapper w-100 position-relative">
+                                <div class="custom-select form-control">
+                                    Select Theme
+                                </div>
+
+                                <ul class="select-list">
+                                    @foreach($fund->themes as $theme)
+                                        <li data-value="{{ $theme->id }}">
+                                            {{ $theme->theme_name }}
+                                        </li>
+                                    @endforeach
+                                </ul>
+
+                                <input type="hidden" name="theme_id" class="hidden-select">
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-md-6">
+                            <label class="form-label">
+                                Select Sub-theme<span>*</span>
+                            </label>
+
+                            <div class="select-wrapper w-100 position-relative">
+                                <div class="custom-select form-control">
+                                    Select Sub-theme
+                                </div>
+
+                                <ul class="select-list">
+                                    @foreach($fund->themes as $theme)
+                                        <li data-value="{{ $theme->id }}">
+                                            {{ $theme->sub_theme_name }}
+                                        </li>
+                                    @endforeach
+                                </ul>
+
+                                <input type="hidden" name="sub_theme_id" class="hidden-select">
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row g-3">
+                        <div class="col-12 col-md-6">
+                            <label class="form-label">
+                                Project Duration<span>*</span>
+                            </label>
+
+                            <input type="number" name="project_duration" class="form-control"
+                                max="{{ $fund->maximum_project_duration }}"
+                                placeholder="Maximum {{ $fund->maximum_project_duration }} months" required>
+                        </div>
+
+                        <div class="col-12 col-md-6">
+                            <label class="form-label">
+                                Total Budget<span>*</span>
+                            </label>
+
+                            <input type="number" name="total_budget" class="form-control" placeholder="Rupees in Lakh"
+                                required>
+                        </div>
+                    </div>
+
+                </div>
+
+
             </div>
+
+            {{-- <div class="card application-form-card border-0 mb-3">
+                <div class="application-sections px-3 px-md-4 py-4">
+                    @foreach ($sections as $section)
+                    <div
+                        class="application-section-row row g-3 g-md-4 {{ $loop->last ? '' : 'mb-4 pb-4 application-section-divider' }}">
+                        <div class="col-12 col-lg-4">
+                            <h2 class="application-section-title mb-2">{{ $section['title'] }}</h2>
+                            <p class="application-section-hint mb-0">Suggested Questions</p>
+                            <p class="application-section-questions mb-0">{{ $section['questions'] }}</p>
+                        </div>
+                        <div class="col-12 col-lg-8">
+                            <div class="application-textarea-wrap">
+                                <div class="d-flex justify-content-end mb-2">
+                                    <span class="application-word-limit">Word Limit: {{ $section['limit'] }}</span>
+                                </div>
+                                <textarea name="{{ $section['name'] }}" rows="6" class="form-control application-textarea"
+                                    data-word-limit="{{ $section['limit'] }}"
+                                    placeholder="Write your response here..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    @endforeach
+                </div>
+            </div> --}}
 
             <div class="card application-form-card border-0 mb-3">
                 <div class="application-sections px-3 px-md-4 py-4">
-                    @foreach ($sections as $section)
+
+                    @foreach ($fund->questionnaires as $question)
+
                         <div
                             class="application-section-row row g-3 g-md-4 {{ $loop->last ? '' : 'mb-4 pb-4 application-section-divider' }}">
+
                             <div class="col-12 col-lg-4">
-                                <h2 class="application-section-title mb-2">{{ $section['title'] }}</h2>
-                                <p class="application-section-hint mb-0">Suggested Questions</p>
-                                <p class="application-section-questions mb-0">{{ $section['questions'] }}</p>
+                                <h2 class="application-section-title mb-2">
+                                    Question {{ $loop->iteration }}
+                                </h2>
+
+                                @if($question->description)
+                                    <p class="application-section-hint mb-0">
+                                        {{ $question->description }}
+                                    </p>
+                                @endif
+
+                                <p class="application-section-questions mb-0">
+                                    {{ $question->question }}
+                                </p>
                             </div>
+
                             <div class="col-12 col-lg-8">
                                 <div class="application-textarea-wrap">
+
                                     <div class="d-flex justify-content-end mb-2">
-                                        <span class="application-word-limit">Word Limit: {{ $section['limit'] }}</span>
+                                        <span class="application-word-limit">
+                                            Word Limit: {{ $question->word_limit }}
+                                        </span>
                                     </div>
-                                    <textarea name="{{ $section['name'] }}" rows="6" class="form-control application-textarea"
-                                        data-word-limit="{{ $section['limit'] }}"
+
+                                    <textarea name="answers[{{ $question->id }}]" rows="6"
+                                        class="form-control application-textarea" data-word-limit="{{ $question->word_limit }}"
                                         placeholder="Write your response here..."></textarea>
+
                                 </div>
                             </div>
+
                         </div>
+
                     @endforeach
+
                 </div>
             </div>
 

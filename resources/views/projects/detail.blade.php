@@ -4,5 +4,6 @@
 @section('header_back_url', route('dashboard'))
 
 @section('content')
- 
+
+
 @endsection

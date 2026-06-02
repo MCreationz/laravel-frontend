@@ -13,7 +13,8 @@
                 <div class="dashboard-v2-org">
                     <p class="dashboard-v2-welcome mb-1">Welcome Back!</p>
                     <h2 class="dashboard-v2-name mb-1">
-                        {{ auth('organization')->user()->organization_name ?? 'Nirmaan Foundation' }}</h2>
+                        {{ auth('organization')->user()->organization_name ?? 'Nirmaan Foundation' }}
+                    </h2>
                     <p class="dashboard-v2-meta mb-0">Registered NPO • FCRA Certified • Est. 2012</p>
                 </div>
 
@@ -128,7 +129,8 @@
 
                                 <td class="text-end">
                                     <div class="dashboard-v2-action">
-                                        <a href="#" class="btn btn-primary dashboard-v2-apply">
+                                        <a href="{{ route('projects.apply.questions', $fund) }}"
+                                            class="btn btn-primary dashboard-v2-apply">
                                             Apply Now
                                         </a>
 
