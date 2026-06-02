@@ -117,10 +117,19 @@ Route::prefix('projects/{fund}/apply')
 
             Route::post('/questions', [QuestionController::class, 'store'])
     ->name('questions.store');
+
         // Step 2
         Route::get('/senior-management', [SeniorManagementController::class, 'index'])
-            ->name('senior-management');
+    ->name('senior-management');
 
+Route::post('/senior-management', [SeniorManagementController::class, 'store'])
+    ->name('senior-management.store');
+
+Route::put('/senior-management/{management}', [SeniorManagementController::class, 'update'])
+    ->name('senior-management.update');
+
+Route::delete('/senior-management/{management}', [SeniorManagementController::class, 'destroy'])
+    ->name('senior-management.destroy');
         // Step 3
         Route::get('/documents', [DocumentController::class, 'index'])
             ->name('documents');

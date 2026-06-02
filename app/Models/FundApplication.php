@@ -27,4 +27,8 @@ class FundApplication extends Model
     {
         return $this->hasMany(FundApplicationAnswer::class);
     }
+    public function seniorManagement()
+{
+    return $this->hasMany(FundApplicationSeniorManagement::class);
+}
 }
