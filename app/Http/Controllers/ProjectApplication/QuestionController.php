@@ -11,25 +11,29 @@ use Illuminate\Support\Facades\DB;
 
 class QuestionController extends Controller
 {
-    public function index(Fund $fund)
-    {
-        $fund->load([
-            'snapshot',
-            'themes',
-            'questionnaires',
-        ]);
+public function index(Fund $fund)
+{
+    $fund->load([
+        'snapshot',
+        'themes',
+        'questionnaires',
+    ]);
 
-        $orgName = auth('organization')->user()->organization_name ?? '';
+    $application = FundApplication::with('answers')
+        ->where('fund_id', $fund->id)
+        ->where('organization_id', auth('organization')->id())
+        ->first();
 
-        return view('projects.apply.questions', compact(
-            'fund',
-            'orgName'
-        ));
-    }
+    $orgName = auth('organization')->user()->organization_name ?? '';
 
+    return view('projects.apply.questions', compact(
+        'fund',
+        'orgName',
+        'application'
+    ));
+}
 public function store(Request $request, Fund $fund)
 {
-   // return $request->all();
     $request->validate([
         'theme_id' => 'required|exists:fund_themes,id',
         'sub_theme_id' => 'required|exists:fund_themes,id',
@@ -39,34 +43,41 @@ public function store(Request $request, Fund $fund)
         'answers' => 'required|array',
     ]);
 
-    DB::transaction(function () use ($request, $fund, &$application) {
+    DB::transaction(function () use ($request, $fund) {
 
-        $application = FundApplication::create([
-            'fund_id' => $fund->id,
-            'organization_id' => auth('organization')->id(),
-            'theme_id' => $request->theme_id,
-            'sub_theme_id' => $request->sub_theme_id,
-            'project_duration' => $request->project_duration,
-            'total_budget' => $request->total_budget,
-            'additional_info' => $request->additional_info,
-            'current_step' => 'senior-management',
-            'status' => 'draft',
-        ]);
+        $application = FundApplication::updateOrCreate(
+            [
+                'fund_id' => $fund->id,
+                'organization_id' => auth('organization')->id(),
+            ],
+            [
+                'theme_id' => $request->theme_id,
+                'sub_theme_id' => $request->sub_theme_id,
+                'project_duration' => $request->project_duration,
+                'total_budget' => $request->total_budget,
+                'additional_info' => $request->additional_info,
+                'current_step' => 'senior-management',
+                'status' => 'draft',
+            ]
+        );
 
         foreach ($request->answers as $questionId => $answer) {
 
-            FundApplicationAnswer::create([
-                'fund_application_id' => $application->id,
-                'fund_questionnaire_id' => $questionId,
-                'answer' => $answer,
-            ]);
+            FundApplicationAnswer::updateOrCreate(
+                [
+                    'fund_application_id' => $application->id,
+                    'fund_questionnaire_id' => $questionId,
+                ],
+                [
+                    'answer' => $answer,
+                ]
+            );
         }
     });
 
-    return redirect()->route(
-        'projects.apply.senior-management',
-        $fund
-    )->with('success', 'Application saved successfully.');
+    return redirect()
+        ->route('projects.apply.senior-management', $fund)
+        ->with('success', 'Application saved successfully.');
 }
 
 
