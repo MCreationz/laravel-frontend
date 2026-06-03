@@ -145,8 +145,7 @@
         <div style="border-radius:0px 0px 8px 8px;"
             class="d-flex justify-content-center justify-content-md-end gap-2 gap-md-3 mt-4 steps-btn pe-lg-4 flex-wrap">
             <div class="btn-wrap">
-                <button type="button" class="btn btn-secondary"
-                    onclick="window.location.href='{{ route('dashboard') }}' ">
+                <button type="button" class="btn btn-secondary" onclick="window.location.href='{{ route('dashboard') }}' ">
                     Back
                 </button>
                 <button type="button" class="btn btn-primary" id="continueBtn">
@@ -187,8 +186,8 @@
                                         Name of Director/Partner <span class="text-danger">*</span>
                                     </label>
 
-                                    <input type="text" class="form-control py-2" name="name"
-                                        placeholder="Enter Name" required>
+                                    <input type="text" class="form-control py-2" name="name" placeholder="Enter Name"
+                                        required>
                                 </div>
 
                                 <!-- Designation -->
@@ -228,8 +227,7 @@
 
                                 <!-- Gender -->
                                 <div class="col-md-6">
-                                    <label class="form-label fw-semibold">Gender <span
-                                            class="text-danger">*</span></label>
+                                    <label class="form-label fw-semibold">Gender <span class="text-danger">*</span></label>
 
                                     <div class="select-wrapper position-relative">
                                         <div
@@ -237,8 +235,7 @@
                                             <span class="text-muted">Select</span>
                                         </div>
 
-                                        <input type="hidden" name="gender" id="gender" class="hidden-select"
-                                            required>
+                                        <input type="hidden" name="gender" id="gender" class="hidden-select" required>
 
                                         <ul class="select-list" style="display:none;">
                                             <li data-value="male">Male</li>
@@ -295,8 +292,7 @@
                                     <label class="form-label fw-semibold">Roles & Responsibilities <span
                                             class="text-danger">*</span></label>
 
-                                    <input type="text" class="form-control py-2" name="roles_and_responsibilities"
-                                        required>
+                                    <input type="text" class="form-control py-2" name="roles_and_responsibilities" required>
                                 </div>
 
                                 <!-- Experience -->
@@ -397,7 +393,8 @@
         }
     </style>
 
-    {{-- <script>
+    {{--
+    <script>
         document.querySelectorAll(".edit-btn").forEach(btn => {
             btn.addEventListener("click", function () {
 
@@ -455,14 +452,14 @@
         });
     </script> --}}
     <script>
-        document.getElementById("continueBtn").addEventListener("click", function() {
+        document.getElementById("continueBtn").addEventListener("click", function () {
             const modal = new bootstrap.Modal(document.getElementById("addAnotherPartner"));
             modal.show();
         });
     </script>
 
     <script>
-        document.getElementById("cancelBtn").addEventListener("click", function() {
+        document.getElementById("cancelBtn").addEventListener("click", function () {
             const modal = new bootstrap.Modal(document.getElementById("addPartner"));
             modal.show();
         });
@@ -470,12 +467,12 @@
     @php
         $documentsRoute =
             auth('organization')->user()->role === 'fund_seeker'
-                ? route('projects.apply.documents.startup', $fund->id)
-                : route('projects.apply.documents.npo', $fund->id);
+            ? route('projects.apply.documents.startup', $fund->id)
+            : route('projects.apply.documents.npo', $fund->id);
     @endphp
 
     <script>
-        document.getElementById("goToDocuments").addEventListener("click", function() {
+        document.getElementById("goToDocuments").addEventListener("click", function () {
             window.location.href = "{{ $documentsRoute }}";
         });
     </script>
