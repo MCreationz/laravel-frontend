@@ -47,7 +47,9 @@
     --white-color: #fff;
     --primary-btn: linear-gradient(65.16deg, var(--accent-color) 8.71%, #07CCB5 61.19%);
 }
-
+* {
+    box-sizing: border-box;
+}
 body,
 p,
 span,
@@ -2041,12 +2043,14 @@ ul.select-list input[type="checkbox"]:checked~label:before {
     top: 41%;
 }
 
-.search-input {
-    padding: 8px 10px 8px 30px;
-    font-size: 11px;
+form .search-input {
+    padding: 8px 10px 8px 30px !important;
+    font-size: 11px !important;
     color: #BABABA;
 }
-
+span.badge.bg-primary-subtle {
+    color: #0160D6 !important;
+}
 .search-input::placeholder {
     color: #BABABA;
 }
