@@ -117,7 +117,7 @@
                     class="col-12 col-md-6 top-fields d-flex gap-2 justify-content-md-end align-items-center flex-wrap flex-md-nowrap">
 
                     <!-- Add Button -->
-                    <button class="btn btn-primary add-btn" data-bs-toggle="modal" data-bs-target="#addPartner">
+                    <button class="btn btn-primary add-btn" data-bs-toggle="modal" data-bs-target="#addAward">
                         + Add Awards & Recognitions
                     </button>
                 </div>
@@ -149,13 +149,13 @@
                     Back
                 </button>
                 <button type="button" class="btn btn-primary" id="continueBtn">
-                    Continue
+                    Submit
                 </button>
             </div>
         </div>
     </div>
 
-    <div class="modal fade" id="addPartner" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="addAward" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
 
@@ -163,7 +163,7 @@
                 <div class="modal-header border-0 pb-0">
                     <div>
                         <h2 class="modal-title mb-2 inner-title" id="addPartnerLabel">
-                            Senior Management Details
+                            Awards & Recognitions
                         </h2>
                     </div>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
@@ -183,26 +183,17 @@
                             <div class="row g-3 mb-3">
                                 <div class="col-12">
                                     <label class="form-label fw-semibold">
-                                        Name of Director/Partner <span class="text-danger">*</span>
+                                        Name of the Award <span class="text-danger">*</span>
                                     </label>
 
-                                    <input type="text" class="form-control py-2" name="name" placeholder="Enter Name"
-                                        required>
-                                </div>
-
-                                <!-- Designation -->
-                                <div class="col-12 col-md-6">
-                                    <label class="form-label fw-semibold">
-                                        Designation <span class="text-danger">*</span>
-                                    </label>
-
-                                    <input type="text" class="form-control py-2" name="designation" required>
+                                    <input type="number" class="form-control py-2" name="name"
+                                        placeholder="Enter Number" required>
                                 </div>
 
                                 <!-- Nature of Engagement -->
                                 <div class="col-md-6">
                                     <label class="form-label fw-semibold">
-                                        Nature of Engagement <span class="text-danger">*</span>
+                                        Awarding Organization <span class="text-danger">*</span>
                                     </label>
 
                                     <div class="select-wrapper position-relative">
@@ -220,14 +211,8 @@
                                         </ul>
                                     </div>
                                 </div>
-                            </div>
-
-                            <!-- Contact / Details -->
-                            <div class="row g-3 mb-3">
-
-                                <!-- Gender -->
                                 <div class="col-md-6">
-                                    <label class="form-label fw-semibold">Gender <span class="text-danger">*</span></label>
+                                    <label class="form-label fw-semibold">Year <span class="text-danger">*</span></label>
 
                                     <div class="select-wrapper position-relative">
                                         <div
@@ -238,81 +223,40 @@
                                         <input type="hidden" name="gender" id="gender" class="hidden-select" required>
 
                                         <ul class="select-list" style="display:none;">
-                                            <li data-value="male">Male</li>
-                                            <li data-value="female">Female</li>
-                                            <li data-value="other">Other</li>
+                                            <li data-value="2000">2000</li>
+                                            <li data-value="2001">2001</li>
+                                            <li data-value="2002">2002</li>
                                         </ul>
                                     </div>
                                 </div>
-
-                                <!-- DOB -->
-                                <div class="col-md-6">
-                                    <label class="form-label fw-semibold">Date of Birth <span
-                                            class="text-danger">*</span></label>
-
-                                    <input type="date" class="form-control py-2" name="date_of_birth" required>
-                                </div>
-
-                                <!-- Appointment -->
-                                <div class="col-md-6">
-                                    <label class="form-label fw-semibold">Date of Appointment <span
-                                            class="text-danger">*</span></label>
-
-                                    <input type="date" class="form-control py-2" name="date_of_appointment" required>
-                                </div>
-
-                                <!-- Qualification -->
-                                <div class="col-md-6">
-                                    <label class="form-label fw-semibold">Highest Qualification <span
-                                            class="text-danger">*</span></label>
-
-                                    <div class="select-wrapper position-relative">
-                                        <div
-                                            class="custom-select form-control py-2 d-flex justify-content-between align-items-center">
-                                            <span class="text-muted">Select</span>
-                                        </div>
-
-                                        <input type="hidden" name="highest_qualification" id="highest_qualification"
-                                            class="hidden-select" required>
-
-                                        <ul class="select-list" style="display:none;">
-                                            <li data-value="Diploma">Diploma</li>
-                                            <li data-value="BA">BA</li>
-                                            <li data-value="BCom">BCom</li>
-                                            <li data-value="BSc">BSc</li>
-                                            <li data-value="MBA">MBA</li>
-                                            <li data-value="PhD">PhD</li>
-                                            <li data-value="Others">Others</li>
-                                        </ul>
-                                    </div>
-                                </div>
-
-                                <!-- Roles -->
-                                <div class="col-md-6">
-                                    <label class="form-label fw-semibold">Roles & Responsibilities <span
-                                            class="text-danger">*</span></label>
-
-                                    <input type="text" class="form-control py-2" name="roles_and_responsibilities" required>
-                                </div>
-
-                                <!-- Experience -->
-                                <div class="col-md-6">
-                                    <label class="form-label fw-semibold">Total Years of Experience <span
-                                            class="text-danger">*</span></label>
-
-                                    <input type="number" class="form-control py-2" name="total_years_of_experience"
-                                        required>
-                                </div>
-
-                                <!-- Resume -->
                                 <div class="col-12">
-                                    <label class="form-label">Upload Resume/CV <span class="text-danger">*</span></label>
+                                    <label class="form-label">Upload Certificate <span
+                                            class="text-danger">*</span></label>
 
                                     <input type="file" id="resume_cv" name="resume_cv" hidden>
 
                                     <label for="resume_cv" class="upload-label">
                                         <div class="upload-content">
-                                            <p>Upload Resume/CV</p>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26"
+                                                viewBox="0 0 26 26" fill="none">
+                                                <g opacity="0.2">
+                                                    <path d="M9.75 11.917V18.417L11.9167 16.2503" stroke="#292D32"
+                                                        stroke-width="1.5" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                    <path d="M9.7526 18.4167L7.58594 16.25" stroke="#292D32"
+                                                        stroke-width="1.5" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                    <path
+                                                        d="M23.8307 10.8337V16.2503C23.8307 21.667 21.6641 23.8337 16.2474 23.8337H9.7474C4.33073 23.8337 2.16406 21.667 2.16406 16.2503V9.75032C2.16406 4.33366 4.33073 2.16699 9.7474 2.16699H15.1641"
+                                                        stroke="#292D32" stroke-width="1.5" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                    <path
+                                                        d="M23.8307 10.8337H19.4974C16.2474 10.8337 15.1641 9.75033 15.1641 6.50033V2.16699L23.8307 10.8337Z"
+                                                        stroke="#292D32" stroke-width="1.5" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                </g>
+                                            </svg>
+                                            <p class="mt-2">Upload Resume/CV</p>
                                             <small id="resume_cv_name"></small>
                                         </div>
                                     </label>
@@ -325,7 +269,7 @@
                         <div class="modal-footer border-0 d-flex justify-content-end gap-2">
                             <button type="button" class="btn simple-btn" data-bs-dismiss="modal">Cancel</button>
                             <button type="submit" class="btn gradient-btn">
-                                Save Partner
+                                Add
                             </button>
                         </div>
 
@@ -335,48 +279,37 @@
             </div>
         </div>
     </div>
-
-    <div class="modal fade" id="addAnotherPartner" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="submitAward" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-
                 <!-- Header (same style as main modal) -->
                 <div class="modal-header border-0 pb-0">
                     <div></div>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
-
                 <!-- Body -->
                 <div class="modal-body p-0">
-
-                    <div class="p-3 text-center">
-
+                    <div class="p-3 px-lg-4 text-center">
                         <div class="edit-top-icon mb-3">
                             <img src="{{ asset('img/edit-icon.png') }}" alt="">
                         </div>
-
                         <h2 class="modal-title mb-2 inner-title">
-                            Do you want to add another director/partner details?
+                           Your Application Has Been Submitted Successfully
                         </h2>
-
                         <p class="text-muted mb-0">
-                            You can add multiple directors or partners to this listing.
-                            If you're done, continue to the next step.
+                            Thank you for applying. We have received your application and will review it shortly.
                         </p>
-
                     </div>
-
                 </div>
-
                 <!-- Footer (same structure as first modal) -->
-                <div class="modal-footer border-0 d-flex justify-content-end gap-2">
+                <div class="modal-footer border-0 d-flex justify-content-end gap-2 flex-wrap px-lg-4">
 
-                    <button type="button" class="btn simple-btn" data-bs-dismiss="modal" id="cancelBtn">
-                        Add Another
+                    <button type="button" class="btn gradient-btn  w-100" data-bs-dismiss="modal" id="cancelBtn">
+                       Go To My Projects 
                     </button>
 
-                    <button type="button" class="btn gradient-btn" id="goToDocuments">
-                        Continue
+                    <button type="button" class="btn simple-btn w-100" id="goToDocuments">
+                        Back
                     </button>
 
                 </div>
@@ -452,15 +385,15 @@
         });
     </script> --}}
     <script>
-        document.getElementById("continueBtn").addEventListener("click", function () {
-            const modal = new bootstrap.Modal(document.getElementById("addAnotherPartner"));
+        document.getElementById("continueBtn").addEventListener("click", function() {
+            const modal = new bootstrap.Modal(document.getElementById("submitAward"));
             modal.show();
         });
     </script>
 
     <script>
-        document.getElementById("cancelBtn").addEventListener("click", function () {
-            const modal = new bootstrap.Modal(document.getElementById("addPartner"));
+        document.getElementById("cancelBtn").addEventListener("click", function() {
+            const modal = new bootstrap.Modal(document.getElementById("addAward"));
             modal.show();
         });
     </script>
