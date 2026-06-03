@@ -19,8 +19,7 @@
 @section('content')
     <div class="step-section position-relative mb-3">
         <div class="bg-image position-absolute top-0 start-0 w-100 h-100">
-            <img src="{{ asset('img/dasboard-bg.png') }}" class="img-fluid" alt="steps section" width="100%"
-                height="100%">
+            <img src="{{ asset('img/dasboard-bg.png') }}" class="img-fluid" alt="steps section" width="100%" height="100%">
         </div>
         <div
             class="step-wrapper d-flex flex-wrap justify-content-center justify-content-md-between align-items-center py-3 py-md-4 py-xl-5 px-2 row-gap-2">
@@ -114,8 +113,8 @@
                 <div class="row mb-3 flex-wrap row-gap-3 row-gap-md-4 px-md-1">
                     <div class="col-12 px-md-2">
                         <label class="form-label">Name of the Organization<span>*</span></label>
-                        <input type="text" name="" class="form-control" placeholder="Name of the Organization"
-                            required value="">
+                        <input type="text" name="" class="form-control" placeholder="Name of the Organization" required
+                            value="">
                     </div>
 
                     <div class="col-12 px-md-2">
@@ -132,8 +131,7 @@
                     </div>
                     <div class="col-12 px-md-2">
                         <label class="form-label">Registration Number<span>*</span></label>
-                        <input type="number" name="" class="form-control" placeholder="Enter Registration Number"
-                            value="">
+                        <input type="number" name="" class="form-control" placeholder="Enter Registration Number" value="">
                     </div>
                     <div class="px-md-2">
                         <hr class="mb-0">
@@ -153,13 +151,11 @@
 
                     <div class="col-12 col-md-6 px-md-2">
                         <label class="form-label">12A Registration Number<span>*</span></label>
-                        <input type="number" name="" class="form-control" placeholder="Enter here"
-                            value="">
+                        <input type="number" name="" class="form-control" placeholder="Enter here" value="">
                     </div>
                     <div class="col-12 col-md-6 px-md-2">
                         <label class="form-label">12 A Registration Validity<span>*</span></label>
-                        <input type="number" name="" class="form-control" placeholder="Enter here"
-                            value="">
+                        <input type="number" name="" class="form-control" placeholder="Enter here" value="">
                     </div>
                     <div class="col-12 px-md-2">
                         <label class="form-label">Upload 80G Certificate<span class="text-danger">*</span></label>
@@ -176,13 +172,11 @@
 
                     <div class="col-12 col-md-6 px-md-2">
                         <label class="form-label">80G Registration Number<span>*</span></label>
-                        <input type="number" name="" class="form-control" placeholder="Enter here"
-                            value="">
+                        <input type="number" name="" class="form-control" placeholder="Enter here" value="">
                     </div>
                     <div class="col-12 col-md-6 px-md-2">
                         <label class="form-label">80G Registration Validity<span>*</span></label>
-                        <input type="date" name="" class="form-control" placeholder="Enter here"
-                            value="">
+                        <input type="date" name="" class="form-control" placeholder="Enter here" value="">
                     </div>
                     <div class="col-12 px-md-2">
                         <label class="form-label">Upload FCRA Certificate<span class="text-danger">*</span></label>
@@ -198,13 +192,11 @@
                     </div>
                     <div class="col-12 col-md-6 px-md-2">
                         <label class="form-label">FCRA Registration Number<span>*</span></label>
-                        <input type="number" name="" class="form-control" placeholder="Enter here"
-                            value="">
+                        <input type="number" name="" class="form-control" placeholder="Enter here" value="">
                     </div>
                     <div class="col-12 col-md-6 px-md-2">
                         <label class="form-label">FCRA Registration Validity<span>*</span></label>
-                        <input type="date" name="" class="form-control" placeholder="Enter here"
-                            value="">
+                        <input type="date" name="" class="form-control" placeholder="Enter here" value="">
                     </div>
 
                     <div class="col-12 px-md-2">
@@ -221,34 +213,32 @@
                     </div>
                     <div class="col-12 col-md-6 px-md-2">
                         <label class="form-label">CSR-1 Registration Number<span>*</span></label>
-                        <input type="number" name="" class="form-control" placeholder="Enter here"
-                            value="">
+                        <input type="number" name="" class="form-control" placeholder="Enter here" value="">
                     </div>
                     <div class="col-12 col-md-6 px-md-2">
                         <label class="form-label">CSR-1 Registration Validity<span>*</span></label>
-                        <input type="date" name="" class="form-control" placeholder="Enter here"
-                            value="">
+                        <input type="date" name="" class="form-control" placeholder="Enter here" value="">
                     </div>
 
                 </div>
-               
+
             </div>
-             <div style="border-radius:0px 0px 8px 8px;"
-                    class="d-flex justify-content-center justify-content-md-end gap-2 gap-md-3 steps-btn pe-lg-4 flex-wrap">
-                    <div class="btn-wrap">
-                        <button type="button" class="btn simple-btn" onclick="">
-                            <img src="/img/back.png" class="me-2" width="15" height="6.25">
-                            Back
-                        </button>
-                    </div>
-                    <div class="btn-wrap">
-                        <button type="submit" class="btn gradient-btn">Continue <svg xmlns="http://www.w3.org/2000/svg"
-                                width="17" height="8" viewBox="0 0 17 8" fill="none">
-                                <path d="M12.625 7L15.75 3.875L12.625 0.75M15.75 3.875H0.75" stroke="white"
-                                    stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                            </svg></button>
-                    </div>
+            <div style="border-radius:0px 0px 8px 8px;"
+                class="d-flex justify-content-center justify-content-md-end gap-2 gap-md-3 steps-btn pe-lg-4 flex-wrap">
+                <div class="btn-wrap">
+                    <button type="button" class="btn simple-btn" onclick="">
+                        <img src="/img/back.png" class="me-2" width="15" height="6.25">
+                        Back
+                    </button>
                 </div>
+                <div class="btn-wrap">
+                    <button type="submit" class="btn gradient-btn">Continue <svg xmlns="http://www.w3.org/2000/svg"
+                            width="17" height="8" viewBox="0 0 17 8" fill="none">
+                            <path d="M12.625 7L15.75 3.875L12.625 0.75M15.75 3.875H0.75" stroke="white" stroke-width="1.5"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg></button>
+                </div>
+            </div>
 
         </form>
     </div>
