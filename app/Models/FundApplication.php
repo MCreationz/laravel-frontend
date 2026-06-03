@@ -31,4 +31,13 @@ class FundApplication extends Model
 {
     return $this->hasMany(FundApplicationSeniorManagement::class);
 }
+
+public function npoDocument()
+{
+    return $this->hasOne(FundApplicationNpoDocument::class);
+}
+public function startupDocument()
+{
+    return $this->hasOne(FundApplicationStartupDocument::class);
+}
 }

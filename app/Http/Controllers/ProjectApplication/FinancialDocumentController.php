@@ -4,11 +4,10 @@ namespace App\Http\Controllers\ProjectApplication;
 
 use App\Http\Controllers\Controller;
 use App\Models\Fund;
-use Illuminate\Http\Request;
 
 class FinancialDocumentController extends Controller
 {
-       public function npo(Fund $fund)
+    public function npo(Fund $fund)
     {
         return view('projects.apply.financial-documents.npo');
     }

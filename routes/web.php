@@ -134,8 +134,14 @@ Route::prefix('projects/{fund}/apply')
         Route::get('/documents/npo', [DocumentController::class, 'npo'])
             ->name('documents.npo');
 
+        Route::post('/documents/npo', [DocumentController::class, 'storeNpo'])
+            ->name('documents.npo.store');
+
         Route::get('/documents/startup', [DocumentController::class, 'startup'])
             ->name('documents.startup');
+
+        Route::post('/documents/startup', [DocumentController::class, 'storeStartup'])
+            ->name('documents.startup.store');
 
         // Step 4 - Financial Documents
         Route::get('/financial-documents/npo', [FinancialDocumentController::class, 'npo'])

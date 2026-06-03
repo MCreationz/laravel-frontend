@@ -607,18 +607,17 @@
             modal.show();
         });
     </script>
+@php
+    $documentsRoute = auth('organization')->user()->role === 'fund_seeker'
+        ? route('projects.apply.documents.startup', $fund->id)
+        : route('projects.apply.documents.npo', $fund->id);
+@endphp
 
-    @php
-        $documentsRoute = auth('organization')->user()->role === 'fund_seeker'
-            ? route('projects.apply.documents.npo', $fund->id)
-            : route('projects.apply.documents.startup', $fund->id);
-    @endphp
-
-    <script>
-        document.getElementById("goToDocuments").addEventListener("click", function () {
-            window.location.href = "{{ $documentsRoute }}";
-        });
-    </script>
+<script>
+    document.getElementById("goToDocuments").addEventListener("click", function () {
+        window.location.href = "{{ $documentsRoute }}";
+    });
+</script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 @endsection

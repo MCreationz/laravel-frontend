@@ -19,8 +19,7 @@
 @section('content')
     <div class="step-section position-relative mb-3">
         <div class="bg-image position-absolute top-0 start-0 w-100 h-100">
-            <img src="{{ asset('img/dasboard-bg.png') }}" class="img-fluid" alt="steps section" width="100%"
-                height="100%">
+            <img src="{{ asset('img/dasboard-bg.png') }}" class="img-fluid" alt="steps section" width="100%" height="100%">
         </div>
         <div
             class="step-wrapper d-flex flex-wrap justify-content-center justify-content-md-between align-items-center py-3 py-md-4 py-xl-5 px-2 row-gap-2">
@@ -102,10 +101,14 @@
             </div>
 
         </div>
-    </div>
+    </div> @php
+        $document = $fundApplication->startupDocument ?? null;
+       //  dd($document);
+    @endphp
 
     <div class="card-body p-0">
-        <form class="step2Form" method="POST" action="{{ route('onboarding.step2.store') }}">
+        <form class="step2Form" method="POST" action="{{ route('projects.apply.documents.startup.store', $fund->id) }}"
+            enctype="multipart/form-data">
             @csrf
             <div style="border-radius:8px;" class="card p-3 p-md-4 border-0">
                 <div class="mb-4">
@@ -114,26 +117,32 @@
                 <div class="row mb-3 flex-wrap row-gap-3 row-gap-md-4 px-md-1">
                     <div class="col-12 px-md-2">
                         <label class="form-label">Name of the Organization<span>*</span></label>
-                        <input type="text" name="" class="form-control" placeholder="Name of the Organization"
-                            required value="">
+                        <input type="text" name="organization_name" class="form-control"
+                            placeholder="Name of the Organization" required
+                            value="{{ old('organization_name', $document->organization_name ?? '') }}">
                     </div>
 
                     <div class="col-12 px-md-2">
                         <label class="form-label">Upload Registration Certificate <span class="text-danger">*</span></label>
 
-                        <input type="file" id="registration-certificate" name="registration-certificate" hidden>
+                        <input type="file" id="registration_certificate" name="registration_certificate" hidden>
 
-                        <label for="registration-certificate" class="upload-label">
+                        <label for="registration_certificate" class="upload-label">
                             <div class="upload-content">
                                 <p>Upload pdf/JPG upto 5 MB</p>
-                                <small id="registration-certificate"></small>
+                                @if(!empty($document->registration_certificate))
+                                    <small class="text-success d-block mb-1">Current file:
+                                        {{ basename($document->registration_certificate) }}</small>
+                                @endif
+                                <small id="registration-certificate-help"></small>
                             </div>
                         </label>
                     </div>
                     <div class="col-12 px-md-2">
                         <label class="form-label">Registration Number<span>*</span></label>
-                        <input type="number" name="" class="form-control" placeholder="Enter Registration Number"
-                            value="">
+                        <input type="text" name="registration_number" class="form-control"
+                            placeholder="Enter Registration Number"
+                            value="{{ old('registration_number', $document->registration_number ?? '') }}">
                     </div>
                     <div class="px-md-2">
                         <hr class="mb-0">
@@ -141,33 +150,37 @@
                     <div class="col-12 px-md-2">
                         <label class="form-label">Upload DPIIT Certificate<span class="text-danger">*</span></label>
 
-                        <input type="file" id="DPIIT-certificate" name="DPIIT-certificate" hidden>
+                        <input type="file" id="dpiit_certificate" name="dpiit_certificate" hidden>
 
-                        <label for="DPIIT-certificate" class="upload-label">
+                        <label for="dpiit_certificate" class="upload-label">
                             <div class="upload-content">
                                 <p>Upload pdf/JPG upto 5 MB</p>
-                                <small id="registration-certificate"></small>
+                                @if(!empty($document->dpiit_certificate))
+                                    <small class="text-success d-block mb-1">Current file:
+                                        {{ basename($document->dpiit_certificate) }}</small>
+                                @endif
+                                <small id="dpiit-certificate-help"></small>
                             </div>
                         </label>
                     </div>
 
                     <div class="col-12 px-md-2">
                         <label class="form-label">DPIIT Registration Number<span>*</span></label>
-                        <input type="number" name="" class="form-control" placeholder="Enter here"
-                            value="">
+                        <input type="text" name="dpiit_registration_number" class="form-control" placeholder="Enter here"
+                            value="{{ old('dpiit_registration_number', $document->dpiit_registration_number ?? '') }}">
                     </div>
                     {{-- radio --}}
                     <div class="col-12 px-md-2">
                         <div class="d-flex align-items-center gap-3">
                             <label class="form-label mb-0">Patent Available</label>
                             <label class="custom-radio mb-0">
-                                <input type="radio" name="patent" checked>
+                                <input type="radio" name="patent_available" value="1" {{ old('patent_available', $document->patent_available ?? '1') == '1' ? 'checked' : '' }}>
                                 <span class="radio"></span>
                                 Yes
                             </label>
 
                             <label class="custom-radio mb-0">
-                                <input type="radio" name="patent">
+                                <input type="radio" name="patent_available" value="0" {{ old('patent_available', $document->patent_available ?? '') == '0' ? 'checked' : '' }}>
                                 <span class="radio"></span>
                                 No
                             </label>
@@ -177,33 +190,33 @@
 
                     <div class="col-12 col-md-6 px-md-2">
                         <label class="form-label">Patent No<span>*</span></label>
-                        <input type="number" name="" class="form-control" placeholder="Enter here"
-                            value="">
+                        <input type="text" name="patent_number" class="form-control" placeholder="Enter here"
+                            value="{{ old('patent_number', $document->patent_number ?? '') }}">
                     </div>
                     <div class="col-12 col-md-6 px-md-2">
                         <label class="form-label">Application No<span>*</span></label>
-                        <input type="number" name="" class="form-control" placeholder="Enter here"
-                            value="">
+                        <input type="text" name="application_number" class="form-control" placeholder="Enter here"
+                            value="{{ old('application_number', $document->application_number ?? '') }}">
                     </div>
                     <div class="col-12 col-md-6 px-md-2">
                         <label class="form-label">Date of Filling<span>*</span></label>
-                        <input type="date" name="" class="form-control" placeholder="Enter here"
-                            value="">
+                        <input type="date" name="date_of_filing" class="form-control" placeholder="Enter here"
+                            value="{{ old('date_of_filing', $document->date_of_filing ?? '') }}">
                     </div>
                     <div class="col-12 col-md-6 px-md-2">
                         <label class="form-label">Patentee Name<span>*</span></label>
-                        <input type="date" name="" class="form-control" placeholder="Enter here"
-                            value="">
+                        <input type="text" name="patentee_name" class="form-control" placeholder="Enter here"
+                            value="{{ old('patentee_name', $document->patentee_name ?? '') }}">
                     </div>
                     <div class="col-12 col-md-6 px-md-2">
                         <label class="form-label">Validity of the Patent<span>*</span></label>
-                        <input type="date" name="" class="form-control" placeholder="Enter here"
-                            value="">
+                        <input type="date" name="patent_validity" class="form-control" placeholder="Enter here"
+                            value="{{ old('patent_validity', $document->patent_validity ?? '') }}">
                     </div>
                     <div class="col-12 col-md-6 px-md-2">
                         <label class="form-label">GST Registration No<span>*</span></label>
-                        <input type="date" name="" class="form-control" placeholder="Enter here"
-                            value="">
+                        <input type="text" name="gst_registration_number" class="form-control" placeholder="Enter here"
+                            value="{{ old('gst_registration_number', $document->gst_registration_number ?? '') }}">
                     </div>
 
 
@@ -211,25 +224,29 @@
                     <div class="col-12 px-md-2">
                         <label class="form-label">Upload GST Certificate<span class="text-danger">*</span></label>
 
-                        <input type="file" id="80g-certificate" name="80g-certificate" hidden>
+                        <input type="file" id="gst_certificate" name="gst_certificate" hidden>
 
-                        <label for="80g-certificate" class="upload-label">
+                        <label for="gst_certificate" class="upload-label">
                             <div class="upload-content">
                                 <p>Upload pdf/JPG upto 5 MB</p>
-                                <small id="80g-certificate"></small>
+                                @if(!empty($document->gst_certificate))
+                                    <small class="text-success d-block mb-1">Current file:
+                                        {{ basename($document->gst_certificate) }}</small>
+                                @endif
+                                <small id="gst-certificate-help"></small>
                             </div>
                         </label>
                     </div>
 
                     <div class="col-12 col-md-6 px-md-2">
                         <label class="form-label">MSME Registration Number<span>*</span></label>
-                        <input type="number" name="" class="form-control" placeholder="Enter here"
-                            value="">
+                        <input type="text" name="msme_registration_number" class="form-control" placeholder="Enter here"
+                            value="{{ old('msme_registration_number', $document->msme_registration_number ?? '') }}">
                     </div>
                     <div class="col-12 col-md-6 px-md-2">
                         <label class="form-label">MSME Registration Validity<span>*</span></label>
-                        <input type="date" name="" class="form-control" placeholder="Enter here"
-                            value="">
+                        <input type="date" name="msme_registration_validity" class="form-control" placeholder="Enter here"
+                            value="{{ old('msme_registration_validity', $document->msme_registration_validity ?? '') }}">
                     </div>
                 </div>
             </div>
