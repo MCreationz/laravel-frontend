@@ -145,8 +145,7 @@
         <div style="border-radius:0px 0px 8px 8px;"
             class="d-flex justify-content-center justify-content-md-end gap-2 gap-md-3 mt-4 steps-btn pe-lg-4 flex-wrap">
             <div class="btn-wrap">
-                <button type="button" class="btn btn-secondary"
-                    onclick="window.location.href='{{ route('dashboard') }}' ">
+                <button type="button" class="btn btn-secondary" onclick="window.location.href='{{ route('dashboard') }}' ">
                     Back
                 </button>
                 <button type="button" class="btn btn-primary" id="continueBtn">
@@ -221,8 +220,7 @@
                                             <span class="text-muted">Select</span>
                                         </div>
 
-                                        <input type="hidden" name="gender" id="gender" class="hidden-select"
-                                            required>
+                                        <input type="hidden" name="gender" id="gender" class="hidden-select" required>
 
                                         <ul class="select-list" style="display:none;">
                                             <li data-value="2000">2000</li>
@@ -328,7 +326,8 @@
         }
     </style>
 
-    {{-- <script>
+    {{--
+    <script>
         document.querySelectorAll(".edit-btn").forEach(btn => {
             btn.addEventListener("click", function () {
 
@@ -401,12 +400,12 @@
     @php
         $documentsRoute =
             auth('organization')->user()->role === 'fund_seeker'
-                ? route('projects.apply.documents.startup', $fund->id)
-                : route('projects.apply.documents.npo', $fund->id);
+            ? route('projects.apply.documents.startup', $fund->id)
+            : route('projects.apply.documents.npo', $fund->id);
     @endphp
 
     <script>
-        document.getElementById("goToDocuments").addEventListener("click", function() {
+        document.getElementById("goToDocuments").addEventListener("click", function () {
             window.location.href = "{{ $documentsRoute }}";
         });
     </script>
