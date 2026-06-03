@@ -130,7 +130,24 @@
                         <input type="file" id="registration-certificate" name="registration_certificate" hidden>
                         <label for="registration-certificate" class="upload-label">
                             <div class="upload-content">
-                                <p>Upload pdf/JPG upto 5 MB</p>
+                                               <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26"
+                                    viewBox="0 0 26 26" fill="none">
+                                    <g opacity="0.2">
+                                        <path d="M9.75 11.917V18.417L11.9167 16.2503" stroke="#292D32" stroke-width="1.5"
+                                            stroke-linecap="round" stroke-linejoin="round" />
+                                        <path d="M9.7526 18.4167L7.58594 16.25" stroke="#292D32" stroke-width="1.5"
+                                            stroke-linecap="round" stroke-linejoin="round" />
+                                        <path
+                                            d="M23.8307 10.8337V16.2503C23.8307 21.667 21.6641 23.8337 16.2474 23.8337H9.7474C4.33073 23.8337 2.16406 21.667 2.16406 16.2503V9.75032C2.16406 4.33366 4.33073 2.16699 9.7474 2.16699H15.1641"
+                                            stroke="#292D32" stroke-width="1.5" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                        <path
+                                            d="M23.8307 10.8337H19.4974C16.2474 10.8337 15.1641 9.75033 15.1641 6.50033V2.16699L23.8307 10.8337Z"
+                                            stroke="#292D32" stroke-width="1.5" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                    </g>
+                                </svg>
+                                <p class="mt-2">Upload pdf/JPG upto 5 MB</p>
                                 <small id="registration-certificate"></small>
                             </div>
                         </label>
@@ -150,7 +167,24 @@
                         <input type="file" id="certificate-12a" name="certificate_12a" hidden>
                         <label for="certificate-12a" class="upload-label">
                             <div class="upload-content">
-                                <p>Upload pdf/JPG upto 5 MB</p>
+                                               <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26"
+                                    viewBox="0 0 26 26" fill="none">
+                                    <g opacity="0.2">
+                                        <path d="M9.75 11.917V18.417L11.9167 16.2503" stroke="#292D32" stroke-width="1.5"
+                                            stroke-linecap="round" stroke-linejoin="round" />
+                                        <path d="M9.7526 18.4167L7.58594 16.25" stroke="#292D32" stroke-width="1.5"
+                                            stroke-linecap="round" stroke-linejoin="round" />
+                                        <path
+                                            d="M23.8307 10.8337V16.2503C23.8307 21.667 21.6641 23.8337 16.2474 23.8337H9.7474C4.33073 23.8337 2.16406 21.667 2.16406 16.2503V9.75032C2.16406 4.33366 4.33073 2.16699 9.7474 2.16699H15.1641"
+                                            stroke="#292D32" stroke-width="1.5" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                        <path
+                                            d="M23.8307 10.8337H19.4974C16.2474 10.8337 15.1641 9.75033 15.1641 6.50033V2.16699L23.8307 10.8337Z"
+                                            stroke="#292D32" stroke-width="1.5" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                    </g>
+                                </svg>
+                                <p class="mt-2">Upload pdf/JPG upto 5 MB</p>
                                 <small id="registration-certificate"></small>
                             </div>
                         </label>
@@ -172,7 +206,24 @@
                         <input type="file" id="certificate-80g" name="certificate_80g" hidden>
                         <label for="certificate-80g" class="upload-label">
                             <div class="upload-content">
-                                <p>Upload pdf/JPG upto 5 MB</p>
+                                               <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26"
+                                    viewBox="0 0 26 26" fill="none">
+                                    <g opacity="0.2">
+                                        <path d="M9.75 11.917V18.417L11.9167 16.2503" stroke="#292D32" stroke-width="1.5"
+                                            stroke-linecap="round" stroke-linejoin="round" />
+                                        <path d="M9.7526 18.4167L7.58594 16.25" stroke="#292D32" stroke-width="1.5"
+                                            stroke-linecap="round" stroke-linejoin="round" />
+                                        <path
+                                            d="M23.8307 10.8337V16.2503C23.8307 21.667 21.6641 23.8337 16.2474 23.8337H9.7474C4.33073 23.8337 2.16406 21.667 2.16406 16.2503V9.75032C2.16406 4.33366 4.33073 2.16699 9.7474 2.16699H15.1641"
+                                            stroke="#292D32" stroke-width="1.5" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                        <path
+                                            d="M23.8307 10.8337H19.4974C16.2474 10.8337 15.1641 9.75033 15.1641 6.50033V2.16699L23.8307 10.8337Z"
+                                            stroke="#292D32" stroke-width="1.5" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                    </g>
+                                </svg>
+                                <p class="mt-2">Upload pdf/JPG upto 5 MB</p>
                                 <small id="80g-certificate"></small>
                             </div>
                         </label>
@@ -197,7 +248,24 @@
 
                         <label for="certificate-fcra" class="upload-label">
                             <div class="upload-content">
-                                <p>Upload pdf/JPG upto 5 MB</p>
+                                               <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26"
+                                    viewBox="0 0 26 26" fill="none">
+                                    <g opacity="0.2">
+                                        <path d="M9.75 11.917V18.417L11.9167 16.2503" stroke="#292D32" stroke-width="1.5"
+                                            stroke-linecap="round" stroke-linejoin="round" />
+                                        <path d="M9.7526 18.4167L7.58594 16.25" stroke="#292D32" stroke-width="1.5"
+                                            stroke-linecap="round" stroke-linejoin="round" />
+                                        <path
+                                            d="M23.8307 10.8337V16.2503C23.8307 21.667 21.6641 23.8337 16.2474 23.8337H9.7474C4.33073 23.8337 2.16406 21.667 2.16406 16.2503V9.75032C2.16406 4.33366 4.33073 2.16699 9.7474 2.16699H15.1641"
+                                            stroke="#292D32" stroke-width="1.5" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                        <path
+                                            d="M23.8307 10.8337H19.4974C16.2474 10.8337 15.1641 9.75033 15.1641 6.50033V2.16699L23.8307 10.8337Z"
+                                            stroke="#292D32" stroke-width="1.5" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                    </g>
+                                </svg>
+                                <p class="mt-2">Upload pdf/JPG upto 5 MB</p>
                                 <small>
                                     {{ $document?->certificate_fcra ? basename($document->certificate_fcra) : '' }}
                                 </small>
@@ -224,7 +292,24 @@
 
                         <label for="certificate-csr1" class="upload-label">
                             <div class="upload-content">
-                                <p>Upload pdf/JPG upto 5 MB</p>
+                                               <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26"
+                                    viewBox="0 0 26 26" fill="none">
+                                    <g opacity="0.2">
+                                        <path d="M9.75 11.917V18.417L11.9167 16.2503" stroke="#292D32" stroke-width="1.5"
+                                            stroke-linecap="round" stroke-linejoin="round" />
+                                        <path d="M9.7526 18.4167L7.58594 16.25" stroke="#292D32" stroke-width="1.5"
+                                            stroke-linecap="round" stroke-linejoin="round" />
+                                        <path
+                                            d="M23.8307 10.8337V16.2503C23.8307 21.667 21.6641 23.8337 16.2474 23.8337H9.7474C4.33073 23.8337 2.16406 21.667 2.16406 16.2503V9.75032C2.16406 4.33366 4.33073 2.16699 9.7474 2.16699H15.1641"
+                                            stroke="#292D32" stroke-width="1.5" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                        <path
+                                            d="M23.8307 10.8337H19.4974C16.2474 10.8337 15.1641 9.75033 15.1641 6.50033V2.16699L23.8307 10.8337Z"
+                                            stroke="#292D32" stroke-width="1.5" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                    </g>
+                                </svg>
+                                <p class="mt-2">Upload pdf/JPG upto 5 MB</p>
                                 <small>
                                     {{ $document?->certificate_csr1 ? basename($document->certificate_csr1) : '' }}
                                 </small>

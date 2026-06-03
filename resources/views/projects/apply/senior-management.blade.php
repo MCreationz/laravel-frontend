@@ -121,69 +121,6 @@
             </div>
         </div>
 
-        <!-- Table -->
-        {{-- <div class="table-responsive">
-            <table class="table align-middle text-center">
-                <thead class="table-light">
-                    <tr>
-                        <th class="text-nowrap">S No.</th>
-                        <th class="text-nowrap">Name of Director/Partner</th>
-                        <th class="text-nowrap">Designation</th>
-                        <th class="text-nowrap">Nature of Engagement</th>
-                        <th class="text-nowrap">Appointment Date</th>
-                        <th class="text-nowrap">Total Experience</th>
-                        <th></th>
-                    </tr>
-
-                </thead>
-                <tbody id="">
-                    <tr>
-                        <td>1</td>
-                        <td>Mukesh Sharma</td>
-                        <td>Chief Executive Officer</td>
-                        <td>Full-time</td>
-                        <td>12/05/2018</td>
-                        <td>05 Years</td>
-                        <td>
-                            <button class="bg-transparent border-0 px-1 py-2">⫶</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Mukesh Sharma</td>
-                        <td>Chief Executive Officer</td>
-                        <td>Full-time</td>
-                        <td>12/05/2018</td>
-                        <td>05 Years</td>
-                        <td>
-                            <button class="bg-transparent border-0 px-1 py-2">⫶</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Mukesh Sharma</td>
-                        <td>Chief Executive Officer</td>
-                        <td>Full-time</td>
-                        <td>12/05/2018</td>
-                        <td>05 Years</td>
-                        <td>
-                            <button class="bg-transparent border-0 px-1 py-2">⫶</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Mukesh Sharma</td>
-                        <td>Chief Executive Officer</td>
-                        <td>Full-time</td>
-                        <td>12/05/2018</td>
-                        <td>05 Years</td>
-                        <td>
-                            <button class="bg-transparent border-0 px-1 py-2">⫶</button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div> --}}
         <div class="table-responsive">
             <table class="table align-middle text-center">
                 <thead class="table-light">

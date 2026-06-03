@@ -19,7 +19,8 @@
 @section('content')
     <div class="step-section position-relative mb-3">
         <div class="bg-image position-absolute top-0 start-0 w-100 h-100">
-            <img src="{{ asset('img/dasboard-bg.png') }}" class="img-fluid" alt="steps section" width="100%" height="100%">
+            <img src="{{ asset('img/dasboard-bg.png') }}" class="img-fluid" alt="steps section" width="100%"
+                height="100%">
         </div>
         <div
             class="step-wrapper d-flex flex-wrap justify-content-center justify-content-md-between align-items-center py-3 py-md-4 py-xl-5 px-2 row-gap-2">
@@ -103,7 +104,7 @@
         </div>
     </div> @php
         $document = $fundApplication->startupDocument ?? null;
-       //  dd($document);
+        //  dd($document);
     @endphp
 
     <div class="card-body p-0">
@@ -129,8 +130,25 @@
 
                         <label for="registration_certificate" class="upload-label">
                             <div class="upload-content">
-                                <p>Upload pdf/JPG upto 5 MB</p>
-                                @if(!empty($document->registration_certificate))
+                                <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26"
+                                    fill="none">
+                                    <g opacity="0.2">
+                                        <path d="M9.75 11.917V18.417L11.9167 16.2503" stroke="#292D32" stroke-width="1.5"
+                                            stroke-linecap="round" stroke-linejoin="round" />
+                                        <path d="M9.7526 18.4167L7.58594 16.25" stroke="#292D32" stroke-width="1.5"
+                                            stroke-linecap="round" stroke-linejoin="round" />
+                                        <path
+                                            d="M23.8307 10.8337V16.2503C23.8307 21.667 21.6641 23.8337 16.2474 23.8337H9.7474C4.33073 23.8337 2.16406 21.667 2.16406 16.2503V9.75032C2.16406 4.33366 4.33073 2.16699 9.7474 2.16699H15.1641"
+                                            stroke="#292D32" stroke-width="1.5" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                        <path
+                                            d="M23.8307 10.8337H19.4974C16.2474 10.8337 15.1641 9.75033 15.1641 6.50033V2.16699L23.8307 10.8337Z"
+                                            stroke="#292D32" stroke-width="1.5" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                    </g>
+                                </svg>
+                                <p class="mt-2">Upload pdf/JPG upto 5 MB</p>
+                                @if (!empty($document->registration_certificate))
                                     <small class="text-success d-block mb-1">Current file:
                                         {{ basename($document->registration_certificate) }}</small>
                                 @endif
@@ -154,8 +172,25 @@
 
                         <label for="dpiit_certificate" class="upload-label">
                             <div class="upload-content">
-                                <p>Upload pdf/JPG upto 5 MB</p>
-                                @if(!empty($document->dpiit_certificate))
+                                <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26"
+                                    viewBox="0 0 26 26" fill="none">
+                                    <g opacity="0.2">
+                                        <path d="M9.75 11.917V18.417L11.9167 16.2503" stroke="#292D32" stroke-width="1.5"
+                                            stroke-linecap="round" stroke-linejoin="round" />
+                                        <path d="M9.7526 18.4167L7.58594 16.25" stroke="#292D32" stroke-width="1.5"
+                                            stroke-linecap="round" stroke-linejoin="round" />
+                                        <path
+                                            d="M23.8307 10.8337V16.2503C23.8307 21.667 21.6641 23.8337 16.2474 23.8337H9.7474C4.33073 23.8337 2.16406 21.667 2.16406 16.2503V9.75032C2.16406 4.33366 4.33073 2.16699 9.7474 2.16699H15.1641"
+                                            stroke="#292D32" stroke-width="1.5" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                        <path
+                                            d="M23.8307 10.8337H19.4974C16.2474 10.8337 15.1641 9.75033 15.1641 6.50033V2.16699L23.8307 10.8337Z"
+                                            stroke="#292D32" stroke-width="1.5" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                    </g>
+                                </svg>
+                                <p class="mt-2">Upload pdf/JPG upto 5 MB</p>
+                                @if (!empty($document->dpiit_certificate))
                                     <small class="text-success d-block mb-1">Current file:
                                         {{ basename($document->dpiit_certificate) }}</small>
                                 @endif
@@ -166,7 +201,8 @@
 
                     <div class="col-12 px-md-2">
                         <label class="form-label">DPIIT Registration Number<span>*</span></label>
-                        <input type="text" name="dpiit_registration_number" class="form-control" placeholder="Enter here"
+                        <input type="text" name="dpiit_registration_number" class="form-control"
+                            placeholder="Enter here"
                             value="{{ old('dpiit_registration_number', $document->dpiit_registration_number ?? '') }}">
                     </div>
                     {{-- radio --}}
@@ -174,13 +210,15 @@
                         <div class="d-flex align-items-center gap-3">
                             <label class="form-label mb-0">Patent Available</label>
                             <label class="custom-radio mb-0">
-                                <input type="radio" name="patent_available" value="1" {{ old('patent_available', $document->patent_available ?? '1') == '1' ? 'checked' : '' }}>
+                                <input type="radio" name="patent_available" value="1"
+                                    {{ old('patent_available', $document->patent_available ?? '1') == '1' ? 'checked' : '' }}>
                                 <span class="radio"></span>
                                 Yes
                             </label>
 
                             <label class="custom-radio mb-0">
-                                <input type="radio" name="patent_available" value="0" {{ old('patent_available', $document->patent_available ?? '') == '0' ? 'checked' : '' }}>
+                                <input type="radio" name="patent_available" value="0"
+                                    {{ old('patent_available', $document->patent_available ?? '') == '0' ? 'checked' : '' }}>
                                 <span class="radio"></span>
                                 No
                             </label>
@@ -215,7 +253,8 @@
                     </div>
                     <div class="col-12 col-md-6 px-md-2">
                         <label class="form-label">GST Registration No<span>*</span></label>
-                        <input type="text" name="gst_registration_number" class="form-control" placeholder="Enter here"
+                        <input type="text" name="gst_registration_number" class="form-control"
+                            placeholder="Enter here"
                             value="{{ old('gst_registration_number', $document->gst_registration_number ?? '') }}">
                     </div>
 
@@ -228,8 +267,25 @@
 
                         <label for="gst_certificate" class="upload-label">
                             <div class="upload-content">
-                                <p>Upload pdf/JPG upto 5 MB</p>
-                                @if(!empty($document->gst_certificate))
+                                <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26"
+                                    viewBox="0 0 26 26" fill="none">
+                                    <g opacity="0.2">
+                                        <path d="M9.75 11.917V18.417L11.9167 16.2503" stroke="#292D32" stroke-width="1.5"
+                                            stroke-linecap="round" stroke-linejoin="round" />
+                                        <path d="M9.7526 18.4167L7.58594 16.25" stroke="#292D32" stroke-width="1.5"
+                                            stroke-linecap="round" stroke-linejoin="round" />
+                                        <path
+                                            d="M23.8307 10.8337V16.2503C23.8307 21.667 21.6641 23.8337 16.2474 23.8337H9.7474C4.33073 23.8337 2.16406 21.667 2.16406 16.2503V9.75032C2.16406 4.33366 4.33073 2.16699 9.7474 2.16699H15.1641"
+                                            stroke="#292D32" stroke-width="1.5" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                        <path
+                                            d="M23.8307 10.8337H19.4974C16.2474 10.8337 15.1641 9.75033 15.1641 6.50033V2.16699L23.8307 10.8337Z"
+                                            stroke="#292D32" stroke-width="1.5" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                    </g>
+                                </svg>
+                                <p class="mt-2">Upload pdf/JPG upto 5 MB</p>
+                                @if (!empty($document->gst_certificate))
                                     <small class="text-success d-block mb-1">Current file:
                                         {{ basename($document->gst_certificate) }}</small>
                                 @endif
@@ -240,12 +296,14 @@
 
                     <div class="col-12 col-md-6 px-md-2">
                         <label class="form-label">MSME Registration Number<span>*</span></label>
-                        <input type="text" name="msme_registration_number" class="form-control" placeholder="Enter here"
+                        <input type="text" name="msme_registration_number" class="form-control"
+                            placeholder="Enter here"
                             value="{{ old('msme_registration_number', $document->msme_registration_number ?? '') }}">
                     </div>
                     <div class="col-12 col-md-6 px-md-2">
                         <label class="form-label">MSME Registration Validity<span>*</span></label>
-                        <input type="date" name="msme_registration_validity" class="form-control" placeholder="Enter here"
+                        <input type="date" name="msme_registration_validity" class="form-control"
+                            placeholder="Enter here"
                             value="{{ old('msme_registration_validity', $document->msme_registration_validity ?? '') }}">
                     </div>
                 </div>
