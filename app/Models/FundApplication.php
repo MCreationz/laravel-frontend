@@ -48,4 +48,8 @@ public function awardRecognitions()
 {
     return $this->hasMany(FundApplicationAwardRecognition::class);
 }
+public function organization()
+{
+    return $this->belongsTo(Organization::class);
+}
 }

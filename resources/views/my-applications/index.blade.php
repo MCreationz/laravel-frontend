@@ -9,6 +9,6 @@
 @section('content')
 
 
-My applications
+    My applications
 
 @endsection
