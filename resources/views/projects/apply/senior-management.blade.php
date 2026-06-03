@@ -480,59 +480,54 @@
         </div>
     </div>
 
-  <div class="modal fade" id="addAnotherPartner" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
+    <div class="modal fade" id="addAnotherPartner" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
 
-            <!-- Header (same style as main modal) -->
-            <div class="modal-header border-0 pb-0">
-                <div></div>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
+                <!-- Header (same style as main modal) -->
+                <div class="modal-header border-0 pb-0">
+                    <div></div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
 
-            <!-- Body -->
-            <div class="modal-body p-0">
+                <!-- Body -->
+                <div class="modal-body p-0">
 
-                <div class="p-3 text-center">
+                    <div class="p-3 text-center">
 
-                    <div class="edit-top-icon mb-3">
-                        <img src="{{ asset('img/edit-icon.png') }}" alt="">
+                        <div class="edit-top-icon mb-3">
+                            <img src="{{ asset('img/edit-icon.png') }}" alt="">
+                        </div>
+
+                        <h2 class="modal-title mb-2 inner-title">
+                            Do you want to add another director/partner details?
+                        </h2>
+
+                        <p class="text-muted mb-0">
+                            You can add multiple directors or partners to this listing.
+                            If you're done, continue to the next step.
+                        </p>
+
                     </div>
 
-                    <h2 class="modal-title mb-2 inner-title">
-                        Do you want to add another director/partner details?
-                    </h2>
+                </div>
 
-                    <p class="text-muted mb-0">
-                        You can add multiple directors or partners to this listing.
-                        If you're done, continue to the next step.
-                    </p>
+                <!-- Footer (same structure as first modal) -->
+                <div class="modal-footer border-0 d-flex justify-content-end gap-2">
+
+                    <button type="button" class="btn simple-btn" data-bs-dismiss="modal" id="cancelBtn">
+                        Add Another
+                    </button>
+
+                    <button type="button" class="btn gradient-btn" id="goToDocuments">
+                        Continue
+                    </button>
 
                 </div>
 
             </div>
-
-            <!-- Footer (same structure as first modal) -->
-            <div class="modal-footer border-0 d-flex justify-content-end gap-2">
-
-                <button type="button"
-                    class="btn simple-btn"
-                    data-bs-dismiss="modal"
-                    id="cancelBtn">
-                    Add Another
-                </button>
-
-                <button type="button"
-                    class="btn gradient-btn"
-                    id="goToDocuments">
-                    Continue
-                </button>
-
-            </div>
-
         </div>
     </div>
-</div>
 
     <style>
         .card-box table th {
@@ -613,9 +608,15 @@
         });
     </script>
 
+    @php
+        $documentsRoute = auth('organization')->user()->role === 'fund_seeker'
+            ? route('projects.apply.documents.npo', $fund->id)
+            : route('projects.apply.documents.startup', $fund->id);
+    @endphp
+
     <script>
         document.getElementById("goToDocuments").addEventListener("click", function () {
-            window.location.href = "{{ route('projects.apply.documents', $fund->id) }}";
+            window.location.href = "{{ $documentsRoute }}";
         });
     </script>
 

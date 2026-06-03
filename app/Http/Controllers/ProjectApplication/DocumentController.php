@@ -3,15 +3,20 @@
 namespace App\Http\Controllers\ProjectApplication;
 
 use App\Http\Controllers\Controller;
+use App\Models\Fund;
 use App\Models\FundApplication;
 
 class DocumentController extends Controller
 {
-    public function index($fund)
+      public function npo(Fund $fund)
     {
-        // optional: validate fund exists
-        $fund = FundApplication::findOrFail($fund);
-
-        return view('projects.apply.documents', compact('fund'));
+        return view('projects.apply.documents.npo');
     }
+
+    public function startup(Fund $fund)
+    {
+        return view('projects.apply.documents.startup');
+    }
+
+
 }
