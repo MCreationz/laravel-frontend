@@ -135,9 +135,69 @@
                 </thead>
 
                 <tbody>
-                    <tr>
-                        <td>Ramesh Gupta <br> +91 441549878</td>
-                    </tr>
+                    @forelse($awards as $award)
+                        <tr>
+                            <td>{{ $award->award_name }}</td>
+                            <td>{{ $award->awarding_organization }}</td>
+                            <td>{{ $award->year }}</td>
+                            <td class="d-flex justify-content-center align-items-center gap-2">
+
+                                <!-- EDIT -->
+                                <button type="button" class="edit-btn border-0 bg-transparent p-1" data-id="{{ $award->id }}"
+                                    data-award_name="{{ $award->award_name }}"
+                                    data-awarding_organization="{{ $award->awarding_organization }}"
+                                    data-year="{{ $award->year }}" data-bs-toggle="modal" data-bs-target="#addAward">
+
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"
+                                        fill="none">
+
+                                        <path
+                                            d="M8.8198 2.39503L3.35707 8.17714C3.1508 8.39671 2.95119 8.8292 2.91127 9.12862L2.66508 11.2844C2.57858 12.0629 3.1375 12.5952 3.90933 12.4621L6.05184 12.0962C6.35126 12.043 6.77044 11.8234 6.97671 11.5972L12.4394 5.81506C13.3843 4.81699 13.8101 3.6792 12.3396 2.28857C10.8758 0.911245 9.76463 1.39697 8.8198 2.39503Z"
+                                            stroke="#07CCB5" stroke-width="1.2" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+
+                                        <path d="M7.91406 3.35938C8.20017 5.19581 9.69061 6.59975 11.5404 6.78605"
+                                            stroke="#07CCB5" stroke-width="1.2" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+
+                                        <path d="M2 14.6387H13.9767" stroke="#07CCB5" stroke-width="1.2" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                    </svg>
+
+                                </button>
+
+                                <!-- DELETE -->
+                                <form method="POST"
+                                    action="{{ route('projects.apply.awards-recognition.destroy', [$fund->id, $award->id]) }}"
+                                    onsubmit="return confirm('Delete this award?')">
+
+                                    @csrf
+                                    @method('DELETE')
+
+                                    <button type="submit" class="border-0 bg-transparent p-1">
+
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="15" viewBox="0 0 13 15"
+                                            fill="none">
+
+                                            <path
+                                                d="M7.91403 5.09124L7.68381 11.0796M4.498 11.0796L4.26778 5.09124M8.58606 2.69123C9.3604 2.75118 10.1323 2.83929 10.9002 2.95538C11.1278 2.98998 11.354 3.02658 11.5802 3.06584M10.9002 2.95538L10.1896 12.1928C10.1606 12.5689 9.99071 12.9201 9.71388 13.1764C9.43706 13.4326 9.07371 13.5749 8.69651 13.5748H3.4853C3.10809 13.5749 2.74475 13.4326 2.46792 13.1764C2.1911 12.9201 2.0212 12.5689 1.9922 12.1928L1.28158 2.95538M1.28158 2.95538C1.05402 2.98932 0.82779 3.02591 0.601562 3.06517M1.28158 2.95538C2.04951 2.83929 2.82141 2.75118 3.59575 2.69123M8.58606 2.69123V2.08175C8.58606 1.2966 7.98057 0.641875 7.19543 0.617256C6.45927 0.593727 5.72254 0.593727 4.98638 0.617256C4.20124 0.641875 3.59575 1.29727 3.59575 2.08175V2.69123M8.58606 2.69123C6.9251 2.56286 5.25671 2.56286 3.59575 2.69123"
+                                                stroke="#E74C3C" stroke-width="1.2" stroke-linecap="round"
+                                                stroke-linejoin="round" />
+                                        </svg>
+
+                                    </button>
+
+                                </form>
+
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="4" class="text-center">
+                                No awards added yet.
+                            </td>
+                        </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>
@@ -172,80 +232,67 @@
                 <!-- Body -->
                 <div class="modal-body p-0">
 
-                    <form id="AddPartnerForm" action="{{ route('projects.apply.senior-management.store', $fund->id) }}"
+                    <form id="AwardForm" action="{{ route('projects.apply.awards-recognition.store', $fund->id) }}"
                         method="POST" enctype="multipart/form-data">
-                        <input type="hidden" name="id" id="edit_id">
+
                         @csrf
+                        <input type="hidden" name="id" id="edit_id">
 
                         <div class="p-3">
 
-                            <!-- Name -->
                             <div class="row g-3 mb-3">
+
                                 <div class="col-12">
                                     <label class="form-label fw-semibold">
                                         Name of the Award <span class="text-danger">*</span>
                                     </label>
 
-                                    <input type="number" class="form-control py-2" name="name"
-                                        placeholder="Enter Number" required>
+                                    <input type="text" class="form-control py-2" name="award_name" id="award_name"
+                                        placeholder="Enter Award Name" required>
                                 </div>
 
-                                <!-- Nature of Engagement -->
                                 <div class="col-md-6">
                                     <label class="form-label fw-semibold">
                                         Awarding Organization <span class="text-danger">*</span>
                                     </label>
 
-                                    <div class="select-wrapper position-relative">
-
-                                        <div
-                                            class="custom-select form-control py-2 d-flex justify-content-between align-items-center">
-                                            <span class="text-muted">Select</span>
-                                        </div>
-
-                                        <input type="hidden" name="nature_of_engagement" id="nature_of_engagement"
-                                            class="hidden-select" required>
-                                        <ul class="select-list" style="display:none;">
-                                            <li data-value="csr_foundation">CSR Foundation</li>
-                                            <li data-value="vc_firm">VC Firm</li>
-                                        </ul>
-                                    </div>
+                                    <input type="text" class="form-control py-2" name="awarding_organization"
+                                        id="awarding_organization" placeholder="Enter Awarding Organization" required>
                                 </div>
+
                                 <div class="col-md-6">
-                                    <label class="form-label fw-semibold">Year <span class="text-danger">*</span></label>
+                                    <label class="form-label fw-semibold">
+                                        Year <span class="text-danger">*</span>
+                                    </label>
 
-                                    <div class="select-wrapper position-relative">
-                                        <div
-                                            class="custom-select form-control py-2 d-flex justify-content-between align-items-center">
-                                            <span class="text-muted">Select</span>
-                                        </div>
+                                    <select name="year" id="year" class="form-control py-2" required>
+                                        <option value="">Select Year</option>
 
-                                        <input type="hidden" name="gender" id="gender" class="hidden-select" required>
-
-                                        <ul class="select-list" style="display:none;">
-                                            <li data-value="2000">2000</li>
-                                            <li data-value="2001">2001</li>
-                                            <li data-value="2002">2002</li>
-                                        </ul>
-                                    </div>
+                                        @for($year = date('Y'); $year >= 2000; $year--)
+                                            <option value="{{ $year }}">
+                                                {{ $year }}
+                                            </option>
+                                        @endfor
+                                    </select>
                                 </div>
+
                                 <div class="col-12">
-                                    <label class="form-label">Upload Certificate <span
-                                            class="text-danger">*</span></label>
+                                    <label class="form-label">
+                                        Upload Certificate <span class="text-danger">*</span>
+                                    </label>
 
-                                    <input type="file" id="resume_cv" name="resume_cv" hidden>
+                                    <input type="file" id="certificate" name="certificate" hidden>
 
-                                    <label for="resume_cv" class="upload-label">
+                                    <label for="certificate" class="upload-label">
                                         <div class="upload-content">
+
                                             <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26"
                                                 viewBox="0 0 26 26" fill="none">
                                                 <g opacity="0.2">
                                                     <path d="M9.75 11.917V18.417L11.9167 16.2503" stroke="#292D32"
-                                                        stroke-width="1.5" stroke-linecap="round"
-                                                        stroke-linejoin="round" />
+                                                        stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                                                     <path d="M9.7526 18.4167L7.58594 16.25" stroke="#292D32"
-                                                        stroke-width="1.5" stroke-linecap="round"
-                                                        stroke-linejoin="round" />
+                                                        stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                                                     <path
                                                         d="M23.8307 10.8337V16.2503C23.8307 21.667 21.6641 23.8337 16.2474 23.8337H9.7474C4.33073 23.8337 2.16406 21.667 2.16406 16.2503V9.75032C2.16406 4.33366 4.33073 2.16699 9.7474 2.16699H15.1641"
                                                         stroke="#292D32" stroke-width="1.5" stroke-linecap="round"
@@ -256,8 +303,14 @@
                                                         stroke-linejoin="round" />
                                                 </g>
                                             </svg>
-                                            <p class="mt-2">Upload Resume/CV</p>
-                                            <small id="resume_cv_name"></small>
+
+                                            <p class="mt-2">Upload pdf/JPG upto 5 MB</p>
+
+                                            <small id="certificate_name"></small>
+
+                                            <small id="current_certificate" class="text-success d-block mt-1">
+                                            </small>
+
                                         </div>
                                     </label>
                                 </div>
@@ -265,10 +318,12 @@
                             </div>
                         </div>
 
-                        <!-- Footer -->
                         <div class="modal-footer border-0 d-flex justify-content-end gap-2">
-                            <button type="button" class="btn simple-btn" data-bs-dismiss="modal">Cancel</button>
-                            <button type="submit" class="btn gradient-btn">
+                            <button type="button" class="btn simple-btn" data-bs-dismiss="modal">
+                                Cancel
+                            </button>
+
+                            <button type="submit" class="btn gradient-btn" id="submitBtn">
                                 Add
                             </button>
                         </div>
@@ -276,9 +331,13 @@
                     </form>
 
                 </div>
+
+
             </div>
         </div>
     </div>
+
+
     <div class="modal fade" id="submitAward" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -294,7 +353,7 @@
                             <img src="{{ asset('img/edit-icon.png') }}" alt="">
                         </div>
                         <h2 class="modal-title mb-2 inner-title">
-                           Your Application Has Been Submitted Successfully
+                            Your Application Has Been Submitted Successfully
                         </h2>
                         <p class="text-muted mb-0">
                             Thank you for applying. We have received your application and will review it shortly.
@@ -304,8 +363,9 @@
                 <!-- Footer (same structure as first modal) -->
                 <div class="modal-footer border-0 d-flex justify-content-end gap-2 flex-wrap px-lg-4">
 
-                    <button type="button" class="btn gradient-btn  w-100" data-bs-dismiss="modal" id="cancelBtn">
-                       Go To My Projects 
+                    <button type="button" class="btn gradient-btn w-100"
+                        onclick="window.location.href='{{ route('dashboard') }}'">
+                        Go To My Projects
                     </button>
 
                     <button type="button" class="btn simple-btn w-100" id="goToDocuments">
@@ -325,6 +385,47 @@
             width: auto;
         }
     </style>
+
+    <script>
+        document.querySelectorAll(".edit-btn").forEach(btn => {
+            btn.addEventListener("click", function () {
+
+                const form = document.getElementById("AwardForm");
+                const id = this.dataset.id;
+                console.log(this.dataset)
+
+                form.action =
+                    "{{ url('projects/' . $fund->id . '/apply/awards-recognition') }}/" + id;
+
+                let methodInput = form.querySelector("input[name='_method']");
+
+                if (!methodInput) {
+                    methodInput = document.createElement("input");
+                    methodInput.type = "hidden";
+                    methodInput.name = "_method";
+                    form.appendChild(methodInput);
+                }
+
+                methodInput.value = "PUT";
+
+                document.getElementById("edit_id").value = id;
+
+                form.querySelector("[name='award_name']").value =
+                    this.dataset.award_name || "";
+
+                form.querySelector("[name='awarding_organization']").value =
+                    this.dataset.awarding_organization || "";
+
+                form.querySelector("[name='year']").value =
+                    this.dataset.year || "";
+
+                form.querySelector("button[type='submit']").textContent = "Update";
+            });
+        });
+    </script>
+
+
+
 
     {{--
     <script>
@@ -385,14 +486,14 @@
         });
     </script> --}}
     <script>
-        document.getElementById("continueBtn").addEventListener("click", function() {
+        document.getElementById("continueBtn").addEventListener("click", function () {
             const modal = new bootstrap.Modal(document.getElementById("submitAward"));
             modal.show();
         });
     </script>
 
     <script>
-        document.getElementById("cancelBtn").addEventListener("click", function() {
+        document.getElementById("cancelBtn").addEventListener("click", function () {
             const modal = new bootstrap.Modal(document.getElementById("addAward"));
             modal.show();
         });
@@ -406,7 +507,7 @@
 
     <script>
         document.getElementById("goToDocuments").addEventListener("click", function () {
-            window.location.href = "{{ $documentsRoute }}";
+            location.reload();
         });
     </script>
 

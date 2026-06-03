@@ -88,7 +88,7 @@ public function startup(Fund $fund)
         $document->save();
 
         return redirect()->route(
-            'projects.apply.financial-documents.npo',
+            'projects.apply.financial-documents',
             $fund->id
         );
     }

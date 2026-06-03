@@ -3,6 +3,7 @@
 use App\Http\Controllers\API\Auth\LoginController as AuthLoginController;
 use App\Http\Controllers\API\Auth\RegisterController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\MyApplicationController;
 use App\Http\Controllers\OnboardingController;
 use App\Http\Controllers\OrganizationFunderController;
 use App\Http\Controllers\ProjectApplication\AwardRecognitionController;
@@ -104,6 +105,9 @@ Route::middleware(['check.onboarding', 'auth:organization'])->group(function () 
     Route::get('/projects/{id}/details', [ProjectController::class, 'details'])
         ->name('projects.details');
 
+        Route::get('/my-applications', [MyApplicationController::class, 'index'])
+    ->name('my-applications.index');
+
 });
 
 Route::prefix('projects/{fund}/apply')
@@ -153,16 +157,14 @@ Route::prefix('projects/{fund}/apply')
         // Step 5
         Route::get('/awards-recognition', [AwardRecognitionController::class, 'index'])
             ->name('awards-recognition');
-            Route::post('/awards-recognition', [AwardRecognitionController::class, 'store'])
-    ->name('awards-recognition.store');
+        Route::post('/awards-recognition', [AwardRecognitionController::class, 'store'])
+            ->name('awards-recognition.store');
 
-Route::put('/awards-recognition/{awardRecognition}', [AwardRecognitionController::class, 'update'])
-    ->name('awards-recognition.update');
+        Route::put('/awards-recognition/{awardRecognition}', [AwardRecognitionController::class, 'update'])
+            ->name('awards-recognition.update');
 
-Route::delete('/awards-recognition/{awardRecognition}', [AwardRecognitionController::class, 'destroy'])
-    ->name('awards-recognition.destroy');
-
-
+        Route::delete('/awards-recognition/{awardRecognition}', [AwardRecognitionController::class, 'destroy'])
+            ->name('awards-recognition.destroy');
 
     });
 

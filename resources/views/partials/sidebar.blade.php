@@ -41,7 +41,7 @@
                     <span class="flex-grow-1 ms-3">Discover Funds</span>
                 </a>
 
-                <a href="{{ route('projects.index') }}"
+                <a href="{{ route('my-applications.index') }}"
                     class="d-flex align-items-center text-decoration-none sidebar-links {{ request()->routeIs('projects.index') ? 'active' : '' }}">
                     <span class="sidebar-link-icon flex-shrink-0">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
