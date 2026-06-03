@@ -2155,6 +2155,7 @@ table td {
 .upload-content p {
     color: rgba(40, 40, 40, 0.5) !important;
     font-weight: 400 !important;
+    margin-bottom: 0;
 }
 
 .doc-card {

@@ -19,7 +19,8 @@
 @section('content')
     <div class="step-section position-relative mb-3">
         <div class="bg-image position-absolute top-0 start-0 w-100 h-100">
-            <img src="{{ asset('img/dasboard-bg.png') }}" class="img-fluid" alt="steps section" width="100%" height="100%">
+            <img src="{{ asset('img/dasboard-bg.png') }}" class="img-fluid" alt="steps section" width="100%"
+                height="100%">
         </div>
         <div
             class="step-wrapper d-flex flex-wrap justify-content-center justify-content-md-between align-items-center py-3 py-md-4 py-xl-5 px-2 row-gap-2">
@@ -199,84 +200,81 @@
 
                 <tbody>
                     @forelse($managements as $index => $item)
-                                <tr>
-                                    <td>{{ $index + 1 }}</td>
+                        <tr>
+                            <td>{{ $index + 1 }}</td>
 
-                                    <td>{{ $item->name }}</td>
+                            <td>{{ $item->name }}</td>
 
-                                    <td>{{ $item->designation ?? '-' }}</td>
+                            <td>{{ $item->designation ?? '-' }}</td>
 
-                                    <td>{{ ucfirst(str_replace('_', ' ', $item->nature_of_engagement ?? '-')) }}</td>
+                            <td>{{ ucfirst(str_replace('_', ' ', $item->nature_of_engagement ?? '-')) }}</td>
 
-                                    <td>
-                                        {{ $item->date_of_appointment
-                        ? \Carbon\Carbon::parse($item->date_of_appointment)->format('d/m/Y')
-                        : '-' }}
-                                    </td>
+                            <td>
+                                {{ $item->date_of_appointment ? \Carbon\Carbon::parse($item->date_of_appointment)->format('d/m/Y') : '-' }}
+                            </td>
 
-                                    <td>
-                                        {{ $item->total_years_of_experience !== null
-                        ? $item->total_years_of_experience . ' Years'
-                        : '-' }}
-                                    </td>
+                            <td>
+                                {{ $item->total_years_of_experience !== null ? $item->total_years_of_experience . ' Years' : '-' }}
+                            </td>
 
-                                    <td class="d-flex justify-content-center align-items-center gap-2">
+                            <td class="d-flex justify-content-center align-items-center gap-2">
 
-                                        <!-- EDIT -->
-                                        <button type="button" class="edit-btn border-0 bg-transparent p-1" data-id="{{ $item->id }}"
-                                            data-name="{{ $item->name }}" data-designation="{{ $item->designation }}"
-                                            data-nature="{{ $item->nature_of_engagement }}" data-gender="{{ $item->gender }}"
-                                            data-dob="{{ $item->date_of_birth ? \Carbon\Carbon::parse($item->date_of_birth)->format('Y-m-d') : '' }}"
-                                            data-appointment="{{ $item->date_of_appointment ? \Carbon\Carbon::parse($item->date_of_appointment)->format('Y-m-d') : '' }}"
-                                            data-qualification="{{ $item->highest_qualification }}"
-                                            data-roles="{{ $item->roles_and_responsibilities }}"
-                                            data-experience="{{ $item->total_years_of_experience }}" data-bs-toggle="modal"
-                                            data-bs-target="#addPartner">
+                                <!-- EDIT -->
+                                <button type="button" class="edit-btn border-0 bg-transparent p-1"
+                                    data-id="{{ $item->id }}" data-name="{{ $item->name }}"
+                                    data-designation="{{ $item->designation }}"
+                                    data-nature="{{ $item->nature_of_engagement }}" data-gender="{{ $item->gender }}"
+                                    data-dob="{{ $item->date_of_birth ? \Carbon\Carbon::parse($item->date_of_birth)->format('Y-m-d') : '' }}"
+                                    data-appointment="{{ $item->date_of_appointment ? \Carbon\Carbon::parse($item->date_of_appointment)->format('Y-m-d') : '' }}"
+                                    data-qualification="{{ $item->highest_qualification }}"
+                                    data-roles="{{ $item->roles_and_responsibilities }}"
+                                    data-experience="{{ $item->total_years_of_experience }}" data-bs-toggle="modal"
+                                    data-bs-target="#addPartner">
 
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"
-                                                fill="none">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                        viewBox="0 0 16 16" fill="none">
 
-                                                <path
-                                                    d="M8.8198 2.39503L3.35707 8.17714C3.1508 8.39671 2.95119 8.8292 2.91127 9.12862L2.66508 11.2844C2.57858 12.0629 3.1375 12.5952 3.90933 12.4621L6.05184 12.0962C6.35126 12.043 6.77044 11.8234 6.97671 11.5972L12.4394 5.81506C13.3843 4.81699 13.8101 3.6792 12.3396 2.28857C10.8758 0.911245 9.76463 1.39697 8.8198 2.39503Z"
-                                                    stroke="#07CCB5" stroke-width="1.2" stroke-linecap="round"
-                                                    stroke-linejoin="round" />
+                                        <path
+                                            d="M8.8198 2.39503L3.35707 8.17714C3.1508 8.39671 2.95119 8.8292 2.91127 9.12862L2.66508 11.2844C2.57858 12.0629 3.1375 12.5952 3.90933 12.4621L6.05184 12.0962C6.35126 12.043 6.77044 11.8234 6.97671 11.5972L12.4394 5.81506C13.3843 4.81699 13.8101 3.6792 12.3396 2.28857C10.8758 0.911245 9.76463 1.39697 8.8198 2.39503Z"
+                                            stroke="#07CCB5" stroke-width="1.2" stroke-linecap="round"
+                                            stroke-linejoin="round" />
 
-                                                <path d="M7.91406 3.35938C8.20017 5.19581 9.69061 6.59975 11.5404 6.78605"
-                                                    stroke="#07CCB5" stroke-width="1.2" stroke-linecap="round"
-                                                    stroke-linejoin="round" />
+                                        <path d="M7.91406 3.35938C8.20017 5.19581 9.69061 6.59975 11.5404 6.78605"
+                                            stroke="#07CCB5" stroke-width="1.2" stroke-linecap="round"
+                                            stroke-linejoin="round" />
 
-                                                <path d="M2 14.6387H13.9767" stroke="#07CCB5" stroke-width="1.2" stroke-linecap="round"
-                                                    stroke-linejoin="round" />
-                                            </svg>
+                                        <path d="M2 14.6387H13.9767" stroke="#07CCB5" stroke-width="1.2"
+                                            stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
 
-                                        </button>
-                                        </button>
+                                </button>
+                                </button>
 
-                                        <!-- DELETE -->
-                                        <form method="POST"
-                                            action="{{ route('projects.apply.senior-management.destroy', [$fund->id, $item->id]) }}"
-                                            onsubmit="return confirm('Delete this record?')">
+                                <!-- DELETE -->
+                                <form method="POST"
+                                    action="{{ route('projects.apply.senior-management.destroy', [$fund->id, $item->id]) }}"
+                                    onsubmit="return confirm('Delete this record?')">
 
-                                            @csrf
-                                            @method('DELETE')
+                                    @csrf
+                                    @method('DELETE')
 
-                                            <button type="submit" class="border-0 bg-transparent p-1">
+                                    <button type="submit" class="border-0 bg-transparent p-1">
 
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="15" viewBox="0 0 13 15"
-                                                    fill="none">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="15"
+                                            viewBox="0 0 13 15" fill="none">
 
-                                                    <path
-                                                        d="M7.91403 5.09124L7.68381 11.0796M4.498 11.0796L4.26778 5.09124M8.58606 2.69123C9.3604 2.75118 10.1323 2.83929 10.9002 2.95538C11.1278 2.98998 11.354 3.02658 11.5802 3.06584M10.9002 2.95538L10.1896 12.1928C10.1606 12.5689 9.99071 12.9201 9.71388 13.1764C9.43706 13.4326 9.07371 13.5749 8.69651 13.5748H3.4853C3.10809 13.5749 2.74475 13.4326 2.46792 13.1764C2.1911 12.9201 2.0212 12.5689 1.9922 12.1928L1.28158 2.95538M1.28158 2.95538C1.05402 2.98932 0.82779 3.02591 0.601562 3.06517M1.28158 2.95538C2.04951 2.83929 2.82141 2.75118 3.59575 2.69123M8.58606 2.69123V2.08175C8.58606 1.2966 7.98057 0.641875 7.19543 0.617256C6.45927 0.593727 5.72254 0.593727 4.98638 0.617256C4.20124 0.641875 3.59575 1.29727 3.59575 2.08175V2.69123M8.58606 2.69123C6.9251 2.56286 5.25671 2.56286 3.59575 2.69123"
-                                                        stroke="#E74C3C" stroke-width="1.2" stroke-linecap="round"
-                                                        stroke-linejoin="round" />
-                                                </svg>
+                                            <path
+                                                d="M7.91403 5.09124L7.68381 11.0796M4.498 11.0796L4.26778 5.09124M8.58606 2.69123C9.3604 2.75118 10.1323 2.83929 10.9002 2.95538C11.1278 2.98998 11.354 3.02658 11.5802 3.06584M10.9002 2.95538L10.1896 12.1928C10.1606 12.5689 9.99071 12.9201 9.71388 13.1764C9.43706 13.4326 9.07371 13.5749 8.69651 13.5748H3.4853C3.10809 13.5749 2.74475 13.4326 2.46792 13.1764C2.1911 12.9201 2.0212 12.5689 1.9922 12.1928L1.28158 2.95538M1.28158 2.95538C1.05402 2.98932 0.82779 3.02591 0.601562 3.06517M1.28158 2.95538C2.04951 2.83929 2.82141 2.75118 3.59575 2.69123M8.58606 2.69123V2.08175C8.58606 1.2966 7.98057 0.641875 7.19543 0.617256C6.45927 0.593727 5.72254 0.593727 4.98638 0.617256C4.20124 0.641875 3.59575 1.29727 3.59575 2.08175V2.69123M8.58606 2.69123C6.9251 2.56286 5.25671 2.56286 3.59575 2.69123"
+                                                stroke="#E74C3C" stroke-width="1.2" stroke-linecap="round"
+                                                stroke-linejoin="round" />
+                                        </svg>
 
-                                            </button>
+                                    </button>
 
-                                        </form>
+                                </form>
 
-                                    </td>
-                                </tr>
+                            </td>
+                        </tr>
                     @empty
                         <tr>
                             <td colspan="7">No records found</td>
@@ -289,7 +287,8 @@
         <div style="border-radius:0px 0px 8px 8px;"
             class="d-flex justify-content-center justify-content-md-end gap-2 gap-md-3 mt-4 steps-btn pe-lg-4 flex-wrap">
             <div class="btn-wrap">
-                <button type="button" class="btn btn-secondary" onclick="window.location.href='{{ route('dashboard') }}' ">
+                <button type="button" class="btn btn-secondary"
+                    onclick="window.location.href='{{ route('dashboard') }}' ">
                     Back
                 </button>
                 <button type="button" class="btn btn-primary" id="continueBtn">
@@ -330,8 +329,8 @@
                                         Name of Director/Partner <span class="text-danger">*</span>
                                     </label>
 
-                                    <input type="text" class="form-control py-2" name="name" placeholder="Enter Name"
-                                        required>
+                                    <input type="text" class="form-control py-2" name="name"
+                                        placeholder="Enter Name" required>
                                 </div>
 
                                 <!-- Designation -->
@@ -371,7 +370,8 @@
 
                                 <!-- Gender -->
                                 <div class="col-md-6">
-                                    <label class="form-label fw-semibold">Gender <span class="text-danger">*</span></label>
+                                    <label class="form-label fw-semibold">Gender <span
+                                            class="text-danger">*</span></label>
 
                                     <div class="select-wrapper position-relative">
                                         <div
@@ -379,7 +379,8 @@
                                             <span class="text-muted">Select</span>
                                         </div>
 
-                                        <input type="hidden" name="gender" id="gender" class="hidden-select" required>
+                                        <input type="hidden" name="gender" id="gender" class="hidden-select"
+                                            required>
 
                                         <ul class="select-list" style="display:none;">
                                             <li data-value="male">Male</li>
@@ -436,7 +437,8 @@
                                     <label class="form-label fw-semibold">Roles & Responsibilities <span
                                             class="text-danger">*</span></label>
 
-                                    <input type="text" class="form-control py-2" name="roles_and_responsibilities" required>
+                                    <input type="text" class="form-control py-2" name="roles_and_responsibilities"
+                                        required>
                                 </div>
 
                                 <!-- Experience -->
@@ -456,7 +458,26 @@
 
                                     <label for="resume_cv" class="upload-label">
                                         <div class="upload-content">
-                                            <p>Upload Resume/CV</p>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26"
+                                                viewBox="0 0 26 26" fill="none">
+                                                <g opacity="0.2">
+                                                    <path d="M9.75 11.917V18.417L11.9167 16.2503" stroke="#292D32"
+                                                        stroke-width="1.5" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                    <path d="M9.7526 18.4167L7.58594 16.25" stroke="#292D32"
+                                                        stroke-width="1.5" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                    <path
+                                                        d="M23.8307 10.8337V16.2503C23.8307 21.667 21.6641 23.8337 16.2474 23.8337H9.7474C4.33073 23.8337 2.16406 21.667 2.16406 16.2503V9.75032C2.16406 4.33366 4.33073 2.16699 9.7474 2.16699H15.1641"
+                                                        stroke="#292D32" stroke-width="1.5" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                    <path
+                                                        d="M23.8307 10.8337H19.4974C16.2474 10.8337 15.1641 9.75033 15.1641 6.50033V2.16699L23.8307 10.8337Z"
+                                                        stroke="#292D32" stroke-width="1.5" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                </g>
+                                            </svg>
+                                            <p class="mt-2">Upload Resume/CV</p>
                                             <small id="resume_cv_name"></small>
                                         </div>
                                     </label>
@@ -493,7 +514,7 @@
                 <!-- Body -->
                 <div class="modal-body p-0">
 
-                    <div class="p-3 text-center">
+                    <div class="p-3 px-lg-4 text-center">
 
                         <div class="edit-top-icon mb-3">
                             <img src="{{ asset('img/edit-icon.png') }}" alt="">
@@ -513,13 +534,13 @@
                 </div>
 
                 <!-- Footer (same structure as first modal) -->
-                <div class="modal-footer border-0 d-flex justify-content-end gap-2">
+                <div class="modal-footer border-0 d-flex justify-content-end gap-2 flex-wrap px-lg-4">
 
-                    <button type="button" class="btn simple-btn" data-bs-dismiss="modal" id="cancelBtn">
+                    <button type="button" class="btn gradient-btn  w-100" data-bs-dismiss="modal" id="cancelBtn">
                         Add Another
                     </button>
 
-                    <button type="button" class="btn gradient-btn" id="goToDocuments">
+                    <button type="button" class="btn simple-btn w-100" id="goToDocuments">
                         Continue
                     </button>
 
@@ -539,7 +560,7 @@
 
     <script>
         document.querySelectorAll(".edit-btn").forEach(btn => {
-            btn.addEventListener("click", function () {
+            btn.addEventListener("click", function() {
 
                 const form = document.getElementById("AddPartnerForm");
                 const modalEl = document.getElementById("addPartner");
@@ -584,7 +605,8 @@
                 form.querySelector("[name='date_of_birth']").value = this.dataset.dob || "";
                 form.querySelector("[name='date_of_appointment']").value = this.dataset.appointment || "";
                 form.querySelector("[name='roles_and_responsibilities']").value = this.dataset.roles || "";
-                form.querySelector("[name='total_years_of_experience']").value = this.dataset.experience || "";
+                form.querySelector("[name='total_years_of_experience']").value = this.dataset.experience ||
+                    "";
 
                 // fill dropdowns properly
                 setSelect("nature_of_engagement", this.dataset.nature);
@@ -595,29 +617,30 @@
         });
     </script>
     <script>
-        document.getElementById("continueBtn").addEventListener("click", function () {
+        document.getElementById("continueBtn").addEventListener("click", function() {
             const modal = new bootstrap.Modal(document.getElementById("addAnotherPartner"));
             modal.show();
         });
     </script>
 
     <script>
-        document.getElementById("cancelBtn").addEventListener("click", function () {
+        document.getElementById("cancelBtn").addEventListener("click", function() {
             const modal = new bootstrap.Modal(document.getElementById("addPartner"));
             modal.show();
         });
     </script>
-@php
-    $documentsRoute = auth('organization')->user()->role === 'fund_seeker'
-        ? route('projects.apply.documents.startup', $fund->id)
-        : route('projects.apply.documents.npo', $fund->id);
-@endphp
+    @php
+        $documentsRoute =
+            auth('organization')->user()->role === 'fund_seeker'
+                ? route('projects.apply.documents.startup', $fund->id)
+                : route('projects.apply.documents.npo', $fund->id);
+    @endphp
 
-<script>
-    document.getElementById("goToDocuments").addEventListener("click", function () {
-        window.location.href = "{{ $documentsRoute }}";
-    });
-</script>
+    <script>
+        document.getElementById("goToDocuments").addEventListener("click", function() {
+            window.location.href = "{{ $documentsRoute }}";
+        });
+    </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 @endsection
