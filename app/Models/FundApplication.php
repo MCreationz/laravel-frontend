@@ -40,4 +40,12 @@ public function startupDocument()
 {
     return $this->hasOne(FundApplicationStartupDocument::class);
 }
+public function financialDocument()
+{
+    return $this->hasOne(FundApplicationFinancialDocument::class);
+}
+public function awardRecognitions()
+{
+    return $this->hasMany(FundApplicationAwardRecognition::class);
+}
 }

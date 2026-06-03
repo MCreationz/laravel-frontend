@@ -145,7 +145,7 @@ public function startup(Fund $fund)
     $document->save();
 
     return redirect()->route(
-        'projects.apply.financial-documents.startup',
+        'projects.apply.financial-documents',
         $fund->id
     );
 }

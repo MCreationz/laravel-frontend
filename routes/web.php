@@ -144,15 +144,26 @@ Route::prefix('projects/{fund}/apply')
             ->name('documents.startup.store');
 
         // Step 4 - Financial Documents
-        Route::get('/financial-documents/npo', [FinancialDocumentController::class, 'npo'])
-            ->name('financial-documents.npo');
+        Route::get('/financial-documents', [FinancialDocumentController::class, 'index'])
+            ->name('financial-documents');
 
-        Route::get('/financial-documents/startup', [FinancialDocumentController::class, 'startup'])
-            ->name('financial-documents.startup');
+        Route::post('/financial-documents', [FinancialDocumentController::class, 'store'])
+            ->name('financial-documents.store');
 
         // Step 5
         Route::get('/awards-recognition', [AwardRecognitionController::class, 'index'])
             ->name('awards-recognition');
+            Route::post('/awards-recognition', [AwardRecognitionController::class, 'store'])
+    ->name('awards-recognition.store');
+
+Route::put('/awards-recognition/{awardRecognition}', [AwardRecognitionController::class, 'update'])
+    ->name('awards-recognition.update');
+
+Route::delete('/awards-recognition/{awardRecognition}', [AwardRecognitionController::class, 'destroy'])
+    ->name('awards-recognition.destroy');
+
+
+
     });
 
 Route::post('/funders/store', [OrganizationFunderController::class, 'store'])
