@@ -2230,6 +2230,43 @@ table td {
 .profile-banner h1 {
     font-size: 47.66px !important;
 }
+.radio-group {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  font-family: Arial, sans-serif;
+}
+.custom-radio input {
+  appearance: none;
+}
+.custom-radio {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  gap: 6px;
+}
+.custom-radio .radio {
+  width: 18px;
+  height: 18px;
+  background: #E2E2E2;
+  border-radius: 50%;
+  position: relative;
+  transition: 0.2s;
+}
+.custom-radio input:checked + .radio {
+  background: linear-gradient(66.53deg, #0160D6 29%, #07CCB5 67.08%);
+}
+.custom-radio input:checked + .radio::after {
+  content: "";
+  width: 10px;
+  height: 10px;
+  background: #fff;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
 /* responsive */
 @media(max-width:1440px) {
     .left-logo-col .bg-image img {

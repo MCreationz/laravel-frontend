@@ -19,7 +19,8 @@
 @section('content')
     <div class="step-section position-relative mb-3">
         <div class="bg-image position-absolute top-0 start-0 w-100 h-100">
-            <img src="{{ asset('img/dasboard-bg.png') }}" class="img-fluid" alt="steps section" width="100%" height="100%">
+            <img src="{{ asset('img/dasboard-bg.png') }}" class="img-fluid" alt="steps section" width="100%"
+                height="100%">
         </div>
         <div
             class="step-wrapper d-flex flex-wrap justify-content-center justify-content-md-between align-items-center py-3 py-md-4 py-xl-5 px-2 row-gap-2">
@@ -113,8 +114,8 @@
                 <div class="row mb-3 flex-wrap row-gap-3 row-gap-md-4 px-md-1">
                     <div class="col-12 px-md-2">
                         <label class="form-label">Name of the Organization<span>*</span></label>
-                        <input type="text" name="" class="form-control" placeholder="Name of the Organization" required
-                            value="">
+                        <input type="text" name="" class="form-control" placeholder="Name of the Organization"
+                            required value="">
                     </div>
 
                     <div class="col-12 px-md-2">
@@ -131,7 +132,8 @@
                     </div>
                     <div class="col-12 px-md-2">
                         <label class="form-label">Registration Number<span>*</span></label>
-                        <input type="number" name="" class="form-control" placeholder="Enter Registration Number" value="">
+                        <input type="number" name="" class="form-control" placeholder="Enter Registration Number"
+                            value="">
                     </div>
                     <div class="px-md-2">
                         <hr class="mb-0">
@@ -155,7 +157,22 @@
                             value="">
                     </div>
                     {{-- radio --}}
+                    <div class="col-12 px-md-2">
+                        <div class="d-flex align-items-center gap-3">
+                            <label class="form-label mb-0">Patent Available</label>
+                            <label class="custom-radio mb-0">
+                                <input type="radio" name="patent" checked>
+                                <span class="radio"></span>
+                                Yes
+                            </label>
 
+                            <label class="custom-radio mb-0">
+                                <input type="radio" name="patent">
+                                <span class="radio"></span>
+                                No
+                            </label>
+                        </div>
+                    </div>
 
 
                     <div class="col-12 col-md-6 px-md-2">
