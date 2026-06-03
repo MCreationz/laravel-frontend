@@ -135,7 +135,8 @@
                         <h2 class="col top-heading mb-0">Registered Office Address</h2>
                         <div class="col-auto form-check only-checkbox">
                             <input class="form-check-input" type="checkbox" name="is_portal_same_as_office"
-                                id="sameAsOffice" value="1" {{ old('is_portal_same_as_office', $address?->is_portal_same_as_office) ? 'checked' : '' }}>
+                                id="sameAsOffice" value="1"
+                                {{ old('is_portal_same_as_office', $address?->is_portal_same_as_office) ? 'checked' : '' }}>
                             <label class="form-check-label" for="sameAsOffice">
                                 Same as Head Office Address
                             </label>
@@ -148,13 +149,15 @@
 
                         <div class="col-12 col-md-6 col-xl-4 px-md-2">
                             <label class="form-label">Address Line 1<span>*</span></label>
-                            <input type="text" name="portal_address_line_1" class="form-control" placeholder="Enter Address"
+                            <input type="text" name="portal_address_line_1" class="form-control"
+                                placeholder="Enter Address"
                                 value="{{ old('portal_address_line_1', $address?->portal_address_line_1) }}">
                         </div>
 
                         <div class="col-12 col-md-6 col-xl-4 px-md-2">
                             <label class="form-label">Address Line 2</label>
-                            <input type="text" name="portal_address_line_2" class="form-control" placeholder="Enter Address"
+                            <input type="text" name="portal_address_line_2" class="form-control"
+                                placeholder="Enter Address"
                                 value="{{ old('portal_address_line_2', $address?->portal_address_line_2) }}">
                         </div>
                         <div class="col-12 col-md-6 col-xl-4 px-md-2">
@@ -200,19 +203,16 @@
             </div>
             <div style="border-radius:0px 0px 8px 8px;"
                 class="d-flex justify-content-center justify-content-md-end gap-2 gap-md-3 steps-btn pe-lg-4 flex-wrap">
-             <div class="btn-wrap">
-    <button 
-        type="button"
-        class="btn simple-btn"
-        onclick="window.location.href='{{ route('onboarding.step1') }}'"
-    >
-        <img src="/img/back.png" class="me-2" width="15" height="6.25">
-        Back
-    </button>
-</div>
                 <div class="btn-wrap">
-                    <button type="submit" class="btn gradient-btn">Next <svg xmlns="http://www.w3.org/2000/svg" width="17"
-                            height="8" viewBox="0 0 17 8" fill="none">
+                    <button type="button" class="btn simple-btn"
+                        onclick="window.location.href='{{ route('onboarding.step1') }}'">
+                        <img src="/img/back.png" class="me-2" width="15" height="6.25">
+                        Back
+                    </button>
+                </div>
+                <div class="btn-wrap">
+                    <button type="submit" class="btn gradient-btn">Next <svg xmlns="http://www.w3.org/2000/svg"
+                            width="17" height="8" viewBox="0 0 17 8" fill="none">
                             <path d="M12.625 7L15.75 3.875L12.625 0.75M15.75 3.875H0.75" stroke="white" stroke-width="1.5"
                                 stroke-linecap="round" stroke-linejoin="round" />
                         </svg></button>
@@ -223,7 +223,7 @@
     </div>
 
     <script>
-        document.getElementById('sameAsOffice').addEventListener('change', function () {
+        document.getElementById('sameAsOffice').addEventListener('change', function() {
 
             const fields = [
                 ['office_house_floor_no', 'portal_house_floor_no'],
@@ -261,270 +261,265 @@
         });
     </script>
 
-  <script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async function() {
 
-    document.addEventListener('DOMContentLoaded', async function () {
+            // =========================
+            // Fetch JSON
+            // =========================
 
-        // =========================
-        // Fetch JSON
-        // =========================
+            const response = await fetch('/states.json');
+            const statesData = await response.json();
 
-        const response = await fetch('/states.json');
-        const statesData = await response.json();
+            // =========================
+            // Office Elements
+            // =========================
 
-        // =========================
-        // Office Elements
-        // =========================
+            const officeStateInput =
+                document.getElementById('office_state');
 
-        const officeStateInput =
-            document.getElementById('office_state');
+            const officeDistrictDropdown =
+                document.getElementById('office_district');
 
-        const officeDistrictDropdown =
-            document.getElementById('office_district');
+            const officeSuggestionsBox =
+                document.getElementById('office_state_suggestions');
 
-        const officeSuggestionsBox =
-            document.getElementById('office_state_suggestions');
+            // =========================
+            // Portal Elements
+            // =========================
 
-        // =========================
-        // Portal Elements
-        // =========================
+            const portalStateInput =
+                document.getElementById('portal_state');
 
-        const portalStateInput =
-            document.getElementById('portal_state');
+            const portalDistrictDropdown =
+                document.getElementById('portal_district');
 
-        const portalDistrictDropdown =
-            document.getElementById('portal_district');
+            const portalSuggestionsBox =
+                document.getElementById('portal_state_suggestions');
 
-        const portalSuggestionsBox =
-            document.getElementById('portal_state_suggestions');
+            // =====================================================
+            // OFFICE STATE AUTOCOMPLETE
+            // =====================================================
 
-        // =====================================================
-        // OFFICE STATE AUTOCOMPLETE
-        // =====================================================
+            officeStateInput.addEventListener('input', function() {
 
-        officeStateInput.addEventListener('input', function () {
+                const value = this.value.toLowerCase();
 
-            const value = this.value.toLowerCase();
+                officeSuggestionsBox.innerHTML = '';
 
-            officeSuggestionsBox.innerHTML = '';
+                officeDistrictDropdown.innerHTML =
+                    '<option value="">Select District</option>';
 
-            officeDistrictDropdown.innerHTML =
-                '<option value="">Select District</option>';
+                if (!value) return;
 
-            if (!value) return;
+                const filteredStates = statesData.filter(item =>
+                    item.state.toLowerCase().includes(value)
+                );
 
-            const filteredStates = statesData.filter(item =>
-                item.state.toLowerCase().includes(value)
-            );
+                filteredStates.forEach(item => {
 
-            filteredStates.forEach(item => {
+                    const button = document.createElement('button');
 
-                const button = document.createElement('button');
+                    button.type = 'button';
 
-                button.type = 'button';
+                    button.className =
+                        'list-group-item list-group-item-action';
 
-                button.className =
-                    'list-group-item list-group-item-action';
+                    button.textContent = item.state;
 
-                button.textContent = item.state;
+                    button.addEventListener('click', function() {
 
-                button.addEventListener('click', function () {
+                        officeStateInput.value = item.state;
 
-                    officeStateInput.value = item.state;
+                        officeSuggestionsBox.innerHTML = '';
 
-                    officeSuggestionsBox.innerHTML = '';
+                        populateDistricts(
+                            item.state,
+                            officeDistrictDropdown
+                        );
 
-                    populateDistricts(
-                        item.state,
-                        officeDistrictDropdown
-                    );
+                    });
 
-                });
-
-                officeSuggestionsBox.appendChild(button);
-
-            });
-
-        });
-
-        // =====================================================
-        // PORTAL STATE AUTOCOMPLETE
-        // =====================================================
-
-        portalStateInput.addEventListener('input', function () {
-
-            const value = this.value.toLowerCase();
-
-            portalSuggestionsBox.innerHTML = '';
-
-            portalDistrictDropdown.innerHTML =
-                '<option value="">Select District</option>';
-
-            if (!value) return;
-
-            const filteredStates = statesData.filter(item =>
-                item.state.toLowerCase().includes(value)
-            );
-
-            filteredStates.forEach(item => {
-
-                const button = document.createElement('button');
-
-                button.type = 'button';
-
-                button.className =
-                    'list-group-item list-group-item-action';
-
-                button.textContent = item.state;
-
-                button.addEventListener('click', function () {
-
-                    portalStateInput.value = item.state;
-
-                    portalSuggestionsBox.innerHTML = '';
-
-                    populateDistricts(
-                        item.state,
-                        portalDistrictDropdown
-                    );
+                    officeSuggestionsBox.appendChild(button);
 
                 });
 
-                portalSuggestionsBox.appendChild(button);
+            });
+
+            // =====================================================
+            // PORTAL STATE AUTOCOMPLETE
+            // =====================================================
+
+            portalStateInput.addEventListener('input', function() {
+
+                const value = this.value.toLowerCase();
+
+                portalSuggestionsBox.innerHTML = '';
+
+                portalDistrictDropdown.innerHTML =
+                    '<option value="">Select District</option>';
+
+                if (!value) return;
+
+                const filteredStates = statesData.filter(item =>
+                    item.state.toLowerCase().includes(value)
+                );
+
+                filteredStates.forEach(item => {
+
+                    const button = document.createElement('button');
+
+                    button.type = 'button';
+
+                    button.className =
+                        'list-group-item list-group-item-action';
+
+                    button.textContent = item.state;
+
+                    button.addEventListener('click', function() {
+
+                        portalStateInput.value = item.state;
+
+                        portalSuggestionsBox.innerHTML = '';
+
+                        populateDistricts(
+                            item.state,
+                            portalDistrictDropdown
+                        );
+
+                    });
+
+                    portalSuggestionsBox.appendChild(button);
+
+                });
 
             });
 
-        });
+            // =====================================================
+            // POPULATE DISTRICTS
+            // =====================================================
 
-        // =====================================================
-        // POPULATE DISTRICTS
-        // =====================================================
+            function populateDistricts(
+                stateName,
+                dropdown,
+                selectedDistrict = ''
+            ) {
 
-        function populateDistricts(
-            stateName,
-            dropdown,
-            selectedDistrict = ''
-        ) {
+                dropdown.innerHTML =
+                    '<option value="">Select District</option>';
 
-            dropdown.innerHTML =
-                '<option value="">Select District</option>';
+                const stateData = statesData.find(
+                    item => item.state === stateName
+                );
 
-            const stateData = statesData.find(
-                item => item.state === stateName
-            );
+                if (!stateData) return;
 
-            if (!stateData) return;
+                stateData.districts.forEach(district => {
 
-            stateData.districts.forEach(district => {
+                    const selected =
+                        district === selectedDistrict ?
+                        'selected' :
+                        '';
 
-                const selected =
-                    district === selectedDistrict
-                        ? 'selected'
-                        : '';
-
-                dropdown.innerHTML += `
+                    dropdown.innerHTML += `
                     <option value="${district}" ${selected}>
                         ${district}
                     </option>
                 `;
 
-            });
+                });
 
-        }
-
-        // =====================================================
-        // PAGE LOAD EXISTING VALUES
-        // =====================================================
-
-        const officeSavedDistrict =
-            `{{ old('office_district', $address?->office_district) }}`;
-
-        const portalSavedDistrict =
-            `{{ old('portal_district', $address?->portal_district) }}`;
-
-        if (officeStateInput.value) {
-
-            populateDistricts(
-                officeStateInput.value,
-                officeDistrictDropdown,
-                officeSavedDistrict
-            );
-
-        }
-
-        if (portalStateInput.value) {
-
-            populateDistricts(
-                portalStateInput.value,
-                portalDistrictDropdown,
-                portalSavedDistrict
-            );
-
-        }
-
-        // =====================================================
-        // HIDE SUGGESTIONS ON OUTSIDE CLICK
-        // =====================================================
-
-        document.addEventListener('click', function (e) {
-
-            if (
-                !officeStateInput.contains(e.target) &&
-                !officeSuggestionsBox.contains(e.target)
-            ) {
-                officeSuggestionsBox.innerHTML = '';
             }
 
-            if (
-                !portalStateInput.contains(e.target) &&
-                !portalSuggestionsBox.contains(e.target)
-            ) {
-                portalSuggestionsBox.innerHTML = '';
+            // =====================================================
+            // PAGE LOAD EXISTING VALUES
+            // =====================================================
+
+            const officeSavedDistrict =
+                `{{ old('office_district', $address?->office_district) }}`;
+
+            const portalSavedDistrict =
+                `{{ old('portal_district', $address?->portal_district) }}`;
+
+            if (officeStateInput.value) {
+
+                populateDistricts(
+                    officeStateInput.value,
+                    officeDistrictDropdown,
+                    officeSavedDistrict
+                );
+
             }
 
-        });
+            if (portalStateInput.value) {
 
-        // =====================================================
-        // SAME AS OFFICE
-        // =====================================================
+                populateDistricts(
+                    portalStateInput.value,
+                    portalDistrictDropdown,
+                    portalSavedDistrict
+                );
 
-        document.getElementById('sameAsOffice')
-            .addEventListener('change', function () {
+            }
 
-                if (this.checked) {
+            // =====================================================
+            // HIDE SUGGESTIONS ON OUTSIDE CLICK
+            // =====================================================
 
-                    // Copy fields
-                    document.querySelector('[name="portal_address_line_1"]').value =
-                        document.querySelector('[name="office_address_line_1"]').value;
+            document.addEventListener('click', function(e) {
 
-                    document.querySelector('[name="portal_address_line_2"]').value =
-                        document.querySelector('[name="office_address_line_2"]').value;
+                if (
+                    !officeStateInput.contains(e.target) &&
+                    !officeSuggestionsBox.contains(e.target)
+                ) {
+                    officeSuggestionsBox.innerHTML = '';
+                }
 
-                    document.querySelector('[name="portal_city"]').value =
-                        document.querySelector('[name="office_city"]').value;
-
-                    document.querySelector('[name="portal_pin_code"]').value =
-                        document.querySelector('[name="office_pin_code"]').value;
-
-                    // Copy state
-                    portalStateInput.value =
-                        officeStateInput.value;
-
-                    // Populate districts
-                    populateDistricts(
-                        officeStateInput.value,
-                        portalDistrictDropdown,
-                        officeDistrictDropdown.value
-                    );
-
+                if (
+                    !portalStateInput.contains(e.target) &&
+                    !portalSuggestionsBox.contains(e.target)
+                ) {
+                    portalSuggestionsBox.innerHTML = '';
                 }
 
             });
 
-    });
+            // =====================================================
+            // SAME AS OFFICE
+            // =====================================================
 
-</script>
+            document.getElementById('sameAsOffice')
+                .addEventListener('change', function() {
 
+                    if (this.checked) {
 
+                        // Copy fields
+                        document.querySelector('[name="portal_address_line_1"]').value =
+                            document.querySelector('[name="office_address_line_1"]').value;
 
+                        document.querySelector('[name="portal_address_line_2"]').value =
+                            document.querySelector('[name="office_address_line_2"]').value;
+
+                        document.querySelector('[name="portal_city"]').value =
+                            document.querySelector('[name="office_city"]').value;
+
+                        document.querySelector('[name="portal_pin_code"]').value =
+                            document.querySelector('[name="office_pin_code"]').value;
+
+                        // Copy state
+                        portalStateInput.value =
+                            officeStateInput.value;
+
+                        // Populate districts
+                        populateDistricts(
+                            officeStateInput.value,
+                            portalDistrictDropdown,
+                            officeDistrictDropdown.value
+                        );
+
+                    }
+
+                });
+
+        });
+    </script>
 @endsection
