@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Super Admin Dashboard')</title>
-<meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -246,21 +246,21 @@
             @endforeach
         @endif
     </script>
-<script>
+    <script>
         function closeModal(modalEl) {
-                    const modal = bootstrap.Modal.getOrCreateInstance(modalEl);
-                    modal.hide();
+            const modal = bootstrap.Modal.getOrCreateInstance(modalEl);
+            modal.hide();
 
-                    // Force cleanup in case backdrop gets stuck
-                    modalEl.addEventListener('hidden.bs.modal', function handler() {
-                        document.body.classList.remove('modal-open');
-                        document.body.style.removeProperty('overflow');
-                        document.body.style.removeProperty('padding-right');
-                        document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
-                        modalEl.removeEventListener('hidden.bs.modal', handler);
-                    }, { once: true });
-                }
-</script>
+            // Force cleanup in case backdrop gets stuck
+            modalEl.addEventListener('hidden.bs.modal', function handler() {
+                document.body.classList.remove('modal-open');
+                document.body.style.removeProperty('overflow');
+                document.body.style.removeProperty('padding-right');
+                document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+                modalEl.removeEventListener('hidden.bs.modal', handler);
+            }, { once: true });
+        }
+    </script>
 
 </body>
 

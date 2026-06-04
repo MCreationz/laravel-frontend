@@ -27,29 +27,34 @@ class FundApplication extends Model
     {
         return $this->hasMany(FundApplicationAnswer::class);
     }
-    public function seniorManagement()
-{
-    return $this->hasMany(FundApplicationSeniorManagement::class);
-}
 
-public function npoDocument()
-{
-    return $this->hasOne(FundApplicationNpoDocument::class);
-}
-public function startupDocument()
-{
-    return $this->hasOne(FundApplicationStartupDocument::class);
-}
-public function financialDocument()
-{
-    return $this->hasOne(FundApplicationFinancialDocument::class);
-}
-public function awardRecognitions()
-{
-    return $this->hasMany(FundApplicationAwardRecognition::class);
-}
-public function organization()
-{
-    return $this->belongsTo(Organization::class);
-}
+    public function seniorManagement()
+    {
+        return $this->hasMany(FundApplicationSeniorManagement::class);
+    }
+
+    public function npoDocument()
+    {
+        return $this->hasOne(FundApplicationNpoDocument::class);
+    }
+
+    public function startupDocument()
+    {
+        return $this->hasOne(FundApplicationStartupDocument::class);
+    }
+
+    public function financialDocument()
+    {
+        return $this->hasOne(FundApplicationFinancialDocument::class);
+    }
+
+    public function awardRecognitions()
+    {
+        return $this->hasMany(FundApplicationAwardRecognition::class);
+    }
+
+    public function organization()
+    {
+        return $this->belongsTo(Organization::class);
+    }
 }

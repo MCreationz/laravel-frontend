@@ -21,7 +21,7 @@
                     </div>
 
                     <p class="text-muted mb-0">
-                       5 Applicants Found
+                        {{ $applications->total() }} Applications Found
                     </p>
                 </div>
 
@@ -68,136 +68,76 @@
 
                 <thead class="table-light">
                     <tr>
-                        <th class="first-col">Organisation</th>
-                        <th class="text-center text-nowrap">Type</th>
-                        <th class="text-center text-nowrap">Contact</th>
-                        <th class="text-center text-nowrap">PAN</th>
-                        <th class="text-center">Vintage</th>
-
-                        <th class="text-center">Turnover</th>
-                        <th class="text-center">Applications</th>
+                        <th class="first-col">Fund</th>
+                        <th class="text-center">Funder</th>
+                        <th class="text-center">Applied On</th>
+                        <th class="text-center">Current Stage</th>
                         <th class="text-center">Status</th>
-                        <th>Actions</th>
+                        <th class="text-center">Action</th>
                     </tr>
                 </thead>
 
                 <tbody>
-                    <tr>
-                        <td>
-                            <div class="d-flex align-items-center gap-2">
+                    @forelse($applications as $application)
+
+                        @php
+                            $statusClass = match ($application->status) {
+                                'approved' => 'bg-success-subtle text-success',
+                                'rejected' => 'bg-danger-subtle text-danger',
+                                'under_review' => 'bg-warning-subtle text-warning',
+                                default => 'bg-primary-subtle text-primary',
+                            };
+                        @endphp
+
+                        <tr>
+                            <td>
                                 <div class="dashboard-v2-name-cell">
                                     <span class="hc-badge">
-                                        HC
+                                        {{ strtoupper(substr($application->fund->fund_name ?? 'F', 0, 2)) }}
                                     </span>
-                                    <span>Empowering Minds Initiative</span>
-                                </div>
 
-                            </div>
-                        </td>
-                        <!-- Client -->
-                        <td class="text-center text-nowrap">
-                            CVS Foundation
-                        </td>
-                        <!-- Type -->
-                        <td class="text-center text-nowrap">
-                            Ramesh Gupta
-                            <br> +91 441549878
-                        </td>
-                        <!-- Outlay -->
-                        <td class="text-center text-nowrap">
-                            545452
-                        </td>
-                        <!-- Cap -->
-                        <td class="text-center text-nowrap">
-                            1 yr
-                        </td>
-                        <!-- Open Date -->
-                        <td class="text-center">
-                            ₹2.5 Cr
-                        </td>
-                        <!-- Applications -->
-                        <td class="text-center">
-                            2
-                        </td>
-                        <!-- Status -->
-                        <td class="text-center">
-                            <span class="badge bg-success-subtle text-success">
-                                Verified
-                            </span>
-                        </td>
-                        <!-- Actions -->
-                        <td class="action-btn">
-                            <div class="btn-group gap-1">
-                                <!-- Edit -->
-                                <a href="http://127.0.0.1:8000/client-admin/funds/edit/1" class="edit-btn">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                        viewBox="0 0 16 16" fill="none">
-                                        <path
-                                            d="M8.8 2.4L3.3 8.2C3.1 8.4 2.9 8.8 2.9 9.1L2.7 11.3C2.6 12.1 3.1 12.6 3.9 12.5L6.1 12.1C6.3 12 6.8 11.8 7 11.6L12.4 5.8C13.4 4.8 13.8 3.7 12.3 2.3C10.9 0.9 9.8 1.4 8.8 2.4Z"
-                                            stroke="#07CCB5" stroke-width="1.2"></path>
+                                    <span>
+                                        {{ $application->fund->fund_name ?? '-' }}
+                                    </span>
+                                </div>
+                            </td>
+
+                            <td class="text-center">
+                                {{ $application->fund->fund_owner ?? '-' }}
+                            </td>
+
+                            <td class="text-center text-nowrap">
+                                {{ $application->created_at->format('d M Y') }}
+                            </td>
+
+                            <td class="text-center">
+                                Step {{ $application->current_step }}
+                            </td>
+
+                            <td class="text-center">
+                                <span class="badge {{ $statusClass }}">
+                                    {{ ucfirst(str_replace('_', ' ', $application->status)) }}
+                                </span>
+                            </td>
+
+                            <td class="text-center action-btn">
+                                <a href="" class="edit-btn" title="View">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                        fill="none" stroke="#07CCB5" stroke-width="2">
+                                        <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z" />
+                                        <circle cx="12" cy="12" r="3" />
                                     </svg>
                                 </a>
-                            </div>
-                        </td>
-                    </tr>
-                                        <tr>
-                        <td>
-                            <div class="d-flex align-items-center gap-2">
-                                <div class="dashboard-v2-name-cell">
-                                    <span class="hc-badge">
-                                        HC
-                                    </span>
-                                    <span>Empowering Minds Initiative</span>
-                                </div>
+                            </td>
+                        </tr>
 
-                            </div>
-                        </td>
-                        <!-- Client -->
-                        <td class="text-center text-nowrap">
-                            CVS Foundation
-                        </td>
-                        <!-- Type -->
-                        <td class="text-center text-nowrap">
-                            Ramesh Gupta
-                            <br> +91 441549878
-                        </td>
-                        <!-- Outlay -->
-                        <td class="text-center text-nowrap">
-                            545452
-                        </td>
-                        <!-- Cap -->
-                        <td class="text-center text-nowrap">
-                            1 yr
-                        </td>
-                        <!-- Open Date -->
-                        <td class="text-center">
-                            ₹2.5 Cr
-                        </td>
-                        <!-- Applications -->
-                        <td class="text-center">
-                            2
-                        </td>
-                        <!-- Status -->
-                        <td class="text-center">
-                            <span class="badge bg-primary-subtle">
-                                Pending
-                            </span>
-                        </td>
-                        <!-- Actions -->
-                        <td class="action-btn">
-                            <div class="btn-group gap-1">
-                                <!-- Edit -->
-                                <a href="http://127.0.0.1:8000/client-admin/funds/edit/1" class="edit-btn">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                        viewBox="0 0 16 16" fill="none">
-                                        <path
-                                            d="M8.8 2.4L3.3 8.2C3.1 8.4 2.9 8.8 2.9 9.1L2.7 11.3C2.6 12.1 3.1 12.6 3.9 12.5L6.1 12.1C6.3 12 6.8 11.8 7 11.6L12.4 5.8C13.4 4.8 13.8 3.7 12.3 2.3C10.9 0.9 9.8 1.4 8.8 2.4Z"
-                                            stroke="#07CCB5" stroke-width="1.2"></path>
-                                    </svg>
-                                </a>
-                            </div>
-                        </td>
-                    </tr>
+                    @empty
+                        <tr>
+                            <td colspan="6" class="text-center py-4">
+                                No applications found.
+                            </td>
+                        </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>
