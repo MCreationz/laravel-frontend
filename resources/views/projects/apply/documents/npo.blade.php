@@ -127,11 +127,11 @@
                     <div class="col-12 px-md-2">
                         <label class="form-label">Upload Registration Certificate <span class="text-danger">*</span></label>
 
-                        <input type="file" id="registration-certificate" name="registration_certificate" hidden>
+                        <input type="file" id="registration-certificate" name="registration_certificate" hidden required>
                         <label for="registration-certificate" class="upload-label">
                             <div class="upload-content">
-                                               <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26"
-                                    viewBox="0 0 26 26" fill="none">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26"
+                                    fill="none">
                                     <g opacity="0.2">
                                         <path d="M9.75 11.917V18.417L11.9167 16.2503" stroke="#292D32" stroke-width="1.5"
                                             stroke-linecap="round" stroke-linejoin="round" />
@@ -156,7 +156,7 @@
                         <label class="form-label">Registration Number<span>*</span></label>
                         <input type="text" name="registration_number" class="form-control"
                             placeholder="Enter Registration Number"
-                            value="{{ old('registration_number', $document?->registration_number) }}">
+                            value="{{ old('registration_number', $document?->registration_number) }}" required>
                     </div>
                     <div class="px-md-2">
                         <hr class="mb-0">
@@ -164,11 +164,11 @@
                     <div class="col-12 px-md-2">
                         <label class="form-label">Upload 12A Certificate<span class="text-danger">*</span></label>
 
-                        <input type="file" id="certificate-12a" name="certificate_12a" hidden>
+                        <input type="file" id="certificate-12a" name="certificate_12a" hidden required>
                         <label for="certificate-12a" class="upload-label">
                             <div class="upload-content">
-                                               <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26"
-                                    viewBox="0 0 26 26" fill="none">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26"
+                                    fill="none">
                                     <g opacity="0.2">
                                         <path d="M9.75 11.917V18.417L11.9167 16.2503" stroke="#292D32" stroke-width="1.5"
                                             stroke-linecap="round" stroke-linejoin="round" />
@@ -193,21 +193,21 @@
                     <div class="col-12 col-md-6 px-md-2">
                         <label class="form-label">12A Registration Number<span>*</span></label>
                         <input type="text" name="registration_number_12a" class="form-control" placeholder="Enter here"
-                            value="{{ old('registration_number_12a', $document?->registration_number_12a) }}">
+                            value="{{ old('registration_number_12a', $document?->registration_number_12a) }}" required>
                     </div>
                     <div class="col-12 col-md-6 px-md-2">
                         <label class="form-label">12 A Registration Validity<span>*</span></label>
                         <input type="date" name="validity_12a" class="form-control"
-                            value="{{ old('validity_12a', $document?->validity_12a) }}">
+                            value="{{ old('validity_12a', $document?->validity_12a) }}" required>
                     </div>
                     <div class="col-12 px-md-2">
                         <label class="form-label">Upload 80G Certificate<span class="text-danger">*</span></label>
 
-                        <input type="file" id="certificate-80g" name="certificate_80g" hidden>
+                        <input type="file" id="certificate-80g" name="certificate_80g" hidden required>
                         <label for="certificate-80g" class="upload-label">
                             <div class="upload-content">
-                                               <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26"
-                                    viewBox="0 0 26 26" fill="none">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26"
+                                    fill="none">
                                     <g opacity="0.2">
                                         <path d="M9.75 11.917V18.417L11.9167 16.2503" stroke="#292D32" stroke-width="1.5"
                                             stroke-linecap="round" stroke-linejoin="round" />
@@ -232,24 +232,24 @@
                     <div class="col-12 col-md-6 px-md-2">
                         <label class="form-label">80G Registration Number<span>*</span></label>
                         <input type="text" name="registration_number_80g" class="form-control" placeholder="Enter here"
-                            value="{{ old('registration_number_80g', $document?->registration_number_80g) }}">
+                            value="{{ old('registration_number_80g', $document?->registration_number_80g) }}" required>
                     </div>
                     <div class="col-12 col-md-6 px-md-2">
                         <label class="form-label">80G Registration Validity<span>*</span></label>
                         <input type="date" name="validity_80g" class="form-control"
-                            value="{{ old('validity_80g', $document?->validity_80g) }}">
+                            value="{{ old('validity_80g', $document?->validity_80g) }}" required>
                     </div>
 
 
                     <div class="col-12 px-md-2">
                         <label class="form-label">Upload FCRA Certificate<span class="text-danger">*</span></label>
 
-                        <input type="file" id="certificate-fcra" name="certificate_fcra" hidden>
+                        <input type="file" id="certificate-fcra" name="certificate_fcra" hidden required>
 
                         <label for="certificate-fcra" class="upload-label">
                             <div class="upload-content">
-                                               <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26"
-                                    viewBox="0 0 26 26" fill="none">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26"
+                                    fill="none">
                                     <g opacity="0.2">
                                         <path d="M9.75 11.917V18.417L11.9167 16.2503" stroke="#292D32" stroke-width="1.5"
                                             stroke-linecap="round" stroke-linejoin="round" />
@@ -276,24 +276,24 @@
                     <div class="col-12 col-md-6 px-md-2">
                         <label class="form-label">FCRA Registration Number<span>*</span></label>
                         <input type="text" name="registration_number_fcra" class="form-control" placeholder="Enter here"
-                            value="{{ old('registration_number_fcra', $document?->registration_number_fcra) }}">
+                            value="{{ old('registration_number_fcra', $document?->registration_number_fcra) }}" required>
                     </div>
 
                     <div class="col-12 col-md-6 px-md-2">
                         <label class="form-label">FCRA Registration Validity<span>*</span></label>
                         <input type="date" name="validity_fcra" class="form-control"
-                            value="{{ old('validity_fcra', $document?->validity_fcra) }}">
+                            value="{{ old('validity_fcra', $document?->validity_fcra) }}" required>
                     </div>
 
                     <div class="col-12 px-md-2">
                         <label class="form-label">Upload CSR-1 Certificate<span class="text-danger">*</span></label>
 
-                        <input type="file" id="certificate-csr1" name="certificate_csr1" hidden>
+                        <input type="file" id="certificate-csr1" name="certificate_csr1" hidden required>
 
                         <label for="certificate-csr1" class="upload-label">
                             <div class="upload-content">
-                                               <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26"
-                                    viewBox="0 0 26 26" fill="none">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26"
+                                    fill="none">
                                     <g opacity="0.2">
                                         <path d="M9.75 11.917V18.417L11.9167 16.2503" stroke="#292D32" stroke-width="1.5"
                                             stroke-linecap="round" stroke-linejoin="round" />
@@ -320,13 +320,13 @@
                     <div class="col-12 col-md-6 px-md-2">
                         <label class="form-label">CSR-1 Registration Number<span>*</span></label>
                         <input type="text" name="registration_number_csr1" class="form-control" placeholder="Enter here"
-                            value="{{ old('registration_number_csr1', $document?->registration_number_csr1) }}">
+                            value="{{ old('registration_number_csr1', $document?->registration_number_csr1) }}" required>
                     </div>
 
                     <div class="col-12 col-md-6 px-md-2">
                         <label class="form-label">CSR-1 Registration Validity<span>*</span></label>
                         <input type="date" name="validity_csr1" class="form-control"
-                            value="{{ old('validity_csr1', $document?->validity_csr1) }}">
+                            value="{{ old('validity_csr1', $document?->validity_csr1) }}" required>
                     </div>
 
                 </div>

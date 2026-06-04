@@ -35,13 +35,16 @@ public function index(Fund $fund)
 public function store(Request $request, Fund $fund)
 {
     $request->validate([
-        'theme_id' => 'required|exists:fund_themes,id',
-        'sub_theme_id' => 'required|exists:fund_themes,id',
-        'project_duration' => 'required|integer|min:1',
-        'total_budget' => 'required|numeric|min:1',
-        'additional_info' => 'nullable|string',
-        'answers' => 'required|array',
-    ]);
+    'theme_id' => 'required|exists:fund_themes,id',
+    'sub_theme_id' => 'required|exists:fund_themes,id',
+    'project_duration' => 'required|integer|min:1',
+    'total_budget' => 'required|numeric|min:1',
+    'additional_info' => 'nullable|string',
+
+    'answers' => 'required|array|min:1',
+    'answers.*' => 'required|string',
+]);
+    //return $request->all();
 
     DB::transaction(function () use ($request, $fund) {
 
@@ -76,8 +79,8 @@ public function store(Request $request, Fund $fund)
     });
 
     return redirect()
-        ->route('projects.apply.senior-management', $fund)
-        ->with('success', 'Application saved successfully.');
+        ->route('projects.apply.senior-management', $fund);
+       
 }
 
 

@@ -275,6 +275,102 @@
 
     });
 </script> --}}
+<script>
+document.addEventListener('DOMContentLoaded', function () {
 
+    document.querySelectorAll('form').forEach(form => {
+
+        form.addEventListener('invalid', function (e) {
+            e.target.classList.add('validation-error');
+        }, true);
+
+        form.addEventListener('submit', function (e) {
+
+            const firstInvalid = form.querySelector(':invalid');
+
+            if (!firstInvalid) {
+                return;
+            }
+
+            e.preventDefault();
+
+            let target = firstInvalid;
+
+            // Hidden file input
+            if (
+                firstInvalid.type === 'file' &&
+                firstInvalid.id
+            ) {
+                const uploadLabel = document.querySelector(
+                    `label[for="${firstInvalid.id}"]`
+                );
+
+                if (uploadLabel) {
+                    target = uploadLabel;
+                }
+            }
+
+            // Select2 support
+            const select2Container =
+                firstInvalid.nextElementSibling?.classList?.contains('select2')
+                    ? firstInvalid.nextElementSibling
+                    : null;
+
+            if (select2Container) {
+                target = select2Container;
+            }
+
+            // Generic hidden field fallback
+            if (target.offsetParent === null) {
+                const wrapper = firstInvalid.closest(
+                    '.form-group, .mb-3, .col-12, .field-wrapper'
+                );
+
+                if (wrapper) {
+                    target = wrapper;
+                }
+            }
+
+            target.classList.add('validation-error');
+
+            target.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center'
+            });
+
+            setTimeout(() => {
+                target.classList.remove('validation-error');
+            }, 5000);
+
+            // Focus only if visible
+            if (
+                firstInvalid.offsetParent !== null &&
+                typeof firstInvalid.focus === 'function'
+            ) {
+                setTimeout(() => {
+                    firstInvalid.focus({
+                        preventScroll: true
+                    });
+                }, 300);
+            }
+        });
+
+    });
+
+});
+</script>
+
+<style>
+.validation-error {
+    border: 2px solid #dc3545 !important;
+    border-radius: 8px;
+}
+</style>
+<style>
+.validation-error {
+    border: 2px solid #dc3545 !important;
+    box-shadow: 0 0 0 0.2rem rgba(220,53,69,.25) !important;
+}
+</style>
 
 </html>

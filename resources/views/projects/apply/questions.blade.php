@@ -167,7 +167,7 @@
                                         </span>
                                     </div>
 
-                                    <textarea name="answers[{{ $question->id }}]" rows="6"
+                                    <textarea name="answers[{{ $question->id }}]" rows="6" required
                                         class="form-control application-textarea" data-word-limit="{{ $question->word_limit }}"
                                         placeholder="Write your response here...">{{ $answers[$question->id]->answer ?? '' }}</textarea>
 

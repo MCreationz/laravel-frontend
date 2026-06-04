@@ -19,8 +19,7 @@
 @section('content')
     <div class="step-section position-relative mb-3">
         <div class="bg-image position-absolute top-0 start-0 w-100 h-100">
-            <img src="{{ asset('img/dasboard-bg.png') }}" class="img-fluid" alt="steps section" width="100%"
-                height="100%">
+            <img src="{{ asset('img/dasboard-bg.png') }}" class="img-fluid" alt="steps section" width="100%" height="100%">
         </div>
         <div
             class="step-wrapper d-flex flex-wrap justify-content-center justify-content-md-between align-items-center py-3 py-md-4 py-xl-5 px-2 row-gap-2">
@@ -124,18 +123,18 @@
                     <div class="col-12 px-md-2">
                         <label class="form-label">Last Year Turnover<span>*</span></label>
                         <input type="number" name="last_year_turnover" class="form-control" placeholder="Enter Number"
-                            value="{{ old('last_year_turnover', $document?->last_year_turnover) }}">
+                            value="{{ old('last_year_turnover', $document?->last_year_turnover) }}" required>
                     </div>
 
                     <div class="col-12 px-md-2">
                         <label class="form-label">Last Year Balance Sheet <span class="text-danger">*</span></label>
 
-                        <input type="file" id="last_year_balance_sheet" name="last_year_balance_sheet" hidden>
+                        <input type="file" id="last_year_balance_sheet" name="last_year_balance_sheet" hidden required>
 
                         <label for="last_year_balance_sheet" class="upload-label">
                             <div class="upload-content">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26"
-                                    viewBox="0 0 26 26" fill="none">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26"
+                                    fill="none">
                                     <g opacity="0.2">
                                         <path d="M9.75 11.917V18.417L11.9167 16.2503" stroke="#292D32" stroke-width="1.5"
                                             stroke-linecap="round" stroke-linejoin="round" />
@@ -168,7 +167,7 @@
                     <div class="col-12 px-md-2">
                         <label class="form-label">Last to Last Year Turnover<span>*</span></label>
                         <input type="number" name="last_to_last_year_turnover" class="form-control"
-                            placeholder="Enter Number"
+                            placeholder="Enter Number" required
                             value="{{ old('last_to_last_year_turnover', $document?->last_to_last_year_turnover) }}">
                     </div>
 
@@ -179,12 +178,12 @@
                         </label>
 
                         <input type="file" id="last_to_last_year_balance_sheet" name="last_to_last_year_balance_sheet"
-                            hidden>
+                            hidden required>
 
                         <label for="last_to_last_year_balance_sheet" class="upload-label">
                             <div class="upload-content">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26"
-                                    viewBox="0 0 26 26" fill="none">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26"
+                                    fill="none">
                                     <g opacity="0.2">
                                         <path d="M9.75 11.917V18.417L11.9167 16.2503" stroke="#292D32" stroke-width="1.5"
                                             stroke-linecap="round" stroke-linejoin="round" />
@@ -217,12 +216,12 @@
                     <div class="col-12 px-md-2">
                         <label class="form-label">Last Year ITR<span class="text-danger">*</span></label>
 
-                        <input type="file" id="last_year_itr" name="last_year_itr" hidden>
+                        <input type="file" id="last_year_itr" name="last_year_itr" hidden required>
 
                         <label for="last_year_itr" class="upload-label">
                             <div class="upload-content">
-                                                             <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26"
-                                    viewBox="0 0 26 26" fill="none">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26"
+                                    fill="none">
                                     <g opacity="0.2">
                                         <path d="M9.75 11.917V18.417L11.9167 16.2503" stroke="#292D32" stroke-width="1.5"
                                             stroke-linecap="round" stroke-linejoin="round" />
@@ -255,12 +254,12 @@
                     <div class="col-12 px-md-2">
                         <label class="form-label">Last to Last Year ITR<span class="text-danger">*</span></label>
 
-                        <input type="file" id="last_to_last_year_itr" name="last_to_last_year_itr" hidden>
+                        <input type="file" id="last_to_last_year_itr" name="last_to_last_year_itr" hidden required>
 
                         <label for="last_to_last_year_itr" class="upload-label">
                             <div class="upload-content">
-                                                             <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26"
-                                    viewBox="0 0 26 26" fill="none">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26"
+                                    fill="none">
                                     <g opacity="0.2">
                                         <path d="M9.75 11.917V18.417L11.9167 16.2503" stroke="#292D32" stroke-width="1.5"
                                             stroke-linecap="round" stroke-linejoin="round" />
@@ -292,12 +291,18 @@
 
                 </div>
             </div>
+            @php
+                $documentsRoute =
+                    auth('organization')->user()->role === 'fund_seeker'
+                    ? route('projects.apply.documents.startup', $fund->id)
+                    : route('projects.apply.documents.npo', $fund->id);
+            @endphp
 
             <div style="border-radius:0px 0px 8px 8px;"
                 class="d-flex justify-content-center justify-content-md-end gap-2 gap-md-3 steps-btn pe-lg-4 flex-wrap">
 
                 <div class="btn-wrap">
-                    <button type="button" class="btn simple-btn" onclick="">
+                    <button type="button" class="btn simple-btn" onclick="window.location.href='{{ $documentsRoute }}'">
                         <img src="/img/back.png" class="me-2" width="15" height="6.25">
                         Back
                     </button>
@@ -306,8 +311,7 @@
                 <div class="btn-wrap">
                     <button type="submit" class="btn gradient-btn">
                         Continue
-                        <svg xmlns="http://www.w3.org/2000/svg" width="17" height="8" viewBox="0 0 17 8"
-                            fill="none">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="17" height="8" viewBox="0 0 17 8" fill="none">
                             <path d="M12.625 7L15.75 3.875L12.625 0.75M15.75 3.875H0.75" stroke="white" stroke-width="1.5"
                                 stroke-linecap="round" stroke-linejoin="round" />
                         </svg>

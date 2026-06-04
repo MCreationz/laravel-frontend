@@ -225,7 +225,7 @@
             class="d-flex justify-content-center justify-content-md-end gap-2 gap-md-3 mt-4 steps-btn pe-lg-4 flex-wrap">
             <div class="btn-wrap">
                 <button type="button" class="btn btn-secondary"
-                    onclick="window.location.href='{{ route('dashboard') }}' ">
+                    onclick="window.location.href='{{ route('projects.apply.questions', $fund)}}' ">
                     Back
                 </button>
                 <button type="button" class="btn btn-primary" id="continueBtn">
@@ -391,7 +391,7 @@
                                 <div class="col-12">
                                     <label class="form-label">Upload Resume/CV <span class="text-danger">*</span></label>
 
-                                    <input type="file" id="resume_cv" name="resume_cv" hidden>
+                                    <input type="file" id="resume_cv" name="resume_cv" hidden >
 
                                     <label for="resume_cv" class="upload-label">
                                         <div class="upload-content">
