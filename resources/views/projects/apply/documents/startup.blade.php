@@ -126,7 +126,7 @@
                     <div class="col-12 px-md-2">
                         <label class="form-label">Upload Registration Certificate <span class="text-danger">*</span></label>
 
-                        <input type="file" id="registration_certificate" name="registration_certificate" hidden>
+                        <input type="file" id="registration_certificate" name="registration_certificate" hidden required>
 
                         <label for="registration_certificate" class="upload-label">
                             <div class="upload-content">
@@ -160,7 +160,7 @@
                         <label class="form-label">Registration Number<span>*</span></label>
                         <input type="text" name="registration_number" class="form-control"
                             placeholder="Enter Registration Number"
-                            value="{{ old('registration_number', $document->registration_number ?? '') }}">
+                            value="{{ old('registration_number', $document->registration_number ?? '') }}" required>
                     </div>
                     <div class="px-md-2">
                         <hr class="mb-0">
@@ -168,7 +168,7 @@
                     <div class="col-12 px-md-2">
                         <label class="form-label">Upload DPIIT Certificate<span class="text-danger">*</span></label>
 
-                        <input type="file" id="dpiit_certificate" name="dpiit_certificate" hidden>
+                        <input type="file" id="dpiit_certificate" name="dpiit_certificate" hidden required>
 
                         <label for="dpiit_certificate" class="upload-label">
                             <div class="upload-content">
@@ -203,7 +203,7 @@
                         <label class="form-label">DPIIT Registration Number<span>*</span></label>
                         <input type="text" name="dpiit_registration_number" class="form-control"
                             placeholder="Enter here"
-                            value="{{ old('dpiit_registration_number', $document->dpiit_registration_number ?? '') }}">
+                            value="{{ old('dpiit_registration_number', $document->dpiit_registration_number ?? '') }}" required>
                     </div>
                     {{-- radio --}}
                     <div class="col-12 px-md-2">
@@ -226,36 +226,36 @@
                     </div>
 
 
-                    <div class="col-12 col-md-6 px-md-2">
+                    <div class="col-12 col-md-6 px-md-2" >
                         <label class="form-label">Patent No<span>*</span></label>
                         <input type="text" name="patent_number" class="form-control" placeholder="Enter here"
-                            value="{{ old('patent_number', $document->patent_number ?? '') }}">
+                            value="{{ old('patent_number', $document->patent_number ?? '') }}" required>
                     </div>
                     <div class="col-12 col-md-6 px-md-2">
                         <label class="form-label">Application No<span>*</span></label>
                         <input type="text" name="application_number" class="form-control" placeholder="Enter here"
-                            value="{{ old('application_number', $document->application_number ?? '') }}">
+                            value="{{ old('application_number', $document->application_number ?? '') }}" required>
                     </div>
                     <div class="col-12 col-md-6 px-md-2">
                         <label class="form-label">Date of Filling<span>*</span></label>
                         <input type="date" name="date_of_filing" class="form-control" placeholder="Enter here"
-                            value="{{ old('date_of_filing', $document->date_of_filing ?? '') }}">
+                            value="{{ old('date_of_filing', $document->date_of_filing ?? '') }}" required>
                     </div>
                     <div class="col-12 col-md-6 px-md-2">
                         <label class="form-label">Patentee Name<span>*</span></label>
                         <input type="text" name="patentee_name" class="form-control" placeholder="Enter here"
-                            value="{{ old('patentee_name', $document->patentee_name ?? '') }}">
+                            value="{{ old('patentee_name', $document->patentee_name ?? '') }}" required>
                     </div>
                     <div class="col-12 col-md-6 px-md-2">
                         <label class="form-label">Validity of the Patent<span>*</span></label>
                         <input type="date" name="patent_validity" class="form-control" placeholder="Enter here"
-                            value="{{ old('patent_validity', $document->patent_validity ?? '') }}">
+                            value="{{ old('patent_validity', $document->patent_validity ?? '') }}" required>
                     </div>
                     <div class="col-12 col-md-6 px-md-2">
                         <label class="form-label">GST Registration No<span>*</span></label>
                         <input type="text" name="gst_registration_number" class="form-control"
                             placeholder="Enter here"
-                            value="{{ old('gst_registration_number', $document->gst_registration_number ?? '') }}">
+                            value="{{ old('gst_registration_number', $document->gst_registration_number ?? '') }}" required>
                     </div>
 
 
@@ -263,7 +263,7 @@
                     <div class="col-12 px-md-2">
                         <label class="form-label">Upload GST Certificate<span class="text-danger">*</span></label>
 
-                        <input type="file" id="gst_certificate" name="gst_certificate" hidden>
+                        <input type="file" id="gst_certificate" name="gst_certificate" hidden required>
 
                         <label for="gst_certificate" class="upload-label">
                             <div class="upload-content">
@@ -298,13 +298,13 @@
                         <label class="form-label">MSME Registration Number<span>*</span></label>
                         <input type="text" name="msme_registration_number" class="form-control"
                             placeholder="Enter here"
-                            value="{{ old('msme_registration_number', $document->msme_registration_number ?? '') }}">
+                            value="{{ old('msme_registration_number', $document->msme_registration_number ?? '') }}" required>
                     </div>
                     <div class="col-12 col-md-6 px-md-2">
                         <label class="form-label">MSME Registration Validity<span>*</span></label>
                         <input type="date" name="msme_registration_validity" class="form-control"
                             placeholder="Enter here"
-                            value="{{ old('msme_registration_validity', $document->msme_registration_validity ?? '') }}">
+                            value="{{ old('msme_registration_validity', $document->msme_registration_validity ?? '') }}" required>
                     </div>
                 </div>
             </div>

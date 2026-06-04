@@ -65,6 +65,13 @@ class FinancialDocumentController extends Controller
         $organization = auth('organization')->user();
 
         if ($organization->role === 'fund_seeker') {
+            FundApplication::where('fund_id', $fund->id)
+                ->where('organization_id', auth('organization')->id())
+                ->where('status', 'draft')
+                ->update([
+                    'status' => 'active',
+                ]);
+
             return redirect()
                 ->route('dashboard')
                 ->with('success', 'Application submitted successfully.');

@@ -10,21 +10,28 @@ use Illuminate\Http\Request;
 
 class AwardRecognitionController extends Controller
 {
- public function index(Fund $fund)
-{
-    $fundApplication = FundApplication::with('awardRecognitions')
-        ->where('fund_id', $fund->id)
-        ->where('organization_id', auth('organization')->id())
-        ->first();
+    public function index(Fund $fund)
+    {
+        $fundApplication = FundApplication::with('awardRecognitions')
+            ->where('fund_id', $fund->id)
+            ->where('organization_id', auth('organization')->id())
+            ->first();
 
-    $awards = $fundApplication?->awardRecognitions ?? collect();
+        $awards = $fundApplication?->awardRecognitions ?? collect();
 
-    return view('projects.apply.awards-recognition.index', compact(
-        'fund',
-        'fundApplication',
-        'awards'
-    ));
-}
+        FundApplication::where('fund_id', $fund->id)
+            ->where('organization_id', auth('organization')->id())
+            ->where('status', 'draft')
+            ->update([
+                'status' => 'active',
+            ]);
+
+        return view('projects.apply.awards-recognition.index', compact(
+            'fund',
+            'fundApplication',
+            'awards'
+        ));
+    }
 
     public function store(Request $request, Fund $fund)
     {

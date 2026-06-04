@@ -7,21 +7,33 @@ use Illuminate\Http\Request;
 
 class MyApplicationController extends Controller
 {
-    public function index(Request $request)
-    {
-        $applications = FundApplication::with([
-                'fund.client'
-            ])
-            ->where('organization_id', auth('organization')->id())
-            ->when($request->search, function ($query, $search) {
-                $query->whereHas('fund', function ($q) use ($search) {
-                    $q->where('title', 'like', "%{$search}%");
-                });
-            })
-            ->latest()
-            ->paginate(10)
-            ->withQueryString();
+public function index(Request $request)
+{
+    $applications = FundApplication::with(['fund.client'])
+        ->where('organization_id', auth('organization')->id())
 
-        return view('my-applications.index', compact('applications'));
-    }
+        ->when($request->search, function ($query, $search) {
+            $query->whereHas('fund', function ($q) use ($search) {
+                $q->where('fund_name', 'like', "%{$search}%");
+            });
+        })
+
+        ->when($request->status, function ($query, $status) {
+            $query->where('status', $status);
+        })
+
+        // ->when($request->fund_type, function ($query, $type) {
+        //     $query->whereHas('fund', function ($q) use ($type) {
+        //         $q->where('fund_type', $type);
+        //     });
+        // })
+
+        ->latest()
+        ->paginate(10)
+        ->withQueryString();
+
+    return view('my-applications.index', compact('applications'));
+}
+
+
 }
