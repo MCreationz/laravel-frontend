@@ -105,14 +105,11 @@ p:last-child {
 
 form .form-control::placeholder {
     color: #b9b9b9;
-    /* Your desired color */
     opacity: 1;
-    /* Ensures full visibility in some browsers */
 }
 
 .custom-select.form-control {
     color: #C6D4E2;
-    /* Change to your desired color */
 }
 
 .font-sm {
@@ -2271,6 +2268,90 @@ table td {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+/*  */
+.timeline-step {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+    border: 1px solid #C3C4C71F;
+    padding: 8px 10px;
+    border-radius: 8px;
+}
+.timeline-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+    font-size: 16px !important;
+}
+.FD-text {
+    border: 0.43px solid #C5DFFF;
+    background: #FBFCFE;
+    width: 79.40863800048828px;
+    height: 79.40863800048828px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 2.6px;
+}
+.completed, .submitted {background: #07CCB5;color: #fff !important;}
+.review { background: #fcf3cf; color: #f1c40f; }
+.pending {
+    border: 1px solid #1E27461A;
+    background: #FBFBFB;
+    width: 20px;
+    height: 20px;
+    font-size: 0 !important;
+}
+span.status-pill.pending-btn {
+    background: #E8F2FE66;
+    color: #1E2746;
+}
+.app-detail-col {
+    background: #FBFBFB;
+    border-radius: 8px;
+    padding: 13px;
+    margin: 0 0 5px;
+    min-height: 75px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+.app-detail-col .text-muted {
+    font-size: 10px !important;
+}
+.detail-title {
+    font-size: 16px !important;
+    color: #000000 !important;
+    font-weight: 500;
+}
+.status-pill {
+    padding: 8.21px 10px;
+    border-radius: 8px !important;
+    min-width: 131px;
+    text-align: center;
+    font-size: 11px !important;
+}
+.snapshot-box {
+    border-radius: 8px;
+    padding: 12px;
+    background: #0160D617;
+}
+.snapshot-box * {
+    color: #000 !important;
+    font-size: 13px !important;
+}
+.status-pill.bg-success-subtle.text-success, .bg-info-subtle {
+    background: #07CCB533 !important;
+    color: #07564D !important;
+}
+span.status-pill.bg-warning-subtle.text-warning {
+    background: #FDFAE8 !important;
+    color: #F0C436 !important;
 }
 /* responsive */
 @media(max-width:1440px) {
