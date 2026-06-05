@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ClientAdmin\ApplicantController;
 use App\Http\Controllers\ClientAdmin\AuthController;
 use App\Http\Controllers\ClientAdmin\DashboardController;
 use App\Http\Controllers\ClientAdmin\FundController;
@@ -164,6 +165,30 @@ Route::prefix('client-admin')->group(function () {
 
         Route::delete('/fund-questionnaires/delete/{id}', [FundQuestionnaireController::class, 'destroy'])
             ->name('client-admin.fund-questionnaires.destroy');
+
+        /*
+|--------------------------------------------------------------------------
+| Applicants
+|--------------------------------------------------------------------------
+*/
+
+        Route::get('/applicants', [ApplicantController::class, 'index'])
+            ->name('client-admin.applicants.index');
+
+        Route::get('/applicants/create', [ApplicantController::class, 'create'])
+            ->name('client-admin.applicants.create');
+
+        Route::post('/applicants', [ApplicantController::class, 'store'])
+            ->name('client-admin.applicants.store');
+
+        Route::get('/applicants/{id}/edit', [ApplicantController::class, 'edit'])
+            ->name('client-admin.applicants.edit');
+
+        Route::put('/applicants/{id}', [ApplicantController::class, 'update'])
+            ->name('client-admin.applicants.update');
+
+        Route::delete('/applicants/{id}', [ApplicantController::class, 'destroy'])
+            ->name('client-admin.applicants.destroy');
 
         /*
         |--------------------------------------------------------------------------

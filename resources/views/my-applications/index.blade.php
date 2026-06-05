@@ -57,7 +57,7 @@
 
                 </form>
 
-                
+
             </div>
         </div>
 
@@ -370,14 +370,14 @@
     </script>
 
     <script>
-let timeout = null;
+        let timeout = null;
 
-document.getElementById('searchInput').addEventListener('input', function () {
-    clearTimeout(timeout);
+        document.getElementById('searchInput').addEventListener('input', function () {
+            clearTimeout(timeout);
 
-    timeout = setTimeout(() => {
-        this.form.submit();
-    }, 400); // 500ms debounce
-});
-</script>
+            timeout = setTimeout(() => {
+                this.form.submit();
+            }, 400); // 500ms debounce
+        });
+    </script>
 @endsection

@@ -41,7 +41,8 @@
                 </div>
                 <div class="flex-grow-1 ms-3 text">Client Admins</div>
             </a>
-            <a href="{{ route('dashboard') }}" class="d-flex align-items-center text-decoration-none sidebar-links">
+            <a href="{{ route('client-admin.applicants.index') }}"
+                class="d-flex align-items-center text-decoration-none sidebar-links">
                 <div class="flex-shrink-0">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                         <path d="M22 10V15C22 20 20 22 15 22H9C4 22 2 20 2 15V9C2 4 4 2 9 2H14" stroke="white"
@@ -56,7 +57,8 @@
                 </div>
                 <div class="flex-grow-1 ms-3 text">Applicants</div>
             </a>
-            <a href="{{ route('dashboard') }}" class="d-flex align-items-center text-decoration-none sidebar-links">
+            <a href="{{ route('client-admin.applicants.index') }}"
+                class="d-flex align-items-center text-decoration-none sidebar-links">
                 <div class="flex-shrink-0">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                         <path d="M11 2H9C4 2 2 4 2 9V15C2 20 4 22 9 22H15C20 22 22 20 22 15V13" stroke="white"
@@ -71,7 +73,8 @@
                 </div>
                 <div class="flex-grow-1 ms-3 text">reviewers</div>
             </a>
-            <a href="{{ route('client-admin.funds.index') }}" class="d-flex align-items-center text-decoration-none sidebar-links">
+            <a href="{{ route('client-admin.funds.index') }}"
+                class="d-flex align-items-center text-decoration-none sidebar-links">
                 <div class="flex-shrink-0">
                     <svg xmlns="http://www.w3.org/2000/svg" width="23" height="19" viewBox="0 0 23 19" fill="none">
                         <path
