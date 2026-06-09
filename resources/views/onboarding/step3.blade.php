@@ -1581,26 +1581,26 @@
                             });
 
                             fundersTable.innerHTML += `
-                    <tr
-                        data-id="${funder.id}"
-                        data-category="${funder.category}"
-                        data-purpose="${funder.purpose}"
-                    >
-                        <td>${index + 1}</td>
-                        <td>${funder.name}</td>
-                        <td>${formatLabel(funder.category)}</td>
-                        <td>${funder.year}</td>
-                        <td>${formatLabel(funder.purpose)}</td>
-                        <td>â‚¹ ${Number(funder.amount).toLocaleString()}</td>
-                        <td>
-                            <button type="button" class="edit editFunder">
-                                <i class="bi bi-pencil-square"></i>
-                            </button>
-                            <button type="button" class="trash deleteFunder">
-                                <i class="bi bi-trash3"></i>
-                            </button>
-                        </td>
-                    </tr>`;
+                        <tr
+                            data-id="${funder.id}"
+                            data-category="${funder.category}"
+                            data-purpose="${funder.purpose}"
+                        >
+                            <td>${index + 1}</td>
+                            <td>${funder.name}</td>
+                            <td>${formatLabel(funder.category)}</td>
+                            <td>${funder.year}</td>
+                            <td>${formatLabel(funder.purpose)}</td>
+                            <td>â‚¹ ${Number(funder.amount).toLocaleString()}</td>
+                            <td>
+                                <button type="button" class="edit editFunder">
+                                    <i class="bi bi-pencil-square"></i>
+                                </button>
+                                <button type="button" class="trash deleteFunder">
+                                    <i class="bi bi-trash3"></i>
+                                </button>
+                            </td>
+                        </tr>`;
                         });
                     })
                     .catch(() => {
@@ -1683,21 +1683,18 @@
 
                     const modalEl = document.getElementById('funderModal');
 
-                    const modalInstance = bootstrap.Modal.getInstance(modalEl);
-                    if (modalInstance) {
-                        modalInstance.hide();
-                    }
+                    const instance = bootstrap.Modal.getOrCreateInstance(modalEl);
+                    instance.hide();
 
-                    // Cleanup
-                    document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+                   setTimeout(() => {
+    document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
 
-                    document.body.classList.remove('modal-open');
-                    document.body.style.overflow = 'auto';
-                    document.body.style.paddingRight = '0px';
+    document.body.classList.remove('modal-open');
+    document.body.style.overflow = '';
+    document.body.style.paddingRight = '';
 
-                    modalEl.classList.remove('show');
-                    modalEl.style.display = 'none';
-                    modalEl.setAttribute('aria-hidden', 'true');
+    document.documentElement.style.overflow = '';
+}, 300);
 
                     loadFunders();
 
@@ -1862,9 +1859,9 @@
                         tag.className = 'state-tag';
 
                         tag.innerHTML = `
-                                                                        <span>${cb.value}</span>
-                                                                        <span class="remove-tag" data-value="${cb.value}">&times;</span>
-                                                                    `;
+                                                                            <span>${cb.value}</span>
+                                                                            <span class="remove-tag" data-value="${cb.value}">&times;</span>
+                                                                        `;
 
                         selectedBox.appendChild(tag);
                     }
