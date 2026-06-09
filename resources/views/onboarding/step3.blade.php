@@ -383,6 +383,46 @@
                                     <label for="s28">West Bengal</label>
                                 </li>
 
+                                <li>
+                                    <input type="checkbox" value="Andaman and Nicobar Islands" id="s29" {{ in_array('Andaman and Nicobar Islands', $selectedStates) ? 'checked' : '' }}>
+                                    <label for="s29">Andaman and Nicobar Islands</label>
+                                </li>
+
+                                <li>
+                                    <input type="checkbox" value="Chandigarh" id="s30" {{ in_array('Chandigarh', $selectedStates) ? 'checked' : '' }}>
+                                    <label for="s30">Chandigarh</label>
+                                </li>
+
+                                <li>
+                                    <input type="checkbox" value="Dadra and Nagar Haveli and Daman and Diu" id="s31" {{ in_array('Dadra and Nagar Haveli and Daman and Diu', $selectedStates) ? 'checked' : '' }}>
+                                    <label for="s31">Dadra and Nagar Haveli and Daman and Diu</label>
+                                </li>
+
+                                <li>
+                                    <input type="checkbox" value="Delhi" id="s32" {{ in_array('Delhi', $selectedStates) ? 'checked' : '' }}>
+                                    <label for="s32">Delhi</label>
+                                </li>
+
+                                <li>
+                                    <input type="checkbox" value="Jammu and Kashmir" id="s33" {{ in_array('Jammu and Kashmir', $selectedStates) ? 'checked' : '' }}>
+                                    <label for="s33">Jammu and Kashmir</label>
+                                </li>
+
+                                <li>
+                                    <input type="checkbox" value="Ladakh" id="s34" {{ in_array('Ladakh', $selectedStates) ? 'checked' : '' }}>
+                                    <label for="s34">Ladakh</label>
+                                </li>
+
+                                <li>
+                                    <input type="checkbox" value="Lakshadweep" id="s35" {{ in_array('Lakshadweep', $selectedStates) ? 'checked' : '' }}>
+                                    <label for="s35">Lakshadweep</label>
+                                </li>
+
+                                <li>
+                                    <input type="checkbox" value="Puducherry" id="s36" {{ in_array('Puducherry', $selectedStates) ? 'checked' : '' }}>
+                                    <label for="s36">Puducherry</label>
+                                </li>
+
                             </ul>
 
                             <input type="hidden" name="state" id="hiddenStates" value="{{ implode(',', $selectedStates) }}"
@@ -834,7 +874,7 @@
                             <div class="select-wrapper w-100 position-relative">
                                 <div class="custom-select form-control">Select an option</div>
 
-                                <input type="hidden" name="category" id="funder_category">
+                                <input class="hidden-select" type="hidden" name="category" id="funder_category">
 
                                 <ul class="select-list" style="display: none;">
                                     <li data-value="government">Government</li>
@@ -849,7 +889,9 @@
 
                         <div class="mb-3">
                             <label>Year</label>
-                            <input type="number" class="form-control" id="funder_year" placeholder="Enter Year (e.g. 2026)">
+                            <input type="number" class="form-control" id="funder_year" placeholder="Enter Year (e.g. 2026)"
+                                min="1000" max="9999" oninput="if(this.value.length > 4) this.value = this.value.slice(0,4)"
+                                required>
                         </div>
 
                         <div class="mb-3">
@@ -858,7 +900,7 @@
                             <div class="select-wrapper w-100 position-relative">
                                 <div class="custom-select form-control">Select an option</div>
 
-                                <input type="hidden" name="purpose" id="funder_purpose">
+                                <input type="hidden" name="purpose" id="funder_purpose" class="hidden-select">
 
                                 <ul class="select-list" style="display: none;">
                                     <li data-value="project">Project</li>
@@ -1539,26 +1581,26 @@
                             });
 
                             fundersTable.innerHTML += `
-                <tr
-                    data-id="${funder.id}"
-                    data-category="${funder.category}"
-                    data-purpose="${funder.purpose}"
-                >
-                    <td>${index + 1}</td>
-                    <td>${funder.name}</td>
-                    <td>${formatLabel(funder.category)}</td>
-                    <td>${funder.year}</td>
-                    <td>${formatLabel(funder.purpose)}</td>
-                    <td>â‚¹ ${Number(funder.amount).toLocaleString()}</td>
-                    <td>
-                        <button type="button" class="edit editFunder">
-                            <i class="bi bi-pencil-square"></i>
-                        </button>
-                        <button type="button" class="trash deleteFunder">
-                            <i class="bi bi-trash3"></i>
-                        </button>
-                    </td>
-                </tr>`;
+                    <tr
+                        data-id="${funder.id}"
+                        data-category="${funder.category}"
+                        data-purpose="${funder.purpose}"
+                    >
+                        <td>${index + 1}</td>
+                        <td>${funder.name}</td>
+                        <td>${formatLabel(funder.category)}</td>
+                        <td>${funder.year}</td>
+                        <td>${formatLabel(funder.purpose)}</td>
+                        <td>â‚¹ ${Number(funder.amount).toLocaleString()}</td>
+                        <td>
+                            <button type="button" class="edit editFunder">
+                                <i class="bi bi-pencil-square"></i>
+                            </button>
+                            <button type="button" class="trash deleteFunder">
+                                <i class="bi bi-trash3"></i>
+                            </button>
+                        </td>
+                    </tr>`;
                         });
                     })
                     .catch(() => {
@@ -1639,7 +1681,24 @@
                         toastr.success("Funder added successfully");
                     }
 
-                    funderModal.hide();
+                    const modalEl = document.getElementById('funderModal');
+
+                    const modalInstance = bootstrap.Modal.getInstance(modalEl);
+                    if (modalInstance) {
+                        modalInstance.hide();
+                    }
+
+                    // Cleanup
+                    document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+
+                    document.body.classList.remove('modal-open');
+                    document.body.style.overflow = 'auto';
+                    document.body.style.paddingRight = '0px';
+
+                    modalEl.classList.remove('show');
+                    modalEl.style.display = 'none';
+                    modalEl.setAttribute('aria-hidden', 'true');
+
                     loadFunders();
 
                 } catch (err) {
@@ -1803,9 +1862,9 @@
                         tag.className = 'state-tag';
 
                         tag.innerHTML = `
-                                                                    <span>${cb.value}</span>
-                                                                    <span class="remove-tag" data-value="${cb.value}">&times;</span>
-                                                                `;
+                                                                        <span>${cb.value}</span>
+                                                                        <span class="remove-tag" data-value="${cb.value}">&times;</span>
+                                                                    `;
 
                         selectedBox.appendChild(tag);
                     }

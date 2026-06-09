@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\OrganizationFunder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class OrganizationFunderController extends Controller
 {
@@ -43,39 +44,59 @@ class OrganizationFunderController extends Controller
     /* =========================
        Store Funder
     ========================= */
-    public function store(Request $request)
-    {
-        $organization = $this->organization();
 
-        if (!$organization) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Unauthorized'
-            ], 401);
-        }
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'category' => 'required|string|max:255', // Added
-            'year' => 'required|digits:4',
-            'purpose' => 'required|string',          // Added
-            'amount' => 'required|numeric|min:0'
-        ]);
+public function store(Request $request)
+{
 
-        $funder = OrganizationFunder::create([
-            'organization_id' => $organization->id,
-            'name' => $request->name,
-            'category' => $request->category,        // Added
-            'year' => $request->year,
-            'purpose' => $request->purpose,          // Added
-            'amount' => $request->amount,
-        ]);
+    $organization = $this->organization();
 
+    if (!$organization) {
         return response()->json([
-            'success' => true,
-            'message' => 'Funder added successfully',
-            'data' => $funder
-        ]);
+            'success' => false,
+            'message' => 'Unauthorized'
+        ], 401);
     }
+
+    $validator = Validator::make($request->all(), [
+        'name' => 'required|string|max:255',
+        'category' => 'required|string|max:255',
+        'year' => 'required|digits:4',
+        'purpose' => 'required|string|max:255',
+        'amount' => 'required|numeric|min:0',
+    ], [
+        'name.required' => 'Funder name is required.',
+        'category.required' => 'Please select a category.',
+        'year.required' => 'Year is required.',
+        'year.digits' => 'Year must be exactly 4 digits.',
+        'purpose.required' => 'Please select a purpose.',
+        'amount.required' => 'Amount is required.',
+        'amount.numeric' => 'Amount must be a valid number.',
+        'amount.min' => 'Amount cannot be negative.',
+    ]);
+
+    if ($validator->fails()) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Validation failed.',
+            'errors' => $validator->errors(),
+        ], 422);
+    }
+
+    $funder = OrganizationFunder::create([
+        'organization_id' => $organization->id,
+        'name' => $request->name,
+        'category' => $request->category,
+        'year' => $request->year,
+        'purpose' => $request->purpose,
+        'amount' => $request->amount,
+    ]);
+
+    return response()->json([
+        'success' => true,
+        'message' => 'Funder added successfully.',
+        'data' => $funder
+    ]);
+}
 
     /* =========================
        Update Funder
