@@ -36,7 +36,7 @@ public function storeStepOne(Request $request)
             'string',
             'size:10',
             Rule::unique('organization_profiles', 'pan_number')
-                ->where('organization_id', $organization->id),
+                ->ignore($organization->id, 'organization_id'),
         ],
         'legal_name' => 'required|string|max:255',
         'date_of_incorporation' => 'required|date',
@@ -47,7 +47,7 @@ public function storeStepOne(Request $request)
         'designation' => 'required|string|max:255',
         'mobile_no' => 'required|digits:10',
     ], [
-        'pan_number.unique' => 'This PAN number has already been registered for your organization.',
+        'pan_number.unique' => 'This PAN number has already been registered by another organization.',
     ]);
 
     if ($validator->fails()) {
@@ -64,6 +64,7 @@ public function storeStepOne(Request $request)
 
     return redirect()->route('onboarding.step2');
 }
+
     public function stepTwo()
     {
         $address = OrganizationAddress::where('organization_id', auth()->guard('organization')->id())->first();
