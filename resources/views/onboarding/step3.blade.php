@@ -1104,7 +1104,7 @@
 @endsection
 
 @section('scripts')
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script> --}}
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
@@ -1581,26 +1581,26 @@
                             });
 
                             fundersTable.innerHTML += `
-                        <tr
-                            data-id="${funder.id}"
-                            data-category="${funder.category}"
-                            data-purpose="${funder.purpose}"
-                        >
-                            <td>${index + 1}</td>
-                            <td>${funder.name}</td>
-                            <td>${formatLabel(funder.category)}</td>
-                            <td>${funder.year}</td>
-                            <td>${formatLabel(funder.purpose)}</td>
-                            <td>â‚¹ ${Number(funder.amount).toLocaleString()}</td>
-                            <td>
-                                <button type="button" class="edit editFunder">
-                                    <i class="bi bi-pencil-square"></i>
-                                </button>
-                                <button type="button" class="trash deleteFunder">
-                                    <i class="bi bi-trash3"></i>
-                                </button>
-                            </td>
-                        </tr>`;
+                                <tr
+                                    data-id="${funder.id}"
+                                    data-category="${funder.category}"
+                                    data-purpose="${funder.purpose}"
+                                >
+                                    <td>${index + 1}</td>
+                                    <td>${funder.name}</td>
+                                    <td>${formatLabel(funder.category)}</td>
+                                    <td>${funder.year}</td>
+                                    <td>${formatLabel(funder.purpose)}</td>
+                                    <td>â‚¹ ${Number(funder.amount).toLocaleString()}</td>
+                                    <td>
+                                        <button type="button" class="edit editFunder">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </button>
+                                        <button type="button" class="trash deleteFunder">
+                                            <i class="bi bi-trash3"></i>
+                                        </button>
+                                    </td>
+                                </tr>`;
                         });
                     })
                     .catch(() => {
@@ -1686,15 +1686,15 @@
                     const instance = bootstrap.Modal.getOrCreateInstance(modalEl);
                     instance.hide();
 
-                   setTimeout(() => {
-    document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+                    // setTimeout(() => {
+                    //     document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
 
-    document.body.classList.remove('modal-open');
-    document.body.style.overflow = '';
-    document.body.style.paddingRight = '';
+                    //     document.body.classList.remove('modal-open');
+                    //     document.body.style.overflow = '';
+                    //     document.body.style.paddingRight = '';
 
-    document.documentElement.style.overflow = '';
-}, 300);
+                    //     document.documentElement.style.overflow = '';
+                    // }, 300);
 
                     loadFunders();
 
@@ -1819,7 +1819,28 @@
             const dropdown = document.querySelector('.checkbox-list');
             const checkboxes = document.querySelectorAll('.checkbox-list input[type="checkbox"]');
             const hiddenInput = document.getElementById('hiddenStates');
+            const panIndiaCheckbox = document.getElementById('s0');
 
+           function handlePanIndiaSelection() {
+    if (panIndiaCheckbox.checked) {
+        checkboxes.forEach(cb => {
+            if (cb !== panIndiaCheckbox) {
+                cb.checked = false;
+                cb.disabled = true;
+                cb.parentElement.style.pointerEvents = 'none';
+                cb.parentElement.style.opacity = '0.5';
+            }
+        });
+    } else {
+        checkboxes.forEach(cb => {
+            if (cb !== panIndiaCheckbox) {
+                cb.disabled = false;
+                cb.parentElement.style.pointerEvents = '';
+                cb.parentElement.style.opacity = '';
+            }
+        });
+    }
+}
             // ðŸ”½ open/close dropdown
             selectedBox.addEventListener('click', function (e) {
                 if (e.target.classList.contains('remove-tag')) return;
@@ -1839,8 +1860,20 @@
 
             // âœ… checkbox select
             checkboxes.forEach(cb => {
-                cb.addEventListener('change', updateSelected);
+                cb.addEventListener('change', function () {
+
+                    if (this === panIndiaCheckbox) {
+                        handlePanIndiaSelection();
+                    } else if (this.checked) {
+                        panIndiaCheckbox.checked = false;
+                        handlePanIndiaSelection();
+                    }
+
+                    updateSelected();
+                });
             });
+            handlePanIndiaSelection();
+
             updateSelected();
 
             // ðŸ” update UI
@@ -1859,9 +1892,9 @@
                         tag.className = 'state-tag';
 
                         tag.innerHTML = `
-                                                                            <span>${cb.value}</span>
-                                                                            <span class="remove-tag" data-value="${cb.value}">&times;</span>
-                                                                        `;
+                                                                                    <span>${cb.value}</span>
+                                                                                    <span class="remove-tag" data-value="${cb.value}">&times;</span>
+                                                                                `;
 
                         selectedBox.appendChild(tag);
                     }

@@ -25,7 +25,7 @@
                 </div>
             @enderror
 
-            <div class="card-box mb-4 position-relative organization-card" data-value="fund_seeker">
+            <div class="card-box mb-4 position-relative organization-card" data-value="funder">
                 <div class="card-wrap p-3">
                     <div class="d-flex align-items-center gap-3 mb-3">
                         <div class="gradient-icon">
@@ -59,7 +59,7 @@
                 </div>
             </div>
 
-            <div class="card-box mt-2 position-relative organization-card" data-value="funder">
+            <div class="card-box mt-2 position-relative organization-card" data-value="fund_seeker">
                 <div class="card-wrap p-3">
                     <div class="d-flex align-items-center gap-3 mb-3">
                         <div class="gradient-icon">
