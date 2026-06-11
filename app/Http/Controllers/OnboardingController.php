@@ -24,17 +24,19 @@ class OnboardingController extends Controller
     {
         // return $request->all();
         // Validate the request
-        $validated = $request->validate([
-            'pan_number' => 'required|string|size:10',
-            'legal_name' => 'required|string|max:255',
-            'date_of_incorporation' => 'required|date',
-            'brand_name' => 'nullable|string|max:255',
-            'website_url' => 'nullable|url|max:2000',
-            'linkedin_url' => 'nullable|url|max:2000',
-            'contact_name' => 'required|string|max:255',
-            'designation' => 'required|string|max:255',
-            'mobile_no' => 'required|digits:10',
-        ]);
+      $validated = $request->validate([
+    'pan_number' => 'required|string|size:10|unique:startup_registrations,pan_number',
+    'legal_name' => 'required|string|max:255',
+    'date_of_incorporation' => 'required|date',
+    'brand_name' => 'nullable|string|max:255',
+    'website_url' => 'nullable|url|max:2000',
+    'linkedin_url' => 'nullable|url|max:2000',
+    'contact_name' => 'required|string|max:255',
+    'designation' => 'required|string|max:255',
+    'mobile_no' => 'required|digits:10',
+], [
+    'pan_number.unique' => 'This PAN number has already been registered.',
+]);
 
         // Get authenticated organization
         $organization = Auth::guard('organization')->user();
