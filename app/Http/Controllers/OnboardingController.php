@@ -8,6 +8,7 @@ use App\Models\OrganizationProfile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class OnboardingController extends Controller
 {
@@ -23,8 +24,20 @@ class OnboardingController extends Controller
 
 public function storeStepOne(Request $request)
 {
+    $organization = Auth::guard('organization')->user();
+
+    if (! $organization) {
+        abort(403, 'Unauthorized');
+    }
+
     $validator = Validator::make($request->all(), [
-        'pan_number' => 'required|string|size:10|unique:organization_profiles,pan_number',
+        'pan_number' => [
+            'required',
+            'string',
+            'size:10',
+            Rule::unique('organization_profiles', 'pan_number')
+                ->where('organization_id', $organization->id),
+        ],
         'legal_name' => 'required|string|max:255',
         'date_of_incorporation' => 'required|date',
         'brand_name' => 'nullable|string|max:255',
@@ -34,7 +47,7 @@ public function storeStepOne(Request $request)
         'designation' => 'required|string|max:255',
         'mobile_no' => 'required|digits:10',
     ], [
-        'pan_number.unique' => 'This PAN number has already been registered.',
+        'pan_number.unique' => 'This PAN number has already been registered for your organization.',
     ]);
 
     if ($validator->fails()) {
@@ -44,12 +57,6 @@ public function storeStepOne(Request $request)
             ->withInput();
     }
 
-    $organization = Auth::guard('organization')->user();
-
-    if (! $organization) {
-        abort(403, 'Unauthorized');
-    }
-
     OrganizationProfile::updateOrCreate(
         ['organization_id' => $organization->id],
         $validator->validated()
@@ -57,7 +64,6 @@ public function storeStepOne(Request $request)
 
     return redirect()->route('onboarding.step2');
 }
-
     public function stepTwo()
     {
         $address = OrganizationAddress::where('organization_id', auth()->guard('organization')->id())->first();
