@@ -20,40 +20,43 @@ class OnboardingController extends Controller
         return view('onboarding.step1', compact('profile'));
     }
 
-    public function storeStepOne(Request $request)
-    {
-        // return $request->all();
-        // Validate the request
-      $validated = $request->validate([
-    'pan_number' => 'required|string|size:10|unique:startup_registrations,pan_number',
-    'legal_name' => 'required|string|max:255',
-    'date_of_incorporation' => 'required|date',
-    'brand_name' => 'nullable|string|max:255',
-    'website_url' => 'nullable|url|max:2000',
-    'linkedin_url' => 'nullable|url|max:2000',
-    'contact_name' => 'required|string|max:255',
-    'designation' => 'required|string|max:255',
-    'mobile_no' => 'required|digits:10',
-], [
-    'pan_number.unique' => 'This PAN number has already been registered.',
-]);
 
-        // Get authenticated organization
-        $organization = Auth::guard('organization')->user();
+public function storeStepOne(Request $request)
+{
+    $validator = Validator::make($request->all(), [
+        'pan_number' => 'required|string|size:10|unique:organization_profiles,pan_number',
+        'legal_name' => 'required|string|max:255',
+        'date_of_incorporation' => 'required|date',
+        'brand_name' => 'nullable|string|max:255',
+        'website_url' => 'nullable|url|max:2000',
+        'linkedin_url' => 'nullable|url|max:2000',
+        'contact_name' => 'required|string|max:255',
+        'designation' => 'required|string|max:255',
+        'mobile_no' => 'required|digits:10',
+    ], [
+        'pan_number.unique' => 'This PAN number has already been registered.',
+    ]);
 
-        if (! $organization) {
-            abort(403, 'Unauthorized');
-        }
-
-        // Create or update profile
-        OrganizationProfile::updateOrCreate(
-            ['organization_id' => $organization->id],
-            $validated
-        );
-
-        // Redirect to step 2
-        return redirect()->route('onboarding.step2');
+    if ($validator->fails()) {
+        return redirect()
+            ->back()
+            ->withErrors($validator)
+            ->withInput();
     }
+
+    $organization = Auth::guard('organization')->user();
+
+    if (! $organization) {
+        abort(403, 'Unauthorized');
+    }
+
+    OrganizationProfile::updateOrCreate(
+        ['organization_id' => $organization->id],
+        $validator->validated()
+    );
+
+    return redirect()->route('onboarding.step2');
+}
 
     public function stepTwo()
     {
