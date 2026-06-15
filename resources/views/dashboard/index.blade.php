@@ -3,7 +3,13 @@
 @section('page_title', '')
 
 @section('header_extra')
-    <span class="header-org-chip">Non - Profit Organisation</span>
+  <span class="header-org-chip">
+    @if(auth('organization')->check() && auth('organization')->user()->role === 'funder')
+        Non - Profit Organisation
+    @else
+        Startup
+    @endif
+</span>
 @endsection
 
 @section('content')
