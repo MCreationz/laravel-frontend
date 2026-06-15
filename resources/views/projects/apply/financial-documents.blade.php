@@ -321,5 +321,53 @@
             </div>
         </form>
     </div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
 
+    const allowedExtensions = ['pdf', 'doc', 'docx', 'xls', 'xlsx'];
+
+    document.querySelectorAll('input[type="file"]').forEach(input => {
+
+        input.setAttribute(
+            'accept',
+            '.pdf,.doc,.docx,.xls,.xlsx,' +
+            'application/pdf,' +
+            'application/msword,' +
+            'application/vnd.openxmlformats-officedocument.wordprocessingml.document,' +
+            'application/vnd.ms-excel,' +
+            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        );
+
+        input.addEventListener('change', function () {
+
+            if (!this.files.length) return;
+
+            const file = this.files[0];
+            const ext = file.name.split('.').pop().toLowerCase();
+
+            if (!allowedExtensions.includes(ext)) {
+
+                alert('Only PDF, DOC, DOCX, XLS and XLSX files are allowed.');
+
+                this.value = '';
+
+                const nameField = document.getElementById(this.id + '_name');
+
+                if (nameField) {
+                    nameField.textContent = '';
+                }
+
+                return;
+            }
+
+            const nameField = document.getElementById(this.id + '_name');
+
+            if (nameField) {
+                nameField.textContent = '✓ ' + file.name;
+            }
+        });
+    });
+
+});
+</script>
 @endsection

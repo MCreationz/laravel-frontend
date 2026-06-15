@@ -186,7 +186,48 @@
             });
         });
     </script>
+<style>
+    .file-uploaded {
+    border: 2px solid #198754;
+    background: #f0fff4;
+}
 
+.file-name {
+    display: block;
+    margin-top: 8px;
+    color: #198754;
+    font-weight: 600;
+}
+</style>
+
+<script>
+    document.addEventListener('change', function (e) {
+
+    if (e.target.type !== 'file') return;
+
+    const input = e.target;
+    const file = input.files[0];
+
+    if (!file) return;
+
+    const label = document.querySelector(`label[for="${input.id}"]`);
+
+    if (!label) return;
+
+    let fileNameEl = label.querySelector('.file-name');
+
+    if (!fileNameEl) {
+        fileNameEl = document.createElement('small');
+        fileNameEl.classList.add('file-name');
+        label.appendChild(fileNameEl);
+    }
+
+    fileNameEl.innerHTML =
+        `✓ ${file.name} (${(file.size / 1024).toFixed(1)} KB)`;
+
+    label.classList.add('file-uploaded');
+});
+</script>
     <script>
         document.querySelectorAll('.select-wrapper').forEach(wrapper => {
 

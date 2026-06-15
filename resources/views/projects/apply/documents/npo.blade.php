@@ -119,9 +119,11 @@
                 <div class="row mb-3 flex-wrap row-gap-3 row-gap-md-4 px-md-1">
                     <div class="col-12 px-md-2">
                         <label class="form-label">Name of the Organization<span>*</span></label>
+
                         <input type="text" name="organization_name" class="form-control"
-                            placeholder="Name of the Organization" required
-                            value="{{ old('organization_name', $document?->organization_name) }}">
+                            placeholder="Name of the Organization"
+                            value="{{ old('organization_name', auth('organization')->user()->organization_name) }}" readonly
+                            required>
                     </div>
 
                     <div class="col-12 px-md-2">
@@ -351,5 +353,40 @@
 
         </form>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
 
+            document.querySelectorAll('input[type="file"]').forEach(input => {
+
+                input.setAttribute(
+                    'accept',
+                    '.pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+                );
+
+                input.addEventListener('change', function () {
+
+                    if (!this.files.length) return;
+
+                    const file = this.files[0];
+                    const ext = file.name.split('.').pop().toLowerCase();
+
+                    if (!['pdf', 'doc', 'docx'].includes(ext)) {
+
+                        alert('Only PDF, DOC and DOCX files are allowed.');
+
+                        this.value = '';
+
+                        const fileNameEl =
+                            document.getElementById(this.id + '_name');
+
+                        if (fileNameEl) {
+                            fileNameEl.textContent = '';
+                        }
+                    }
+                });
+
+            });
+
+        });
+    </script>
 @endsection

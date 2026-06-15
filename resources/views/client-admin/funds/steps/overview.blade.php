@@ -164,9 +164,9 @@
                                             </svg>
                                         </div>
 
-                                        <p class="">Upload PDF/JPG up to 5 MB</p>
+                                        <p class="">Upload image up to 5 MB</p>
 
-                                        <small id="fund_logo_name" class="d-block mt-2"></small>
+                                        {{-- <small id="fund_logo_name" class="d-block mt-2"></small> --}}
                                     </div>
                                 </label>
                             </div>
@@ -199,9 +199,9 @@
                                             </svg>
                                         </div>
 
-                                        <p class="">Upload PDF/JPG up to 5 MB</p>
+                                        <p class="">Upload image up to 5 MB</p>
 
-                                        <small id="fund_banner_name" class="d-block mt-2"></small>
+                                        {{-- <small id="fund_banner_name" class="d-block mt-2"></small> --}}
                                     </div>
                                 </label>
                             </div>
@@ -224,6 +224,7 @@
         </div>
     </div>
 
+    {{--
     <script>
         document.getElementById("fund_logo").addEventListener("change", function () {
             const fileName = this.files[0]?.name;
@@ -244,6 +245,51 @@
 
             document.getElementById('fund_banner_name').textContent = fileName;
         });
-    </script>
+    </script> --}}
 
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+
+            const allowedExtensions = ['jpg', 'jpeg', 'png', 'webp', 'gif'];
+
+            document.querySelectorAll('input[type="file"]').forEach(input => {
+
+                input.setAttribute(
+                    'accept',
+                    'image/jpeg,image/png,image/webp,image/gif,.jpg,.jpeg,.png,.webp,.gif'
+                );
+
+                input.addEventListener('change', function () {
+
+                    if (!this.files.length) return;
+
+                    const file = this.files[0];
+                    const ext = file.name.split('.').pop().toLowerCase();
+
+                    if (!allowedExtensions.includes(ext)) {
+
+                        alert('Only image files (JPG, JPEG, PNG, WEBP, GIF) are allowed.');
+
+                        this.value = '';
+
+                        const nameField = document.getElementById(this.id + '_name');
+
+                        if (nameField) {
+                            nameField.textContent = '';
+                        }
+
+                        return;
+                    }
+
+                    const nameField = document.getElementById(this.id + '_name');
+
+                    if (nameField) {
+                        nameField.textContent = '✓ ' + file.name;
+                    }
+                });
+            });
+
+        });
+    </script>
 @endsection

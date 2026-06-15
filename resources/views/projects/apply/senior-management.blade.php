@@ -391,7 +391,14 @@
                                 <div class="col-12">
                                     <label class="form-label">Upload Resume/CV <span class="text-danger">*</span></label>
 
-                                    <input type="file" id="resume_cv" name="resume_cv" hidden >
+                                   <input
+    type="file"
+    id="resume_cv"
+    name="resume_cv"
+    accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+    hidden
+    required
+>
 
                                     <label for="resume_cv" class="upload-label">
                                         <div class="upload-content">
@@ -579,5 +586,5 @@
         });
     </script>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script> --}}
 @endsection

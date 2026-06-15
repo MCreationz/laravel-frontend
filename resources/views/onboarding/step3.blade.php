@@ -820,7 +820,7 @@
                                 <th scope="col">Category</th>
                                 <th scope="col">Year</th>
                                 <th scope="col">Purpose</th>
-                                <th scope="col">Amount (₹00.00 Lakh)</th>
+                                <th scope="col">Amount</th>
                             </tr>
                         </thead>
                         <tbody id="fundersTable"></tbody>
@@ -1575,10 +1575,7 @@
                         res.data.forEach((funder, index) => {
                             const category = funder.category || 'â€”';
                             const purpose = funder.purpose || 'â€”';
-                            const amount = Number(funder.amount).toLocaleString('en-IN', {
-                                minimumFractionDigits: 2,
-                                maximumFractionDigits: 2
-                            });
+                            const amount = funder.amount
 
                             fundersTable.innerHTML += `
                                 <tr
@@ -1591,7 +1588,7 @@
                                     <td>${formatLabel(funder.category)}</td>
                                     <td>${funder.year}</td>
                                     <td>${formatLabel(funder.purpose)}</td>
-                                    <td>â‚¹ ${Number(funder.amount).toLocaleString()}</td>
+                                    <td> ${funder.amount}</td>
                                     <td>
                                         <button type="button" class="edit editFunder">
                                             <i class="bi bi-pencil-square"></i>
@@ -1725,7 +1722,7 @@
                     document.getElementById('funder_name').value = row.children[1].innerText.trim();
                     document.getElementById('funder_year').value = row.children[3].innerText.trim();
                     document.getElementById('funder_amount').value =
-                        row.children[3].innerText.replace(/,/g, '');
+                        row.children[5].innerText.replace(/,/g, '');
 
                     // values
                     let category = row.dataset.category || '';
@@ -1929,4 +1926,7 @@
 
         });
     </script>
+
+
+
 @endsection

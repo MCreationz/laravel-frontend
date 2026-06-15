@@ -510,6 +510,40 @@
             location.reload();
         });
     </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+            document.querySelectorAll('input[type="file"]').forEach(input => {
+
+                input.setAttribute(
+                    'accept',
+                    '.pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+                );
+
+                input.addEventListener('change', function () {
+
+                    if (!this.files.length) return;
+
+                    const file = this.files[0];
+                    const ext = file.name.split('.').pop().toLowerCase();
+
+                    if (!['pdf', 'doc', 'docx'].includes(ext)) {
+
+                        alert('Only PDF, DOC and DOCX files are allowed.');
+
+                        this.value = '';
+
+                        const fileNameEl =
+                            document.getElementById(this.id + '_name');
+
+                        if (fileNameEl) {
+                            fileNameEl.textContent = '';
+                        }
+                    }
+                });
+
+            });
+
+        });
+    </script>
 @endsection
