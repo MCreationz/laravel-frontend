@@ -30,16 +30,18 @@
                     <span class="flex-grow-1 ms-3">Dashboard</span>
                 </a>
 
-                <a href="#"
-                    class="d-flex align-items-center text-decoration-none sidebar-links">
-                    <span class="sidebar-link-icon flex-shrink-0">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                            <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.6"/>
-                            <path d="M20 20L16.5 16.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-                        </svg>
-                    </span>
-                    <span class="flex-grow-1 ms-3">Discover Funds</span>
-                </a>
+            <a href="{{ route('discover.funds.index') }}"
+   class="d-flex align-items-center text-decoration-none sidebar-links">
+    <span class="sidebar-link-icon flex-shrink-0">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+            viewBox="0 0 24 24" fill="none">
+            <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.6"/>
+            <path d="M20 20L16.5 16.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+        </svg>
+    </span>
+
+    <span class="flex-grow-1 ms-3">Discover Funds</span>
+</a>
 
                 <a href="{{ route('my-applications.index') }}"
                     class="d-flex align-items-center text-decoration-none sidebar-links {{ request()->routeIs('projects.index') ? 'active' : '' }}">
@@ -54,16 +56,22 @@
                     <span class="flex-grow-1 ms-3">My Applications</span>
                 </a>
 
-                <a href="#"
-                    class="d-flex align-items-center text-decoration-none sidebar-links">
-                    <span class="sidebar-link-icon flex-shrink-0">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                            <path d="M12 20.25C12 20.25 4.5 14.5 4.5 9.75C4.5 7.67893 6.17893 6 8.25 6C9.564 6 10.721 6.675 11.25 7.725C11.779 6.675 12.936 6 14.25 6C16.3211 6 18 7.67893 18 9.75C18 14.5 12 20.25 12 20.25Z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </span>
-                    <span class="flex-grow-1 ms-3">My Documents</span>
-                </a>
-            </nav>
+            <a href="{{ route('organization.documents.index') }}"
+   class="d-flex align-items-center text-decoration-none sidebar-links">
+
+    <span class="sidebar-link-icon flex-shrink-0">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+            viewBox="0 0 24 24" fill="none">
+            <path d="M12 20.25C12 20.25 4.5 14.5 4.5 9.75C4.5 7.67893 6.17893 6 8.25 6C9.564 6 10.721 6.675 11.25 7.725C11.779 6.675 12.936 6 14.25 6C16.3211 6 18 7.67893 18 9.75C18 14.5 12 20.25 12 20.25Z"
+                  stroke="currentColor"
+                  stroke-width="1.6"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"/>
+        </svg>
+    </span>
+
+    <span class="flex-grow-1 ms-3">My Documents</span>
+</a>
         @endunless
     </div>
 

@@ -275,11 +275,14 @@
 
     });
 </script> --}}
+
+
 <script>
 document.addEventListener('DOMContentLoaded', function () {
 
     document.querySelectorAll('form').forEach(form => {
 
+        // Mark invalid fields on native validation trigger
         form.addEventListener('invalid', function (e) {
             e.target.classList.add('validation-error');
         }, true);
@@ -288,29 +291,21 @@ document.addEventListener('DOMContentLoaded', function () {
 
             const firstInvalid = form.querySelector(':invalid');
 
-            if (!firstInvalid) {
-                return;
-            }
+            if (!firstInvalid) return;
 
             e.preventDefault();
 
             let target = firstInvalid;
 
-            // Hidden file input
-            if (
-                firstInvalid.type === 'file' &&
-                firstInvalid.id
-            ) {
-                const uploadLabel = document.querySelector(
-                    `label[for="${firstInvalid.id}"]`
-                );
-
+            // FILE INPUT (resume upload fix)
+            if (firstInvalid.type === 'file' && firstInvalid.id) {
+                const uploadLabel = form.querySelector(`label[for="${firstInvalid.id}"]`);
                 if (uploadLabel) {
                     target = uploadLabel;
                 }
             }
 
-            // Select2 support
+            // Select2 fallback (if used elsewhere)
             const select2Container =
                 firstInvalid.nextElementSibling?.classList?.contains('select2')
                     ? firstInvalid.nextElementSibling
@@ -320,10 +315,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 target = select2Container;
             }
 
-            // Generic hidden field fallback
+            // Hidden/custom field fallback
             if (target.offsetParent === null) {
                 const wrapper = firstInvalid.closest(
-                    '.form-group, .mb-3, .col-12, .field-wrapper'
+                    '.form-group, .mb-3, .col-12, .field-wrapper, .row'
                 );
 
                 if (wrapper) {
@@ -331,28 +326,33 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             }
 
+            // Apply error class
             target.classList.add('validation-error');
 
+            // Scroll to first error
             target.scrollIntoView({
                 behavior: 'smooth',
                 block: 'center'
             });
 
-            setTimeout(() => {
-                target.classList.remove('validation-error');
-            }, 5000);
-
-            // Focus only if visible
+            // Focus real input if possible
             if (
                 firstInvalid.offsetParent !== null &&
                 typeof firstInvalid.focus === 'function'
             ) {
                 setTimeout(() => {
-                    firstInvalid.focus({
-                        preventScroll: true
-                    });
+                    firstInvalid.focus({ preventScroll: true });
                 }, 300);
             }
+        });
+
+        // Remove error instantly when user fixes input
+        form.addEventListener('input', function (e) {
+            e.target.classList.remove('validation-error');
+        });
+
+        form.addEventListener('change', function (e) {
+            e.target.classList.remove('validation-error');
         });
 
     });
@@ -360,10 +360,50 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 </script>
 
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    const form = document.getElementById('AddPartnerForm');
+    const input = document.getElementById('resume_cv');
+    const label = document.querySelector('label[for="resume_cv"]');
+    const errorText = document.getElementById('resume_cv_error');
+
+    function setError(state) {
+        label.classList.toggle('error', state);
+        errorText.classList.toggle('d-none', !state);
+    }
+
+    form.addEventListener('submit', function (e) {
+        console.log('submtting')
+
+        if (!input.files || input.files.length === 0) {
+            e.preventDefault();
+            setError(true);
+        } else {
+            setError(false);
+        }
+
+    });
+
+    input.addEventListener('change', function () {
+        if (this.files.length > 0) {
+            setError(false);
+        }
+    });
+
+});
+</script>
+
+
 <style>
 .validation-error {
     border: 2px solid #dc3545 !important;
     border-radius: 8px;
+}
+.upload-label.validation-error {
+    border: 2px solid #dc3545;
+    border-radius: 8px;
+    background: rgba(220, 53, 69, 0.05);
 }
 </style>
 <style>

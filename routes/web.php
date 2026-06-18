@@ -3,8 +3,10 @@
 use App\Http\Controllers\API\Auth\LoginController as AuthLoginController;
 use App\Http\Controllers\API\Auth\RegisterController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DiscoverFundController;
 use App\Http\Controllers\MyApplicationController;
 use App\Http\Controllers\OnboardingController;
+use App\Http\Controllers\OrganizationDocumentController;
 use App\Http\Controllers\OrganizationFunderController;
 use App\Http\Controllers\ProjectApplication\AwardRecognitionController;
 use App\Http\Controllers\ProjectApplication\DocumentController;
@@ -74,6 +76,17 @@ Route::post('/login/verify-otp', [AuthLoginController::class, 'verifyLoginOtp'])
 
 Route::post('/logout', [AuthLoginController::class, 'logout'])
     ->name('logout');
+    Route::get('/forgot-password', [AuthLoginController::class, 'forgotPassword'])
+    ->name('forgot.password');
+
+Route::post('/forgot-password', [AuthLoginController::class, 'sendResetLink'])
+    ->name('forgot.password.send');
+
+    Route::get('/reset-password/{token}', [AuthLoginController::class, 'showResetForm'])
+    ->name('password.reset.form');
+
+Route::post('/reset-password', [AuthLoginController::class, 'resetPassword'])
+    ->name('password.reset');
 
 Route::middleware(['check.onboarding', 'auth:organization'])->group(function () {
 
@@ -107,6 +120,24 @@ Route::middleware(['check.onboarding', 'auth:organization'])->group(function () 
 
         Route::get('/my-applications', [MyApplicationController::class, 'index'])
     ->name('my-applications.index');
+
+    Route::get('/discover-funds', [DiscoverFundController::class, 'index'])
+    ->name('discover.funds.index');
+
+      // list documents
+    Route::get('/organization-documents', [OrganizationDocumentController::class, 'index'])
+        ->name('organization.documents.index');
+
+    // store document
+    Route::post('/organization-documents', [OrganizationDocumentController::class, 'store'])
+        ->name('organization.documents.store');
+
+        Route::post('/organization-documents/{id}', [OrganizationDocumentController::class, 'update'])
+    ->name('organization.documents.update');
+
+Route::delete('/organization-documents/{id}', [OrganizationDocumentController::class, 'destroy'])
+    ->name('organization.documents.destroy');
+
 
 });
 

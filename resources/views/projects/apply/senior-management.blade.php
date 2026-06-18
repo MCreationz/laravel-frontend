@@ -388,47 +388,59 @@
                                 </div>
 
                                 <!-- Resume -->
-                                <div class="col-12">
-                                    <label class="form-label">Upload Resume/CV <span class="text-danger">*</span></label>
+<div class="col-12">
+    <label class="form-label">
+        Upload Resume/CV <span class="text-danger">*</span>
+    </label>
 
-                                   <input
+   <input
     type="file"
     id="resume_cv"
     name="resume_cv"
-    accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-    hidden
-    required
+    accept=".pdf,.doc,.docx,.jpg,.jpeg"
+    
+    style="position:absolute; left:-9999px;"
 >
 
-                                    <label for="resume_cv" class="upload-label">
-                                        <div class="upload-content">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26"
-                                                viewBox="0 0 26 26" fill="none">
-                                                <g opacity="0.2">
-                                                    <path d="M9.75 11.917V18.417L11.9167 16.2503" stroke="#292D32"
-                                                        stroke-width="1.5" stroke-linecap="round"
-                                                        stroke-linejoin="round" />
-                                                    <path d="M9.7526 18.4167L7.58594 16.25" stroke="#292D32"
-                                                        stroke-width="1.5" stroke-linecap="round"
-                                                        stroke-linejoin="round" />
-                                                    <path
-                                                        d="M23.8307 10.8337V16.2503C23.8307 21.667 21.6641 23.8337 16.2474 23.8337H9.7474C4.33073 23.8337 2.16406 21.667 2.16406 16.2503V9.75032C2.16406 4.33366 4.33073 2.16699 9.7474 2.16699H15.1641"
-                                                        stroke="#292D32" stroke-width="1.5" stroke-linecap="round"
-                                                        stroke-linejoin="round" />
-                                                    <path
-                                                        d="M23.8307 10.8337H19.4974C16.2474 10.8337 15.1641 9.75033 15.1641 6.50033V2.16699L23.8307 10.8337Z"
-                                                        stroke="#292D32" stroke-width="1.5" stroke-linecap="round"
-                                                        stroke-linejoin="round" />
-                                                </g>
-                                            </svg>
-                                            <p class="mt-2">Upload Resume/CV</p>
-                                            <small id="resume_cv_name"></small>
-                                        </div>
-                                    </label>
-                                </div>
+    <label for="resume_cv" class="upload-label">
+        <div class="upload-content">
+            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26"
+                viewBox="0 0 26 26" fill="none">
+                <g opacity="0.2">
+                    <path d="M9.75 11.917V18.417L11.9167 16.2503" stroke="#292D32"
+                        stroke-width="1.5" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                    <path d="M9.7526 18.4167L7.58594 16.25" stroke="#292D32"
+                        stroke-width="1.5" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                    <path
+                        d="M23.8307 10.8337V16.2503C23.8307 21.667 21.6641 23.8337 16.2474 23.8337H9.7474C4.33073 23.8337 2.16406 21.667 2.16406 16.2503V9.75032C2.16406 4.33366 4.33073 2.16699 9.7474 2.16699H15.1641"
+                        stroke="#292D32" stroke-width="1.5" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                    <path
+                        d="M23.8307 10.8337H19.4974C16.2474 10.8337 15.1641 9.75033 15.1641 6.50033V2.16699L23.8307 10.8337Z"
+                        stroke="#292D32" stroke-width="1.5" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </g>
+            </svg>
+
+            <p class="mt-2">Upload Resume/CV</p>
+
+            <small class="text-muted">(PDF, DOC, DOCX, JPG, JPEG)</small>
+      
+
+            <small id="resume_cv_name" class="text-muted"></small>
+        </div>
+    </label>
+          <small id="resume_cv_error" class="text-danger d-none">
+    Resume is required
+</small>
+</div>
 
                             </div>
                         </div>
+
+                        
 
                         <!-- Footer -->
                         <div class="modal-footer border-0 d-flex justify-content-end gap-2">
@@ -441,6 +453,8 @@
                     </form>
 
                 </div>
+
+
             </div>
         </div>
     </div>
@@ -494,6 +508,39 @@
         </div>
     </div>
 
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+
+    const resumeInput = document.getElementById('resume_cv');
+    const form        = document.getElementById('AddPartnerForm');
+    const errorEl     = document.getElementById('resume_cv_error');
+    const uploadLabel = document.querySelector('label[for="resume_cv"]');
+
+    form.addEventListener('submit', function (e) {
+
+        if (!resumeInput.files.length) {
+            e.preventDefault();
+            errorEl.classList.remove('d-none');
+            uploadLabel.style.border = '2px solid red';
+            uploadLabel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            return false;
+        }
+
+        errorEl.classList.add('d-none');
+        uploadLabel.style.border = '2px dashed #ccc';
+    });
+
+    resumeInput.addEventListener('change', function () {
+        if (this.files.length) {
+            errorEl.classList.add('d-none');
+            uploadLabel.style.border = '2px dashed #ccc';
+            document.getElementById('resume_cv_name').textContent = this.files[0].name;
+        }
+    });
+
+});
+  </script>
+
     <style>
         .card-box table th {
             min-width: min-content;
@@ -501,6 +548,24 @@
             width: auto;
         }
     </style>
+
+    <style>
+.upload-label {
+    border: 2px dashed #ccc;
+    border-radius: 8px;
+    cursor: pointer;
+    display: block;
+    padding: 15px;
+    transition: 0.2s ease;
+}
+
+.upload-label.error {
+    border: 3px solid red !important;
+    outline: 2px solid red !important;
+}
+    </style>
+
+
 
     <script>
         document.querySelectorAll(".edit-btn").forEach(btn => {
@@ -585,6 +650,8 @@
             window.location.href = "{{ $documentsRoute }}";
         });
     </script>
+
+
 
     {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script> --}}
 @endsection

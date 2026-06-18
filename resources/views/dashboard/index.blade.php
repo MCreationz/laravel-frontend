@@ -3,48 +3,71 @@
 @section('page_title', '')
 
 @section('header_extra')
-  <span class="header-org-chip">
-    @if(auth('organization')->check() && auth('organization')->user()->role === 'funder')
-        Non - Profit Organisation
-    @else
-        Startup
-    @endif
-</span>
+    <span class="header-org-chip">
+        @if(auth('organization')->check() && auth('organization')->user()->role === 'funder')
+            Non - Profit Organisation
+        @else
+            Startup
+        @endif
+    </span>
 @endsection
 
 @section('content')
     <div class="dashboard-v2">
         <div class="dashboard-v2-summary-card mb-3">
+
             <div class="dashboard-v2-summary-grid">
                 <div class="dashboard-v2-org">
                     <p class="dashboard-v2-welcome mb-1">Welcome Back!</p>
+
                     <h2 class="dashboard-v2-name mb-1">
-                        {{ auth('organization')->user()->organization_name ?? 'Nirmaan Foundation' }}
+                        {{ auth('organization')->user()->organization_name ?? 'Organization' }}
                     </h2>
-                    <p class="dashboard-v2-meta mb-0">Registered NPO • FCRA Certified • Est. 2012</p>
+
+                    @php
+                        $profile = auth('organization')->user()->profile;
+                    @endphp
+
+                    <p class="dashboard-v2-meta mb-0">
+                        Registered NPO
+                        @if($profile?->is_fcra_certified)
+                            • FCRA Certified
+                        @endif
+                        @if($profile?->established_year)
+                            • Est. {{ $profile->established_year }}
+                        @endif
+                    </p>
                 </div>
 
                 <div class="dashboard-v2-kpi">
-                    <p class="mb-0 value">₹9 Cr</p>
+                    <p class="mb-0 value">
+                        ₹{{ number_format($fundingAvailable ?? 0) }}
+                    </p>
                     <p class="mb-0 label">Funding Available</p>
                 </div>
+
                 <div class="dashboard-v2-kpi">
-                    <p class="mb-0 value">2</p>
+                    <p class="mb-0 value">{{ $totalApplications ?? 0 }}</p>
                     <p class="mb-0 label">Total Applications</p>
                 </div>
+
                 <div class="dashboard-v2-kpi">
-                    <p class="mb-0 value">2</p>
+                    <p class="mb-0 value">{{ $ongoing ?? 0 }}</p>
                     <p class="mb-0 label">Ongoing</p>
                 </div>
+
                 <div class="dashboard-v2-kpi">
-                    <p class="mb-0 value">0</p>
+                    <p class="mb-0 value">{{ $selected ?? 0 }}</p>
                     <p class="mb-0 label">Selected</p>
                 </div>
+
                 <div class="dashboard-v2-kpi">
-                    <p class="mb-0 value">0</p>
+                    <p class="mb-0 value">{{ $rejected ?? 0 }}</p>
                     <p class="mb-0 label">Rejected</p>
                 </div>
             </div>
+
+
         </div>
 
         <div class="dashboard-v2-table-card">

@@ -49,7 +49,9 @@ public function index(Fund $fund)
             'highest_qualification' => 'nullable|string|max:255',
             'roles_and_responsibilities' => 'nullable|string',
             'total_years_of_experience' => 'nullable|integer|min:0',
-            'resume_cv' => 'nullable|file|mimes:pdf,doc,docx|max:5120',
+            'resume_cv' => 'nullable|file|mimes:pdf,doc,docx,jpg,jpeg|max:5120',
+
+
         ]);
 
         $application = FundApplication::where('fund_id', $fund->id)

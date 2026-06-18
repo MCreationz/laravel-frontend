@@ -3,11 +3,15 @@
 namespace App\Http\Controllers\API\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Mail\ResetPasswordMail;
 use App\Models\Organization;
+use App\Models\OrganizationPasswordReset;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Str;
 
 class LoginController extends Controller
 {
@@ -254,6 +258,132 @@ class LoginController extends Controller
     }
 
 
+public function forgotPassword()
+{
+    return view('auth.forgot-password');
+}
+
+public function sendResetLink(Request $request)
+{
+    $request->validate([
+        'work_email' => ['required', 'email']
+    ]);
+
+    $organization = Organization::where(
+        'work_email',
+        $request->work_email
+    )->first();
+
+    if (!$organization) {
+        return back()->withErrors([
+            'work_email' => 'No account found with this email address.'
+        ])->withInput();
+    }
+
+    $token = Str::random(64);
+
+    OrganizationPasswordReset::updateOrCreate(
+        [
+            'organization_id' => $organization->id,
+        ],
+        [
+            'token'      => $token,
+            'expires_at' => now()->addMinutes(30),
+        ]
+    );
+
+    $resetUrl = route('password.reset.form', [
+        'token' => $token
+    ]);
+
+    Mail::to($organization->work_email)
+        ->send(new ResetPasswordMail($resetUrl));
+
+    return back()->with(
+        'success',
+        'Password reset link has been sent to your email.'
+    );
+}
 
 
+public function showResetForm($token)
+{
+    $reset = OrganizationPasswordReset::where('token', $token)
+        ->first();
+
+    if (!$reset) {
+        return redirect()
+            ->route('forgot.password')
+            ->withErrors([
+                'email' => 'Invalid password reset link.'
+            ]);
+    }
+
+    if ($reset->expires_at->isPast()) {
+
+        $reset->delete();
+
+        return redirect()
+            ->route('forgot.password')
+            ->withErrors([
+                'email' => 'Password reset link has expired.'
+            ]);
+    }
+
+    return view('auth.reset-password', compact('token'));
+}
+public function resetPassword(Request $request)
+{
+    $request->validate([
+        'token' => ['required'],
+        'password' => ['required', 'min:8', 'confirmed'],
+    ]);
+
+    $reset = OrganizationPasswordReset::where(
+        'token',
+        $request->token
+    )->first();
+
+    if (!$reset) {
+        return redirect()
+            ->route('forgot.password')
+            ->withErrors([
+                'email' => 'Invalid password reset link.'
+            ]);
+    }
+
+    if ($reset->expires_at->isPast()) {
+
+        $reset->delete();
+
+        return redirect()
+            ->route('forgot.password')
+            ->withErrors([
+                'email' => 'Password reset link has expired.'
+            ]);
+    }
+
+    $organization = Organization::find($reset->organization_id);
+
+    if (!$organization) {
+
+        $reset->delete();
+
+        return redirect()
+            ->route('forgot.password')
+            ->withErrors([
+                'email' => 'Organization not found.'
+            ]);
+    }
+
+    $organization->update([
+        'password' => Hash::make($request->password),
+    ]);
+
+    $reset->delete();
+
+    return redirect()
+        ->route('login')
+        ->with('success', 'Password has been reset successfully.');
+}
 }

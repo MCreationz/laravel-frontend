@@ -33,9 +33,11 @@
                     <i id="eyeIcon" class="bi bi-eye"></i>
                 </button>
             </div>
-            <p class="forget-pass text-end mt-2">
-                <a href="#">Forget Password</a>
-            </p>
+           <p class="forget-pass text-end mt-2">
+    <a href="{{ route('forgot.password') }}">
+        Forgot Password?
+    </a>
+</p>
         </div>
         <div class="account-wrap">
             <div class="col-12 btn-wrap mt-4">
