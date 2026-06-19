@@ -35,6 +35,11 @@ class Fund extends Model
     {
         return $this->belongsTo(ClientAdmin::class);
     }
+    public function reviewers()
+{
+    return $this->belongsToMany(Reviewer::class, 'fund_reviewer')
+        ->withTimestamps();
+}
 
     public function snapshot()
     {

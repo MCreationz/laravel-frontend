@@ -189,7 +189,7 @@
                                 <div class="btn-group gap-1">
 
                                     <!-- View -->
-                                    <a href="{{ route('superadmin.client-admins.show', $clientAdmin->id) }}"
+                                    {{-- <a href="{{ route('superadmin.client-admins.show', $clientAdmin->id) }}"
                                         class="view-btn">
 
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
@@ -215,7 +215,7 @@
 
                                         </svg>
 
-                                    </a>
+                                    </a> --}}
 
                                     <!-- Edit -->
                                     <button type="button" class="edit-btn edit-client-admin"

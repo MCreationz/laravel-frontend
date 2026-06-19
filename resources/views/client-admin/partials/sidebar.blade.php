@@ -25,7 +25,7 @@
                 </div>
                 <div class="flex-grow-1 ms-3 text">Dashboard</div>
             </a>
-            <a href="{{ route('superadmin.client-admins.index') }}"
+            {{-- <a href="{{ route('superadmin.client-admins.index') }}"
                 class="d-flex align-items-center text-decoration-none sidebar-links  {{ request()->routeIs('superadmin.client-admins.index') ? 'active' : '' }}">
                 <div class="flex-shrink-0">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -40,7 +40,7 @@
                     </svg>
                 </div>
                 <div class="flex-grow-1 ms-3 text">Client Admins</div>
-            </a>
+            </a> --}}
             <a href="{{ route('client-admin.applicants.index') }}"
                 class="d-flex align-items-center text-decoration-none sidebar-links">
                 <div class="flex-shrink-0">
@@ -57,7 +57,7 @@
                 </div>
                 <div class="flex-grow-1 ms-3 text">Applicants</div>
             </a>
-            <a href="{{ route('client-admin.applicants.index') }}"
+            <a href="{{ route('client-admin.reviewers.index') }}"
                 class="d-flex align-items-center text-decoration-none sidebar-links">
                 <div class="flex-shrink-0">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -71,7 +71,7 @@
                             stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
                 </div>
-                <div class="flex-grow-1 ms-3 text">reviewers</div>
+                <div class="flex-grow-1 ms-3 text">Reviewers</div>
             </a>
             <a href="{{ route('client-admin.funds.index') }}"
                 class="d-flex align-items-center text-decoration-none sidebar-links">
@@ -100,31 +100,42 @@
         </div>
 
     </div>
-    <div class="sidebar-boxes mt-5 d-flex flex-column-2 flex-wrap gap-2.5">
-        <div class="col single-item">
-            <div class="single-box clients">
-                <div class="number">5</div>
-                <div class="text">Clients</div>
-            </div>
-        </div>
+    <div class="sidebar-boxes mt-5 d-flex flex-wrap gap-2.5">
+
         <div class="col single-item">
             <div class="single-box applicants">
-                <div class="number">5</div>
+                <div class="number">
+                    {{
+    \App\Models\FundApplication::whereHas('fund', function ($q) {
+        $q->where('client_id', auth('client_admin')->id());
+    })->count()
+                }}
+                </div>
                 <div class="text">Applicants</div>
             </div>
         </div>
+
         <div class="col single-item">
             <div class="single-box reviewers">
-                <div class="number">5</div>
+                <div class="number">0</div>
                 <div class="text">Reviewers</div>
             </div>
         </div>
-        <div class="col single-item">
-            <div class="single-box funds">
-                <div class="number">6</div>
+
+        <div class="col single-item flex-grow-1">
+            <div class="single-box funds h-100">
+                <div class="number">
+                    {{
+    \App\Models\Fund::where(
+        'client_id',
+        auth('client_admin')->id()
+    )->count()
+                }}
+                </div>
                 <div class="text">Funds</div>
             </div>
         </div>
+
     </div>
 </div>
 

@@ -31,8 +31,8 @@
         <div class="col-auto d-flex align-items-center ms-auto">
             <div class="access-content-wrap">
                 <div class="access-content">
-                    <div class="access-title">Super Admin</div>
-                    <div class="access-subtitle">Full Access</div>
+                    <div class="access-title">Client Admin</div>
+                    {{-- <div class="access-subtitle">Full Access</div> --}}
                 </div>
             </div>
             <div class="header-links d-flex justify-content-end align-items-center">

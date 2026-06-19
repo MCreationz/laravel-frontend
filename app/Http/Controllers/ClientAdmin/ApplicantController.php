@@ -10,10 +10,13 @@ class ApplicantController extends Controller
 {
     public function index(Request $request)
     {
-        $applicants = FundApplication::with([
-            'organization.profile',
-            'organization.operationalDetail',
-        ])
+       $applicants = FundApplication::with([
+        'organization.profile',
+        'organization.operationalDetail',
+    ])
+    ->whereHas('fund', function ($q) {
+        $q->where('client_id', auth('client_admin')->id());
+    })
             ->when($request->search, function ($query, $search) {
                 $query->whereHas('organization', function ($q) use ($search) {
                     $q->where('organization_name', 'like', "%{$search}%")

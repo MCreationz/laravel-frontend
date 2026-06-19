@@ -41,7 +41,7 @@
                 </div>
                 <div class="flex-grow-1 ms-3 text">Client Admins</div>
             </a>
-            <a href="{{ route('dashboard') }}" class="d-flex align-items-center text-decoration-none sidebar-links">
+            <a href="{{ route('superadmin.applicants.index') }}" class="d-flex align-items-center text-decoration-none sidebar-links">
                 <div class="flex-shrink-0">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                         <path d="M22 10V15C22 20 20 22 15 22H9C4 22 2 20 2 15V9C2 4 4 2 9 2H14" stroke="white"
@@ -56,7 +56,7 @@
                 </div>
                 <div class="flex-grow-1 ms-3 text">Applicants</div>
             </a>
-            <a href="{{ route('dashboard') }}" class="d-flex align-items-center text-decoration-none sidebar-links">
+            <a href="{{ route('superadmin.reviewers.index') }}" class="d-flex align-items-center text-decoration-none sidebar-links">
                 <div class="flex-shrink-0">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                         <path d="M11 2H9C4 2 2 4 2 9V15C2 20 4 22 9 22H15C20 22 22 20 22 15V13" stroke="white"
@@ -69,9 +69,9 @@
                             stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
                 </div>
-                <div class="flex-grow-1 ms-3 text">reviewers</div>
+                <div class="flex-grow-1 ms-3 text">Reviewers</div>
             </a>
-            <a href="{{ route('dashboard') }}" class="d-flex align-items-center text-decoration-none sidebar-links">
+            <a href="{{ route('superadmin.funds.index') }}" class="d-flex align-items-center text-decoration-none sidebar-links">
                 <div class="flex-shrink-0">
                     <svg xmlns="http://www.w3.org/2000/svg" width="23" height="19" viewBox="0 0 23 19" fill="none">
                         <path
@@ -98,31 +98,34 @@
 
     </div>
     <div class="sidebar-boxes mt-5 d-flex flex-column-2 flex-wrap gap-2.5">
-        <div class="col single-item">
-            <div class="single-box clients">
-                <div class="number">5</div>
-                <div class="text">Clients</div>
-            </div>
-        </div>
-        <div class="col single-item">
-            <div class="single-box applicants">
-                <div class="number">5</div>
-                <div class="text">Applicants</div>
-            </div>
-        </div>
-        <div class="col single-item">
-            <div class="single-box reviewers">
-                <div class="number">5</div>
-                <div class="text">Reviewers</div>
-            </div>
-        </div>
-        <div class="col single-item">
-            <div class="single-box funds">
-                <div class="number">6</div>
-                <div class="text">Funds</div>
-            </div>
+    <div class="col single-item">
+        <div class="single-box clients">
+            <div class="number">{{ \App\Models\ClientAdmin::count() }}</div>
+            <div class="text">Clients</div>
         </div>
     </div>
+
+    <div class="col single-item">
+        <div class="single-box applicants">
+            <div class="number">{{ \App\Models\FundApplication::count() }}</div>
+            <div class="text">Applicants</div>
+        </div>
+    </div>
+
+    <div class="col single-item">
+        <div class="single-box reviewers">
+            <div class="number">0</div>
+            <div class="text">Reviewers</div>
+        </div>
+    </div>
+
+    <div class="col single-item">
+        <div class="single-box funds">
+            <div class="number">{{ \App\Models\Fund::count() }}</div>
+            <div class="text">Funds</div>
+        </div>
+    </div>
+</div>
 </div>
 
 </div>

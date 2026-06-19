@@ -16,7 +16,9 @@ class FundController extends Controller
     {
         session()->forget('current_fund_id');
 
-        $funds = Fund::with('client')
+        $funds = Fund::with('client')->where(
+                'client_id',
+                auth('client_admin')->id())
 
             ->when($request->filled('search'), function ($query) use ($request) {
 

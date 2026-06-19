@@ -61,7 +61,8 @@
                 <thead class="table-light">
                     <tr>
                         <th class="first-col">Organisation</th>
-                        <th class="text-center">Type</th>
+                        {{-- <th class="text-center">Type</th> --}}
+                         <th class="text-center">Fund</th>
                         <th class="text-center">Contact</th>
                         <th class="text-center">PAN</th>
                         <th class="text-center">Vintage</th>
@@ -77,6 +78,9 @@
 
                         @php
                             $organization = $applicant->organization;
+                            if (!$organization) {
+                                continue;
+                            }
                             $profile = $organization?->profile;
                             $operational = $organization?->operationalDetail;
 
@@ -98,10 +102,14 @@
                                     </span>
                                 </div>
                             </td>
-
+{{-- 
                             <td class="text-center">
                                 {{ ucfirst($organization->role ?? '-') }}
+                            </td> --}}
+                               <td class="text-center">
+                                {{$applicant->fund->fund_name}}
                             </td>
+
 
                             <td class="text-center">
                                 {{ $profile->contact_name ?? '-' }}
@@ -166,35 +174,35 @@
 
         </div>
     </div>
-<script>
-document.addEventListener('DOMContentLoaded', function () {
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
 
-    const searchInput = document.getElementById('searchInput');
+            const searchInput = document.getElementById('searchInput');
 
-    let debounceTimer;
+            let debounceTimer;
 
-    searchInput.addEventListener('input', function () {
+            searchInput.addEventListener('input', function () {
 
-        clearTimeout(debounceTimer);
+                clearTimeout(debounceTimer);
 
-        debounceTimer = setTimeout(() => {
+                debounceTimer = setTimeout(() => {
 
-            const url = new URL(window.location.href);
+                    const url = new URL(window.location.href);
 
-            if (this.value.trim()) {
-                url.searchParams.set('search', this.value.trim());
-            } else {
-                url.searchParams.delete('search');
-            }
+                    if (this.value.trim()) {
+                        url.searchParams.set('search', this.value.trim());
+                    } else {
+                        url.searchParams.delete('search');
+                    }
 
-            url.searchParams.delete('page');
+                    url.searchParams.delete('page');
 
-            window.location.href = url.toString();
+                    window.location.href = url.toString();
 
-        }, 400);
+                }, 400);
 
-    });
+            });
 
-});
-</script>
+        });
+    </script>
 @endsection
