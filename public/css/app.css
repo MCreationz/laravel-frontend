@@ -2485,6 +2485,10 @@ p.text-small {
 .status-header span {
     color: #000 !important;
 }
+.logout-btn {
+    min-width: min-content;
+    padding: 7px !important;
+}
 /* responsive */
 @media(max-width:1440px) {
     .left-logo-col .bg-image img {

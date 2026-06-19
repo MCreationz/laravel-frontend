@@ -8,47 +8,80 @@
                     <span></span>
                 </button>
             </div>
+
             <p class="mb-0 header-text d-flex align-items-center gap-2">
                 @hasSection('header_back')
-                    <a href="@yield('header_back')" 
-                       class="arrow-icon d-flex align-items-center justify-content-center cursor-pointer">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17"
-                            viewBox="0 0 20 17" fill="none">
-                            <path d="M8.25 0.75L0.75 8.25L8.25 15.75M0.75 8.25H18.75"
-                                stroke="black" stroke-width="1.5"
+                    <a href="@yield('header_back')"
+                        class="arrow-icon d-flex align-items-center justify-content-center cursor-pointer">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17" fill="none">
+                            <path d="M8.25 0.75L0.75 8.25L8.25 15.75M0.75 8.25H18.75" stroke="black" stroke-width="1.5"
                                 stroke-linecap="round" stroke-linejoin="round" />
                         </svg>
                     </a>
                 @endif
 
                 @yield('header_title', 'Dashboard')
-
             </p>
         </div>
+
         <div class="col-auto logo mobile d-none text-center flex-grow">
-            <img src="{{ asset('img/FundInk-logo.svg') }}" alt="FundInk site logo" width="124px" height="">
+            <img src="{{ asset('img/FundInk-logo.svg') }}" alt="FundInk site logo" width="124px">
         </div>
+
         <div class="col-auto d-flex align-items-center ms-auto">
             <div class="access-content-wrap">
                 <div class="access-content">
                     <div class="access-title">Client Admin</div>
-                    {{-- <div class="access-subtitle">Full Access</div> --}}
                 </div>
             </div>
+
             <div class="header-links d-flex justify-content-end align-items-center">
+
+                {{-- Notifications --}}
                 <a href="#" class="icon px-2 px-lg-3">
-                    <img src="{{ asset('img/notification.svg') }}" alt="settings" width="18.531612396240234px"
-                        height="20px">
+                    <img src="{{ asset('img/notification.svg') }}" alt="notification" width="18" height="20">
                 </a>
-                <div class="d-flex align-items-center ps-1 ps-lg-3">
-                    <div class="flex-shrink-0 profile-img">
-                        <img src="{{ asset('img/profile.png') }}" alt="profile" width="36px" height="36px">
-                    </div>
-                    <div class="flex-grow-1 ms-2 ms-lg-3 profile-name">
+
+                {{-- Profile Dropdown --}}
+                <div class="dropdown ps-1 ps-lg-3">
+
+                    <div class="d-flex align-items-center profile-dropdown-toggle" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+
+                        <div class="flex-shrink-0 profile-img">
+                            <img src="{{ asset('img/profile.png') }}" alt="profile" width="36" height="36">
+                        </div>
+
+                        <div class="flex-grow-1 ms-2 ms-lg-3 profile-name">
+                            {{ auth('client_admin')->user()->name ?? 'Client' }}
+                        </div>
+                        
 
                     </div>
+
+
+
                 </div>
+                <form method="POST" action="{{ route('client-admin.logout') }}" class="m-0">
+                            @csrf
+
+                            <button type="submit" class="btn logout-btn">
+
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                                    <polyline points="16 17 21 12 16 7" />
+                                    <line x1="21" y1="12" x2="9" y2="12" />
+                                </svg>
+
+                            </button>
+
+                        </form>
+
             </div>
+
+            
         </div>
     </div>
 </header>

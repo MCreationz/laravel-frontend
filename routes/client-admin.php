@@ -22,6 +22,8 @@ Route::prefix('client-admin')->group(function () {
 
     Route::post('/login', [AuthController::class, 'login'])
         ->name('client-admin.login.submit');
+        Route::post('/logout', [AuthController::class, 'logout'])
+    ->name('client-admin.logout');
 
     Route::middleware('guest:client_admin')->group(function () {
 
