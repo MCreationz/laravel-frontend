@@ -6,160 +6,211 @@
 @section('content')
     <div class="dashboard-v2">
         <div class="dashboard-v2-summary-card mb-3">
-            <div class="dashboard-v2-summary-grid">
-                <div class="dashboard-v2-org">
-                    <p class="dashboard-v2-welcome mb-1">Super Admin</p>
-
+            <div class="dashboard-col-wrap d-flex justify-content-between align-items-center flex-wrap gap-2 gap-lg-0">
+                <div class="left-content col-12 col-lg-4 col-xl-5 flex-shrink-0">
+                    <p class="dashboard-v2-welcome mb-2">Super Admin</p>
                     <h2 class="dashboard-v2-name mb-1">
                         Fundlink Control Centre
                     </h2>
-                   <p>Full platform oversight - clients, applicants, reviewers, and funds</p>
-
-                    <p class="dashboard-v2-meta mb-0">
-                     
-                    </p>
+                    <p class="text-white text mb-0">Full platform oversight - clients, applicants, reviewers, and funds</p>
                 </div>
+                <div
+                    class="col-12 col-lg-7 flex-grow-1 flex-wrap flex-lg-nowrap dashboar-cards-wrap d-flex gap-1 justify-content-lg-end row-cols-1 row-cols-sm-2 row-cols-md-5">
+                    <div class="col">
+                        <div class="dashboard-v2-kpi">
+                            <p class="mb-0 value">
+                                ₹{{ number_format($fundingAvailable ?? 0) }}
+                            </p>
+                            <p class="mb-0 label">Funding Available</p>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="dashboard-v2-kpi">
+                            <p class="mb-0 value">{{ $totalApplications ?? 0 }}</p>
+                            <p class="mb-0 label">Total Applications</p>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="dashboard-v2-kpi">
+                            <p class="mb-0 value">{{ $ongoing ?? 0 }}</p>
+                            <p class="mb-0 label">Ongoing</p>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="dashboard-v2-kpi">
+                            <p class="mb-0 value">{{ $selected ?? 0 }}</p>
+                            <p class="mb-0 label">Selected</p>
+                        </div>
+                    </div>
 
-                <div class="dashboard-v2-kpi">
-                    <p class="mb-0 value">
-                        ₹{{ number_format($fundingAvailable ?? 0) }}
-                    </p>
-                    <p class="mb-0 label">Funding Available</p>
-                </div>
-
-                <div class="dashboard-v2-kpi">
-                    <p class="mb-0 value">{{ $totalApplications ?? 0 }}</p>
-                    <p class="mb-0 label">Total Applications</p>
-                </div>
-
-                <div class="dashboard-v2-kpi">
-                    <p class="mb-0 value">{{ $ongoing ?? 0 }}</p>
-                    <p class="mb-0 label">Ongoing</p>
-                </div>
-
-                <div class="dashboard-v2-kpi">
-                    <p class="mb-0 value">{{ $selected ?? 0 }}</p>
-                    <p class="mb-0 label">Selected</p>
-                </div>
-
-                <div class="dashboard-v2-kpi">
-                    <p class="mb-0 value">{{ $rejected ?? 0 }}</p>
-                    <p class="mb-0 label">Rejected</p>
+                    <div class="col">
+                        <div class="dashboard-v2-kpi">
+                            <p class="mb-0 value">{{ $rejected ?? 0 }}</p>
+                            <p class="mb-0 label">Rejected</p>
+                        </div>
+                    </div>
                 </div>
             </div>
-
-
         </div>
-
-        <div class="dashboard-v2-table-card">
-            <div class="dashboard-v2-table-head">
-                <h3 class="mb-0">All Projects</h3>
-                <div class="dashboard-v2-filters">
-                    <div class="search-box dashboard-v2-search">
-                        <span class="search-icon w-100">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 13 13" fill="none">
-                                <path
-                                    d="M5.70944 0.00239889C4.19598 0.00493613 2.74524 0.607279 1.67506 1.67746C0.604881 2.74764 0.00253724 4.19838 0 5.71184C0.0012649 7.22657 0.602894 8.67904 1.67307 9.75102C2.74325 10.823 4.19471 11.4271 5.70944 11.4309C7.05284 11.4309 8.29068 10.9583 9.26944 10.1762L11.6468 12.5536C11.7672 12.6656 11.9264 12.7265 12.0908 12.7236C12.2552 12.7207 12.4121 12.6543 12.5286 12.5381C12.645 12.422 12.7119 12.2653 12.7152 12.1008C12.7186 11.9364 12.658 11.7771 12.5464 11.6564L10.169 9.27664C10.981 8.26684 11.4236 7.00998 11.4237 5.71424C11.4237 2.56685 8.85683 0.00239889 5.70944 0.00239889ZM5.70944 1.27383C8.17074 1.27383 10.1522 3.25294 10.1522 5.71184C10.1522 8.17074 8.17074 10.1618 5.70944 10.1618C3.24814 10.1618 1.26903 8.17793 1.26903 5.71664C1.26903 3.25534 3.24814 1.27383 5.70944 1.27383Z"
-                                    fill="#BABABA" />
-                            </svg>
-                        </span>
-                        <input type="text" class="form-control" placeholder="Search">
+    </div>
+    <div class="dashboard-status d-flex d-flex row-cols-2 row-cols-md-4 flex-wrap row-gap-2">
+        <div class="col px-1">
+            <div class="single-item">
+                <div class="single-box clients">
+                    <div class="number">04</div>
+                    <div class="text">Active Client Admins <span>of 6 total</span></div>
+                </div>
+            </div>
+        </div>
+        <div class="col px-1">
+            <div class="single-item">
+                <div class="single-box applicants">
+                    <div class="number">03</div>
+                    <div class="text">verified Applicants <span>of 6 total</span></div>
+                </div>
+            </div>
+        </div>
+        <div class="col px-1">
+            <div class="single-item">
+                <div class="single-box reviewers">
+                    <div class="number">04</div>
+                    <div class="text">Active Reviewers <span>of 6 total</span></div>
+                </div>
+            </div>
+        </div>
+        <div class="col px-1">
+            <div class="single-item">
+                <div class="single-box funds">
+                    <div class="number">03</div>
+                    <div class="text">open Funding Calls <span>of 6 total</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="recent-status mt-3">
+        <div class="d-flex row-cols-1 row-cols-lg-2 flex-wrap row-gap-2">
+            <div class="col px-1">
+                <div class="recent-col client bg-white h-100">
+                    <div class="top-title-wrap px-2 px-md-3 pt-3 pt-md-4 pb-2">
+                        <h3 class="top-title mb-0 font-inter h5 fw-bold">Recent Client Admins</h3>
                     </div>
-                    <div class="select-wrapper dashboard-v2-select">
-                        <div class="custom-select form-control">Category</div>
-                        <input type="hidden" class="hidden-select" value="">
-                        <ul class="select-list">
-                            <li data-value="all">All</li>
-                            <li data-value="education">Education</li>
-                            <li data-value="health">Health</li>
-                        </ul>
+                    <div class="recent-inner">
+                        <div class="single-row d-flex justify-content-between px-2 px-md-3 py-2 py-md-3 align-items-center">
+                            <div class="d-flex align-items-center gap-2">
+                                <div class="px-2 py-1 fw-bold gradient-text bordered">
+                                    HC
+                                </div>
+                                <div class="text-wrap">
+                                    <span class="fw-bold">
+                                        M3M Foundation
+                                    </span>
+                                    <p class="text-muted text-small">CSM Foundation • 12/03/2026</p>
+                                </div>
+                            </div>
+                            <div class="active-btn"><a href="#">Active</a></div>
+                        </div>
+                        <div class="single-row d-flex justify-content-between px-2 px-md-3 py-2 py-md-3 align-items-center">
+                            <div class="d-flex align-items-center gap-2">
+                                <div class="px-2 py-1 fw-bold gradient-text bordered">
+                                    HC
+                                </div>
+                                <div class="text-wrap">
+                                    <span class="fw-bold">
+                                        M3M Foundation
+                                    </span>
+                                    <p class="text-muted text-small">CSM Foundation • 12/03/2026</p>
+                                </div>
+                            </div>
+                            <div class="active-btn"><a href="#">Active</a></div>
+                        </div>
+                        <div class="single-row d-flex justify-content-between px-2 px-md-3 py-2 py-md-3 align-items-center">
+                            <div class="d-flex align-items-center gap-2">
+                                <div class="px-2 py-1 fw-bold gradient-text bordered">
+                                    HC
+                                </div>
+                                <div class="text-wrap">
+                                    <span class="fw-bold">
+                                        M3M Foundation
+                                    </span>
+                                    <p class="text-muted text-small">CSM Foundation • 12/03/2026</p>
+                                </div>
+                            </div>
+                            <div class="active-btn"><a href="#">Active</a></div>
+                        </div>
+                        <div class="single-row d-flex justify-content-between px-2 px-md-3 py-2 py-md-3 align-items-center">
+                            <div class="d-flex align-items-center gap-2">
+                                <div class="px-2 py-1 fw-bold gradient-text bordered">
+                                    HC
+                                </div>
+                                <div class="text-wrap">
+                                    <span class="fw-bold">
+                                        M3M Foundation
+                                    </span>
+                                    <p class="text-muted text-small">CSM Foundation • 12/03/2026</p>
+                                </div>
+                            </div>
+                            <div class="active-btn"><a href="#">Active</a></div>
+                        </div>
                     </div>
                 </div>
             </div>
-{{-- 
-            <div class="table-responsive">
-                <table class="table dashboard-v2-table mb-0">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Domain Tags</th>
-                            <th>Status</th>
-                            <th class="text-end">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @forelse($funds as $fund)
-                            @php
-                                $snapshot = $fund->snapshot;
+            <div class="col px-1">
+                <div class="recent-col fund-status bg-white py-3 py-md-4 px-2 px-md-3 h-100">
+                    <div class="top-title-wrap">
+                        <h3 class="top-title mb-0 font-inter h5 fw-bold">Fund Status Overview</h3>
+                    </div>
 
-                                $tags = collect(explode(',', $snapshot->eligible_states ?? ''))
-                                    ->filter()
-                                    ->values();
+                    <div class="recent-inner">
+                        <div class="status-progress-wrap">
+                            <!-- Active -->
+                            <div class="status-row">
+                                <div class="status-header">
+                                    <span><strong>Active</strong></span>
+                                    <span>03</span>
+                                </div>
+                                <div class="progress">
+                                    <div class="progress-bar progress-active" style="width: 55%"></div>
+                                </div>
+                            </div>
 
-                                $statusItems = collect([
-                                    $snapshot?->fund_outlay ? 'Fund Outlay: ₹' . $snapshot->fund_outlay : null,
-                                    $snapshot?->fund_type ? 'Fund Type: ' . ucfirst($snapshot->fund_type) : null,
-                                    $snapshot?->single_entity_cap ? 'Per Entity Cap: ₹' . $snapshot->single_entity_cap : null,
-                                ])->filter()->values();
-                            @endphp
+                            <!-- Closed -->
+                            <div class="status-row">
+                                <div class="status-header">
+                                    <span><strong>Closed</strong></span>
+                                    <span>02</span>
+                                </div>
+                                <div class="progress">
+                                    <div class="progress-bar progress-closed" style="width: 25%"></div>
+                                </div>
+                            </div>
 
-                            <tr>
-                                <td>
-                                    <div class="dashboard-v2-name-cell">
-                                        <span class="hc-badge">
-                                            {{ strtoupper(substr($fund->fund_name ?? 'F', 0, 2)) }}
-                                        </span>
-                                        <span>{{ $fund->fund_name }}</span>
-                                    </div>
-                                </td>
+                            <!-- Suspended -->
+                            <div class="status-row">
+                                <div class="status-header">
+                                    <span><strong>Suspended</strong></span>
+                                    <span>06</span>
+                                </div>
+                                <div class="progress">
+                                    <div class="progress-bar progress-suspended" style="width: 55%"></div>
+                                </div>
+                            </div>
 
-                                <td>
-                                    <div class="tag-wrap">
-                                        @foreach($tags->take(3) as $tag)
-                                            <span class="tag-pill">{{ trim($tag) }}</span>
-                                        @endforeach
+                            <!-- Draft -->
+                            <div class="status-row mb-0">
+                                <div class="status-header">
+                                    <span><strong>Draft</strong></span>
+                                    <span>08</span>
+                                </div>
+                                <div class="progress">
+                                    <div class="progress-bar progress-draft" style="width: 75%"></div>
+                                </div>
+                            </div>
 
-                                        @if($tags->count() > 3)
-                                            <span class="tag-pill plus">+{{ $tags->count() - 3 }}</span>
-                                        @endif
-                                    </div>
-                                </td>
+                        </div>
 
-                                <td>
-                                    <div class="status-wrap">
-                                        @foreach($statusItems->take(3) as $item)
-                                            <span class="status-pill">{{ $item }}</span>
-                                        @endforeach
-
-                                        @if($statusItems->count() > 3)
-                                            <span class="status-pill plus">+{{ $statusItems->count() - 3 }}</span>
-                                        @endif
-                                    </div>
-                                </td>
-
-                                <td class="text-end">
-                                    <div class="dashboard-v2-action">
-                                        <a href=""
-                                            class="btn btn-primary dashboard-v2-apply">
-                                            Apply Now
-                                        </a>
-
-                                        <a href="" class="dashboard-v2-view-link">
-                                            View Details
-                                        </a>
-                                    </div>
-                                </td>
-                            </tr>
-                        @empty
-                            <tr>
-                                <td colspan="4" class="text-center py-4">
-                                    No funds available.
-                                </td>
-                            </tr>
-                        @endforelse
-                    </tbody>
-                </table>
-            </div> --}}
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 @endsection
