@@ -16,13 +16,7 @@
                    <p>Full platform oversight - clients, applicants, reviewers, and funds</p>
 
                     <p class="dashboard-v2-meta mb-0">
-                        Registered NPO
-                        @if($profile?->is_fcra_certified)
-                            • FCRA Certified
-                        @endif
-                        @if($profile?->established_year)
-                            • Est. {{ $profile->established_year }}
-                        @endif
+                     
                     </p>
                 </div>
 
