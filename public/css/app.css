@@ -3308,6 +3308,12 @@ input#searchInput {
     padding-left: 30px;
     font-size: 13px;
 }
+.btn.response {
+    font-size: 11px !important;
+    font-weight: 600 !important;
+    min-width: 84px;
+    padding: 7px 10px !important;
+}
 @media (max-width: 1200px) {
     .dashboard-v2-summary-grid {
         grid-template-columns: repeat(3, minmax(120px, 1fr));
