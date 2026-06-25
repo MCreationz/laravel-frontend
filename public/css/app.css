@@ -3318,6 +3318,17 @@ input#searchInput {
     min-width: 84px;
     padding: 7px 10px !important;
 }
+span#notification-count {
+    color: #fff !important;
+    padding: 2px;
+    min-width: 20px;
+    min-height: 20px;
+    text-align: center;
+    display: inline-flex !important;
+    justify-content: center;
+    align-items: center;
+    line-height: 1;
+}
 @media (max-width: 1200px) {
     .dashboard-v2-summary-grid {
         grid-template-columns: repeat(3, minmax(120px, 1fr));

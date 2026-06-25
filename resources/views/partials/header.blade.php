@@ -30,7 +30,7 @@
         <div class="dropdown">
 
             <a href="#"
-               class="icon px-2 px-lg-3 position-relative"
+               class="icon position-relative"
                data-bs-toggle="dropdown"
                aria-expanded="false">
 
@@ -50,14 +50,14 @@
             <div class="dropdown-menu dropdown-menu-end p-0 shadow"
                  style="width:380px; max-height:500px; overflow-y:auto;">
 
-                <div class="d-flex justify-content-between align-items-center p-3 border-bottom">
+                <div class="d-flex justify-content-between align-items-center p-2 border-bottom">
 
                     <strong>Notifications</strong>
 
                     <button
                         type="button"
                         id="mark-all-read"
-                        class="btn btn-sm btn-link text-decoration-none">
+                        class="btn btn-sm btn-link text-decoration-none p-1">
                         Mark all read
                     </button>
 
@@ -78,7 +78,7 @@
         <a href="{{ route('profile.show') }}"
            class="text-decoration-none text-reset">
 
-            <div class="d-flex align-items-center ps-1 ps-lg-2">
+            <div class="d-flex align-items-center ps-2 ps-lg-3">
 
                 <div class="flex-shrink-0 profile-img">
                     <img src="{{ asset('img/profile.png') }}"
@@ -149,7 +149,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     <div
                         class="border-bottom p-3 notification-item"
                         data-id="${item.id}"
-                        style="${item.is_read ? '' : 'background:#f8f9fa'}">
+                        style="${item.is_read ? '' : 'background:#dbe9f6'}">
 
                         <div class="fw-semibold">
                             ${item.title}
