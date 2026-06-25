@@ -15,6 +15,7 @@ use App\Http\Controllers\SuperAdmin\SettingsController;
 use App\Http\Controllers\SuperAdmin\UserController;
 use Illuminate\Support\Facades\Route;
 
+
 Route::prefix('super-admin')
     ->name('superadmin.')
     ->group(function () {
