@@ -5,15 +5,18 @@ use App\Http\Controllers\API\Auth\RegisterController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DiscoverFundController;
 use App\Http\Controllers\MyApplicationController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\OnboardingController;
 use App\Http\Controllers\OrganizationDocumentController;
 use App\Http\Controllers\OrganizationFunderController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectApplication\AwardRecognitionController;
 use App\Http\Controllers\ProjectApplication\DocumentController;
 use App\Http\Controllers\ProjectApplication\FinancialDocumentController;
 use App\Http\Controllers\ProjectApplication\QuestionController;
 use App\Http\Controllers\ProjectApplication\SeniorManagementController;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\SettingController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -76,13 +79,13 @@ Route::post('/login/verify-otp', [AuthLoginController::class, 'verifyLoginOtp'])
 
 Route::post('/logout', [AuthLoginController::class, 'logout'])
     ->name('logout');
-    Route::get('/forgot-password', [AuthLoginController::class, 'forgotPassword'])
+Route::get('/forgot-password', [AuthLoginController::class, 'forgotPassword'])
     ->name('forgot.password');
 
 Route::post('/forgot-password', [AuthLoginController::class, 'sendResetLink'])
     ->name('forgot.password.send');
 
-    Route::get('/reset-password/{token}', [AuthLoginController::class, 'showResetForm'])
+Route::get('/reset-password/{token}', [AuthLoginController::class, 'showResetForm'])
     ->name('password.reset.form');
 
 Route::post('/reset-password', [AuthLoginController::class, 'resetPassword'])
@@ -111,6 +114,26 @@ Route::middleware(['check.onboarding', 'auth:organization'])->group(function () 
     Route::post('/onboarding/step-3', [OnboardingController::class, 'storeStepThree'])
         ->name('onboarding.step3.store');
 
+    Route::prefix('notifications')
+        ->name('notifications.')
+        ->group(function () {
+
+            Route::get('/', [NotificationController::class, 'index'])
+                ->name('index');
+
+            Route::get('/unread-count', [NotificationController::class, 'unreadCount'])
+                ->name('unread-count');
+
+            Route::post('/{id}/read', [NotificationController::class, 'markAsRead'])
+                ->name('read');
+
+            Route::post('/read-all', [NotificationController::class, 'markAllAsRead'])
+                ->name('read-all');
+
+            Route::delete('/{id}', [NotificationController::class, 'destroy'])
+                ->name('delete');
+        });
+
     // routes/web.php
     Route::get('/projects', [ProjectController::class, 'index'])
         ->name('projects.index');
@@ -118,13 +141,13 @@ Route::middleware(['check.onboarding', 'auth:organization'])->group(function () 
     Route::get('/projects/{id}/details', [ProjectController::class, 'details'])
         ->name('projects.details');
 
-        Route::get('/my-applications', [MyApplicationController::class, 'index'])
-    ->name('my-applications.index');
+    Route::get('/my-applications', [MyApplicationController::class, 'index'])
+        ->name('my-applications.index');
 
     Route::get('/discover-funds', [DiscoverFundController::class, 'index'])
-    ->name('discover.funds.index');
+        ->name('discover.funds.index');
 
-      // list documents
+    // list documents
     Route::get('/organization-documents', [OrganizationDocumentController::class, 'index'])
         ->name('organization.documents.index');
 
@@ -132,12 +155,36 @@ Route::middleware(['check.onboarding', 'auth:organization'])->group(function () 
     Route::post('/organization-documents', [OrganizationDocumentController::class, 'store'])
         ->name('organization.documents.store');
 
-        Route::post('/organization-documents/{id}', [OrganizationDocumentController::class, 'update'])
-    ->name('organization.documents.update');
+    Route::post('/organization-documents/{id}', [OrganizationDocumentController::class, 'update'])
+        ->name('organization.documents.update');
 
-Route::delete('/organization-documents/{id}', [OrganizationDocumentController::class, 'destroy'])
-    ->name('organization.documents.destroy');
+    Route::delete('/organization-documents/{id}', [OrganizationDocumentController::class, 'destroy'])
+        ->name('organization.documents.destroy');
 
+    Route::prefix('profile')
+        ->name('profile.')
+        ->group(function () {
+
+            Route::get('/', [ProfileController::class, 'show'])
+                ->name('show');
+
+            Route::post('/update', [ProfileController::class, 'updateProfile'])
+                ->name('update');
+
+            Route::post('/avatar', [ProfileController::class, 'updateAvatar'])
+                ->name('avatar.update');
+        });
+
+    Route::prefix('settings')
+        ->name('settings.')
+        ->group(function () {
+
+            Route::get('/', [SettingController::class, 'show'])
+                ->name('show');
+
+            Route::post('/password', [SettingController::class, 'updatePassword'])
+                ->name('password.update');
+        });
 
 });
 

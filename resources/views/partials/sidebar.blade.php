@@ -76,7 +76,7 @@
     </div>
 
     <div class="sidebar-bottom-nav">
-        <a href="#" class="d-flex align-items-center text-decoration-none sidebar-links">
+        <a href="{{ route('settings.show') }}" class="d-flex align-items-center text-decoration-none sidebar-links">
             <span class="sidebar-link-icon flex-shrink-0">
                 <i class="bi bi-gear"></i>
             </span>

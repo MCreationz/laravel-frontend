@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\OrganizationAddress;
 use App\Models\OrganizationOperationalDetail;
 use App\Models\OrganizationProfile;
+use App\Services\NotificationService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -21,49 +22,48 @@ class OnboardingController extends Controller
         return view('onboarding.step1', compact('profile'));
     }
 
+    public function storeStepOne(Request $request)
+    {
+        $organization = Auth::guard('organization')->user();
 
-public function storeStepOne(Request $request)
-{
-    $organization = Auth::guard('organization')->user();
+        if (! $organization) {
+            abort(403, 'Unauthorized');
+        }
 
-    if (! $organization) {
-        abort(403, 'Unauthorized');
+        $validator = Validator::make($request->all(), [
+            'pan_number' => [
+                'required',
+                'string',
+                'size:10',
+                Rule::unique('organization_profiles', 'pan_number')
+                    ->ignore($organization->id, 'organization_id'),
+            ],
+            'legal_name' => 'required|string|max:255',
+            'date_of_incorporation' => 'required|date',
+            'brand_name' => 'nullable|string|max:255',
+            'website_url' => 'nullable|url|max:2000',
+            'linkedin_url' => 'nullable|url|max:2000',
+            'contact_name' => 'required|string|max:255',
+            'designation' => 'required|string|max:255',
+            'mobile_no' => 'required|digits:10',
+        ], [
+            'pan_number.unique' => 'This PAN number has already been registered by another organization.',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()
+                ->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        OrganizationProfile::updateOrCreate(
+            ['organization_id' => $organization->id],
+            $validator->validated()
+        );
+
+        return redirect()->route('onboarding.step2');
     }
-
-    $validator = Validator::make($request->all(), [
-        'pan_number' => [
-            'required',
-            'string',
-            'size:10',
-            Rule::unique('organization_profiles', 'pan_number')
-                ->ignore($organization->id, 'organization_id'),
-        ],
-        'legal_name' => 'required|string|max:255',
-        'date_of_incorporation' => 'required|date',
-        'brand_name' => 'nullable|string|max:255',
-        'website_url' => 'nullable|url|max:2000',
-        'linkedin_url' => 'nullable|url|max:2000',
-        'contact_name' => 'required|string|max:255',
-        'designation' => 'required|string|max:255',
-        'mobile_no' => 'required|digits:10',
-    ], [
-        'pan_number.unique' => 'This PAN number has already been registered by another organization.',
-    ]);
-
-    if ($validator->fails()) {
-        return redirect()
-            ->back()
-            ->withErrors($validator)
-            ->withInput();
-    }
-
-    OrganizationProfile::updateOrCreate(
-        ['organization_id' => $organization->id],
-        $validator->validated()
-    );
-
-    return redirect()->route('onboarding.step2');
-}
 
     public function stepTwo()
     {
@@ -163,7 +163,7 @@ public function storeStepOne(Request $request)
 
         $data = [
             'organization_id' => $organization->id,
-           // 'organization_type' => $role === 'fund_seeker' ? 'profit' : 'non_profit',
+            // 'organization_type' => $role === 'fund_seeker' ? 'profit' : 'non_profit',
             'registration_type' => $request->registration_type,
             'state' => $request->state,
             'years_of_operation_months' => $request->years_of_operation_months,
@@ -209,6 +209,12 @@ public function storeStepOne(Request $request)
             $data
         );
 
+   NotificationService::createOnce(
+    'onboarding_completed',
+    'Profile Completed',
+    'Your organization profile has been successfully completed. You now have access to the dashboard and can begin exploring available features and opportunities.',
+    $organization->id
+);
         return redirect()->route('dashboard');
     }
 }
