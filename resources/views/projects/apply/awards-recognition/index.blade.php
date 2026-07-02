@@ -146,7 +146,7 @@
                                 <button type="button" class="edit-btn border-0 bg-transparent p-1" data-id="{{ $award->id }}"
                                     data-award_name="{{ $award->award_name }}"
                                     data-awarding_organization="{{ $award->awarding_organization }}"
-                                    data-year="{{ $award->year }}" data-bs-toggle="modal" data-bs-target="#addAward">
+                                    data-year="{{ $award->year }}"  data-certificate="{{ $award->certificate }}" data-bs-toggle="modal" data-bs-target="#addAward">
 
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"
                                         fill="none">
@@ -307,6 +307,13 @@
                                             <p class="mt-2">Upload pdf/JPG upto 5 MB</p>
 
                                             <small id="certificate_name"></small>
+                                            @if (!empty($award->certificate))
+    <a href="{{ asset('storage/' . $award->certificate) }}"
+       target="_blank"
+       class="text-success d-block mb-1">
+        View existing certificate
+    </a>
+@endif
 
                                             <small id="current_certificate" class="text-success d-block mt-1">
                                             </small>
@@ -386,43 +393,49 @@
         }
     </style>
 
-    <script>
-        document.querySelectorAll(".edit-btn").forEach(btn => {
-            btn.addEventListener("click", function () {
+   <script>
+document.querySelectorAll(".edit-btn").forEach(btn => {
+    btn.addEventListener("click", function () {
 
-                const form = document.getElementById("AwardForm");
-                const id = this.dataset.id;
-                console.log(this.dataset)
+        const form = document.getElementById("AwardForm");
+        const id = this.dataset.id;
 
-                form.action =
-                    "{{ url('projects/' . $fund->id . '/apply/awards-recognition') }}/" + id;
+        form.action = "{{ url('projects/' . $fund->id . '/apply/awards-recognition') }}/" + id;
 
-                let methodInput = form.querySelector("input[name='_method']");
+        let methodInput = form.querySelector("input[name='_method']");
+        if (!methodInput) {
+            methodInput = document.createElement("input");
+            methodInput.type = "hidden";
+            methodInput.name = "_method";
+            form.appendChild(methodInput);
+        }
+        methodInput.value = "PUT";
 
-                if (!methodInput) {
-                    methodInput = document.createElement("input");
-                    methodInput.type = "hidden";
-                    methodInput.name = "_method";
-                    form.appendChild(methodInput);
-                }
+        document.getElementById("edit_id").value = id;
 
-                methodInput.value = "PUT";
+        form.querySelector("[name='award_name']").value =
+            this.dataset.award_name || "";
 
-                document.getElementById("edit_id").value = id;
+        form.querySelector("[name='awarding_organization']").value =
+            this.dataset.awarding_organization || "";
 
-                form.querySelector("[name='award_name']").value =
-                    this.dataset.award_name || "";
+        form.querySelector("[name='year']").value =
+            this.dataset.year || "";
 
-                form.querySelector("[name='awarding_organization']").value =
-                    this.dataset.awarding_organization || "";
+        const fileInput = document.getElementById("certificate");
 
-                form.querySelector("[name='year']").value =
-                    this.dataset.year || "";
+        const hasFile = this.dataset.certificate && this.dataset.certificate !== "";
 
-                form.querySelector("button[type='submit']").textContent = "Update";
-            });
-        });
-    </script>
+        if (hasFile) {
+            fileInput.removeAttribute("required");
+        } else {
+            fileInput.setAttribute("required", "required");
+        }
+
+        form.querySelector("button[type='submit']").textContent = "Update";
+    });
+});
+</script>
 
 
 

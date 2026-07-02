@@ -367,6 +367,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const input = document.getElementById('resume_cv');
     const label = document.querySelector('label[for="resume_cv"]');
     const errorText = document.getElementById('resume_cv_error');
+    const hasExistingResumeInput = document.getElementById('has_existing_resume');
 
     function setError(state) {
         label.classList.toggle('error', state);
@@ -374,14 +375,16 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     form.addEventListener('submit', function (e) {
-        console.log('submtting')
 
-        if (!input.files || input.files.length === 0) {
+        const hasExistingResume = hasExistingResumeInput.value === "1";
+
+        if ((!input.files || input.files.length === 0) && !hasExistingResume) {
             e.preventDefault();
             setError(true);
-        } else {
-            setError(false);
+            return false;
         }
+
+        setError(false);
 
     });
 

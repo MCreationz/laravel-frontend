@@ -23,7 +23,7 @@
     @endphp
 
     <div class="application-form-page">
-        <form method="POST" action="{{ route('projects.apply.questions.store', $fund) }}" id="applicationForm">
+        <form method="POST" id="applicationForm">
             @csrf
 
             <div class="card application-form-card border-0 mb-3">
@@ -161,12 +161,19 @@
                             <div class="col-12 col-lg-8">
                                 <div class="application-textarea-wrap">
 
-                                    <div class="d-flex justify-content-end mb-2">
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <small class="text-muted word-counter">
+                                            0 / {{ $question->word_limit }} words
+                                        </small>
+
                                         <span class="application-word-limit">
                                             Word Limit: {{ $question->word_limit }}
                                         </span>
                                     </div>
 
+                                    <small class="text-danger word-error d-none">
+                                        Reduce your answer to {{ $question->word_limit }} words or fewer.
+                                    </small>
                                     <textarea name="answers[{{ $question->id }}]" rows="6" required
                                         class="form-control application-textarea" data-word-limit="{{ $question->word_limit }}"
                                         placeholder="Write your response here...">{{ $answers[$question->id]->answer ?? '' }}</textarea>
@@ -188,9 +195,19 @@
                     </label>
 
                     <div class="application-textarea-wrap">
-                        <div class="d-flex justify-content-end mb-2">
-                            <span class="application-word-limit">Word Limit: 100</span>
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <small class="text-muted word-counter">
+                                0 / 100 words
+                            </small>
+
+                            <span class="application-word-limit">
+                                Word Limit: 100
+                            </span>
                         </div>
+
+                        <small class="text-danger word-error d-none">
+                            Reduce your answer to 100 words or fewer.
+                        </small>
 
                         <textarea name="additional_info" rows="5" class="form-control application-textarea"
                             data-word-limit="100"
@@ -215,9 +232,106 @@
 
         </form>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.getElementById('applicationForm');
+            const action = @json(route('projects.apply.questions.store', $fund));
+
+            const textareas = document.querySelectorAll('.application-textarea');
+
+            function countWords(text) {
+                return text.trim() === ''
+                    ? 0
+                    : text.trim().split(/\s+/).length;
+            }
+
+            function validateTextarea(textarea) {
+
+                const limit = parseInt(textarea.dataset.wordLimit);
+
+                const words = countWords(textarea.value);
+
+                const wrapper = textarea.closest('.application-textarea-wrap');
+
+                const counter = wrapper.querySelector('.word-counter');
+
+                const error = wrapper.querySelector('.word-error');
+                console.log({
+                    words,
+                    limit,
+                    valid: words <= limit
+                });
+
+                counter.textContent = `${words} / ${limit} words`;
+
+                if (words > limit) {
+
+                    textarea.classList.add('is-invalid');
+                    counter.classList.add('text-danger');
+                    counter.classList.remove('text-muted');
+
+                    error.classList.remove('d-none');
+
+                    return false;
+
+                } else {
+
+                    textarea.classList.remove('is-invalid');
+
+                    counter.classList.remove('text-danger');
+                    counter.classList.add('text-muted');
+
+                    error.classList.add('d-none');
+
+                    return true;
+                }
+            }
+
+            textareas.forEach(textarea => {
+
+                validateTextarea(textarea);
+
+                textarea.addEventListener('input', function () {
+                    validateTextarea(this);
+                });
+
+            });
+
+            form.addEventListener('submit', function (e) {
+
+                e.preventDefault();
+
+                let valid = true;
+
+                textareas.forEach(textarea => {
+                    if (!validateTextarea(textarea)) {
+                        valid = false;
+                    }
+                });
+                console.log('Form valid:', valid);
+
+                if (!valid) {
+
+                    document.querySelector('.is-invalid')?.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'center'
+                    });
+
+                    return;
+                }
+
+                // Everything is valid, submit the form
+                form.action = action;
+                form.submit();
+
+            });
+
+        });
+    </script>
 @endsection
 
 @section('scripts')
+    {{--
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             document.querySelectorAll('.application-textarea[data-word-limit]').forEach(function (textarea) {
@@ -236,7 +350,9 @@
                 window.location.href = @json(route('dashboard'));
             });
         });
-    </script>
+    </script> --}}
+
+
 @endsection
 
 

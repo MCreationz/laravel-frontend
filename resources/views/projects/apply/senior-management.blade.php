@@ -130,6 +130,7 @@
                         <th class="text-nowrap">Designation</th>
                         <th class="text-nowrap">Nature of Engagement</th>
                         <th class="text-nowrap">Appointment Date</th>
+                        <th class="text-nowrap">Resume</th>
                         <th class="text-nowrap">Total Experience</th>
                         <th></th>
                     </tr>
@@ -149,6 +150,17 @@
                             <td>
                                 {{ $item->date_of_appointment ? \Carbon\Carbon::parse($item->date_of_appointment)->format('d/m/Y') : '-' }}
                             </td>
+                            <td>
+    @if($item->resume_cv)
+        <a href="{{ asset('storage/' . $item->resume_cv) }}"
+           target="_blank"
+           class="text-decoration-none">
+            View Resume
+        </a>
+    @else
+        -
+    @endif
+</td>
 
                             <td>
                                 {{ $item->total_years_of_experience !== null ? $item->total_years_of_experience . ' Years' : '-' }}
@@ -157,35 +169,36 @@
                             <td class="d-flex justify-content-center align-items-center gap-2">
 
                                 <!-- EDIT -->
-                                <button type="button" class="edit-btn border-0 bg-transparent p-1"
-                                    data-id="{{ $item->id }}" data-name="{{ $item->name }}"
-                                    data-designation="{{ $item->designation }}"
-                                    data-nature="{{ $item->nature_of_engagement }}" data-gender="{{ $item->gender }}"
-                                    data-dob="{{ $item->date_of_birth ? \Carbon\Carbon::parse($item->date_of_birth)->format('Y-m-d') : '' }}"
-                                    data-appointment="{{ $item->date_of_appointment ? \Carbon\Carbon::parse($item->date_of_appointment)->format('Y-m-d') : '' }}"
-                                    data-qualification="{{ $item->highest_qualification }}"
-                                    data-roles="{{ $item->roles_and_responsibilities }}"
-                                    data-experience="{{ $item->total_years_of_experience }}" data-bs-toggle="modal"
-                                    data-bs-target="#addPartner">
+                                    <button type="button" class="edit-btn border-0 bg-transparent p-1"
+                                        data-id="{{ $item->id }}" data-name="{{ $item->name }}"
+                                        data-designation="{{ $item->designation }}"
+                                        data-nature="{{ $item->nature_of_engagement }}" data-gender="{{ $item->gender }}"
+                                        data-dob="{{ $item->date_of_birth ? \Carbon\Carbon::parse($item->date_of_birth)->format('Y-m-d') : '' }}"
+                                        data-appointment="{{ $item->date_of_appointment ? \Carbon\Carbon::parse($item->date_of_appointment)->format('Y-m-d') : '' }}"
+                                        data-qualification="{{ $item->highest_qualification }}"
+                                        data-roles="{{ $item->roles_and_responsibilities }}"
+                                        data-experience="{{ $item->total_years_of_experience }}" data-bs-toggle="modal"
+                                        data-resume="{{ $item->resume_cv }}"
+                                        data-bs-target="#addPartner">
 
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                        viewBox="0 0 16 16" fill="none">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                            viewBox="0 0 16 16" fill="none">
 
-                                        <path
-                                            d="M8.8198 2.39503L3.35707 8.17714C3.1508 8.39671 2.95119 8.8292 2.91127 9.12862L2.66508 11.2844C2.57858 12.0629 3.1375 12.5952 3.90933 12.4621L6.05184 12.0962C6.35126 12.043 6.77044 11.8234 6.97671 11.5972L12.4394 5.81506C13.3843 4.81699 13.8101 3.6792 12.3396 2.28857C10.8758 0.911245 9.76463 1.39697 8.8198 2.39503Z"
-                                            stroke="#07CCB5" stroke-width="1.2" stroke-linecap="round"
-                                            stroke-linejoin="round" />
+                                            <path
+                                                d="M8.8198 2.39503L3.35707 8.17714C3.1508 8.39671 2.95119 8.8292 2.91127 9.12862L2.66508 11.2844C2.57858 12.0629 3.1375 12.5952 3.90933 12.4621L6.05184 12.0962C6.35126 12.043 6.77044 11.8234 6.97671 11.5972L12.4394 5.81506C13.3843 4.81699 13.8101 3.6792 12.3396 2.28857C10.8758 0.911245 9.76463 1.39697 8.8198 2.39503Z"
+                                                stroke="#07CCB5" stroke-width="1.2" stroke-linecap="round"
+                                                stroke-linejoin="round" />
 
-                                        <path d="M7.91406 3.35938C8.20017 5.19581 9.69061 6.59975 11.5404 6.78605"
-                                            stroke="#07CCB5" stroke-width="1.2" stroke-linecap="round"
-                                            stroke-linejoin="round" />
+                                            <path d="M7.91406 3.35938C8.20017 5.19581 9.69061 6.59975 11.5404 6.78605"
+                                                stroke="#07CCB5" stroke-width="1.2" stroke-linecap="round"
+                                                stroke-linejoin="round" />
 
-                                        <path d="M2 14.6387H13.9767" stroke="#07CCB5" stroke-width="1.2"
-                                            stroke-linecap="round" stroke-linejoin="round" />
-                                    </svg>
+                                            <path d="M2 14.6387H13.9767" stroke="#07CCB5" stroke-width="1.2"
+                                                stroke-linecap="round" stroke-linejoin="round" />
+                                        </svg>
 
-                                </button>
-                                </button>
+                                    </button>
+                                
 
                                 <!-- DELETE -->
                                 <form method="POST"
@@ -295,8 +308,8 @@
                                         <input type="hidden" name="nature_of_engagement" id="nature_of_engagement"
                                             class="hidden-select" required>
                                         <ul class="select-list" style="display:none;">
-                                            <li data-value="csr_foundation">CSR Foundation</li>
-                                            <li data-value="vc_firm">VC Firm</li>
+                                         <li data-value="full_time">Full Time</li>
+<li data-value="part_time">Part Time</li>
                                         </ul>
                                     </div>
                                 </div>
@@ -328,21 +341,20 @@
                                 </div>
 
                                 <!-- DOB -->
-                                <div class="col-md-6">
-                                    <label class="form-label fw-semibold">Date of Birth <span
-                                            class="text-danger">*</span></label>
+                              <div class="col-md-6">
+    <label class="form-label fw-semibold">Date of Birth <span class="text-danger">*</span></label>
 
-                                    <input type="date" class="form-control py-2" name="date_of_birth" required>
-                                </div>
+    <input type="date" class="form-control py-2" name="date_of_birth"
+        max="{{ now()->format('Y-m-d') }}" required>
+</div>
 
-                                <!-- Appointment -->
-                                <div class="col-md-6">
-                                    <label class="form-label fw-semibold">Date of Appointment <span
-                                            class="text-danger">*</span></label>
+<!-- Appointment -->
+<div class="col-md-6">
+    <label class="form-label fw-semibold">Date of Appointment <span class="text-danger">*</span></label>
 
-                                    <input type="date" class="form-control py-2" name="date_of_appointment" required>
-                                </div>
-
+    <input type="date" class="form-control py-2" name="date_of_appointment"
+        max="{{ now()->format('Y-m-d') }}" required>
+</div>
                                 <!-- Qualification -->
                                 <div class="col-md-6">
                                     <label class="form-label fw-semibold">Highest Qualification <span
@@ -357,15 +369,45 @@
                                         <input type="hidden" name="highest_qualification" id="highest_qualification"
                                             class="hidden-select" required>
 
-                                        <ul class="select-list" style="display:none;">
-                                            <li data-value="Diploma">Diploma</li>
-                                            <li data-value="BA">BA</li>
-                                            <li data-value="BCom">BCom</li>
-                                            <li data-value="BSc">BSc</li>
-                                            <li data-value="MBA">MBA</li>
-                                            <li data-value="PhD">PhD</li>
-                                            <li data-value="Others">Others</li>
-                                        </ul>
+                                       <ul class="select-list" style="display:none;">
+    
+    <li data-value="Diploma">Diploma</li>
+
+    <li data-value="BA">BA</li>
+    <li data-value="BCom">BCom</li>
+    <li data-value="BSc">BSc</li>
+    <li data-value="BCA">BCA</li>
+    <li data-value="BBA">BBA</li>
+    <li data-value="BE">BE</li>
+    <li data-value="BTech">BTech</li>
+    <li data-value="LLB">LLB</li>
+    <li data-value="MBBS">MBBS</li>
+    <li data-value="BDS">BDS</li>
+    <li data-value="BPharm">BPharm</li>
+    <li data-value="BEd">BEd</li>
+
+    <li data-value="MA">MA</li>
+    <li data-value="MCom">MCom</li>
+    <li data-value="MSc">MSc</li>
+    <li data-value="MCA">MCA</li>
+    <li data-value="MBA">MBA</li>
+    <li data-value="ME">ME</li>
+    <li data-value="MTech">MTech</li>
+    <li data-value="LLM">LLM</li>
+    <li data-value="MD">MD</li>
+    <li data-value="MS">MS</li>
+    <li data-value="MPharm">MPharm</li>
+    <li data-value="MEd">MEd</li>
+
+    <li data-value="CA">CA</li>
+    <li data-value="CS">CS</li>
+    <li data-value="CMA">CMA</li>
+
+    <li data-value="MPhil">MPhil</li>
+    <li data-value="PhD">PhD</li>
+
+    <li data-value="Others">Others</li>
+</ul>
                                     </div>
                                 </div>
 
@@ -386,7 +428,7 @@
                                     <input type="number" class="form-control py-2" name="total_years_of_experience"
                                         required>
                                 </div>
-
+<input type="hidden" id="has_existing_resume" value="0">
                                 <!-- Resume -->
 <div class="col-12">
     <label class="form-label">
@@ -430,6 +472,7 @@
       
 
             <small id="resume_cv_name" class="text-muted"></small>
+            <div id="existing_resume" class="mt-2"></div>
         </div>
     </label>
           <small id="resume_cv_error" class="text-danger d-none">
@@ -508,21 +551,50 @@
         </div>
     </div>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+
+    const today = new Date().toISOString().split('T')[0];
+
+    document.querySelectorAll('input[type="date"]').forEach(input => {
+
+        input.max = today;
+
+        input.addEventListener('change', function () {
+
+            if (this.value && this.value > today) {
+                alert('Future dates are not allowed.');
+                this.value = '';
+            }
+
+        });
+
+    });
+
+});
+    </script>
+
   <script>
-    document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function () {
 
     const resumeInput = document.getElementById('resume_cv');
-    const form        = document.getElementById('AddPartnerForm');
-    const errorEl     = document.getElementById('resume_cv_error');
+    const form = document.getElementById('AddPartnerForm');
+    const errorEl = document.getElementById('resume_cv_error');
     const uploadLabel = document.querySelector('label[for="resume_cv"]');
+const hasExistingResumeInput = document.getElementById('has_existing_resume');
 
-    form.addEventListener('submit', function (e) {
+form.addEventListener('submit', function (e) {
 
-        if (!resumeInput.files.length) {
+    const hasExistingResume = hasExistingResumeInput.value === "1";
+
+    if (!resumeInput.files.length && !hasExistingResume) {
             e.preventDefault();
             errorEl.classList.remove('d-none');
             uploadLabel.style.border = '2px solid red';
-            uploadLabel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            uploadLabel.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center'
+            });
             return false;
         }
 
@@ -621,10 +693,37 @@
                 setSelect("nature_of_engagement", this.dataset.nature);
                 setSelect("gender", this.dataset.gender);
                 setSelect("highest_qualification", this.dataset.qualification);
+                const existingResume = document.getElementById('existing_resume');
+
+const hasExistingResume = document.getElementById('has_existing_resume');
+
+if (this.dataset.resume) {
+
+    hasExistingResume.value = "1";
+    console.log("Hidden value:", document.getElementById('has_existing_resume').value);
+
+    const fileName = this.dataset.resume.split('/').pop();
+
+    existingResume.innerHTML = `
+        <a href="/storage/${this.dataset.resume}"
+           target="_blank"
+           class="text-decoration-none">
+            View Uploaded File (${fileName})
+        </a>
+    `;
+
+} else {
+
+    hasExistingResume.value = "0";
+    existingResume.innerHTML = "";
+
+}
 
             });
         });
     </script>
+
+
     <script>
         document.getElementById("continueBtn").addEventListener("click", function() {
             const modal = new bootstrap.Modal(document.getElementById("addAnotherPartner"));

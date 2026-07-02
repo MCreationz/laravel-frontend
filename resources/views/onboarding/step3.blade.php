@@ -732,10 +732,9 @@
 
                         <!-- Lifetime Revenue -->
                         <div class="col-12 col-md-6 col-lg-4 px-md-2">
-                            <label class="form-label">Ongoing Year Turnover (till last month) (₹
-                                Lakh)<span>*</span></label>
+                            <label class="form-label">Ongoing Year Turnover (till last month) (₹)<span>*</span></label>
 
-                            <input type="number" name="lifetime_revenue_lakh"
+                            <input type="text" inputmode="numeric" name="lifetime_revenue_lakh"
                                 class="form-control @error('lifetime_revenue_lakh') is-invalid @enderror"
                                 value="{{ $lifetime }}" placeholder="Enter amount, if you have zero turnover just put 0"
                                 required>
@@ -747,9 +746,9 @@
 
                         <!-- Ongoing Year -->
                         <div class="col-12 col-md-6 col-lg-4 px-md-2">
-                            <label class="form-label">Last Year Turnover (₹ Lakh)<span>*</span></label>
+                            <label class="form-label">Last Year Turnover (₹)<span>*</span></label>
 
-                            <input type="number" name="ongoing_year_revenue_lakh"
+                            <input type="text" inputmode="numeric" name="ongoing_year_revenue_lakh"
                                 class="form-control @error('ongoing_year_revenue_lakh') is-invalid @enderror"
                                 value="{{ $ongoing }}" placeholder="Enter amount, if you have zero turnover just put 0"
                                 required>
@@ -761,9 +760,9 @@
 
                         <!-- Last Year -->
                         <div class="col-12 col-md-6 col-lg-4 px-md-2">
-                            <label class="form-label">Last to Last Year Turnover (₹ Lakh)<span>*</span></label>
+                            <label class="form-label">Last to Last Year Turnover (₹)<span>*</span></label>
 
-                            <input type="number" name="last_year_revenue_lakh"
+                            <input type="text" inputmode="numeric" name="last_year_revenue_lakh"
                                 class="form-control @error('last_year_revenue_lakh') is-invalid @enderror"
                                 value="{{ $lastYear }}" placeholder="Enter amount, If you have zero turnover then put 0"
                                 required>
@@ -772,20 +771,6 @@
                                 <div class="text-danger small">{{ $message }}</div>
                             @enderror
                         </div>
-
-                        <!-- Last to Last Year -->
-                        {{-- <div class="col-12 col-md-6 col-lg-3 px-md-2">
-                            <label class="form-label">Last to Last Year Turnover (₹ Lakh)<span>*</span></label>
-
-                            <input type="number" name="last_to_last_year_revenue_lakh"
-                                class="form-control @error('last_to_last_year_revenue_lakh') is-invalid @enderror"
-                                value="{{ $lastToLast }}" placeholder="Enter amount, if you have zero donation just put 0"
-                                required>
-
-                            @error('last_to_last_year_revenue_lakh')
-                            <div class="text-danger small">{{ $message }}</div>
-                            @enderror
-                        </div> --}}
 
                     </div>
 
@@ -915,8 +900,9 @@
                         </div>
 
                         <div class="mb-3">
-                            <label>Amount (₹00.00 Lakh)</label>
-                            <input type="number" class="form-control" id="funder_amount" placeholder="Enter Amount">
+                            <label>Amount (₹)</label>
+                            <input type="text" inputmode="numeric" class="form-control" id="funder_amount"
+                                placeholder="Enter Amount">
                         </div>
                     </form>
                 </div>
@@ -1579,26 +1565,26 @@
                             const amount = funder.amount
 
                             fundersTable.innerHTML += `
-                                    <tr
-                                        data-id="${funder.id}"
-                                        data-category="${funder.category}"
-                                        data-purpose="${funder.purpose}"
-                                    >
-                                        <td>${index + 1}</td>
-                                        <td>${funder.name}</td>
-                                        <td>${formatLabel(funder.category)}</td>
-                                        <td>${funder.year}</td>
-                                        <td>${formatLabel(funder.purpose)}</td>
-                                        <td> ${funder.amount}</td>
-                                        <td>
-                                            <button type="button" class="edit editFunder">
-                                                <i class="bi bi-pencil-square"></i>
-                                            </button>
-                                            <button type="button" class="trash deleteFunder">
-                                                <i class="bi bi-trash3"></i>
-                                            </button>
-                                        </td>
-                                    </tr>`;
+                                            <tr
+                                                data-id="${funder.id}"
+                                                data-category="${funder.category}"
+                                                data-purpose="${funder.purpose}"
+                                            >
+                                                <td>${index + 1}</td>
+                                                <td>${funder.name}</td>
+                                                <td>${formatLabel(funder.category)}</td>
+                                                <td>${funder.year}</td>
+                                                <td>${formatLabel(funder.purpose)}</td>
+                                                <td>${Number(funder.amount).toLocaleString('en-IN')}</td>
+                                                <td>
+                                                    <button type="button" class="edit editFunder">
+                                                        <i class="bi bi-pencil-square"></i>
+                                                    </button>
+                                                    <button type="button" class="trash deleteFunder">
+                                                        <i class="bi bi-trash3"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>`;
                         });
                     })
                     .catch(() => {
@@ -1662,13 +1648,13 @@
 
                 let id = document.getElementById('funder_id').value;
 
-                let data = {
-                    name: document.getElementById('funder_name').value,
-                    year: document.getElementById('funder_year').value,
-                    amount: document.getElementById('funder_amount').value,
-                    category: document.getElementById('funder_category')?.value || '',
-                    purpose: document.getElementById('funder_purpose')?.value || ''
-                };
+              let data = {
+    name: document.getElementById('funder_name').value,
+    year: document.getElementById('funder_year').value,
+    amount: document.getElementById('funder_amount').value.replace(/,/g, ''),
+    category: document.getElementById('funder_category')?.value || '',
+    purpose: document.getElementById('funder_purpose')?.value || ''
+};
 
                 try {
                     if (id) {
@@ -1890,9 +1876,9 @@
                         tag.className = 'state-tag';
 
                         tag.innerHTML = `
-                                                                                        <span>${cb.value}</span>
-                                                                                        <span class="remove-tag" data-value="${cb.value}">&times;</span>
-                                                                                    `;
+                                                                                                <span>${cb.value}</span>
+                                                                                                <span class="remove-tag" data-value="${cb.value}">&times;</span>
+                                                                                            `;
 
                         selectedBox.appendChild(tag);
                     }
@@ -1907,27 +1893,58 @@
             }
 
             // âŒ CROSS CLICK FIX (MAIN LOGIC)
-        selectedBox.addEventListener('click', function (e) {
+            selectedBox.addEventListener('click', function (e) {
 
-    if (e.target.classList.contains('remove-tag')) {
+                if (e.target.classList.contains('remove-tag')) {
 
-        e.stopPropagation();
+                    e.stopPropagation();
 
-        const value = e.target.dataset.value;
+                    const value = e.target.dataset.value;
 
-        const checkbox = [...checkboxes].find(cb => cb.value === value);
+                    const checkbox = [...checkboxes].find(cb => cb.value === value);
 
-        if (checkbox) {
-            checkbox.checked = false;
-            checkbox.dispatchEvent(new Event('change'));
-        }
-    }
+                    if (checkbox) {
+                        checkbox.checked = false;
+                        checkbox.dispatchEvent(new Event('change'));
+                    }
+                }
 
-});
+            });
 
         });
     </script>
 
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
 
+            document.querySelectorAll('input[type="text"][inputmode="numeric"]').forEach(input => {
+
+                // Format existing value
+                if (input.value) {
+                    input.value = Number(input.value.replace(/,/g, '')).toLocaleString('en-IN');
+                }
+
+                input.addEventListener('input', function () {
+
+                    // Keep only digits
+                    let value = this.value.replace(/[^\d]/g, '');
+
+                    if (!value) {
+                        this.value = '';
+                        return;
+                    }
+
+                    this.value = Number(value).toLocaleString('en-IN');
+                });
+
+                // Remove commas before form submit
+                input.form?.addEventListener('submit', () => {
+                    input.value = input.value.replace(/,/g, '');
+                });
+
+            });
+
+        });
+    </script>
 @endsection

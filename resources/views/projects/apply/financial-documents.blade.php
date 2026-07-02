@@ -106,6 +106,10 @@
 
     @php
         $document = $fundApplication->financialDocument ?? null;
+        $organization = auth('organization')->user();
+        $op = $organization->operationalDetail;
+        //dd($op);
+
     @endphp
 
     <div class="card-body p-0">
@@ -120,10 +124,20 @@
 
                 <div class="row mb-3 flex-wrap row-gap-3 row-gap-md-4 px-md-1">
 
+                    @php
+                        $lastYearRevenue =
+                            old(
+                                'last_year_turnover',
+                                $document?->last_year_turnover
+                                ?? optional($op)->last_year_revenue_lakh
+                            );
+                    @endphp
+
                     <div class="col-12 px-md-2">
                         <label class="form-label">Last Year Turnover<span>*</span></label>
+
                         <input type="number" name="last_year_turnover" class="form-control" placeholder="Enter Number"
-                            value="{{ old('last_year_turnover', $document?->last_year_turnover) }}" required>
+                            value="{{ $lastYearRevenue }}" readonly>
                     </div>
 
                     <div class="col-12 px-md-2">
@@ -153,10 +167,10 @@
                                 <p class="mt-2">Upload pdf/JPG upto 5 MB</p>
 
                                 @if (!empty($document?->last_year_balance_sheet))
-                                    <small class="text-success d-block mb-1">
-                                        Current file:
-                                        {{ basename($document->last_year_balance_sheet) }}
-                                    </small>
+                                    <a href="{{ asset('storage/' . $document->last_year_balance_sheet) }}" target="_blank"
+                                        class="text-success d-block mb-1">
+                                        View last year balance sheet
+                                    </a>
                                 @endif
 
                                 <small id="last-year-balance-sheet-help"></small>
@@ -202,10 +216,10 @@
                                 <p class="mt-2">Upload pdf/JPG upto 5 MB</p>
 
                                 @if (!empty($document?->last_to_last_year_balance_sheet))
-                                    <small class="text-success d-block mb-1">
-                                        Current file:
-                                        {{ basename($document->last_to_last_year_balance_sheet) }}
-                                    </small>
+                                    <a href="{{ asset('storage/' . $document->last_to_last_year_balance_sheet) }}"
+                                        target="_blank" class="text-success d-block mb-1">
+                                        View last to last year balance sheet
+                                    </a>
                                 @endif
 
                                 <small id="last-to-last-year-balance-sheet-help"></small>
@@ -240,12 +254,11 @@
                                 <p class="mt-2">Upload pdf/JPG upto 5 MB</p>
 
                                 @if (!empty($document?->last_year_itr))
-                                    <small class="text-success d-block mb-1">
-                                        Current file:
-                                        {{ basename($document->last_year_itr) }}
-                                    </small>
+                                    <a href="{{ asset('storage/' . $document->last_year_itr) }}" target="_blank"
+                                        class="text-success d-block mb-1">
+                                        View last year ITR
+                                    </a>
                                 @endif
-
                                 <small id="last-year-itr-help"></small>
                             </div>
                         </label>
@@ -278,10 +291,10 @@
                                 <p class="mt-2">Upload pdf/JPG upto 5 MB</p>
 
                                 @if (!empty($document?->last_to_last_year_itr))
-                                    <small class="text-success d-block mb-1">
-                                        Current file:
-                                        {{ basename($document->last_to_last_year_itr) }}
-                                    </small>
+                                    <a href="{{ asset('storage/' . $document->last_to_last_year_itr) }}" target="_blank"
+                                        class="text-success d-block mb-1">
+                                        View last to last year ITR
+                                    </a>
                                 @endif
 
                                 <small id="last-to-last-year-itr-help"></small>
@@ -321,52 +334,79 @@
             </div>
         </form>
     </div>
-<script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+
+            const allowedExtensions = ['pdf', 'doc', 'docx', 'xls', 'xlsx'];
+
+            document.querySelectorAll('input[type="file"]').forEach(input => {
+
+                input.setAttribute(
+                    'accept',
+                    '.pdf,.doc,.docx,.xls,.xlsx,' +
+                    'application/pdf,' +
+                    'application/msword,' +
+                    'application/vnd.openxmlformats-officedocument.wordprocessingml.document,' +
+                    'application/vnd.ms-excel,' +
+                    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+                );
+
+                input.addEventListener('change', function () {
+
+                    if (!this.files.length) return;
+
+                    const file = this.files[0];
+                    const ext = file.name.split('.').pop().toLowerCase();
+
+                    if (!allowedExtensions.includes(ext)) {
+
+                        alert('Only PDF, DOC, DOCX, XLS and XLSX files are allowed.');
+
+                        this.value = '';
+
+                        const nameField = document.getElementById(this.id + '_name');
+
+                        if (nameField) {
+                            nameField.textContent = '';
+                        }
+
+                        return;
+                    }
+
+                    const nameField = document.getElementById(this.id + '_name');
+
+                    if (nameField) {
+                        nameField.textContent = '✓ ' + file.name;
+                    }
+                });
+            });
+
+        });
+    </script>
+    <script>
 document.addEventListener('DOMContentLoaded', function () {
 
-    const allowedExtensions = ['pdf', 'doc', 'docx', 'xls', 'xlsx'];
+    const fileRules = {
+        "last_year_balance_sheet": {{ $document?->last_year_balance_sheet ? 'true' : 'false' }},
+        "last_to_last_year_balance_sheet": {{ $document?->last_to_last_year_balance_sheet ? 'true' : 'false' }},
+        "last_year_itr": {{ $document?->last_year_itr ? 'true' : 'false' }},
+        "last_to_last_year_itr": {{ $document?->last_to_last_year_itr ? 'true' : 'false' }}
+    };
 
-    document.querySelectorAll('input[type="file"]').forEach(input => {
+    function applyRequiredRules() {
+        Object.entries(fileRules).forEach(([id, hasFile]) => {
+            const input = document.getElementById(id);
+            if (!input) return;
 
-        input.setAttribute(
-            'accept',
-            '.pdf,.doc,.docx,.xls,.xlsx,' +
-            'application/pdf,' +
-            'application/msword,' +
-            'application/vnd.openxmlformats-officedocument.wordprocessingml.document,' +
-            'application/vnd.ms-excel,' +
-            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-        );
-
-        input.addEventListener('change', function () {
-
-            if (!this.files.length) return;
-
-            const file = this.files[0];
-            const ext = file.name.split('.').pop().toLowerCase();
-
-            if (!allowedExtensions.includes(ext)) {
-
-                alert('Only PDF, DOC, DOCX, XLS and XLSX files are allowed.');
-
-                this.value = '';
-
-                const nameField = document.getElementById(this.id + '_name');
-
-                if (nameField) {
-                    nameField.textContent = '';
-                }
-
-                return;
-            }
-
-            const nameField = document.getElementById(this.id + '_name');
-
-            if (nameField) {
-                nameField.textContent = '✓ ' + file.name;
+            if (hasFile) {
+                input.removeAttribute('required');
+            } else {
+                input.setAttribute('required', 'required');
             }
         });
-    });
+    }
+
+    applyRequiredRules();
 
 });
 </script>

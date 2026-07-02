@@ -158,8 +158,16 @@ class OnboardingController extends Controller
 
     public function storeStepThree(Request $request)
     {
+       //return $request->all();
         $organization = Auth::guard('organization')->user();
         $role = $organization->role;
+
+         $request->merge([
+        'lifetime_revenue_lakh' => str_replace(',', '', $request->lifetime_revenue_lakh),
+        'ongoing_year_revenue_lakh' => str_replace(',', '', $request->ongoing_year_revenue_lakh),
+        'last_year_revenue_lakh' => str_replace(',', '', $request->last_year_revenue_lakh),
+    ]);
+
 
         $data = [
             'organization_id' => $organization->id,
