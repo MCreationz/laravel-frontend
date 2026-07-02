@@ -1570,7 +1570,7 @@ button.tab.active {
     background: #fff;
     border-radius: 16px !important;
     box-shadow: 0 0 9px 0 rgba(167, 167, 167, 0.25);
-    overflow: hidden;
+    /* overflow: hidden; */
 }
 
 .application-hero-banner {
