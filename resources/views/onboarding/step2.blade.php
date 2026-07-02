@@ -135,8 +135,7 @@
                         <h2 class="col top-heading mb-0">Registered Office Address</h2>
                         <div class="col-auto form-check only-checkbox">
                             <input class="form-check-input" type="checkbox" name="is_portal_same_as_office"
-                                id="sameAsOffice" value="1"
-                                {{ old('is_portal_same_as_office', $address?->is_portal_same_as_office) ? 'checked' : '' }}>
+                                id="sameAsOffice" value="1" {{ old('is_portal_same_as_office', $address?->is_portal_same_as_office) ? 'checked' : '' }}>
                             <label class="form-check-label" for="sameAsOffice">
                                 Same as Head Office Address
                             </label>
@@ -149,15 +148,13 @@
 
                         <div class="col-12 col-md-6 col-xl-4 px-md-2">
                             <label class="form-label">Address Line 1<span>*</span></label>
-                            <input type="text" name="portal_address_line_1" class="form-control"
-                                placeholder="Enter Address"
+                            <input type="text" name="portal_address_line_1" class="form-control" placeholder="Enter Address"
                                 value="{{ old('portal_address_line_1', $address?->portal_address_line_1) }}">
                         </div>
 
                         <div class="col-12 col-md-6 col-xl-4 px-md-2">
                             <label class="form-label">Address Line 2</label>
-                            <input type="text" name="portal_address_line_2" class="form-control"
-                                placeholder="Enter Address"
+                            <input type="text" name="portal_address_line_2" class="form-control" placeholder="Enter Address"
                                 value="{{ old('portal_address_line_2', $address?->portal_address_line_2) }}">
                         </div>
                         <div class="col-12 col-md-6 col-xl-4 px-md-2">
@@ -211,8 +208,8 @@
                     </button>
                 </div>
                 <div class="btn-wrap">
-                    <button type="submit" class="btn gradient-btn">Next <svg xmlns="http://www.w3.org/2000/svg"
-                            width="17" height="8" viewBox="0 0 17 8" fill="none">
+                    <button type="submit" class="btn gradient-btn">Next <svg xmlns="http://www.w3.org/2000/svg" width="17"
+                            height="8" viewBox="0 0 17 8" fill="none">
                             <path d="M12.625 7L15.75 3.875L12.625 0.75M15.75 3.875H0.75" stroke="white" stroke-width="1.5"
                                 stroke-linecap="round" stroke-linejoin="round" />
                         </svg></button>
@@ -223,7 +220,7 @@
     </div>
 
     <script>
-        document.getElementById('sameAsOffice').addEventListener('change', function() {
+        document.getElementById('sameAsOffice').addEventListener('change', function () {
 
             const fields = [
                 ['office_house_floor_no', 'portal_house_floor_no'],
@@ -262,7 +259,7 @@
     </script>
 
     <script>
-        document.addEventListener('DOMContentLoaded', async function() {
+        document.addEventListener('DOMContentLoaded', async function () {
 
             // =========================
             // Fetch JSON
@@ -301,7 +298,7 @@
             // OFFICE STATE AUTOCOMPLETE
             // =====================================================
 
-            officeStateInput.addEventListener('input', function() {
+            officeStateInput.addEventListener('input', function () {
 
                 const value = this.value.toLowerCase();
 
@@ -327,7 +324,7 @@
 
                     button.textContent = item.state;
 
-                    button.addEventListener('click', function() {
+                    button.addEventListener('click', function () {
 
                         officeStateInput.value = item.state;
 
@@ -350,7 +347,7 @@
             // PORTAL STATE AUTOCOMPLETE
             // =====================================================
 
-            portalStateInput.addEventListener('input', function() {
+            portalStateInput.addEventListener('input', function () {
 
                 const value = this.value.toLowerCase();
 
@@ -376,7 +373,7 @@
 
                     button.textContent = item.state;
 
-                    button.addEventListener('click', function() {
+                    button.addEventListener('click', function () {
 
                         portalStateInput.value = item.state;
 
@@ -418,14 +415,14 @@
 
                     const selected =
                         district === selectedDistrict ?
-                        'selected' :
-                        '';
+                            'selected' :
+                            '';
 
                     dropdown.innerHTML += `
-                    <option value="${district}" ${selected}>
-                        ${district}
-                    </option>
-                `;
+                                <option value="${district}" ${selected}>
+                                    ${district}
+                                </option>
+                            `;
 
                 });
 
@@ -465,7 +462,7 @@
             // HIDE SUGGESTIONS ON OUTSIDE CLICK
             // =====================================================
 
-            document.addEventListener('click', function(e) {
+            document.addEventListener('click', function (e) {
 
                 if (
                     !officeStateInput.contains(e.target) &&
@@ -488,7 +485,7 @@
             // =====================================================
 
             document.getElementById('sameAsOffice')
-                .addEventListener('change', function() {
+                .addEventListener('change', function () {
 
                     if (this.checked) {
 
@@ -519,7 +516,91 @@
                     }
 
                 });
+            $('input[name="office_pin_code"]').on('input', function () {
 
+                let pincode = $(this).val().replace(/\D/g, '');
+
+                if (pincode.length !== 6) {
+                    return;
+                }
+
+                $.getJSON(
+                    'https://api.postalpincode.in/pincode/' + pincode,
+                    function (res) {
+
+                        if (res[0].Status === "Success" && res[0].PostOffice.length) {
+
+                            let office = res[0].PostOffice[0];
+
+                            // Fill state
+                            officeStateInput.value = office.State;
+
+                            // Hide suggestions if open
+                            officeSuggestionsBox.innerHTML = '';
+
+                            // Populate districts and select the one from API
+                            populateDistricts(
+                                office.State,
+                                officeDistrictDropdown,
+                                office.District
+                            );
+
+                        } else {
+                            $('#office_state').val('');
+                            $('#office_district').html('<option value="">Select District</option>');
+                        }
+                    }
+                );
+
+            });
+
+
+            let lastPortalPincode = '';
+
+            $('input[name="portal_pin_code"]').on('input', function () {
+
+                let pincode = $(this).val().replace(/\D/g, '');
+
+                if (pincode.length !== 6 || pincode === lastPortalPincode) {
+                    return;
+                }
+
+                lastPortalPincode = pincode;
+
+                $.getJSON(
+                    'https://api.postalpincode.in/pincode/' + pincode,
+                    function (res) {
+
+                        if (res[0].Status === "Success" && res[0].PostOffice.length) {
+
+                            let office = res[0].PostOffice[0];
+
+                            // Fill state
+                            portalStateInput.value = office.State;
+
+                            // Hide suggestions
+                            portalSuggestionsBox.innerHTML = '';
+
+                            // Populate districts and select the returned district
+                            populateDistricts(
+                                office.State,
+                                portalDistrictDropdown,
+                                office.District
+                            );
+
+                        } else {
+
+                            portalStateInput.value = '';
+
+                            portalDistrictDropdown.innerHTML =
+                                '<option value="">Select District</option>';
+                        }
+                    }
+                );
+
+            });
         });
     </script>
+
+
 @endsection

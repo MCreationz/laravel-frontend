@@ -77,7 +77,8 @@
 
                         <div class="col-12 col-md-6 col-xl-4 px-md-2">
                             <label class="form-label">Organization PAN<span>*</span></label>
-                            <input type="text" name="pan_number" class="form-control pan-card" placeholder="Enter PAN number"
+                            <input type="text" name="pan_number" class="form-control pan-card"
+                                placeholder="Enter PAN number"
                                 value="{{ old('pan_number', optional($profile)->pan_number) }}"
                                 pattern="[A-Z]{5}[0-9]{4}[A-Z]{1}" maxlength="10" style="text-transform: uppercase;"
                                 oninput="this.value = this.value.toUpperCase();">
@@ -86,8 +87,7 @@
 
                         <div class="col-12 col-md-6 col-xl-4 px-md-2">
                             <label class="form-label">Legal Name<span>*</span></label>
-                            <input type="text" name="legal_name" class="form-control"
-                                placeholder="Enter legal name"
+                            <input type="text" name="legal_name" class="form-control" placeholder="Enter legal name"
                                 value="{{ old('legal_name', optional($profile)->legal_name) }}" required>
                             <div class="error-message text-danger" style="display:none;"></div>
                         </div>
@@ -100,8 +100,7 @@
                                     value="{{ old('date_of_incorporation', optional($profile)->date_of_incorporation) }}"
                                     max="{{ date('Y-m-d') }}" required>
                                 <span class="date-input-placeholder" aria-hidden="true">mm/dd/yyyy</span>
-                                <button type="button" class="date-input-icon-btn" tabindex="-1"
-                                    aria-label="Open calendar">
+                                <button type="button" class="date-input-icon-btn" tabindex="-1" aria-label="Open calendar">
                                     <svg class="date-input-icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
                                         xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                                         <g opacity="0.6">
@@ -130,16 +129,14 @@
 
                         <div class="col-12 col-md-6 col-xl-4 px-md-2">
                             <label class="form-label">Brand/Operating Name</label>
-                            <input type="text" name="brand_name" class="form-control"
-                                placeholder="Enter your brand name"
+                            <input type="text" name="brand_name" class="form-control" placeholder="Enter your brand name"
                                 value="{{ old('brand_name', optional($profile)->brand_name) }}">
                             <div class="error-message text-danger" style="display:none;"></div>
                         </div>
 
                         <div class="col-12 col-md-6 col-xl-4 px-md-2">
                             <label class="form-label">Website</label>
-                            <input type="url" name="website_url" class="form-control"
-                                placeholder="https:// "
+                            <input type="url" name="website_url" class="form-control" placeholder="https:// "
                                 value="{{ old('website_url', optional($profile)->website_url) }}" id="website" required>
                             <div class="error-message text-danger" style="display:none;"></div>
                         </div>
@@ -154,7 +151,8 @@
 
                         <div class="col-12 col-md-6 col-xl-4 px-md-2">
                             <label class="form-label">Name of PoC<span>*</span></label>
-                            <input type="text" name="contact_name" class="form-control" placeholder="Enter Point of Contact name"
+                            <input type="text" name="contact_name" class="form-control"
+                                placeholder="Enter Point of Contact name"
                                 value="{{ old('contact_name', optional($profile)->contact_name) }}" required>
                             <div class="error-message text-danger" style="display:none;"></div>
                         </div>
@@ -170,8 +168,8 @@
                             <label class="form-label">Mobile No<span>*</span></label>
                             <input type="tel" name="mobile_no" class="form-control"
                                 value="{{ old('mobile_no', optional($profile)->mobile_no) }}"
-                                oninput="this.value = this.value.replace(/[^0-9]/g, '')" pattern="[0-9]{10}"
-                                maxlength="10" placeholder="+91 9876543210" required>
+                                oninput="this.value = this.value.replace(/[^0-9]/g, '')" pattern="[0-9]{10}" maxlength="10"
+                                placeholder="9876543210" required>
                             <div class="error-message text-danger" style="display:none;"></div>
                         </div>
                     </div>
@@ -193,7 +191,7 @@
     </div>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
+        document.addEventListener("DOMContentLoaded", function () {
             const form = document.getElementById('step1Form');
             const inputs = form.querySelectorAll('input[required], input[pattern]');
 
@@ -210,7 +208,7 @@
                 updateDatePlaceholder();
                 dateInput.addEventListener('input', updateDatePlaceholder);
                 dateInput.addEventListener('change', updateDatePlaceholder);
-                dateIconBtn?.addEventListener('click', function() {
+                dateIconBtn?.addEventListener('click', function () {
                     if (typeof dateInput.showPicker === 'function') {
                         dateInput.showPicker();
                     } else {
@@ -232,7 +230,7 @@
             });
 
             // Form submit check
-            form.addEventListener('submit', function(e) {
+            form.addEventListener('submit', function (e) {
                 let valid = true;
                 inputs.forEach(input => {
                     const errorDiv = input.closest('.col-12, .col-md-6, .col-xl-4')
@@ -259,13 +257,35 @@
                         msg = 'Invalid format';
                     }
                 } else if (input.type === 'url' && input.value) {
+                    let url = input.value.trim();
+
+                    // Add https:// if protocol is missing
+                    if (!/^https?:\/\//i.test(url)) {
+                        url = 'https://' + url;
+                    }
+
                     try {
-                        new URL(input.value);
+                        const parsed = new URL(url);
+
+                        // Require a valid domain
+                        const hostname = parsed.hostname;
+
+                        // Must contain a dot and end with a valid TLD
+                        if (
+                            !hostname.includes('.') ||
+                            hostname.startsWith('.') ||
+                            hostname.endsWith('.') ||
+                            !/^[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)+$/.test(hostname)
+                        ) {
+                            throw new Error();
+                        }
+
                     } catch (e) {
                         valid = false;
                         msg = 'Enter a valid URL';
                     }
-                } else if (input.type === 'date' && input.value) {
+                }
+                else if (input.type === 'date' && input.value) {
                     const max = input.getAttribute('max');
                     if (max && input.value > max) {
                         valid = false;
@@ -284,7 +304,7 @@
 
             // Auto prefix https:// for website field
             const websiteInput = document.getElementById("website");
-            websiteInput.addEventListener("blur", function() {
+            websiteInput.addEventListener("blur", function () {
                 let value = this.value.trim();
                 if (value !== "" && !/^https?:\/\//i.test(value)) {
                     this.value = "https://" + value;

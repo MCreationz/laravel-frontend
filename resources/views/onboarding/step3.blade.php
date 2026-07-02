@@ -659,7 +659,7 @@
 
                         <!-- Years of Operation -->
                         <div class="col-12 col-md-6 px-md-2">
-                            <label class="form-label">Years of Operation<span>*</span></label>
+                            <label class="form-label">Years of Operation (in Years)<span>*</span></label>
 
                             <input type="number" name="years_of_operation_months"
                                 class="form-control @error('years_of_operation_months') is-invalid @enderror"
@@ -1104,7 +1104,8 @@
 @endsection
 
 @section('scripts')
-    {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script> --}}
+    {{--
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script> --}}
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
@@ -1578,26 +1579,26 @@
                             const amount = funder.amount
 
                             fundersTable.innerHTML += `
-                                <tr
-                                    data-id="${funder.id}"
-                                    data-category="${funder.category}"
-                                    data-purpose="${funder.purpose}"
-                                >
-                                    <td>${index + 1}</td>
-                                    <td>${funder.name}</td>
-                                    <td>${formatLabel(funder.category)}</td>
-                                    <td>${funder.year}</td>
-                                    <td>${formatLabel(funder.purpose)}</td>
-                                    <td> ${funder.amount}</td>
-                                    <td>
-                                        <button type="button" class="edit editFunder">
-                                            <i class="bi bi-pencil-square"></i>
-                                        </button>
-                                        <button type="button" class="trash deleteFunder">
-                                            <i class="bi bi-trash3"></i>
-                                        </button>
-                                    </td>
-                                </tr>`;
+                                    <tr
+                                        data-id="${funder.id}"
+                                        data-category="${funder.category}"
+                                        data-purpose="${funder.purpose}"
+                                    >
+                                        <td>${index + 1}</td>
+                                        <td>${funder.name}</td>
+                                        <td>${formatLabel(funder.category)}</td>
+                                        <td>${funder.year}</td>
+                                        <td>${formatLabel(funder.purpose)}</td>
+                                        <td> ${funder.amount}</td>
+                                        <td>
+                                            <button type="button" class="edit editFunder">
+                                                <i class="bi bi-pencil-square"></i>
+                                            </button>
+                                            <button type="button" class="trash deleteFunder">
+                                                <i class="bi bi-trash3"></i>
+                                            </button>
+                                        </td>
+                                    </tr>`;
                         });
                     })
                     .catch(() => {
@@ -1818,26 +1819,26 @@
             const hiddenInput = document.getElementById('hiddenStates');
             const panIndiaCheckbox = document.getElementById('s0');
 
-           function handlePanIndiaSelection() {
-    if (panIndiaCheckbox.checked) {
-        checkboxes.forEach(cb => {
-            if (cb !== panIndiaCheckbox) {
-                cb.checked = false;
-                cb.disabled = true;
-                cb.parentElement.style.pointerEvents = 'none';
-                cb.parentElement.style.opacity = '0.5';
+            function handlePanIndiaSelection() {
+                if (panIndiaCheckbox.checked) {
+                    checkboxes.forEach(cb => {
+                        if (cb !== panIndiaCheckbox) {
+                            cb.checked = false;
+                            cb.disabled = true;
+                            cb.parentElement.style.pointerEvents = 'none';
+                            cb.parentElement.style.opacity = '0.5';
+                        }
+                    });
+                } else {
+                    checkboxes.forEach(cb => {
+                        if (cb !== panIndiaCheckbox) {
+                            cb.disabled = false;
+                            cb.parentElement.style.pointerEvents = '';
+                            cb.parentElement.style.opacity = '';
+                        }
+                    });
+                }
             }
-        });
-    } else {
-        checkboxes.forEach(cb => {
-            if (cb !== panIndiaCheckbox) {
-                cb.disabled = false;
-                cb.parentElement.style.pointerEvents = '';
-                cb.parentElement.style.opacity = '';
-            }
-        });
-    }
-}
             // ðŸ”½ open/close dropdown
             selectedBox.addEventListener('click', function (e) {
                 if (e.target.classList.contains('remove-tag')) return;
@@ -1889,9 +1890,9 @@
                         tag.className = 'state-tag';
 
                         tag.innerHTML = `
-                                                                                    <span>${cb.value}</span>
-                                                                                    <span class="remove-tag" data-value="${cb.value}">&times;</span>
-                                                                                `;
+                                                                                        <span>${cb.value}</span>
+                                                                                        <span class="remove-tag" data-value="${cb.value}">&times;</span>
+                                                                                    `;
 
                         selectedBox.appendChild(tag);
                     }
@@ -1906,23 +1907,23 @@
             }
 
             // âŒ CROSS CLICK FIX (MAIN LOGIC)
-            selectedBox.addEventListener('click', function (e) {
+        selectedBox.addEventListener('click', function (e) {
 
-                if (e.target.classList.contains('remove-tag')) {
+    if (e.target.classList.contains('remove-tag')) {
 
-                    e.stopPropagation();
+        e.stopPropagation();
 
-                    const value = e.target.getAttribute('data-value');
+        const value = e.target.dataset.value;
 
-                    checkboxes.forEach(cb => {
-                        if (cb.value === value) {
-                            cb.checked = false;
-                        }
-                    });
+        const checkbox = [...checkboxes].find(cb => cb.value === value);
 
-                    updateSelected();
-                }
-            });
+        if (checkbox) {
+            checkbox.checked = false;
+            checkbox.dispatchEvent(new Event('change'));
+        }
+    }
+
+});
 
         });
     </script>
