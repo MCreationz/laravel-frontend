@@ -144,6 +144,9 @@ Route::middleware(['check.onboarding', 'auth:organization'])->group(function () 
     Route::get('/my-applications', [MyApplicationController::class, 'index'])
         ->name('my-applications.index');
 
+    Route::get('/my-applications/{application}', [MyApplicationController::class, 'show'])
+        ->name('my-applications.show');
+
     Route::get('/discover-funds', [DiscoverFundController::class, 'index'])
         ->name('discover.funds.index');
 

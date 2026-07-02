@@ -4,16 +4,8 @@
 @section('header_back_url', route('dashboard'))
 
 @section('header_extra')
-    <div class="header-first-time d-flex align-items-center gap-2">
-        <span class="header-first-time-label">First Time User</span>
-        <label class="switch mb-0">
-            <input type="checkbox" checked>
-            <span class="slider"></span>
-        </label>
-    </div>
-    <a href="#" class="icon px-2 px-lg-3 header-refresh" title="Refresh">
-        <i class="bi bi-arrow-clockwise"></i>
-    </a>
+  
+   
 @endsection
 
 @section('content')
@@ -136,7 +128,7 @@
                     <div class="col-12 px-md-2">
                         <label class="form-label">Last Year Turnover<span>*</span></label>
 
-                        <input type="number" name="last_year_turnover" class="form-control" placeholder="Enter Number"
+                        <input type="text" inputmode="numeric" name="last_year_turnover" class="form-control" placeholder="Enter Number"
                             value="{{ $lastYearRevenue }}" readonly>
                     </div>
 
@@ -180,7 +172,7 @@
 
                     <div class="col-12 px-md-2">
                         <label class="form-label">Last to Last Year Turnover<span>*</span></label>
-                        <input type="number" name="last_to_last_year_turnover" class="form-control"
+                        <input type="text" inputmode="numeric" name="last_to_last_year_turnover" class="form-control"
                             placeholder="Enter Number" required
                             value="{{ old('last_to_last_year_turnover', $document?->last_to_last_year_turnover) }}">
                     </div>

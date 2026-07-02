@@ -396,7 +396,38 @@ document.addEventListener('DOMContentLoaded', function () {
 
 });
 </script>
+<script>
+        document.addEventListener('DOMContentLoaded', function () {
 
+            document.querySelectorAll('input[type="text"][inputmode="numeric"]').forEach(input => {
+
+                // Format existing value
+                if (input.value) {
+                    input.value = Number(input.value.replace(/,/g, '')).toLocaleString('en-IN');
+                }
+
+                input.addEventListener('input', function () {
+
+                    // Keep only digits
+                    let value = this.value.replace(/[^\d]/g, '');
+
+                    if (!value) {
+                        this.value = '';
+                        return;
+                    }
+
+                    this.value = Number(value).toLocaleString('en-IN');
+                });
+
+                // Remove commas before form submit
+                input.form?.addEventListener('submit', () => {
+                    input.value = input.value.replace(/,/g, '');
+                });
+
+            });
+
+        });
+    </script>
 
 <style>
 .validation-error {

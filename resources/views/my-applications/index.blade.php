@@ -3,13 +3,13 @@
 @section('page_title', '')
 
 @section('header_extra')
-  <span class="header-org-chip">
-    @if(auth('organization')->check() && auth('organization')->user()->role === 'funder')
-        Non - Profit Organisation
-    @else
-        Startup
-    @endif
-</span>
+    <span class="header-org-chip">
+        @if(auth('organization')->check() && auth('organization')->user()->role === 'funder')
+            Non - Profit Organisation
+        @else
+            Startup
+        @endif
+    </span>
 
 @endsection
 
@@ -97,14 +97,17 @@
 
                         <tr>
                             <td>
-                                <div class="dashboard-v2-name-cell">
+                                <div class="dashboard-v2-name-cell application-details"
+                                    data-application-id="{{ $application->id }}" style="cursor:pointer;">
+
                                     <span class="hc-badge">
                                         {{ strtoupper(substr($application->fund->fund_name ?? 'F', 0, 2)) }}
                                     </span>
 
-                                    <span>
+                                    <span style="text-decoration: underline;">
                                         {{ $application->fund->fund_name ?? '-' }}
                                     </span>
+
                                 </div>
                             </td>
 
@@ -337,6 +340,96 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="applicationModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
+            <div class="modal-content">
+
+                <div class="modal-header border-0" style="border-bottom:1px solid rgb(0 0 0 / 10%) !important;">
+
+                    <div class="d-flex align-items-center gap-3">
+
+                        <div class="FD-text">
+                            <h2 class="gradient-text mb-0" id="appFundShort">FD</h2>
+                        </div>
+
+                        <div>
+                            <h3 class="mb-0 modal-heading" id="appFundName">-</h3>
+                            <small class="text-muted">
+                                Application Details
+                            </small>
+                        </div>
+
+                    </div>
+
+                    <button class="btn-close" data-bs-dismiss="modal"></button>
+
+                </div>
+
+                <div class="modal-body">
+
+                    <div class="row">
+
+                        <!-- LEFT -->
+                        <div class="col-lg-8">
+
+                            <h5 class="mb-4">Questionnaire</h5>
+
+                            <div id="applicationAnswers">
+                                <!-- Dynamic -->
+                            </div>
+
+                        </div>
+
+                        <!-- RIGHT -->
+                        <div class="col-lg-4">
+
+                            <h5 class="mb-4">Application Information</h5>
+
+                            <div class="app-detail-col">
+                                <p class="text-muted mb-0">Theme</p>
+                                <div class="detail-title" id="appTheme">-</div>
+                            </div>
+
+                            <div class="app-detail-col mt-3">
+                                <p class="text-muted mb-0">Sub Theme</p>
+                                <div class="detail-title" id="appSubTheme">-</div>
+                            </div>
+
+                            <div class="app-detail-col mt-3">
+                                <p class="text-muted mb-0">Project Duration</p>
+                                <div class="detail-title" id="appDuration">-</div>
+                            </div>
+
+                            <div class="app-detail-col mt-3">
+                                <p class="text-muted mb-0">Total Budget</p>
+                                <div class="detail-title" id="appBudget">-</div>
+                            </div>
+
+                            <div class="app-detail-col mt-3">
+                                <p class="text-muted mb-0">Status</p>
+                                <div class="detail-title" id="appStatus">-</div>
+                            </div>
+
+                            <div class="mt-4 snapshot-box">
+
+                                <p class="fw-semibold mb-3">
+                                    Additional Information
+                                </p>
+
+                                <div id="appAdditionalInfo" style="white-space:pre-wrap;font-size:14px;">
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
@@ -387,4 +480,77 @@
             }, 400); // 500ms debounce
         });
     </script>
+
+    <script>
+        const applicationShowRoute = "{{ route('my-applications.show', ':id') }}";
+
+        $(document).on('click', '.application-details', function () {
+
+            const applicationId = $(this).data('application-id');
+            const url = applicationShowRoute.replace(':id', applicationId);
+
+            $.ajax({
+                url: url,
+                type: 'GET',
+                dataType: 'json',
+               success: function (response) {
+
+    const app = response.application;
+      function formatIndianNumber(value) {
+        value = String(value || '').replace(/,/g, '');
+
+        if (!value || isNaN(value)) {
+            return '-';
+        }
+
+        return Number(value).toLocaleString('en-IN');
+    }
+
+    $('#appFundShort').text(
+        app.fund.fund_name.substring(0,2).toUpperCase()
+    );
+
+    $('#appFundName').text(app.fund.fund_name);
+
+    $('#appTheme').text(app.theme?.theme_name ?? '-');
+    $('#appSubTheme').text(app.sub_theme?.sub_theme_name ?? '-');
+    $('#appDuration').text(app.project_duration + ' Months');
+$('#appBudget').text('₹ ' + formatIndianNumber(app.total_budget));    $('#appStatus').text(app.status);
+    $('#appAdditionalInfo').text(app.additional_info);
+
+    let html = '';
+
+    app.answers.forEach(function(answer, index){
+
+        html += `
+            <div class="card mb-3 border-0 shadow-sm">
+                <div class="card-body">
+
+                    <div class="fw-semibold mb-2">
+                        Q${index + 1}.
+                        ${answer.questionnaire?.question ?? 'Question'}
+                    </div>
+
+                    <div class="text-muted">
+                        ${answer.answer ?? '-'}
+                    </div>
+
+                </div>
+            </div>
+        `;
+    });
+
+    $('#applicationAnswers').html(html);
+
+    $('#applicationModal').modal('show');
+},
+                error: function (xhr) {
+                    console.error(xhr);
+                    alert('Unable to fetch application details.');
+                }
+            });
+
+        });
+    </script>
+   
 @endsection

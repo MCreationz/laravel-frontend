@@ -34,6 +34,10 @@ public function index(Fund $fund)
 }
 public function store(Request $request, Fund $fund)
 {
+
+  $request->merge([
+        'total_budget' => str_replace(',', '', $request->total_budget),
+    ]);
     $request->validate([
     'theme_id' => 'required|exists:fund_themes,id',
     'sub_theme_id' => 'required|exists:fund_themes,id',

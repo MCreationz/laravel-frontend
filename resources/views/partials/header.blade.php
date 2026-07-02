@@ -78,20 +78,30 @@
         <a href="{{ route('profile.show') }}"
            class="text-decoration-none text-reset">
 
-            <div class="d-flex align-items-center ps-2 ps-lg-3">
+@php
+    $name = trim(auth('organization')->user()->organization_name);
 
-                <div class="flex-shrink-0 profile-img">
-                    <img src="{{ asset('img/profile.png') }}"
-                         alt="Profile"
-                         width="36"
-                         height="36">
-                </div>
+    $words = preg_split('/\s+/', $name);
 
-                <div class="flex-grow-1 ms-2 ms-lg-3 profile-name text-truncate">
-                    {{ auth('organization')->user()->organization_name }}
-                </div>
+    if (count($words) >= 2) {
+        $initials = strtoupper(substr($words[0], 0, 1) . substr(end($words), 0, 1));
+    } else {
+        $initials = strtoupper(substr($name, 0, 2));
+    }
+@endphp
 
-            </div>
+<div class="d-flex align-items-center ps-2 ps-lg-3">
+
+    <div class="flex-shrink-0 rounded-circle d-flex align-items-center justify-content-center"
+         style="width:36px;height:36px;background:#1E2746;color:#fff !important;font-weight:600;font-size:14px;">
+        <span style="color:#fff !important;">{{ $initials }}</span>
+    </div>
+
+    <div class="flex-grow-1 ms-2 ms-lg-3 profile-name text-truncate">
+        {{ $name }}
+    </div>
+
+</div>
 
         </a>
 

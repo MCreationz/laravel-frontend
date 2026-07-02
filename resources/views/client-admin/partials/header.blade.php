@@ -43,25 +43,37 @@
                 </a>
 
                 {{-- Profile Dropdown --}}
-                <div class="dropdown ps-1 ps-lg-3">
+                @php
+    $name = trim(auth('client_admin')->user()->name ?? 'Client');
 
-                    <div class="d-flex align-items-center profile-dropdown-toggle" role="button"
-                        data-bs-toggle="dropdown" aria-expanded="false">
+    $words = preg_split('/\s+/', $name);
 
-                        <div class="flex-shrink-0 profile-img">
-                            <img src="{{ asset('img/profile.png') }}" alt="profile" width="36" height="36">
-                        </div>
+    if (count($words) >= 2) {
+        $initials = strtoupper(substr($words[0], 0, 1) . substr(end($words), 0, 1));
+    } else {
+        $initials = strtoupper(substr($name, 0, 2));
+    }
+@endphp
 
-                        <div class="flex-grow-1 ms-2 ms-lg-3 profile-name">
-                            {{ auth('client_admin')->user()->name ?? 'Client' }}
-                        </div>
-                        
+<div class="dropdown ps-1 ps-lg-3">
 
-                    </div>
+    <div class="d-flex align-items-center profile-dropdown-toggle"
+         role="button"
+         data-bs-toggle="dropdown"
+         aria-expanded="false">
 
+        <div class="flex-shrink-0 rounded-circle d-flex align-items-center justify-content-center"
+             style="width:36px;height:36px;background:#1E2746;font-weight:600;font-size:14px;color:#fff !important;">
+            <span style="color:#fff !important;">{{ $initials }}</span>
+        </div>
 
+        <div class="flex-grow-1 ms-2 ms-lg-3 profile-name">
+            {{ $name }}
+        </div>
 
-                </div>
+    </div>
+
+</div>
                 <form method="POST" action="{{ route('client-admin.logout') }}" class="m-0">
                             @csrf
 

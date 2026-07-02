@@ -18,7 +18,7 @@
         @else
             <nav class="sidebar-main-nav d-flex flex-column gap-1">
                 <a href="{{ route('dashboard') }}"
-                    class="d-flex align-items-center text-decoration-none sidebar-links {{ request()->routeIs('dashboard') || request()->routeIs('projects.details') ? 'active' : '' }}">
+                    class="d-flex align-items-center text-decoration-none sidebar-links {{ request()->routeIs('dashboard')  ? 'active' : '' }}">
                     <span class="sidebar-link-icon flex-shrink-0">
                         <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" viewBox="0 0 23 23" fill="none">
                             <path d="M21.0833 8.16484V3.814C21.0833 2.46275 20.47 1.9165 18.9463 1.9165H15.0746C13.5508 1.9165 12.9375 2.46275 12.9375 3.814V8.15525C12.9375 9.51609 13.5508 10.0528 15.0746 10.0528H18.9463C20.47 10.0623 21.0833 9.51609 21.0833 8.16484Z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
@@ -31,7 +31,7 @@
                 </a>
 
             <a href="{{ route('discover.funds.index') }}"
-   class="d-flex align-items-center text-decoration-none sidebar-links">
+   class="d-flex align-items-center text-decoration-none sidebar-links {{ request()->routeIs('discover.funds.*') || request()->routeIs('projects.apply.*') || request()->routeIs('projects.details') ? 'active' : '' }}">
     <span class="sidebar-link-icon flex-shrink-0">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
             viewBox="0 0 24 24" fill="none">
@@ -44,7 +44,7 @@
 </a>
 
                 <a href="{{ route('my-applications.index') }}"
-                    class="d-flex align-items-center text-decoration-none sidebar-links {{ request()->routeIs('projects.index') ? 'active' : '' }}">
+                    class="d-flex align-items-center text-decoration-none sidebar-links {{ request()->routeIs('my-applications.*') ? 'active' : '' }}">
                     <span class="sidebar-link-icon flex-shrink-0">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                             <path d="M22 10V15C22 20 20 22 15 22H9C4 22 2 20 2 15V9C2 4 4 2 9 2H14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
@@ -57,7 +57,7 @@
                 </a>
 
             <a href="{{ route('organization.documents.index') }}"
-   class="d-flex align-items-center text-decoration-none sidebar-links">
+   class="d-flex align-items-center text-decoration-none sidebar-links {{ request()->routeIs('organization.documents.*') ? 'active' : '' }}">
 
     <span class="sidebar-link-icon flex-shrink-0">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -76,7 +76,7 @@
     </div>
 
     <div class="sidebar-bottom-nav">
-        <a href="{{ route('settings.show') }}" class="d-flex align-items-center text-decoration-none sidebar-links">
+        <a href="{{ route('settings.show') }}" class="d-flex align-items-center text-decoration-none sidebar-links {{ request()->routeIs('settings.*') ? 'active' : '' }}">
             <span class="sidebar-link-icon flex-shrink-0">
                 <i class="bi bi-gear"></i>
             </span>
