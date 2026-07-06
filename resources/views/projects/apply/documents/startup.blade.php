@@ -122,7 +122,7 @@
                             placeholder="Enter Registration Number"
                             value="{{ old('registration_number', $document->registration_number ?? '') }}" required>
                     </div>
-                    <div class="col-12 px-md-2">
+                    <div class="col-12 px-md-2 position-relative pb-5">
                         <label class="form-label">Upload Registration Certificate <span class="text-danger">*</span></label>
 
                         <input type="file" id="registration_certificate" name="registration_certificate" hidden required>
@@ -147,16 +147,32 @@
                                     </g>
                                 </svg>
                                 <p class="mt-2">Upload pdf/JPG upto 5 MB</p>
-                                @if (!empty($document->registration_certificate))
-                                    <a href="{{ asset('storage/' . $document->registration_certificate) }}"
-                                        target="_blank" class="text-success d-block mb-1">
-                                        View registration document
-                                    </a>
-                                @endif
+                              
                                 <small id="registration-certificate-help"></small>
                             </div>
                         </label>
+
+                                             @if (!empty($document->registration_certificate))
+    @php
+        $extension = strtolower(pathinfo($document->registration_certificate, PATHINFO_EXTENSION));
+
+        $icon = match ($extension) {
+            'pdf' => asset('img/pdf-icon.png'),
+            'doc', 'docx' => asset('img/docx.svg'),
+            'xls', 'xlsx', 'csv' => asset('img/excel.svg'),
+            default => asset('img/docx.svg'),
+        };
+    @endphp
+
+    <a href="{{ asset('storage/' . $document->registration_certificate) }}"
+        target="_blank" class="text-success d-block mb-1 uploaded-doc">
+        <img src="{{ $icon }}" alt="" width="20" height="20">
+        View registration document
+    </a>
+@endif
+
                     </div>
+
                 </div>
             </div>
             <div class="card p-3 p-md-4 border-0 mb-3">
@@ -169,7 +185,7 @@
                                 value="{{ old('dpiit_registration_number', $document->dpiit_registration_number ?? '') }}"
                                 required>
                         </div>
-                        <div class="col-12 px-md-2">
+                        <div class="col-12 px-md-2 position-relative pb-5">
                             <label class="form-label">Upload DPIIT Certificate<span class="text-danger">*</span></label>
 
                             <input type="file" id="dpiit_certificate" name="dpiit_certificate" hidden required>
@@ -194,15 +210,28 @@
                                         </g>
                                     </svg>
                                     <p class="mt-2">Upload pdf/JPG upto 5 MB</p>
-                                    @if (!empty($document->dpiit_certificate))
-                                        <a href="{{ asset('storage/' . $document->dpiit_certificate) }}" target="_blank"
-                                            class="text-success d-block mb-1">
-                                            View DPIIT certificate
-                                        </a>
-                                    @endif
+                                  
                                     <small id="dpiit-certificate-help"></small>
                                 </div>
                             </label>
+                            @if (!empty($document->dpiit_certificate))
+    @php
+        $extension = strtolower(pathinfo($document->dpiit_certificate, PATHINFO_EXTENSION));
+
+        $icon = match ($extension) {
+            'pdf' => asset('img/pdf-icon.png'),
+            'doc', 'docx' => asset('img/docx.svg'),
+            'xls', 'xlsx', 'csv' => asset('img/excel.svg'),
+            default => asset('img/docx.svg'),
+        };
+    @endphp
+
+    <a href="{{ asset('storage/' . $document->dpiit_certificate) }}" target="_blank"
+        class="text-success d-block mb-1 uploaded-doc">
+        <img src="{{ $icon }}" alt="" width="20" height="20">
+        View DPIIT certificate
+    </a>
+@endif
                         </div>
                     @endif
                 </div>
@@ -277,7 +306,7 @@
                                 value="{{ old('gst_registration_number', $document->gst_registration_number ?? '') }}"
                                 required>
                         </div>
-                        <div class="col-12 px-md-2">
+                        <div class="col-12 px-md-2 position-relative pb-5">
                             <label class="form-label">Upload GST Certificate<span class="text-danger">*</span></label>
                             <input type="file" id="gst_certificate" name="gst_certificate" hidden required>
                             <label for="gst_certificate" class="upload-label">
@@ -300,15 +329,28 @@
                                         </g>
                                     </svg>
                                     <p class="mt-2">Upload pdf/JPG upto 5 MB</p>
-                                    @if (!empty($document->gst_certificate))
-                                        <a href="{{ asset('storage/' . $document->gst_certificate) }}" target="_blank"
-                                            class="text-success d-block mb-1">
-                                            View GST certificate
-                                        </a>
-                                    @endif
+                                  
                                     <small id="gst-certificate-help"></small>
                                 </div>
                             </label>
+                            @if (!empty($document->gst_certificate))
+    @php
+        $extension = strtolower(pathinfo($document->gst_certificate, PATHINFO_EXTENSION));
+
+        $icon = match ($extension) {
+            'pdf' => asset('img/pdf-icon.png'),
+            'doc', 'docx' => asset('img/docx.svg'),
+            'xls', 'xlsx', 'csv' => asset('img/excel.svg'),
+            default => asset('img/docx.svg'),
+        };
+    @endphp
+
+    <a href="{{ asset('storage/' . $document->gst_certificate) }}" target="_blank"
+        class="text-success d-block mb-1 uploaded-doc">
+        <img src="{{ $icon }}" alt="" width="20" height="20">
+        View GST certificate
+    </a>
+@endif
                         </div>
                     @endif
                 </div>

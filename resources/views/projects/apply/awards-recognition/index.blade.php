@@ -4,8 +4,8 @@
 @section('header_back_url', route('dashboard'))
 
 @section('header_extra')
-  
-   
+
+
 @endsection
 
 @section('content')
@@ -80,10 +80,10 @@
 
                 </div>
             </div>
-               @php
-        $documentsRoute =
-             route('projects.apply.financial-documents', $fund->id)
-    @endphp
+            @php
+                $documentsRoute =
+                    route('projects.apply.financial-documents', $fund->id)
+            @endphp
 
             <div class="col-6 col-md-3 step bold">
 
@@ -126,6 +126,7 @@
                         <th class="text-nowrap">Name of the Award</th>
                         <th class="text-nowrap">Awarding Organization</th>
                         <th class="text-nowrap">Year</th>
+                        <th class="text-nowrap">Certificate</th>
                         <th class="text-nowrap">Actions</th>
                     </tr>
                 </thead>
@@ -136,13 +137,36 @@
                             <td>{{ $award->award_name }}</td>
                             <td>{{ $award->awarding_organization }}</td>
                             <td>{{ $award->year }}</td>
+                           <td>
+    @if($award->certificate)
+        @php
+            $extension = strtolower(pathinfo($award->certificate, PATHINFO_EXTENSION));
+
+            $icon = match ($extension) {
+                'pdf' => asset('img/pdf-icon.png'),
+                'doc', 'docx' => asset('img/docx.svg'),
+                'xls', 'xlsx', 'csv' => asset('img/excel.svg'),
+                default => asset('img/docx.svg'),
+            };
+        @endphp
+
+        <a href="{{ asset('storage/' . $award->certificate) }}"
+           target="_blank"
+           class="">
+            <img src="{{ $icon }}" alt="" width="20" height="20">
+        </a>
+    @else
+        -
+    @endif
+</td>
                             <td class="d-flex justify-content-center align-items-center gap-2">
 
                                 <!-- EDIT -->
                                 <button type="button" class="edit-btn border-0 bg-transparent p-1" data-id="{{ $award->id }}"
                                     data-award_name="{{ $award->award_name }}"
                                     data-awarding_organization="{{ $award->awarding_organization }}"
-                                    data-year="{{ $award->year }}"  data-certificate="{{ $award->certificate }}" data-bs-toggle="modal" data-bs-target="#addAward">
+                                    data-year="{{ $award->year }}" data-certificate="{{ $award->certificate }}"
+                                    data-bs-toggle="modal" data-bs-target="#addAward">
 
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"
                                         fill="none">
@@ -201,10 +225,9 @@
         <div style="border-radius:0px 0px 8px 8px;"
             class="d-flex justify-content-center justify-content-md-end gap-2 gap-md-3 mt-4 steps-btn pe-lg-4 flex-wrap">
             <div class="btn-wrap">
-           <button type="button" class="btn btn-secondary"
-    onclick="window.location.href='{{ $documentsRoute }}'">
-    Back
-</button>
+                <button type="button" class="btn btn-secondary" onclick="window.location.href='{{ $documentsRoute }}'">
+                    Back
+                </button>
                 <button type="button" class="btn btn-primary" id="continueBtn">
                     Submit
                 </button>
@@ -304,10 +327,22 @@
                                             <p class="mt-2">Upload pdf/JPG upto 5 MB</p>
 
                                             <small id="certificate_name"></small>
-                                            @if (!empty($award->certificate))
+                                                                           @if (!empty($award->certificate))
+    @php
+        $extension = strtolower(pathinfo($award->certificate, PATHINFO_EXTENSION));
+
+        $icon = match ($extension) {
+            'pdf' => asset('img/pdf-icon.png'),
+            'doc', 'docx' => asset('img/docx.svg'),
+            'xls', 'xlsx', 'csv' => asset('img/excel.svg'),
+            default => asset('img/docx.svg'),
+        };
+    @endphp
+
     <a href="{{ asset('storage/' . $award->certificate) }}"
-       target="_blank"
-       class="text-success d-block mb-1">
+        target="_blank"
+        class="text-success ">
+        <img src="{{ $icon }}" alt="" width="20" height="20">
         View existing certificate
     </a>
 @endif
@@ -317,6 +352,7 @@
 
                                         </div>
                                     </label>
+
                                 </div>
 
                             </div>
@@ -390,49 +426,49 @@
         }
     </style>
 
-   <script>
-document.querySelectorAll(".edit-btn").forEach(btn => {
-    btn.addEventListener("click", function () {
+    <script>
+        document.querySelectorAll(".edit-btn").forEach(btn => {
+            btn.addEventListener("click", function () {
 
-        const form = document.getElementById("AwardForm");
-        const id = this.dataset.id;
+                const form = document.getElementById("AwardForm");
+                const id = this.dataset.id;
 
-        form.action = "{{ url('projects/' . $fund->id . '/apply/awards-recognition') }}/" + id;
+                form.action = "{{ url('projects/' . $fund->id . '/apply/awards-recognition') }}/" + id;
 
-        let methodInput = form.querySelector("input[name='_method']");
-        if (!methodInput) {
-            methodInput = document.createElement("input");
-            methodInput.type = "hidden";
-            methodInput.name = "_method";
-            form.appendChild(methodInput);
-        }
-        methodInput.value = "PUT";
+                let methodInput = form.querySelector("input[name='_method']");
+                if (!methodInput) {
+                    methodInput = document.createElement("input");
+                    methodInput.type = "hidden";
+                    methodInput.name = "_method";
+                    form.appendChild(methodInput);
+                }
+                methodInput.value = "PUT";
 
-        document.getElementById("edit_id").value = id;
+                document.getElementById("edit_id").value = id;
 
-        form.querySelector("[name='award_name']").value =
-            this.dataset.award_name || "";
+                form.querySelector("[name='award_name']").value =
+                    this.dataset.award_name || "";
 
-        form.querySelector("[name='awarding_organization']").value =
-            this.dataset.awarding_organization || "";
+                form.querySelector("[name='awarding_organization']").value =
+                    this.dataset.awarding_organization || "";
 
-        form.querySelector("[name='year']").value =
-            this.dataset.year || "";
+                form.querySelector("[name='year']").value =
+                    this.dataset.year || "";
 
-        const fileInput = document.getElementById("certificate");
+                const fileInput = document.getElementById("certificate");
 
-        const hasFile = this.dataset.certificate && this.dataset.certificate !== "";
+                const hasFile = this.dataset.certificate && this.dataset.certificate !== "";
 
-        if (hasFile) {
-            fileInput.removeAttribute("required");
-        } else {
-            fileInput.setAttribute("required", "required");
-        }
+                if (hasFile) {
+                    fileInput.removeAttribute("required");
+                } else {
+                    fileInput.setAttribute("required", "required");
+                }
 
-        form.querySelector("button[type='submit']").textContent = "Update";
-    });
-});
-</script>
+                form.querySelector("button[type='submit']").textContent = "Update";
+            });
+        });
+    </script>
 
 
 
@@ -508,7 +544,7 @@ document.querySelectorAll(".edit-btn").forEach(btn => {
             modal.show();
         });
     </script>
- 
+
 
     <script>
         document.getElementById("goToDocuments").addEventListener("click", function () {

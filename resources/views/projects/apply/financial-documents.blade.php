@@ -167,14 +167,24 @@
                                 <small id="last-year-balance-sheet-help"></small>
                             </div>
                         </label>
-                        @if (!empty($document?->last_year_balance_sheet))
-                            <a href="{{ asset('storage/' . $document->last_year_balance_sheet) }}" target="_blank"
-                                class="text-success d-block mb-1 uploaded-doc">
-                                <img src="{{ asset('img/pdf-icon.png') }}" alt="" width=""
-                                    height="">View last year balance sheet <img
-                                    src="{{ asset('img/close-icon.png') }}" alt="" width=""
-                                    height=""></a>
-                        @endif
+                   @if (!empty($document?->last_year_balance_sheet))
+@php
+    $extension = strtolower(pathinfo($document->last_year_balance_sheet, PATHINFO_EXTENSION));
+
+    $icon = match ($extension) {
+        'pdf' => asset('img/pdf-icon.png'),
+        'doc', 'docx' => asset('img/docx.svg'),
+        'xls', 'xlsx', 'csv' => asset('img/excel.svg'),
+        default => asset('img/docx.svg'),
+    };
+@endphp
+
+<a href="{{ asset('storage/' . $document->last_year_balance_sheet) }}"
+    target="_blank" class="text-success d-block mb-1 uploaded-doc">
+    <img src="{{ $icon }}" alt="File" width="20" height="20">
+    View last year balance sheet
+</a>
+@endif
                     </div>
 
 
@@ -213,15 +223,24 @@
                                 <small id="last-to-last-year-balance-sheet-help"></small>
                             </div>
                         </label>
-                        @if (!empty($document?->last_to_last_year_balance_sheet))
-                            <a href="{{ asset('storage/' . $document->last_to_last_year_balance_sheet) }}"
-                                target="_blank" class="text-success d-block mb-1 uploaded-doc">
-                                <img src="{{ asset('img/pdf-icon.png') }}" alt="" width=""
-                                    height="">View last to last year balance sheet <img
-                                    src="{{ asset('img/close-icon.png') }}" alt="" width=""
-                                    height="">
-                            </a>
-                        @endif
+                @if (!empty($document?->last_to_last_year_balance_sheet))
+@php
+    $extension = strtolower(pathinfo($document->last_to_last_year_balance_sheet, PATHINFO_EXTENSION));
+
+    $icon = match ($extension) {
+        'pdf' => asset('img/pdf-icon.png'),
+        'doc', 'docx' => asset('img/docx.svg'),
+        'xls', 'xlsx', 'csv' => asset('img/excel.svg'),
+        default => asset('img/docx.svg'),
+    };
+@endphp
+
+<a href="{{ asset('storage/' . $document->last_to_last_year_balance_sheet) }}"
+    target="_blank" class="text-success d-block mb-1 uploaded-doc">
+    <img src="{{ $icon }}" alt="" width="20" height="20">
+    View last to last year balance sheet
+</a>
+@endif
 
                     </div>
 
@@ -255,14 +274,24 @@
                             </div>
                         </label>
 
-                        @if (!empty($document?->last_year_itr))
-                            <a href="{{ asset('storage/' . $document->last_year_itr) }}" target="_blank"
-                                class="text-success d-block mb-1 uploaded-doc">
-                                <img src="{{ asset('img/pdf-icon.png') }}" alt="" width=""
-                                    height=""> View last year ITR <img src="{{ asset('img/close-icon.png') }}"
-                                    alt="" width="" height="">
-                            </a>
-                        @endif
+                     @if (!empty($document?->last_year_itr))
+   @php
+    $extension = strtolower(pathinfo($document->last_year_itr, PATHINFO_EXTENSION));
+
+    $icon = match ($extension) {
+        'pdf' => asset('img/pdf-icon.png'),
+        'doc', 'docx' => asset('img/docx.svg'),
+        'xls', 'xlsx', 'csv' => asset('img/excel.svg'),
+        default => asset('img/docx.svg'),
+    };
+@endphp
+
+<a href="{{ asset('storage/' . $document->last_year_itr) }}" target="_blank"
+    class="text-success d-block mb-1 uploaded-doc">
+    <img src="{{ $icon }}" alt="" width="20" height="20">
+    View last year ITR
+</a>
+@endif
                     </div>
 
                     <div class="col-12 col-md-6  px-md-2 position-relative pb-5">
@@ -293,15 +322,25 @@
                                 <small id="last-to-last-year-itr-help"></small>
                             </div>
                         </label>
-                        @if (!empty($document?->last_to_last_year_itr))
-                            <a href="{{ asset('storage/' . $document->last_to_last_year_itr) }}" target="_blank"
-                                class="text-success d-block mb-1 uploaded-doc">
-                                <img src="{{ asset('img/pdf-icon.png') }}" alt="" width=""
-                                    height=""> View last to last year ITR <img
-                                    src="{{ asset('img/close-icon.png') }}" alt="" width=""
-                                    height="">
-                            </a>
-                        @endif
+                   @if (!empty($document?->last_to_last_year_itr))
+ @php
+    $extension = strtolower(pathinfo($document->last_to_last_year_itr, PATHINFO_EXTENSION));
+
+    $icon = match ($extension) {
+        'pdf' => asset('img/pdf-icon.png'),
+        'doc', 'docx' => asset('img/docx.svg'),
+        'xls', 'xlsx', 'csv' => asset('img/excel.svg'),
+        default => asset('img/docx.svg'),
+    };
+@endphp
+
+<a href="{{ asset('storage/' . $document->last_to_last_year_itr) }}"
+   target="_blank"
+   class="text-success d-block mb-1 uploaded-doc">
+    <img src="{{ $icon }}" alt="File Icon" width="20" height="20">
+    View last to last year ITR
+</a>
+@endif
                     </div>
 
                 </div>
@@ -338,23 +377,7 @@
             </div>
         </form>
     </div>
-    <style>
-        .uploaded-doc {
-            background: #fff;
-            position: absolute;
-            bottom: 0px;
-            left: 8px;
-            border: 1px solid #D9D9D9;
-            padding: 10px 12px;
-            border-radius: 8px;
-            display: inline-flex !important;
-            text-decoration: none;
-            color: #282828 !important;
-            align-items: center;
-            gap: 10px;
-        }
-    </style>
-
+ 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
 
