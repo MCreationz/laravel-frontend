@@ -454,29 +454,25 @@
         });
     </script>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
+   <script>
+    document.addEventListener('DOMContentLoaded', function () {
 
-            const fileRules = {
-                "dpiit_certificate": {{ $document?->dpiit_certificate ? 'true' : 'false' }},
-                "gst_certificate": {{ $document?->gst_certificate ? 'true' : 'false' }},
-                "registration_certificate": {{ $document?->registration_certificate ? 'true' : 'false' }}
-            };
+        const fileRules = {
+            dpiit_certificate: {{ $document?->dpiit_certificate ? 'true' : 'false' }},
+            gst_certificate: {{ $document?->gst_certificate ? 'true' : 'false' }},
+            registration_certificate: {{ $document?->registration_certificate ? 'true' : 'false' }}
+        };
 
-            function applyRequiredRules() {
-                Object.entries(fileRules).forEach(([id, hasFile]) => {
-                    const input = document.getElementById(id);
-                    if (!input) return;
+        Object.entries(fileRules).forEach(([id, hasFile]) => {
+            const input = document.getElementById(id);
 
-                    if (hasFile) {
-                        input.removeAttribute('required');
-                    } else {
-                        input.setAttribute('required', 'required');
-                    }
-                });
+            if (!input) {
+                return;
             }
 
-            applyRequiredRules();
+            input.toggleAttribute('required', !hasFile);
         });
-    </script>
+
+    });
+</script>
 @endsection

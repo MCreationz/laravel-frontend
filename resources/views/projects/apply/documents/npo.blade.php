@@ -498,21 +498,25 @@
         });
     </script>
 
-    <script>
-        function toggleFileRequired(inputId, hasFile) {
-            const input = document.getElementById(inputId);
+<script>
+    function toggleFileRequired(inputId, hasFile) {
+        const input = document.getElementById(inputId);
 
-            if (hasFile) {
-                input.removeAttribute('required');
-            } else {
-                input.setAttribute('required', 'required');
-            }
+        if (!input) {
+            return;
         }
 
-        toggleFileRequired('registration-certificate', {{ $document?->registration_certificate ? 'true' : 'false' }});
-        toggleFileRequired('certificate-12a', {{ $document?->certificate_12a ? 'true' : 'false' }});
-        toggleFileRequired('certificate-80g', {{ $document?->certificate_80g ? 'true' : 'false' }});
-        toggleFileRequired('certificate-fcra', {{ $document?->certificate_fcra ? 'true' : 'false' }});
-        toggleFileRequired('certificate-csr1', {{ $document?->certificate_csr1 ? 'true' : 'false' }});
-    </script>
+        if (hasFile) {
+            input.removeAttribute('required');
+        } else {
+            input.setAttribute('required', 'required');
+        }
+    }
+
+    toggleFileRequired('registration-certificate', {{ $document?->registration_certificate ? 'true' : 'false' }});
+    toggleFileRequired('certificate-12a', {{ $document?->certificate_12a ? 'true' : 'false' }});
+    toggleFileRequired('certificate-80g', {{ $document?->certificate_80g ? 'true' : 'false' }});
+    toggleFileRequired('certificate-fcra', {{ $document?->certificate_fcra ? 'true' : 'false' }});
+    toggleFileRequired('certificate-csr1', {{ $document?->certificate_csr1 ? 'true' : 'false' }});
+</script>
 @endsection
