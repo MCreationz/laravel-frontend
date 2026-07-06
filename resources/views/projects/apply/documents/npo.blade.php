@@ -4,8 +4,8 @@
 @section('header_back_url', route('dashboard'))
 
 @section('header_extra')
-  
-   
+
+
 @endsection
 
 @section('content')
@@ -105,12 +105,12 @@
             enctype="multipart/form-data">
             @csrf
             @csrf
-            <div style="border-radius:8px;" class="card p-3 p-md-4 border-0">
+            <div class="card p-3 p-md-4 border-0 mb-3">
                 <div class="mb-4">
                     <h1 class="top-heading mb-0">Organizational Details</h1>
                 </div>
-                <div class="row mb-3 flex-wrap row-gap-3 row-gap-md-4 px-md-1">
-                    <div class="col-12 px-md-2">
+                <div class="row flex-wrap row-gap-3 row-gap-md-4 px-md-1">
+                    <div class="col-12 col-md-6 px-md-2">
                         <label class="form-label">Name of the Organization<span>*</span></label>
 
                         <input type="text" name="organization_name" class="form-control"
@@ -118,7 +118,12 @@
                             value="{{ old('organization_name', auth('organization')->user()->organization_name) }}" readonly
                             required>
                     </div>
-
+                    <div class="col-12 col-md-6 px-md-2">
+                        <label class="form-label">Registration Number<span>*</span></label>
+                        <input type="text" name="registration_number" class="form-control"
+                            placeholder="Enter Registration Number"
+                            value="{{ old('registration_number', $document?->registration_number) }}" required>
+                    </div>
                     <div class="col-12 px-md-2">
                         <label class="form-label">Upload Registration Certificate <span class="text-danger">*</span></label>
 
@@ -143,42 +148,45 @@
                                     </g>
                                 </svg>
                                 <p class="mt-2">Upload pdf/JPG upto 5 MB</p>
-                               <small id="registration-certificate"></small>
+                                <small id="registration-certificate"></small>
 
-@if($document?->registration_certificate)
-    <div class="mt-2">
-        <a href="{{ asset('storage/' . $document->registration_certificate) }}"
-           target="_blank"
-           class="text-decoration-none">
-            View Uploaded File ({{ basename($document->registration_certificate) }})
-        </a>
-    </div>
-@endif
+                                @if ($document?->registration_certificate)
+                                    <div class="mt-2">
+                                        <a href="{{ asset('storage/' . $document->registration_certificate) }}"
+                                            target="_blank" class="text-decoration-none">
+                                            View Uploaded File ({{ basename($document->registration_certificate) }})
+                                        </a>
+                                    </div>
+                                @endif
                             </div>
                         </label>
                     </div>
-                    <div class="col-12 px-md-2">
-                        <label class="form-label">Registration Number<span>*</span></label>
-                        <input type="text" name="registration_number" class="form-control"
-                            placeholder="Enter Registration Number"
-                            value="{{ old('registration_number', $document?->registration_number) }}" required>
-                    </div>
-                    <div class="px-md-2">
-                        <hr class="mb-0">
-                    </div>
-                    @if($op?->status_12a)
-
+                </div>
+            </div>
+            <div class="card p-3 p-md-4 border-0 mb-3">
+                <div class="row flex-wrap row-gap-3 row-gap-md-4 px-md-1">
+                    @if ($op?->status_12a)
+                        <div class="col-12 col-md-6 px-md-2">
+                            <label class="form-label">12A Registration Number<span>*</span></label>
+                            <input type="text" name="registration_number_12a" class="form-control"
+                                placeholder="Enter here"
+                                value="{{ old('registration_number_12a', $document?->registration_number_12a) }}" required>
+                        </div>
+                        <div class="col-12 col-md-6 px-md-2">
+                            <label class="form-label">12 A Registration Validity<span>*</span></label>
+                            <input type="date" name="validity_12a" class="form-control"
+                                value="{{ old('validity_12a', $document?->validity_12a) }}" required>
+                        </div>
                         <div class="col-12 px-md-2">
                             <label class="form-label">Upload 12A Certificate<span class="text-danger">*</span></label>
-
                             <input type="file" id="certificate-12a" name="certificate_12a" hidden required>
                             <label for="certificate-12a" class="upload-label">
                                 <div class="upload-content">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26"
-                                        fill="none">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26"
+                                        viewBox="0 0 26 26" fill="none">
                                         <g opacity="0.2">
-                                            <path d="M9.75 11.917V18.417L11.9167 16.2503" stroke="#292D32" stroke-width="1.5"
-                                                stroke-linecap="round" stroke-linejoin="round" />
+                                            <path d="M9.75 11.917V18.417L11.9167 16.2503" stroke="#292D32"
+                                                stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                                             <path d="M9.7526 18.4167L7.58594 16.25" stroke="#292D32" stroke-width="1.5"
                                                 stroke-linecap="round" stroke-linejoin="round" />
                                             <path
@@ -192,46 +200,48 @@
                                         </g>
                                     </svg>
                                     <p class="mt-2">Upload pdf/JPG upto 5 MB</p>
-                                       <small id="registration-certificate"></small>
+                                    <small id="registration-certificate"></small>
 
-            @if($document?->certificate_12a)
-                <div class="mt-2">
-                    <a href="{{ asset('storage/' . $document->certificate_12a) }}"
-                        target="_blank"
-                        class="text-decoration-none">
-                        View Uploaded File ({{ basename($document->certificate_12a) }})
-                    </a>
-                </div>
-            @endif
+                                    @if ($document?->certificate_12a)
+                                        <div class="mt-2">
+                                            <a href="{{ asset('storage/' . $document->certificate_12a) }}"
+                                                target="_blank" class="text-decoration-none">
+                                                View Uploaded File ({{ basename($document->certificate_12a) }})
+                                            </a>
+                                        </div>
+                                    @endif
                                 </div>
                             </label>
                         </div>
-
-                        <div class="col-12 col-md-6 px-md-2">
-                            <label class="form-label">12A Registration Number<span>*</span></label>
-                            <input type="text" name="registration_number_12a" class="form-control" placeholder="Enter here"
-                                value="{{ old('registration_number_12a', $document?->registration_number_12a) }}" required>
-                        </div>
-                        <div class="col-12 col-md-6 px-md-2">
-                            <label class="form-label">12 A Registration Validity<span>*</span></label>
-                            <input type="date" name="validity_12a" class="form-control"
-                                value="{{ old('validity_12a', $document?->validity_12a) }}" required>
-                        </div>
                     @endif
-
-                    @if($op?->status_80g)
-
+                </div>
+            </div>
+            <div class="card p-3 p-md-4 border-0 mb-3">
+                <div class="row flex-wrap row-gap-3 row-gap-md-4 px-md-1">
+                    @if ($op?->status_80g)
+                        <div class="col-12 col-md-6 px-md-2">
+                            <label class="form-label">80G Registration Number<span>*</span></label>
+                            <input type="text" name="registration_number_80g" class="form-control"
+                                placeholder="Enter here"
+                                value="{{ old('registration_number_80g', $document?->registration_number_80g) }}"
+                                required>
+                        </div>
+                        <div class="col-12 col-md-6 px-md-2">
+                            <label class="form-label">80G Registration Validity<span>*</span></label>
+                            <input type="date" name="validity_80g" class="form-control"
+                                value="{{ old('validity_80g', $document?->validity_80g) }}" required>
+                        </div>
                         <div class="col-12 px-md-2">
                             <label class="form-label">Upload 80G Certificate<span class="text-danger">*</span></label>
 
                             <input type="file" id="certificate-80g" name="certificate_80g" hidden required>
                             <label for="certificate-80g" class="upload-label">
                                 <div class="upload-content">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26"
-                                        fill="none">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26"
+                                        viewBox="0 0 26 26" fill="none">
                                         <g opacity="0.2">
-                                            <path d="M9.75 11.917V18.417L11.9167 16.2503" stroke="#292D32" stroke-width="1.5"
-                                                stroke-linecap="round" stroke-linejoin="round" />
+                                            <path d="M9.75 11.917V18.417L11.9167 16.2503" stroke="#292D32"
+                                                stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                                             <path d="M9.7526 18.4167L7.58594 16.25" stroke="#292D32" stroke-width="1.5"
                                                 stroke-linecap="round" stroke-linejoin="round" />
                                             <path
@@ -246,44 +256,46 @@
                                     </svg>
                                     <p class="mt-2">Upload pdf/JPG upto 5 MB</p>
                                     <small id="80g-certificate"></small>
-                                    @if($document?->certificate_80g)
-    <div class="mt-2">
-        <a href="{{ asset('storage/' . $document->certificate_80g) }}"
-           target="_blank"
-           class="text-decoration-none">
-            View Uploaded File ({{ basename($document->certificate_80g) }})
-        </a>
-    </div>
-@endif
+                                    @if ($document?->certificate_80g)
+                                        <div class="mt-2">
+                                            <a href="{{ asset('storage/' . $document->certificate_80g) }}"
+                                                target="_blank" class="text-decoration-none">
+                                                View Uploaded File ({{ basename($document->certificate_80g) }})
+                                            </a>
+                                        </div>
+                                    @endif
                                 </div>
                             </label>
                         </div>
-
-                        <div class="col-12 col-md-6 px-md-2">
-                            <label class="form-label">80G Registration Number<span>*</span></label>
-                            <input type="text" name="registration_number_80g" class="form-control" placeholder="Enter here"
-                                value="{{ old('registration_number_80g', $document?->registration_number_80g) }}" required>
-                        </div>
-                        <div class="col-12 col-md-6 px-md-2">
-                            <label class="form-label">80G Registration Validity<span>*</span></label>
-                            <input type="date" name="validity_80g" class="form-control"
-                                value="{{ old('validity_80g', $document?->validity_80g) }}" required>
-                        </div>
                     @endif
-                    @if($op?->status_fcra)
+                </div>
+            </div>
 
+            <div class="card p-3 p-md-4 border-0 mb-3">
+                <div class="row flex-wrap row-gap-3 row-gap-md-4 px-md-1">
+                    @if ($op?->status_fcra)
+                        <div class="col-12 col-md-6 px-md-2">
+                            <label class="form-label">FCRA Registration Number<span>*</span></label>
+                            <input type="text" name="registration_number_fcra" class="form-control"
+                                placeholder="Enter here"
+                                value="{{ old('registration_number_fcra', $document?->registration_number_fcra) }}"
+                                required>
+                        </div>
+                        <div class="col-12 col-md-6 px-md-2">
+                            <label class="form-label">FCRA Registration Validity<span>*</span></label>
+                            <input type="date" name="validity_fcra" class="form-control"
+                                value="{{ old('validity_fcra', $document?->validity_fcra) }}" required>
+                        </div>
                         <div class="col-12 px-md-2">
                             <label class="form-label">Upload FCRA Certificate<span class="text-danger">*</span></label>
-
                             <input type="file" id="certificate-fcra" name="certificate_fcra" hidden required>
-
                             <label for="certificate-fcra" class="upload-label">
                                 <div class="upload-content">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26"
-                                        fill="none">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26"
+                                        viewBox="0 0 26 26" fill="none">
                                         <g opacity="0.2">
-                                            <path d="M9.75 11.917V18.417L11.9167 16.2503" stroke="#292D32" stroke-width="1.5"
-                                                stroke-linecap="round" stroke-linejoin="round" />
+                                            <path d="M9.75 11.917V18.417L11.9167 16.2503" stroke="#292D32"
+                                                stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                                             <path d="M9.7526 18.4167L7.58594 16.25" stroke="#292D32" stroke-width="1.5"
                                                 stroke-linecap="round" stroke-linejoin="round" />
                                             <path
@@ -297,34 +309,35 @@
                                         </g>
                                     </svg>
                                     <p class="mt-2">Upload pdf/JPG upto 5 MB</p>
-                                   @if($document?->certificate_fcra)
-    <div class="mt-2">
-        <a href="{{ asset('storage/' . $document->certificate_fcra) }}"
-           target="_blank"
-           class="text-decoration-none">
-            View Uploaded File ({{ basename($document->certificate_fcra) }})
-        </a>
-    </div>
-@endif
+                                    @if ($document?->certificate_fcra)
+                                        <div class="mt-2">
+                                            <a href="{{ asset('storage/' . $document->certificate_fcra) }}"
+                                                target="_blank" class="text-decoration-none">
+                                                View Uploaded File ({{ basename($document->certificate_fcra) }})
+                                            </a>
+                                        </div>
+                                    @endif
                                 </div>
                             </label>
                         </div>
-
-                        <div class="col-12 col-md-6 px-md-2">
-                            <label class="form-label">FCRA Registration Number<span>*</span></label>
-                            <input type="text" name="registration_number_fcra" class="form-control" placeholder="Enter here"
-                                value="{{ old('registration_number_fcra', $document?->registration_number_fcra) }}" required>
-                        </div>
-
-                        <div class="col-12 col-md-6 px-md-2">
-                            <label class="form-label">FCRA Registration Validity<span>*</span></label>
-                            <input type="date" name="validity_fcra" class="form-control"
-                                value="{{ old('validity_fcra', $document?->validity_fcra) }}" required>
-                        </div>
                     @endif
-                    @if($op?->csr_1_registration)
-
-
+                </div>
+            </div>
+            <div class="card p-3 p-md-4 border-0">
+                <div class="row flex-wrap row-gap-3 row-gap-md-4 px-md-1">
+                    @if ($op?->csr_1_registration)
+                        <div class="col-12 col-md-6 px-md-2">
+                            <label class="form-label">CSR-1 Registration Number<span>*</span></label>
+                            <input type="text" name="registration_number_csr1" class="form-control"
+                                placeholder="Enter here"
+                                value="{{ old('registration_number_csr1', $document?->registration_number_csr1) }}"
+                                required>
+                        </div>
+                        <div class="col-12 col-md-6 px-md-2">
+                            <label class="form-label">CSR-1 Registration Validity<span>*</span></label>
+                            <input type="date" name="validity_csr1" class="form-control"
+                                value="{{ old('validity_csr1', $document?->validity_csr1) }}" required>
+                        </div>
                         <div class="col-12 px-md-2">
                             <label class="form-label">Upload CSR-1 Certificate<span class="text-danger">*</span></label>
 
@@ -332,11 +345,11 @@
 
                             <label for="certificate-csr1" class="upload-label">
                                 <div class="upload-content">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26"
-                                        fill="none">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26"
+                                        viewBox="0 0 26 26" fill="none">
                                         <g opacity="0.2">
-                                            <path d="M9.75 11.917V18.417L11.9167 16.2503" stroke="#292D32" stroke-width="1.5"
-                                                stroke-linecap="round" stroke-linejoin="round" />
+                                            <path d="M9.75 11.917V18.417L11.9167 16.2503" stroke="#292D32"
+                                                stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                                             <path d="M9.7526 18.4167L7.58594 16.25" stroke="#292D32" stroke-width="1.5"
                                                 stroke-linecap="round" stroke-linejoin="round" />
                                             <path
@@ -350,38 +363,25 @@
                                         </g>
                                     </svg>
                                     <p class="mt-2">Upload pdf/JPG upto 5 MB</p>
-                                  @if($document?->certificate_csr1)
-    <div class="mt-2">
-        <a href="{{ asset('storage/' . $document->certificate_csr1) }}"
-           target="_blank"
-           class="text-decoration-none">
-            View Uploaded File ({{ basename($document->certificate_csr1) }})
-        </a>
-    </div>
-@endif
+                                    @if ($document?->certificate_csr1)
+                                        <div class="mt-2">
+                                            <a href="{{ asset('storage/' . $document->certificate_csr1) }}"
+                                                target="_blank" class="text-decoration-none">
+                                                View Uploaded File ({{ basename($document->certificate_csr1) }})
+                                            </a>
+                                        </div>
+                                    @endif
                                 </div>
                             </label>
                         </div>
-
-                        <div class="col-12 col-md-6 px-md-2">
-                            <label class="form-label">CSR-1 Registration Number<span>*</span></label>
-                            <input type="text" name="registration_number_csr1" class="form-control" placeholder="Enter here"
-                                value="{{ old('registration_number_csr1', $document?->registration_number_csr1) }}" required>
-                        </div>
-
-                        <div class="col-12 col-md-6 px-md-2">
-                            <label class="form-label">CSR-1 Registration Validity<span>*</span></label>
-                            <input type="date" name="validity_csr1" class="form-control"
-                                value="{{ old('validity_csr1', $document?->validity_csr1) }}" required>
-                        </div>
                     @endif
                 </div>
-
             </div>
             <div style="border-radius:0px 0px 8px 8px;"
                 class="d-flex justify-content-center justify-content-md-end gap-2 gap-md-3 steps-btn pe-lg-4 flex-wrap">
                 <div class="btn-wrap">
-                    <button type="button" class="btn simple-btn" onclick="window.location.href='{{ route('projects.apply.senior-management', $fund->id) }}'">
+                    <button type="button" class="btn simple-btn"
+                        onclick="window.location.href='{{ route('projects.apply.senior-management', $fund->id) }}'">
                         <img src="/img/back.png" class="me-2" width="15" height="6.25">
                         Back
                     </button>
@@ -394,11 +394,10 @@
                         </svg></button>
                 </div>
             </div>
-
         </form>
     </div>
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
 
             document.querySelectorAll('input[type="file"]').forEach(input => {
 
@@ -407,7 +406,7 @@
                     '.pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document'
                 );
 
-                input.addEventListener('change', function () {
+                input.addEventListener('change', function() {
 
                     if (!this.files.length) return;
 
@@ -436,19 +435,19 @@
 
     <script>
         function toggleFileRequired(inputId, hasFile) {
-    const input = document.getElementById(inputId);
+            const input = document.getElementById(inputId);
 
-    if (hasFile) {
-        input.removeAttribute('required');
-    } else {
-        input.setAttribute('required', 'required');
-    }
-}
+            if (hasFile) {
+                input.removeAttribute('required');
+            } else {
+                input.setAttribute('required', 'required');
+            }
+        }
 
-toggleFileRequired('registration-certificate', {{ $document?->registration_certificate ? 'true' : 'false' }});
-toggleFileRequired('certificate-12a', {{ $document?->certificate_12a ? 'true' : 'false' }});
-toggleFileRequired('certificate-80g', {{ $document?->certificate_80g ? 'true' : 'false' }});
-toggleFileRequired('certificate-fcra', {{ $document?->certificate_fcra ? 'true' : 'false' }});
-toggleFileRequired('certificate-csr1', {{ $document?->certificate_csr1 ? 'true' : 'false' }});
+        toggleFileRequired('registration-certificate', {{ $document?->registration_certificate ? 'true' : 'false' }});
+        toggleFileRequired('certificate-12a', {{ $document?->certificate_12a ? 'true' : 'false' }});
+        toggleFileRequired('certificate-80g', {{ $document?->certificate_80g ? 'true' : 'false' }});
+        toggleFileRequired('certificate-fcra', {{ $document?->certificate_fcra ? 'true' : 'false' }});
+        toggleFileRequired('certificate-csr1', {{ $document?->certificate_csr1 ? 'true' : 'false' }});
     </script>
 @endsection

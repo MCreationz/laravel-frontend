@@ -4,8 +4,8 @@
 @section('header_back_url', route('dashboard'))
 
 @section('header_extra')
-  
-   
+
+
 @endsection
 
 @section('content')
@@ -104,19 +104,24 @@
         <form class="step2Form" method="POST" action="{{ route('projects.apply.documents.startup.store', $fund->id) }}"
             enctype="multipart/form-data">
             @csrf
-            <div style="border-radius:8px;" class="card p-3 p-md-4 border-0">
+            <div class="card p-3 p-md-4 border-0 mb-3">
                 <div class="mb-4">
                     <h1 class="top-heading mb-0">Organizational Details</h1>
                 </div>
-                <div class="row mb-3 flex-wrap row-gap-3 row-gap-md-4 px-md-1">
-                    <div class="col-12 px-md-2">
+                <div class="row flex-wrap row-gap-3 row-gap-md-4 px-md-1">
+                    <div class="col-12 col-md-6 px-md-2">
                         <label class="form-label">Name of the Organization<span>*</span></label>
-
                         <input type="text" name="organization_name" class="form-control"
                             placeholder="Name of the Organization" required
-                            value="{{ old('organization_name', $document->organization_name ?? auth('organization')->user()->organization_name) }}" readonly>
+                            value="{{ old('organization_name', $document->organization_name ?? auth('organization')->user()->organization_name) }}"
+                            readonly>
                     </div>
-
+                    <div class="col-12 col-md-6 px-md-2">
+                        <label class="form-label">Registration Number<span>*</span></label>
+                        <input type="text" name="registration_number" class="form-control"
+                            placeholder="Enter Registration Number"
+                            value="{{ old('registration_number', $document->registration_number ?? '') }}" required>
+                    </div>
                     <div class="col-12 px-md-2">
                         <label class="form-label">Upload Registration Certificate <span class="text-danger">*</span></label>
 
@@ -143,26 +148,27 @@
                                 </svg>
                                 <p class="mt-2">Upload pdf/JPG upto 5 MB</p>
                                 @if (!empty($document->registration_certificate))
-                                    <a href="{{ asset('storage/' . $document->registration_certificate) }}" target="_blank"
-                                        class="text-success d-block mb-1">
-                                        View registration document  
+                                    <a href="{{ asset('storage/' . $document->registration_certificate) }}"
+                                        target="_blank" class="text-success d-block mb-1">
+                                        View registration document
                                     </a>
                                 @endif
                                 <small id="registration-certificate-help"></small>
                             </div>
                         </label>
                     </div>
-                    <div class="col-12 px-md-2">
-                        <label class="form-label">Registration Number<span>*</span></label>
-                        <input type="text" name="registration_number" class="form-control"
-                            placeholder="Enter Registration Number"
-                            value="{{ old('registration_number', $document->registration_number ?? '') }}" required>
-                    </div>
-                    <div class="px-md-2">
-                        <hr class="mb-0">
-                    </div>
-                    @if($op->dpiit_registration == 1)
-
+                </div>
+            </div>
+            <div class="card p-3 p-md-4 border-0 mb-3">
+                <div class="row flex-wrap row-gap-3 row-gap-md-4 px-md-1">
+                    @if ($op->dpiit_registration == 1)
+                        <div class="col-12 px-md-2">
+                            <label class="form-label">DPIIT Registration Number<span>*</span></label>
+                            <input type="text" name="dpiit_registration_number" class="form-control"
+                                placeholder="Enter here"
+                                value="{{ old('dpiit_registration_number', $document->dpiit_registration_number ?? '') }}"
+                                required>
+                        </div>
                         <div class="col-12 px-md-2">
                             <label class="form-label">Upload DPIIT Certificate<span class="text-danger">*</span></label>
 
@@ -170,11 +176,11 @@
 
                             <label for="dpiit_certificate" class="upload-label">
                                 <div class="upload-content">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26"
-                                        fill="none">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26"
+                                        viewBox="0 0 26 26" fill="none">
                                         <g opacity="0.2">
-                                            <path d="M9.75 11.917V18.417L11.9167 16.2503" stroke="#292D32" stroke-width="1.5"
-                                                stroke-linecap="round" stroke-linejoin="round" />
+                                            <path d="M9.75 11.917V18.417L11.9167 16.2503" stroke="#292D32"
+                                                stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                                             <path d="M9.7526 18.4167L7.58594 16.25" stroke="#292D32" stroke-width="1.5"
                                                 stroke-linecap="round" stroke-linejoin="round" />
                                             <path
@@ -189,7 +195,7 @@
                                     </svg>
                                     <p class="mt-2">Upload pdf/JPG upto 5 MB</p>
                                     @if (!empty($document->dpiit_certificate))
-                                        <a href="{{ asset('storage/' .$document->dpiit_certificate) }}" target="_blank"
+                                        <a href="{{ asset('storage/' . $document->dpiit_certificate) }}" target="_blank"
                                             class="text-success d-block mb-1">
                                             View DPIIT certificate
                                         </a>
@@ -198,45 +204,36 @@
                                 </div>
                             </label>
                         </div>
-
-                        <div class="col-12 px-md-2">
-                            <label class="form-label">DPIIT Registration Number<span>*</span></label>
-                            <input type="text" name="dpiit_registration_number" class="form-control" placeholder="Enter here"
-                                value="{{ old('dpiit_registration_number', $document->dpiit_registration_number ?? '') }}"
-                                required>
-                        </div>
                     @endif
-
-
+                </div>
+            </div>
+            <div class="card p-3 p-md-4 border-0 mb-3">
+                <div class="row flex-wrap row-gap-3 row-gap-md-4 px-md-1">
                     {{-- radio --}}
-                  @php
-    $patentAvailable =
-        old('patent_available',
-            $document->patent_available
-            ?? optional($op)->patent_available
-            ?? 0
-        );
-@endphp
+                    @php
+                        $patentAvailable = old(
+                            'patent_available',
+                            $document->patent_available ?? (optional($op)->patent_available ?? 0),
+                        );
+                    @endphp
+                    <div class="col-12 px-md-2">
+                        <div class="d-flex align-items-center gap-3">
+                            <label class="form-label mb-0">Patent Available</label>
+                            <label class="custom-radio mb-0">
+                                <input type="radio" name="patent_available" value="1"
+                                    {{ $patentAvailable == 1 ? 'checked' : '' }}>
+                                <span class="radio"></span>
+                                Yes
+                            </label>
 
-<div class="col-12 px-md-2">
-    <div class="d-flex align-items-center gap-3">
-        <label class="form-label mb-0">Patent Available</label>
-
-        <label class="custom-radio mb-0">
-            <input type="radio" name="patent_available" value="1"
-                {{ $patentAvailable == 1 ? 'checked' : '' }}>
-            <span class="radio"></span>
-            Yes
-        </label>
-
-        <label class="custom-radio mb-0">
-            <input type="radio" name="patent_available" value="0"
-                {{ $patentAvailable == 0 ? 'checked' : '' }}>
-            <span class="radio"></span>
-            No
-        </label>
-    </div>
-</div>
+                            <label class="custom-radio mb-0">
+                                <input type="radio" name="patent_available" value="0"
+                                    {{ $patentAvailable == 0 ? 'checked' : '' }}>
+                                <span class="radio"></span>
+                                No
+                            </label>
+                        </div>
+                    </div>
 
                     <div class="col-12 col-md-6 px-md-2 patent-field">
                         <label class="form-label">Patent No<span>*</span></label>
@@ -262,35 +259,34 @@
                             value="{{ old('patentee_name', $document->patentee_name ?? '') }}">
                     </div>
 
-                    <div class="col-12 col-md-6 px-md-2 patent-field">
+                    <div class="col-12 px-md-2 patent-field">
                         <label class="form-label">Validity of the Patent<span>*</span></label>
                         <input type="date" name="patent_validity" class="form-control"
                             value="{{ old('patent_validity', $document->patent_validity ?? '') }}">
                     </div>
-
-
-                    @if($op->gstin_registration == 1)
-
-                        <div class="col-12 col-md-6 px-md-2">
-                            <label class="form-label">GST Registration No<span>*</span></label>
-                            <input type="text" name="gst_registration_number" class="form-control" placeholder="Enter here"
-                                value="{{ old('gst_registration_number', $document->gst_registration_number ?? '') }}" required>
-                        </div>
-
-
+                </div>
+            </div>
+            <div class="card p-3 p-md-4 border-0 mb-3">
+                <div class="row flex-wrap row-gap-3 row-gap-md-4 px-md-1">
+                    @if ($op->gstin_registration == 1)
 
                         <div class="col-12 px-md-2">
+                            <label class="form-label">GST Registration No<span>*</span></label>
+                            <input type="text" name="gst_registration_number" class="form-control"
+                                placeholder="Enter here"
+                                value="{{ old('gst_registration_number', $document->gst_registration_number ?? '') }}"
+                                required>
+                        </div>
+                        <div class="col-12 px-md-2">
                             <label class="form-label">Upload GST Certificate<span class="text-danger">*</span></label>
-
                             <input type="file" id="gst_certificate" name="gst_certificate" hidden required>
-
                             <label for="gst_certificate" class="upload-label">
                                 <div class="upload-content">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26"
-                                        fill="none">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26"
+                                        viewBox="0 0 26 26" fill="none">
                                         <g opacity="0.2">
-                                            <path d="M9.75 11.917V18.417L11.9167 16.2503" stroke="#292D32" stroke-width="1.5"
-                                                stroke-linecap="round" stroke-linejoin="round" />
+                                            <path d="M9.75 11.917V18.417L11.9167 16.2503" stroke="#292D32"
+                                                stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                                             <path d="M9.7526 18.4167L7.58594 16.25" stroke="#292D32" stroke-width="1.5"
                                                 stroke-linecap="round" stroke-linejoin="round" />
                                             <path
@@ -305,7 +301,7 @@
                                     </svg>
                                     <p class="mt-2">Upload pdf/JPG upto 5 MB</p>
                                     @if (!empty($document->gst_certificate))
-                                        <a href="{{ asset('storage/' .$document->gst_certificate) }}" target="_blank"
+                                        <a href="{{ asset('storage/' . $document->gst_certificate) }}" target="_blank"
                                             class="text-success d-block mb-1">
                                             View GST certificate
                                         </a>
@@ -315,18 +311,22 @@
                             </label>
                         </div>
                     @endif
-                    @if($op->msme_registration == 1)
-
-
+                </div>
+            </div>
+            <div class="card p-3 p-md-4 border-0">
+                <div class="row flex-wrap row-gap-3 row-gap-md-4 px-md-1">
+                    @if ($op->msme_registration == 1)
                         <div class="col-12 col-md-6 px-md-2">
                             <label class="form-label">MSME Registration Number<span>*</span></label>
-                            <input type="text" name="msme_registration_number" class="form-control" placeholder="Enter here"
+                            <input type="text" name="msme_registration_number" class="form-control"
+                                placeholder="Enter here"
                                 value="{{ old('msme_registration_number', $document->msme_registration_number ?? '') }}"
                                 required>
                         </div>
                         <div class="col-12 col-md-6 px-md-2">
                             <label class="form-label">MSME Registration Validity<span>*</span></label>
-                            <input type="date" name="msme_registration_validity" class="form-control" placeholder="Enter here"
+                            <input type="date" name="msme_registration_validity" class="form-control"
+                                placeholder="Enter here"
                                 value="{{ old('msme_registration_validity', $document->msme_registration_validity ?? '') }}"
                                 required>
                         </div>
@@ -336,7 +336,8 @@
             <div style="border-radius:0px 0px 8px 8px;"
                 class="d-flex justify-content-center justify-content-md-end gap-2 gap-md-3 steps-btn pe-lg-4 flex-wrap">
                 <div class="btn-wrap">
-                  <button type="button" class="btn simple-btn" onclick="window.location.href='{{ route('projects.apply.senior-management', $fund->id) }}'">
+                    <button type="button" class="btn simple-btn"
+                        onclick="window.location.href='{{ route('projects.apply.senior-management', $fund->id) }}'">
                         <img src="/img/back.png" class="me-2" width="15" height="6.25">
                         Back
                     </button>
@@ -353,7 +354,7 @@
         </form>
     </div>
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
 
             document.querySelectorAll('input[type="file"]').forEach(input => {
 
@@ -362,7 +363,7 @@
                     '.pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document'
                 );
 
-                input.addEventListener('change', function () {
+                input.addEventListener('change', function() {
 
                     if (!this.files.length) return;
 
@@ -391,7 +392,7 @@
 
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
             const radios = document.querySelectorAll('input[name="patent_available"]');
             const fields = document.querySelectorAll('.patent-field');
 
@@ -411,29 +412,29 @@
         });
     </script>
 
-<script>
-document.addEventListener('DOMContentLoaded', function () {
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
 
-    const fileRules = {
-        "dpiit_certificate": {{ $document?->dpiit_certificate ? 'true' : 'false' }},
-        "gst_certificate": {{ $document?->gst_certificate ? 'true' : 'false' }},
-        "registration_certificate": {{ $document?->registration_certificate ? 'true' : 'false' }}
-    };
+            const fileRules = {
+                "dpiit_certificate": {{ $document?->dpiit_certificate ? 'true' : 'false' }},
+                "gst_certificate": {{ $document?->gst_certificate ? 'true' : 'false' }},
+                "registration_certificate": {{ $document?->registration_certificate ? 'true' : 'false' }}
+            };
 
-    function applyRequiredRules() {
-        Object.entries(fileRules).forEach(([id, hasFile]) => {
-            const input = document.getElementById(id);
-            if (!input) return;
+            function applyRequiredRules() {
+                Object.entries(fileRules).forEach(([id, hasFile]) => {
+                    const input = document.getElementById(id);
+                    if (!input) return;
 
-            if (hasFile) {
-                input.removeAttribute('required');
-            } else {
-                input.setAttribute('required', 'required');
+                    if (hasFile) {
+                        input.removeAttribute('required');
+                    } else {
+                        input.setAttribute('required', 'required');
+                    }
+                });
             }
-        });
-    }
 
-    applyRequiredRules();
-});
-</script>
+            applyRequiredRules();
+        });
+    </script>
 @endsection
