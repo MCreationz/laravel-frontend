@@ -142,18 +142,29 @@
                             <td>
                                 {{ $item->date_of_appointment ? \Carbon\Carbon::parse($item->date_of_appointment)->format('d/m/Y') : '-' }}
                             </td>
-                            <td>
+<td>
     @if($item->resume_cv)
+        @php
+            $extension = strtolower(pathinfo($item->resume_cv, PATHINFO_EXTENSION));
+          
+
+            $icon = match ($extension) {
+                'pdf' => asset('img/pdf-icon.png'),
+                'doc', 'docx' => asset('img/docx.svg'),
+                'xls', 'xlsx', 'csv' => asset('img/excel.svg'),
+                default => asset('img/docx.svg'),
+            };
+        @endphp
+
         <a href="{{ asset('storage/' . $item->resume_cv) }}"
            target="_blank"
            class="text-decoration-none">
-            View Resume
+            <img src="{{ $icon }}" alt="" width="20" height="20">
         </a>
     @else
         -
     @endif
 </td>
-
                             <td>
                                 {{ $item->total_years_of_experience !== null ? $item->total_years_of_experience . ' Years' : '-' }}
                             </td>
@@ -694,13 +705,22 @@ if (this.dataset.resume) {
     hasExistingResume.value = "1";
     console.log("Hidden value:", document.getElementById('has_existing_resume').value);
 
-    const fileName = this.dataset.resume.split('/').pop();
+    const extension = this.dataset.resume.split('.').pop().toLowerCase();
+
+    let icon = "/img/docx.svg";
+
+    if (extension === "pdf") {
+        icon = "/img/pdf-icon.png";
+    } else if (["xls", "xlsx", "csv"].includes(extension)) {
+        icon = "/img/excel.svg";
+    }
 
     existingResume.innerHTML = `
         <a href="/storage/${this.dataset.resume}"
            target="_blank"
-           class="text-decoration-none">
-            View Uploaded File (${fileName})
+           class="text-success d-block mb-1">
+            <img src="${icon}" alt="" width="20" height="20">
+            View Resume
         </a>
     `;
 

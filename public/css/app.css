@@ -3329,6 +3329,21 @@ span#notification-count {
     align-items: center;
     line-height: 1;
 }
+
+     .uploaded-doc {
+            background: #fff;
+            position: absolute;
+            bottom: 0px;
+            left: 8px;
+            border: 1px solid #D9D9D9;
+            padding: 10px 12px;
+            border-radius: 8px;
+            display: inline-flex !important;
+            text-decoration: none;
+            color: #282828 !important;
+            align-items: center;
+            gap: 10px;
+        }
 @media (max-width: 1200px) {
     .dashboard-v2-summary-grid {
         grid-template-columns: repeat(3, minmax(120px, 1fr));

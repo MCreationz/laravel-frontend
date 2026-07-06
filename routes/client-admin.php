@@ -22,8 +22,8 @@ Route::prefix('client-admin')->group(function () {
 
     Route::post('/login', [AuthController::class, 'login'])
         ->name('client-admin.login.submit');
-        Route::post('/logout', [AuthController::class, 'logout'])
-    ->name('client-admin.logout');
+    Route::post('/logout', [AuthController::class, 'logout'])
+        ->name('client-admin.logout');
 
     Route::middleware('guest:client_admin')->group(function () {
 
@@ -109,21 +109,20 @@ Route::prefix('client-admin')->group(function () {
         Route::post('/funds/questionnaire', [FundController::class, 'storeQuestionnaire'])
             ->name('client-admin.funds.questionnaire.store');
 
+        Route::get('/client-admin/reviewers', [ReviewerController::class, 'index'])
+            ->name('client-admin.reviewers.index');
 
-            Route::get('/client-admin/reviewers', [ReviewerController::class, 'index'])
-    ->name('client-admin.reviewers.index');
+        Route::post('/client-admin/reviewers/store', [ReviewerController::class, 'store'])
+            ->name('client-admin.reviewers.store');
 
-Route::post('/client-admin/reviewers/store', [ReviewerController::class, 'store'])
-    ->name('client-admin.reviewers.store');
+        Route::post('/client-admin/reviewers/{reviewer}/update', [ReviewerController::class, 'update'])
+            ->name('client-admin.reviewers.update');
 
-Route::post('/client-admin/reviewers/{reviewer}/update', [ReviewerController::class, 'update'])
-    ->name('client-admin.reviewers.update');
-
-Route::post('/client-admin/reviewers/{reviewer}/delete', [ReviewerController::class, 'destroy'])
-    ->name('client-admin.reviewers.delete');
-Route::post('/reviewers/assign-funds', [ReviewerController::class, 'assignFunds'])
-    ->name('client-admin.reviewers.assign-funds');
-        /*
+        Route::post('/client-admin/reviewers/{reviewer}/delete', [ReviewerController::class, 'destroy'])
+            ->name('client-admin.reviewers.delete');
+        Route::post('/reviewers/assign-funds', [ReviewerController::class, 'assignFunds'])
+            ->name('client-admin.reviewers.assign-funds');
+            /*
         |--------------------------------------------------------------------------
         | Fund Themes
         |--------------------------------------------------------------------------

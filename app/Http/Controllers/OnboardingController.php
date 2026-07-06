@@ -158,16 +158,15 @@ class OnboardingController extends Controller
 
     public function storeStepThree(Request $request)
     {
-       //return $request->all();
+        // return $request->all();
         $organization = Auth::guard('organization')->user();
         $role = $organization->role;
 
-         $request->merge([
-        'lifetime_revenue_lakh' => str_replace(',', '', $request->lifetime_revenue_lakh),
-        'ongoing_year_revenue_lakh' => str_replace(',', '', $request->ongoing_year_revenue_lakh),
-        'last_year_revenue_lakh' => str_replace(',', '', $request->last_year_revenue_lakh),
-    ]);
-
+        $request->merge([
+            'lifetime_revenue_lakh' => str_replace(',', '', $request->lifetime_revenue_lakh),
+            'ongoing_year_revenue_lakh' => str_replace(',', '', $request->ongoing_year_revenue_lakh),
+            'last_year_revenue_lakh' => str_replace(',', '', $request->last_year_revenue_lakh),
+        ]);
 
         $data = [
             'organization_id' => $organization->id,
@@ -217,12 +216,22 @@ class OnboardingController extends Controller
             $data
         );
 
-   NotificationService::createOnce(
-    'onboarding_completed',
-    'Profile Completed',
-    'Your organization profile has been successfully completed. You now have access to the dashboard and can begin exploring available features and opportunities.',
-    $organization->id
-);
+        NotificationService::createOnce(
+            'onboarding_completed',
+            'Profile Completed',
+            'Your organization profile has been successfully completed. You now have access to the dashboard and can begin exploring available features and opportunities.',
+            $organization->id
+        );
+
         return redirect()->route('dashboard');
+    }
+
+    public function verifyPan(Request $request)
+    {
+        return response()->json([
+            'status' => true,
+            'message' => 'PAN verified successfully.',
+            'legal_name' => 'SWAP IT HUB PRIVATE LIMITED',
+            'date_of_incorporation' => '20-03-2024',    ]);
     }
 }

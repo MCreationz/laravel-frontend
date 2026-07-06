@@ -4,8 +4,8 @@
 @section('header_back_url', route('dashboard'))
 
 @section('header_extra')
-  
-   
+
+
 @endsection
 
 @section('content')
@@ -101,7 +101,6 @@
         $organization = auth('organization')->user();
         $op = $organization->operationalDetail;
         //dd($op);
-
     @endphp
 
     <div class="card-body p-0">
@@ -109,30 +108,35 @@
             enctype="multipart/form-data">
             @csrf
 
-            <div style="border-radius:8px;" class="card p-3 p-md-4 border-0">
+            <div class="card p-3 p-md-4 border-0">
                 <div class="mb-4">
                     <h1 class="top-heading mb-0">Financial Documents</h1>
                 </div>
 
-                <div class="row mb-3 flex-wrap row-gap-3 row-gap-md-4 px-md-1">
+                <div class="row flex-wrap row-gap-3 row-gap-md-4 px-md-1">
 
                     @php
-                        $lastYearRevenue =
-                            old(
-                                'last_year_turnover',
-                                $document?->last_year_turnover
-                                ?? optional($op)->last_year_revenue_lakh
-                            );
+                        $lastYearRevenue = old(
+                            'last_year_turnover',
+                            $document?->last_year_turnover ?? optional($op)->last_year_revenue_lakh,
+                        );
                     @endphp
 
-                    <div class="col-12 px-md-2">
+                    <div class="col-12 col-md-6 px-md-2">
                         <label class="form-label">Last Year Turnover<span>*</span></label>
 
-                        <input type="text" inputmode="numeric" name="last_year_turnover" class="form-control" placeholder="Enter Number"
-                            value="{{ $lastYearRevenue }}" readonly>
+                        <input type="text" inputmode="numeric" name="last_year_turnover" class="form-control"
+                            placeholder="Enter Number" value="{{ $lastYearRevenue }}" readonly>
                     </div>
 
-                    <div class="col-12 px-md-2">
+                    <div class="col-12 col-md-6 px-md-2">
+                        <label class="form-label">Last to Last Year Turnover<span>*</span></label>
+                        <input type="text" inputmode="numeric" name="last_to_last_year_turnover" class="form-control"
+                            placeholder="Enter Number" required
+                            value="{{ old('last_to_last_year_turnover', $document?->last_to_last_year_turnover) }}">
+                    </div>
+
+                    <div class="col-12 col-md-6 px-md-2 position-relative pb-5">
                         <label class="form-label">Last Year Balance Sheet <span class="text-danger">*</span></label>
 
                         <input type="file" id="last_year_balance_sheet" name="last_year_balance_sheet" hidden required>
@@ -158,26 +162,33 @@
                                 </svg>
                                 <p class="mt-2">Upload pdf/JPG upto 5 MB</p>
 
-                                @if (!empty($document?->last_year_balance_sheet))
-                                    <a href="{{ asset('storage/' . $document->last_year_balance_sheet) }}" target="_blank"
-                                        class="text-success d-block mb-1">
-                                        View last year balance sheet
-                                    </a>
-                                @endif
+
 
                                 <small id="last-year-balance-sheet-help"></small>
                             </div>
                         </label>
+                   @if (!empty($document?->last_year_balance_sheet))
+@php
+    $extension = strtolower(pathinfo($document->last_year_balance_sheet, PATHINFO_EXTENSION));
+
+    $icon = match ($extension) {
+        'pdf' => asset('img/pdf-icon.png'),
+        'doc', 'docx' => asset('img/docx.svg'),
+        'xls', 'xlsx', 'csv' => asset('img/excel.svg'),
+        default => asset('img/docx.svg'),
+    };
+@endphp
+
+<a href="{{ asset('storage/' . $document->last_year_balance_sheet) }}"
+    target="_blank" class="text-success d-block mb-1 uploaded-doc">
+    <img src="{{ $icon }}" alt="File" width="20" height="20">
+    View last year balance sheet
+</a>
+@endif
                     </div>
 
-                    <div class="col-12 px-md-2">
-                        <label class="form-label">Last to Last Year Turnover<span>*</span></label>
-                        <input type="text" inputmode="numeric" name="last_to_last_year_turnover" class="form-control"
-                            placeholder="Enter Number" required
-                            value="{{ old('last_to_last_year_turnover', $document?->last_to_last_year_turnover) }}">
-                    </div>
 
-                    <div class="col-12 px-md-2">
+                    <div class="col-12 col-md-6 px-md-2 position-relative pb-5">
                         <label class="form-label">
                             Last to Last Year Balance Sheet
                             <span class="text-danger">*</span>
@@ -188,8 +199,8 @@
 
                         <label for="last_to_last_year_balance_sheet" class="upload-label">
                             <div class="upload-content">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26"
-                                    fill="none">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26"
+                                    viewBox="0 0 26 26" fill="none">
                                     <g opacity="0.2">
                                         <path d="M9.75 11.917V18.417L11.9167 16.2503" stroke="#292D32" stroke-width="1.5"
                                             stroke-linecap="round" stroke-linejoin="round" />
@@ -207,27 +218,41 @@
                                 </svg>
                                 <p class="mt-2">Upload pdf/JPG upto 5 MB</p>
 
-                                @if (!empty($document?->last_to_last_year_balance_sheet))
-                                    <a href="{{ asset('storage/' . $document->last_to_last_year_balance_sheet) }}"
-                                        target="_blank" class="text-success d-block mb-1">
-                                        View last to last year balance sheet
-                                    </a>
-                                @endif
+
 
                                 <small id="last-to-last-year-balance-sheet-help"></small>
                             </div>
                         </label>
+                @if (!empty($document?->last_to_last_year_balance_sheet))
+@php
+    $extension = strtolower(pathinfo($document->last_to_last_year_balance_sheet, PATHINFO_EXTENSION));
+
+    $icon = match ($extension) {
+        'pdf' => asset('img/pdf-icon.png'),
+        'doc', 'docx' => asset('img/docx.svg'),
+        'xls', 'xlsx', 'csv' => asset('img/excel.svg'),
+        default => asset('img/docx.svg'),
+    };
+@endphp
+
+<a href="{{ asset('storage/' . $document->last_to_last_year_balance_sheet) }}"
+    target="_blank" class="text-success d-block mb-1 uploaded-doc">
+    <img src="{{ $icon }}" alt="" width="20" height="20">
+    View last to last year balance sheet
+</a>
+@endif
+
                     </div>
 
-                    <div class="col-12 px-md-2">
+                    <div class="col-12 col-md-6 px-md-2 position-relative pb-5">
                         <label class="form-label">Last Year ITR<span class="text-danger">*</span></label>
 
                         <input type="file" id="last_year_itr" name="last_year_itr" hidden required>
 
                         <label for="last_year_itr" class="upload-label">
                             <div class="upload-content">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26"
-                                    fill="none">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26"
+                                    viewBox="0 0 26 26" fill="none">
                                     <g opacity="0.2">
                                         <path d="M9.75 11.917V18.417L11.9167 16.2503" stroke="#292D32" stroke-width="1.5"
                                             stroke-linecap="round" stroke-linejoin="round" />
@@ -245,26 +270,39 @@
                                 </svg>
                                 <p class="mt-2">Upload pdf/JPG upto 5 MB</p>
 
-                                @if (!empty($document?->last_year_itr))
-                                    <a href="{{ asset('storage/' . $document->last_year_itr) }}" target="_blank"
-                                        class="text-success d-block mb-1">
-                                        View last year ITR
-                                    </a>
-                                @endif
                                 <small id="last-year-itr-help"></small>
                             </div>
                         </label>
+
+                     @if (!empty($document?->last_year_itr))
+   @php
+    $extension = strtolower(pathinfo($document->last_year_itr, PATHINFO_EXTENSION));
+
+    $icon = match ($extension) {
+        'pdf' => asset('img/pdf-icon.png'),
+        'doc', 'docx' => asset('img/docx.svg'),
+        'xls', 'xlsx', 'csv' => asset('img/excel.svg'),
+        default => asset('img/docx.svg'),
+    };
+@endphp
+
+<a href="{{ asset('storage/' . $document->last_year_itr) }}" target="_blank"
+    class="text-success d-block mb-1 uploaded-doc">
+    <img src="{{ $icon }}" alt="" width="20" height="20">
+    View last year ITR
+</a>
+@endif
                     </div>
 
-                    <div class="col-12 px-md-2">
+                    <div class="col-12 col-md-6  px-md-2 position-relative pb-5">
                         <label class="form-label">Last to Last Year ITR<span class="text-danger">*</span></label>
 
                         <input type="file" id="last_to_last_year_itr" name="last_to_last_year_itr" hidden required>
 
                         <label for="last_to_last_year_itr" class="upload-label">
                             <div class="upload-content">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26"
-                                    fill="none">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26"
+                                    viewBox="0 0 26 26" fill="none">
                                     <g opacity="0.2">
                                         <path d="M9.75 11.917V18.417L11.9167 16.2503" stroke="#292D32" stroke-width="1.5"
                                             stroke-linecap="round" stroke-linejoin="round" />
@@ -281,17 +319,28 @@
                                     </g>
                                 </svg>
                                 <p class="mt-2">Upload pdf/JPG upto 5 MB</p>
-
-                                @if (!empty($document?->last_to_last_year_itr))
-                                    <a href="{{ asset('storage/' . $document->last_to_last_year_itr) }}" target="_blank"
-                                        class="text-success d-block mb-1">
-                                        View last to last year ITR
-                                    </a>
-                                @endif
-
                                 <small id="last-to-last-year-itr-help"></small>
                             </div>
                         </label>
+                   @if (!empty($document?->last_to_last_year_itr))
+ @php
+    $extension = strtolower(pathinfo($document->last_to_last_year_itr, PATHINFO_EXTENSION));
+
+    $icon = match ($extension) {
+        'pdf' => asset('img/pdf-icon.png'),
+        'doc', 'docx' => asset('img/docx.svg'),
+        'xls', 'xlsx', 'csv' => asset('img/excel.svg'),
+        default => asset('img/docx.svg'),
+    };
+@endphp
+
+<a href="{{ asset('storage/' . $document->last_to_last_year_itr) }}"
+   target="_blank"
+   class="text-success d-block mb-1 uploaded-doc">
+    <img src="{{ $icon }}" alt="File Icon" width="20" height="20">
+    View last to last year ITR
+</a>
+@endif
                     </div>
 
                 </div>
@@ -299,15 +348,16 @@
             @php
                 $documentsRoute =
                     auth('organization')->user()->role === 'fund_seeker'
-                    ? route('projects.apply.documents.startup', $fund->id)
-                    : route('projects.apply.documents.npo', $fund->id);
+                        ? route('projects.apply.documents.startup', $fund->id)
+                        : route('projects.apply.documents.npo', $fund->id);
             @endphp
 
             <div style="border-radius:0px 0px 8px 8px;"
                 class="d-flex justify-content-center justify-content-md-end gap-2 gap-md-3 steps-btn pe-lg-4 flex-wrap">
 
                 <div class="btn-wrap">
-                    <button type="button" class="btn simple-btn" onclick="window.location.href='{{ $documentsRoute }}'">
+                    <button type="button" class="btn simple-btn"
+                        onclick="window.location.href='{{ $documentsRoute }}'">
                         <img src="/img/back.png" class="me-2" width="15" height="6.25">
                         Back
                     </button>
@@ -316,7 +366,8 @@
                 <div class="btn-wrap">
                     <button type="submit" class="btn gradient-btn">
                         Continue
-                        <svg xmlns="http://www.w3.org/2000/svg" width="17" height="8" viewBox="0 0 17 8" fill="none">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="17" height="8" viewBox="0 0 17 8"
+                            fill="none">
                             <path d="M12.625 7L15.75 3.875L12.625 0.75M15.75 3.875H0.75" stroke="white" stroke-width="1.5"
                                 stroke-linecap="round" stroke-linejoin="round" />
                         </svg>
@@ -326,8 +377,9 @@
             </div>
         </form>
     </div>
+ 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
 
             const allowedExtensions = ['pdf', 'doc', 'docx', 'xls', 'xlsx'];
 
@@ -343,7 +395,7 @@
                     'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
                 );
 
-                input.addEventListener('change', function () {
+                input.addEventListener('change', function() {
 
                     if (!this.files.length) return;
 
@@ -376,30 +428,30 @@
         });
     </script>
     <script>
-document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
 
-    const fileRules = {
-        "last_year_balance_sheet": {{ $document?->last_year_balance_sheet ? 'true' : 'false' }},
-        "last_to_last_year_balance_sheet": {{ $document?->last_to_last_year_balance_sheet ? 'true' : 'false' }},
-        "last_year_itr": {{ $document?->last_year_itr ? 'true' : 'false' }},
-        "last_to_last_year_itr": {{ $document?->last_to_last_year_itr ? 'true' : 'false' }}
-    };
+            const fileRules = {
+                "last_year_balance_sheet": {{ $document?->last_year_balance_sheet ? 'true' : 'false' }},
+                "last_to_last_year_balance_sheet": {{ $document?->last_to_last_year_balance_sheet ? 'true' : 'false' }},
+                "last_year_itr": {{ $document?->last_year_itr ? 'true' : 'false' }},
+                "last_to_last_year_itr": {{ $document?->last_to_last_year_itr ? 'true' : 'false' }}
+            };
 
-    function applyRequiredRules() {
-        Object.entries(fileRules).forEach(([id, hasFile]) => {
-            const input = document.getElementById(id);
-            if (!input) return;
+            function applyRequiredRules() {
+                Object.entries(fileRules).forEach(([id, hasFile]) => {
+                    const input = document.getElementById(id);
+                    if (!input) return;
 
-            if (hasFile) {
-                input.removeAttribute('required');
-            } else {
-                input.setAttribute('required', 'required');
+                    if (hasFile) {
+                        input.removeAttribute('required');
+                    } else {
+                        input.setAttribute('required', 'required');
+                    }
+                });
             }
+
+            applyRequiredRules();
+
         });
-    }
-
-    applyRequiredRules();
-
-});
-</script>
+    </script>
 @endsection
