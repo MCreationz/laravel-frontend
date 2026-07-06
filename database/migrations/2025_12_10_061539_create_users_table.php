@@ -15,7 +15,6 @@ return new class extends Migration
             $table->string('mobile', 20)->nullable()->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->foreignId('company_id')->nullable()->constrained()->nullOnDelete();
             $table->string('status')->default('active');
             $table->rememberToken();
             $table->timestamps();
