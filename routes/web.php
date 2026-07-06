@@ -92,6 +92,8 @@ Route::post('/reset-password', [AuthLoginController::class, 'resetPassword'])
     ->name('password.reset');
 
 Route::middleware(['check.onboarding', 'auth:organization'])->group(function () {
+    Route::post('/onboarding/verify-pan', [OnboardingController::class, 'verifyPan'])
+    ->name('onboarding.verify-pan');
 
     Route::get('/dashboard', [DashboardController::class, 'index'])
         ->name('dashboard');

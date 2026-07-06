@@ -114,7 +114,7 @@
 
                         <input type="text" name="organization_name" class="form-control"
                             placeholder="Name of the Organization" required
-                            value="{{ old('organization_name', $document->organization_name ?? auth('organization')->user()->organization_name) }}">
+                            value="{{ old('organization_name', $document->organization_name ?? auth('organization')->user()->organization_name) }}" readonly>
                     </div>
 
                     <div class="col-12 px-md-2">

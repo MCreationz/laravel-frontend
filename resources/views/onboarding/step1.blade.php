@@ -77,7 +77,7 @@
 
                         <div class="col-12 col-md-6 col-xl-4 px-md-2">
                             <label class="form-label">Organization PAN<span>*</span></label>
-                            <input type="text" name="pan_number" class="form-control pan-card"
+                            <input type="text" id="pan_number" name="pan_number" class="form-control pan-card"
                                 placeholder="Enter PAN number"
                                 value="{{ old('pan_number', optional($profile)->pan_number) }}"
                                 pattern="[A-Z]{5}[0-9]{4}[A-Z]{1}" maxlength="10" style="text-transform: uppercase;"
@@ -88,18 +88,18 @@
                         <div class="col-12 col-md-6 col-xl-4 px-md-2">
                             <label class="form-label">Legal Name<span>*</span></label>
                             <input type="text" name="legal_name" class="form-control" placeholder="Enter legal name"
-                                value="{{ old('legal_name', optional($profile)->legal_name) }}" required>
+                                id="legal_name" value="{{ old('legal_name', optional($profile)->legal_name) }}" required>
                             <div class="error-message text-danger" style="display:none;"></div>
                         </div>
 
                         <div class="col-12 col-md-6 col-xl-4 px-md-2">
                             <label class="form-label">Date of Incorporation as per PAN<span>*</span></label>
-                            <div class="date-input-wrap">
+                            <div class="date-input-wrap has-value">
                                 <input type="date" name="date_of_incorporation" id="date_of_incorporation"
                                     class="form-control date-input-field"
                                     value="{{ old('date_of_incorporation', optional($profile)->date_of_incorporation) }}"
-                                    max="{{ date('Y-m-d') }}" required>
-                                <span class="date-input-placeholder" aria-hidden="true">mm/dd/yyyy</span>
+                                    max="{{ date('Y-m-d') }}" required id="date_of_incorporation" placeholder="dd/mm/yyyy">
+                                <span class="date-input-placeholder" aria-hidden="true">dd/mm/yyyy</span>
                                 <button type="button" class="date-input-icon-btn" tabindex="-1" aria-label="Open calendar">
                                     <svg class="date-input-icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
                                         xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -201,13 +201,24 @@
 
             function updateDatePlaceholder() {
                 if (!dateWrap || !dateInput) return;
-                dateWrap.classList.toggle('has-value', Boolean(dateInput.value));
+
+                if (document.activeElement === dateInput || dateInput.value) {   // ✅ also checks value
+                    dateWrap.classList.add('has-value');
+                } else {
+                    dateWrap.classList.remove('has-value');
+                }
             }
 
             if (dateInput && dateWrap) {
                 updateDatePlaceholder();
-                dateInput.addEventListener('input', updateDatePlaceholder);
-                dateInput.addEventListener('change', updateDatePlaceholder);
+
+                dateInput.addEventListener('focus', updateDatePlaceholder);
+                dateInput.addEventListener('blur', updateDatePlaceholder);
+
+                dateInput.addEventListener('change', function () {
+                    updateDatePlaceholder();
+                });
+
                 dateIconBtn?.addEventListener('click', function () {
                     if (typeof dateInput.showPicker === 'function') {
                         dateInput.showPicker();
@@ -312,4 +323,95 @@
             });
         });
     </script>
+
+    <script>
+        $(document).ready(function () {
+
+            let panVerified = false;
+            let verificationInProgress = false;
+
+            $('#pan_number').on('input', function () {
+
+                let pan = $(this).val().toUpperCase().trim();
+
+                if (pan.length !== 10) {
+                    panVerified = false;
+                    verificationInProgress = false;
+                    return;
+                }
+
+                const panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]$/;
+
+                if (!panRegex.test(pan)) {
+                    panVerified = false;
+                    verificationInProgress = false;
+                    return;
+                }
+
+                if (panVerified || verificationInProgress) {
+                    return;
+                }
+
+                verificationInProgress = true;
+
+                setTimeout(function () {
+
+                    const confirmed = confirm(
+                        "Please confirm this is your organization's PAN and not a personal PAN."
+                    );
+
+                    if (!confirmed) {
+                        verificationInProgress = false;
+                        $('#pan_number').focus();
+                        return;
+                    }
+
+                    $.ajax({
+                        url: "{{ route('onboarding.verify-pan') }}",
+                        type: "POST",
+                        data: {
+                            pan_number: pan,
+                            _token: "{{ csrf_token() }}"
+                        },
+                        success: function (response) {
+                            panVerified = true;
+                            verificationInProgress = false;
+                            toastr.success(response.message);
+
+                            $('#legal_name').val(response.legal_name);
+                            console.log(response.date_of_incorporation);
+
+                            let date = response.date_of_incorporation;
+
+                            if (date) {
+                                const [day, month, year] = date.split('-');
+                                const formatted = `${year}-${month}-${day}`;
+                                $('#date_of_incorporation').val(formatted).trigger('input');
+                            }
+
+                            $('.date-input-wrap').addClass('has-value');
+                            console.log($('#date_of_incorporation').val());
+                        },
+                        error: function (xhr) {
+                            panVerified = false;
+                            verificationInProgress = false;
+
+                            console.log(xhr.responseJSON);
+                        }
+                    });
+
+
+
+                }, 300);
+
+            });
+
+        });
+
+
+
+
+    </script>
+
+
 @endsection

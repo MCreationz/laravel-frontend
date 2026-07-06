@@ -65,6 +65,7 @@
 
         </div>
     </div>
+    
     <div class="card-body p-0">
 
         <form id="onboardingForm" method="POST" action="{{ route('onboarding.step3.store') }}"> @csrf
@@ -1565,26 +1566,26 @@
                             const amount = funder.amount
 
                             fundersTable.innerHTML += `
-                                            <tr
-                                                data-id="${funder.id}"
-                                                data-category="${funder.category}"
-                                                data-purpose="${funder.purpose}"
-                                            >
-                                                <td>${index + 1}</td>
-                                                <td>${funder.name}</td>
-                                                <td>${formatLabel(funder.category)}</td>
-                                                <td>${funder.year}</td>
-                                                <td>${formatLabel(funder.purpose)}</td>
-                                                <td>${Number(funder.amount).toLocaleString('en-IN')}</td>
-                                                <td>
-                                                    <button type="button" class="edit editFunder">
-                                                        <i class="bi bi-pencil-square"></i>
-                                                    </button>
-                                                    <button type="button" class="trash deleteFunder">
-                                                        <i class="bi bi-trash3"></i>
-                                                    </button>
-                                                </td>
-                                            </tr>`;
+                                                <tr
+                                                    data-id="${funder.id}"
+                                                    data-category="${funder.category}"
+                                                    data-purpose="${funder.purpose}"
+                                                >
+                                                    <td>${index + 1}</td>
+                                                    <td>${funder.name}</td>
+                                                    <td>${formatLabel(funder.category)}</td>
+                                                    <td>${funder.year}</td>
+                                                    <td>${formatLabel(funder.purpose)}</td>
+                                                    <td>${Number(funder.amount).toLocaleString('en-IN')}</td>
+                                                    <td>
+                                                        <button type="button" class="edit editFunder">
+                                                            <i class="bi bi-pencil-square"></i>
+                                                        </button>
+                                                        <button type="button" class="trash deleteFunder">
+                                                            <i class="bi bi-trash3"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>`;
                         });
                     })
                     .catch(() => {
@@ -1648,13 +1649,13 @@
 
                 let id = document.getElementById('funder_id').value;
 
-              let data = {
-    name: document.getElementById('funder_name').value,
-    year: document.getElementById('funder_year').value,
-    amount: document.getElementById('funder_amount').value.replace(/,/g, ''),
-    category: document.getElementById('funder_category')?.value || '',
-    purpose: document.getElementById('funder_purpose')?.value || ''
-};
+                let data = {
+                    name: document.getElementById('funder_name').value,
+                    year: document.getElementById('funder_year').value,
+                    amount: document.getElementById('funder_amount').value.replace(/,/g, ''),
+                    category: document.getElementById('funder_category')?.value || '',
+                    purpose: document.getElementById('funder_purpose')?.value || ''
+                };
 
                 try {
                     if (id) {
@@ -1876,9 +1877,9 @@
                         tag.className = 'state-tag';
 
                         tag.innerHTML = `
-                                                                                                <span>${cb.value}</span>
-                                                                                                <span class="remove-tag" data-value="${cb.value}">&times;</span>
-                                                                                            `;
+                                                                                                    <span>${cb.value}</span>
+                                                                                                    <span class="remove-tag" data-value="${cb.value}">&times;</span>
+                                                                                                `;
 
                         selectedBox.appendChild(tag);
                     }
