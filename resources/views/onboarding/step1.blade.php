@@ -132,17 +132,15 @@
                             </div>
                             <div class="error-message text-danger" style="display:none;"></div>
                         </div> --}}
-
-                        <div class="col-12 col-md-6 col-xl-4 px-md-2">
+<div class="col-12 col-md-6 col-xl-4 px-md-2">
     <label class="form-label">Date of Incorporation as per PAN<span>*</span></label>
 
     <input
-        type="text"
+        type="date"
         name="date_of_incorporation"
         id="date_of_incorporation"
         class="form-control"
-        placeholder="DD-MM-YYYY"
-        maxlength="10"
+        max="{{ date('Y-m-d') }}"
         readonly>
 
     <div class="error-message text-danger" style="display:none;"></div>
@@ -344,6 +342,8 @@
             });
         });
     </script>
+
+
 <script>
 $(document).ready(function () {
 
@@ -407,7 +407,16 @@ $(document).ready(function () {
                 toastr.success(response.message || 'PAN verified successfully.');
 
                 $('#legal_name').val(response.data.organization_name || '');
-                $('#date_of_incorporation').val(response.data.incorporation_date || '');
+
+                if (response.data.incorporation_date) {
+
+                    const parts = response.data.incorporation_date.split('-');
+
+                    if (parts.length === 3) {
+                        const formattedDate = `${parts[2]}-${parts[1]}-${parts[0]}`;
+                        $('#date_of_incorporation').val(formattedDate);
+                    }
+                }
 
             },
 
