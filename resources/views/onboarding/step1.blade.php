@@ -98,7 +98,7 @@
                             <div class="error-message text-danger" style="display:none;"></div>
                         </div>
 
-                        <div class="col-12 col-md-6 col-xl-4 px-md-2">
+                        {{-- <div class="col-12 col-md-6 col-xl-4 px-md-2">
                             <label class="form-label">Date of Incorporation as per PAN<span>*</span></label>
                             <div class="date-input-wrap has-value">
                                 <input type="date" name="date_of_incorporation" id="date_of_incorporation"
@@ -131,7 +131,22 @@
                                 </button>
                             </div>
                             <div class="error-message text-danger" style="display:none;"></div>
-                        </div>
+                        </div> --}}
+
+                        <div class="col-12 col-md-6 col-xl-4 px-md-2">
+    <label class="form-label">Date of Incorporation as per PAN<span>*</span></label>
+
+    <input
+        type="text"
+        name="date_of_incorporation"
+        id="date_of_incorporation"
+        class="form-control"
+        placeholder="DD-MM-YYYY"
+        maxlength="10"
+        readonly>
+
+    <div class="error-message text-danger" style="display:none;"></div>
+</div>
 
                         <div class="col-12 col-md-6 col-xl-4 px-md-2">
                             <label class="form-label">Brand/Operating Name</label>
@@ -329,112 +344,103 @@
             });
         });
     </script>
+<script>
+$(document).ready(function () {
 
-   <script>
-    $(document).ready(function () {
+    let panVerified = false;
+    let verificationInProgress = false;
 
-        let panVerified = false;
-        let verificationInProgress = false;
+    $('#pan_number').on('input', function () {
 
-        $('#pan_number').on('input', function () {
+        const pan = $(this).val().toUpperCase().trim();
+        $(this).val(pan);
 
-            const pan = $(this).val().toUpperCase().trim();
-            $(this).val(pan);
+        // Reset when PAN changes
+        panVerified = false;
 
-            // Reset verification when PAN changes
-            panVerified = false;
+        $('#legal_name').val('');
+        $('#date_of_incorporation').val('');
 
-            $('#legal_name').val('');
-            $('#date_of_incorporation').val('');
-            $('.date-input-wrap').removeClass('has-value');
+        if (pan.length !== 10) {
+            verificationInProgress = false;
+            $('#pan-loader').addClass('d-none');
+            return;
+        }
 
-            if (pan.length !== 10) {
-                verificationInProgress = false;
-                $('#pan-loader').addClass('d-none');
-                return;
-            }
+        const panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]$/;
 
-            const panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]$/;
+        if (!panRegex.test(pan)) {
+            verificationInProgress = false;
+            return;
+        }
 
-            if (!panRegex.test(pan)) {
-                verificationInProgress = false;
-                return;
-            }
+        if (verificationInProgress || panVerified) {
+            return;
+        }
 
-            if (verificationInProgress || panVerified) {
-                return;
-            }
+        const confirmed = confirm(
+            "Please confirm that this is your organization's PAN and not a personal PAN."
+        );
 
-            const confirmed = confirm(
-                "Please confirm that this is your organization's PAN and not a personal PAN."
-            );
+        if (!confirmed) {
+            $('#pan_number').focus();
+            return;
+        }
 
-            if (!confirmed) {
-                $('#pan_number').focus();
-                return;
-            }
+        verificationInProgress = true;
 
-            verificationInProgress = true;
+        $('#pan-loader').removeClass('d-none');
+        $('#pan_number').prop('readonly', true);
 
-            $('#pan-loader').removeClass('d-none');
-            $('#pan_number').prop('readonly', true);
+        $.ajax({
+            url: "{{ route('onboarding.verify-pan') }}",
+            type: "POST",
+            data: {
+                pan_number: pan,
+                _token: "{{ csrf_token() }}"
+            },
 
-            $.ajax({
-                url: "{{ route('onboarding.verify-pan') }}",
-                type: "POST",
-                data: {
-                    pan_number: pan,
-                    _token: "{{ csrf_token() }}"
-                },
+            success: function (response) {
 
-                success: function (response) {
+                panVerified = true;
 
-                    panVerified = true;
+                toastr.success(response.message || 'PAN verified successfully.');
 
-                    toastr.success(response.message || 'PAN verified successfully.');
+                $('#legal_name').val(response.data.organization_name || '');
+                $('#date_of_incorporation').val(response.data.incorporation_date || '');
 
-                    $('#legal_name').val(response.data.organization_name ?? '');
+            },
 
-                    if (response.data.incorporation_date) {
-                        $('#date_of_incorporation')
-                            .val(response.data.incorporation_date)
-                            .trigger('input');
+            error: function (xhr) {
 
-                        $('.date-input-wrap').addClass('has-value');
-                    }
-                },
+                panVerified = false;
 
-                error: function (xhr) {
+                $('#legal_name').val('');
+                $('#date_of_incorporation').val('');
 
-                    panVerified = false;
+                let message = 'Unable to verify PAN. Please try again.';
 
-                    $('#legal_name').val('');
-                    $('#date_of_incorporation').val('');
-                    $('.date-input-wrap').removeClass('has-value');
-
-                    let message = 'Unable to verify PAN. Please try again.';
-
-                    if (xhr.responseJSON?.message) {
-                        message = xhr.responseJSON.message;
-                    }
-
-                    toastr.error(message);
-
-                    $('#pan_number').focus();
-                },
-
-                complete: function () {
-
-                    verificationInProgress = false;
-
-                    $('#pan-loader').addClass('d-none');
-                    $('#pan_number').prop('readonly', false);
+                if (xhr.responseJSON && xhr.responseJSON.message) {
+                    message = xhr.responseJSON.message;
                 }
-            });
 
+                toastr.error(message);
+
+                $('#pan_number').focus();
+            },
+
+            complete: function () {
+
+                verificationInProgress = false;
+
+                $('#pan-loader').addClass('d-none');
+                $('#pan_number').prop('readonly', false);
+            }
         });
 
     });
+
+});
 </script>
 
 @endsection
