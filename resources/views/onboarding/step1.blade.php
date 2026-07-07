@@ -82,7 +82,13 @@
                                 value="{{ old('pan_number', optional($profile)->pan_number) }}"
                                 pattern="[A-Z]{5}[0-9]{4}[A-Z]{1}" maxlength="10" style="text-transform: uppercase;"
                                 oninput="this.value = this.value.toUpperCase();">
+                            <div id="pan-loader" class="position-absolute top-50 end-0 translate-middle-y me-3 d-none">
+                                <div class="spinner-border spinner-border-sm text-primary" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                            </div>
                             <div class="error-message text-danger" style="display:none;"></div>
+
                         </div>
 
                         <div class="col-12 col-md-6 col-xl-4 px-md-2">
@@ -324,7 +330,7 @@
         });
     </script>
 
- <script>
+   <script>
     $(document).ready(function () {
 
         let panVerified = false;
@@ -335,41 +341,43 @@
             const pan = $(this).val().toUpperCase().trim();
             $(this).val(pan);
 
-            // Reset if PAN changes
+            // Reset verification when PAN changes
             panVerified = false;
 
             $('#legal_name').val('');
+            $('#date_of_incorporation').val('');
+            $('.date-input-wrap').removeClass('has-value');
 
             if (pan.length !== 10) {
                 verificationInProgress = false;
+                $('#pan-loader').addClass('d-none');
                 return;
             }
 
             const panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]$/;
 
             if (!panRegex.test(pan)) {
-                toastr.error('Please enter a valid PAN number.');
                 verificationInProgress = false;
                 return;
             }
 
-            if (verificationInProgress) {
+            if (verificationInProgress || panVerified) {
                 return;
             }
-
-            verificationInProgress = true;
 
             const confirmed = confirm(
                 "Please confirm that this is your organization's PAN and not a personal PAN."
             );
 
             if (!confirmed) {
-                verificationInProgress = false;
                 $('#pan_number').focus();
                 return;
             }
 
-            toastr.info('Verifying PAN...');
+            verificationInProgress = true;
+
+            $('#pan-loader').removeClass('d-none');
+            $('#pan_number').prop('readonly', true);
 
             $.ajax({
                 url: "{{ route('onboarding.verify-pan') }}",
@@ -381,7 +389,6 @@
 
                 success: function (response) {
 
-                    verificationInProgress = false;
                     panVerified = true;
 
                     toastr.success(response.message || 'PAN verified successfully.');
@@ -395,26 +402,33 @@
 
                         $('.date-input-wrap').addClass('has-value');
                     }
-
                 },
 
                 error: function (xhr) {
 
-                    verificationInProgress = false;
                     panVerified = false;
 
                     $('#legal_name').val('');
                     $('#date_of_incorporation').val('');
+                    $('.date-input-wrap').removeClass('has-value');
 
                     let message = 'Unable to verify PAN. Please try again.';
 
-                    if (xhr.responseJSON) {
-                        message = xhr.responseJSON.message || message;
+                    if (xhr.responseJSON?.message) {
+                        message = xhr.responseJSON.message;
                     }
 
                     toastr.error(message);
 
                     $('#pan_number').focus();
+                },
+
+                complete: function () {
+
+                    verificationInProgress = false;
+
+                    $('#pan-loader').addClass('d-none');
+                    $('#pan_number').prop('readonly', false);
                 }
             });
 
@@ -422,6 +436,5 @@
 
     });
 </script>
-
 
 @endsection

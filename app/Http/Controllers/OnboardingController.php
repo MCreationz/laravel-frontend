@@ -260,12 +260,14 @@ public function verifyPan(Request $request)
         $result = $data['result'] ?? [];
 
         // Reject Individual PAN
-        if (strcasecmp($result['pan_type'] ?? '', 'Individual') === 0) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Individual PAN is not allowed. Please provide a Company/LLP PAN.',
-            ], 422);
-        }
+      $panType = strtolower(trim($result['pan_type'] ?? ''));
+
+if (str_contains($panType, 'individual') || str_contains($panType, 'person')) {
+    return response()->json([
+        'success' => false,
+        'message' => 'Individual PAN is not allowed. Please provide a Company/LLP PAN.',
+    ], 422);
+}
 
         return response()->json([
             'success' => true,
