@@ -236,12 +236,16 @@ public function verifyPan(Request $request)
     ]);
 
     try {
+
         $response = Http::withHeaders([
-            'x-api-key' => env('PAN_API_KEY'),
-            'Accept' => 'application/json',
+            'apiKey' => env('PAN_API_KEY'),
             'Content-Type' => 'application/json',
-        ])->post('https://api.apigalaxy.in/kyc/v1/verify/pan', [
-            'pan_number' => strtoupper($request->pan_number),
+            'Accept' => 'application/json',
+        ])->post('https://api.apigalaxy.in/kyc/v1/verify/pan/plus', [
+            'requested_orderId'   => 'ORD-' . time(),
+            'customer_pan_number' => strtoupper($request->pan_number),
+            'service_id'          => 'AG1035',
+            'name_to_match'       => 'dummy',
         ]);
 
         $data = $response->json();
@@ -270,7 +274,9 @@ public function verifyPan(Request $request)
                 'pan_number'         => $result['pan_number'] ?? null,
                 'organization_name'  => $result['user_full_name'] ?? null,
                 'pan_type'           => $result['pan_type'] ?? null,
-                'incorporation_date' => $result['user_dob'] ?? null,
+                'incorporation_date' => !empty($result['user_dob'])
+                    ? str_replace('/', '-', $result['user_dob'])
+                    : null,
                 'email'              => $result['user_email'] ?? null,
                 'phone'              => $result['user_phone_number'] ?? null,
                 'address'            => $result['user_address'] ?? [],
