@@ -82,11 +82,11 @@
                                 value="{{ old('pan_number', optional($profile)->pan_number) }}"
                                 pattern="[A-Z]{5}[0-9]{4}[A-Z]{1}" maxlength="10" style="text-transform: uppercase;"
                                 oninput="this.value = this.value.toUpperCase();">
-                            <div id="pan-loader" class="position-absolute top-50 end-0 translate-middle-y me-3 d-none">
+                            {{-- <div id="pan-loader" class="position-absolute top-50 end-0 translate-middle-y me-3 d-none">
                                 <div class="spinner-border spinner-border-sm text-primary" role="status">
                                     <span class="visually-hidden">Loading...</span>
                                 </div>
-                            </div>
+                            </div> --}}
                             <div class="error-message text-danger" style="display:none;"></div>
 
                         </div>
