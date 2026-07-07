@@ -94,7 +94,7 @@
                         <div class="col-12 col-md-6 col-xl-4 px-md-2">
                             <label class="form-label">Legal Name<span>*</span></label>
                             <input type="text" name="legal_name" class="form-control" placeholder="Enter legal name"
-                                id="legal_name" value="{{ old('legal_name', optional($profile)->legal_name) }}" required>
+                                id="legal_name" value="{{ old('legal_name', optional($profile)->legal_name) }}" required readonly>
                             <div class="error-message text-danger" style="display:none;"></div>
                         </div>
 
