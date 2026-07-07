@@ -140,12 +140,12 @@
         name="date_of_incorporation"
         id="date_of_incorporation"
         class="form-control"
+        value="{{ old('date_of_incorporation', optional($profile)->date_of_incorporation ? \Carbon\Carbon::parse($profile->date_of_incorporation)->format('Y-m-d') : '') }}"
         max="{{ date('Y-m-d') }}"
         readonly>
 
     <div class="error-message text-danger" style="display:none;"></div>
 </div>
-
                         <div class="col-12 col-md-6 col-xl-4 px-md-2">
                             <label class="form-label">Brand/Operating Name</label>
                             <input type="text" name="brand_name" class="form-control" placeholder="Enter your brand name"
