@@ -77,7 +77,7 @@
 
                         <div class="col-12 col-md-6 col-xl-4 px-md-2">
                             <label class="form-label">Organization PAN<span>*</span></label>
-                            <input type="text" id="pan_number_test" name="pan_number" class="form-control pan-card"
+                            <input type="text" id="pan_number" name="pan_number" class="form-control pan-card"
                                 placeholder="Enter PAN number"
                                 value="{{ old('pan_number', optional($profile)->pan_number) }}"
                                 pattern="[A-Z]{5}[0-9]{4}[A-Z]{1}" maxlength="10" style="text-transform: uppercase;"
