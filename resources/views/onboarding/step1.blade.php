@@ -324,94 +324,104 @@
         });
     </script>
 
-    <script>
-        $(document).ready(function () {
+ <script>
+    $(document).ready(function () {
 
-            let panVerified = false;
-            let verificationInProgress = false;
+        let panVerified = false;
+        let verificationInProgress = false;
 
-            $('#pan_number').on('input', function () {
+        $('#pan_number').on('input', function () {
 
-                let pan = $(this).val().toUpperCase().trim();
+            const pan = $(this).val().toUpperCase().trim();
+            $(this).val(pan);
 
-                if (pan.length !== 10) {
-                    panVerified = false;
+            // Reset if PAN changes
+            panVerified = false;
+
+            $('#legal_name').val('');
+
+            if (pan.length !== 10) {
+                verificationInProgress = false;
+                return;
+            }
+
+            const panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]$/;
+
+            if (!panRegex.test(pan)) {
+                toastr.error('Please enter a valid PAN number.');
+                verificationInProgress = false;
+                return;
+            }
+
+            if (verificationInProgress) {
+                return;
+            }
+
+            verificationInProgress = true;
+
+            const confirmed = confirm(
+                "Please confirm that this is your organization's PAN and not a personal PAN."
+            );
+
+            if (!confirmed) {
+                verificationInProgress = false;
+                $('#pan_number').focus();
+                return;
+            }
+
+            toastr.info('Verifying PAN...');
+
+            $.ajax({
+                url: "{{ route('onboarding.verify-pan') }}",
+                type: "POST",
+                data: {
+                    pan_number: pan,
+                    _token: "{{ csrf_token() }}"
+                },
+
+                success: function (response) {
+
                     verificationInProgress = false;
-                    return;
-                }
+                    panVerified = true;
 
-                const panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]$/;
+                    toastr.success(response.message || 'PAN verified successfully.');
 
-                if (!panRegex.test(pan)) {
-                    panVerified = false;
-                    verificationInProgress = false;
-                    return;
-                }
+                    $('#legal_name').val(response.data.organization_name ?? '');
 
-                if (panVerified || verificationInProgress) {
-                    return;
-                }
+                    if (response.data.incorporation_date) {
+                        $('#date_of_incorporation')
+                            .val(response.data.incorporation_date)
+                            .trigger('input');
 
-                verificationInProgress = true;
-
-                setTimeout(function () {
-
-                    const confirmed = confirm(
-                        "Please confirm this is your organization's PAN and not a personal PAN."
-                    );
-
-                    if (!confirmed) {
-                        verificationInProgress = false;
-                        $('#pan_number').focus();
-                        return;
+                        $('.date-input-wrap').addClass('has-value');
                     }
 
-                    $.ajax({
-                        url: "{{ route('onboarding.verify-pan') }}",
-                        type: "POST",
-                        data: {
-                            pan_number: pan,
-                            _token: "{{ csrf_token() }}"
-                        },
-                        success: function (response) {
-                            panVerified = true;
-                            verificationInProgress = false;
-                            toastr.success(response.message);
+                },
 
-                            $('#legal_name').val(response.legal_name);
-                            console.log(response.date_of_incorporation);
+                error: function (xhr) {
 
-                            let date = response.date_of_incorporation;
+                    verificationInProgress = false;
+                    panVerified = false;
 
-                            if (date) {
-                                const [day, month, year] = date.split('-');
-                                const formatted = `${year}-${month}-${day}`;
-                                $('#date_of_incorporation').val(formatted).trigger('input');
-                            }
+                    $('#legal_name').val('');
+                    $('#date_of_incorporation').val('');
 
-                            $('.date-input-wrap').addClass('has-value');
-                            console.log($('#date_of_incorporation').val());
-                        },
-                        error: function (xhr) {
-                            panVerified = false;
-                            verificationInProgress = false;
+                    let message = 'Unable to verify PAN. Please try again.';
 
-                            console.log(xhr.responseJSON);
-                        }
-                    });
+                    if (xhr.responseJSON) {
+                        message = xhr.responseJSON.message || message;
+                    }
 
+                    toastr.error(message);
 
-
-                }, 300);
-
+                    $('#pan_number').focus();
+                }
             });
 
         });
 
-
-
-
-    </script>
+    });
+</script>
 
 
 @endsection
