@@ -21,7 +21,7 @@
                     <p class="dashboard-v2-welcome mb-1">Welcome Back!</p>
 
                     <h2 class="dashboard-v2-name mb-1">
-                        {{ auth('organization')->user()->organization_name ?? 'Organization' }}
+                        {{ auth('organization')->user()->profile->legal_name ?? 'Organization' }}
                     </h2>
 
                     @php
