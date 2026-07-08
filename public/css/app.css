@@ -578,7 +578,7 @@ button.btn.show-password {
 }
 
 .select-list li {
-    padding: 8px 12px;
+    padding: 8px 6px 8px 12px;
     color: #878787 !important;
     cursor: pointer;
     border-radius: 4px;
@@ -1735,6 +1735,7 @@ ul.select-list label {
     width: 100%;
     position: relative;
     cursor: pointer;
+    padding-right: 20px;
 }
 
 .select-list.checkbox-list {
