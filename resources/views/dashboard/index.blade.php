@@ -28,7 +28,7 @@
                         $profile = auth('organization')->user()->profile;
                     @endphp
 
-                    <p class="dashboard-v2-meta mb-0">
+                    {{-- <p class="dashboard-v2-meta mb-0">
                         Registered NPO
                         @if($profile?->is_fcra_certified)
                             • FCRA Certified
@@ -36,7 +36,7 @@
                         @if($profile?->established_year)
                             • Est. {{ $profile->established_year }}
                         @endif
-                    </p>
+                    </p> --}}
                 </div>
 
                 <div class="dashboard-v2-kpi">
