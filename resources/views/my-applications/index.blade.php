@@ -118,10 +118,11 @@
                             <td class="text-center text-nowrap">
                                 {{ $application->created_at->format('d M Y') }}
                             </td>
-
-                            <td class="text-center">
-                                Step {{ $application->current_step }}
-                            </td>
+<td class="text-center">
+    {{ \Illuminate\Support\Str::of($application->current_step)
+        ->replace(['_', '-'], ' ')
+        ->title() }}
+</td>
 
                             <td class="text-center">
                                 <span class="badge {{ $statusClass }}">
@@ -135,7 +136,7 @@
                                     data-owner="{{ $application->fund->fund_owner ?? '-' }}"
                                     data-application-id="APP-{{ $application->id }}"
                                     data-applied="{{ $application->created_at->format('d/m/Y') }}"
-                                    data-stage="Step {{ $application->current_step }}"
+                                    data-stage="{{ $application->current_step }}"
                                     data-status="{{ ucfirst(str_replace('_', ' ', $application->status)) }}">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                                         fill="none" stroke="#07CCB5" stroke-width="2">
@@ -449,7 +450,9 @@
                     document.getElementById('modalFundOwner').textContent = owner;
                     document.getElementById('modalApplicationId').textContent = applicationId;
                     document.getElementById('modalAppliedOn').textContent = applied;
-                    document.getElementById('modalCurrentStage').textContent = stage;
+                  document.getElementById('modalCurrentStage').textContent = stage
+    .replace(/[_-]/g, ' ')
+    .replace(/\b\w/g, c => c.toUpperCase());
                     document.getElementById('modalFounder').textContent = owner;
                     document.getElementById('modalStatus').textContent = status;
 

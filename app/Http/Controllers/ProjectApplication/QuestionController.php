@@ -52,21 +52,25 @@ public function store(Request $request, Fund $fund)
 
     DB::transaction(function () use ($request, $fund) {
 
-        $application = FundApplication::updateOrCreate(
-            [
-                'fund_id' => $fund->id,
-                'organization_id' => auth('organization')->id(),
-            ],
-            [
-                'theme_id' => $request->theme_id,
-                'sub_theme_id' => $request->sub_theme_id,
-                'project_duration' => $request->project_duration,
-                'total_budget' => $request->total_budget,
-                'additional_info' => $request->additional_info,
-                'current_step' => 'senior-management',
-                'status' => 'draft',
-            ]
-        );
+   $application = FundApplication::updateOrCreate(
+    [
+        'fund_id' => $fund->id,
+        'organization_id' => auth('organization')->id(),
+    ],
+    [
+        'theme_id' => $request->theme_id,
+        'sub_theme_id' => $request->sub_theme_id,
+        'project_duration' => $request->project_duration,
+        'total_budget' => $request->total_budget,
+        'additional_info' => $request->additional_info,
+        'status' => 'draft',
+    ]
+);
+
+if (empty($application->current_step)) {
+    $application->current_step = 'submission-pending';
+    $application->save();
+}
 
         foreach ($request->answers as $questionId => $answer) {
 

@@ -70,6 +70,7 @@ class FinancialDocumentController extends Controller
                 ->where('status', 'draft')
                 ->update([
                     'status' => 'active',
+                    'current_step'=>'application_evaluation'
                 ]);
 
             return redirect()

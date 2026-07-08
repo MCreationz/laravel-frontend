@@ -489,5 +489,22 @@ document.addEventListener('DOMContentLoaded', function () {
     label.classList.add('file-uploaded');
 });
 </script>
+<script>
+document.addEventListener('keydown', function (e) {
+    if (e.target.matches('input[type="number"]')) {
+        if (['e', 'E', '+', '-'].includes(e.key)) {
+            e.preventDefault();
+        }
+    }   
+});
 
+document.addEventListener('paste', function (e) {
+    if (e.target.matches('input[type="number"]')) {
+        const pasted = (e.clipboardData || window.clipboardData).getData('text');
+        if (/[eE+\-]/.test(pasted)) {
+            e.preventDefault();
+        }
+    }
+});
+</script>
 </html>

@@ -60,14 +60,26 @@
                                 </td>
 
                                 <!-- VIEW -->
-                                <td class="text-center">
-                                    <a href="{{ asset('storage/' . $file) }}"
-                                       target="_blank"
-                                       class="btn btn-primary btn-sm">
-                                        View
-                                    </a>
-                                </td>
+                              <td class="text-center">
+    @php
+        $extension = strtolower(pathinfo($file, PATHINFO_EXTENSION));
+      //  dd($extension);
 
+        $icon = match ($extension) {
+            'pdf' => asset('img/pdf-icon.png'),
+            'doc', 'docx' => asset('img/docx.svg'),
+            'xls', 'xlsx', 'csv' => asset('img/excel.svg'),
+            default => asset('img/docx.svg'),
+        };
+    @endphp
+
+    <a href="{{ asset('storage/' . $file) }}"
+       target="_blank"
+       class=" d-inline-flex align-items-center gap-2">
+        <img src="{{ $icon }}" alt="" width="20" height="20">
+        
+    </a>
+</td>
                             </tr>
                         @endif
 

@@ -4,8 +4,8 @@
 @section('header_back_url', route('dashboard'))
 
 @section('header_extra')
-  
-   
+
+
 @endsection
 
 @section('content')
@@ -63,8 +63,8 @@
                                 </div>
 
                                 <ul class="select-list">
-                                    @foreach($fund->themes as $theme)
-                                        <li data-value="{{ $theme->id }}">
+                                    @foreach($fund->themes->unique('theme_name') as $theme)
+                                        <li data-value="{{ $theme->id }}" data-theme="{{ $theme->theme_name }}">
                                             {{ $theme->theme_name }}
                                         </li>
                                     @endforeach
@@ -87,12 +87,11 @@
 
                                 <ul class="select-list">
                                     @foreach($fund->themes as $theme)
-                                        <li data-value="{{ $theme->id }}">
+                                        <li data-value="{{ $theme->id }}" data-theme="{{ $theme->theme_name }}">
                                             {{ $theme->sub_theme_name }}
                                         </li>
                                     @endforeach
                                 </ul>
-
                                 <input type="hidden" name="sub_theme_id" class="hidden-select"
                                     value="{{ $application?->sub_theme_id }}">
                             </div>
@@ -117,8 +116,8 @@
                                 Total Budget<span>*</span>
                             </label>
 
-                            <input type="text" inputmode="numeric" name="total_budget" class="form-control" placeholder="Rupees in Lakh"
-                                value="{{ $application?->total_budget }}" required>
+                            <input type="text" inputmode="numeric" name="total_budget" class="form-control"
+                                placeholder="Rupees in Lakh" value="{{ $application?->total_budget }}" required>
                         </div>
                     </div>
 
@@ -317,6 +316,57 @@
                 form.submit();
 
             });
+
+        });
+    </script>
+
+    <script>
+        const fundThemes = @json($fund->themes);
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+
+            const themeWrapper = document.querySelector('input[name="theme_id"]').closest('.select-wrapper');
+            const subThemeWrapper = document.querySelector('input[name="sub_theme_id"]').closest('.select-wrapper');
+
+            const themeInput = themeWrapper.querySelector('.hidden-select');
+            const subThemeInput = subThemeWrapper.querySelector('.hidden-select');
+            const subThemeDisplay = subThemeWrapper.querySelector('.custom-select');
+
+            function filterSubThemes(themeName) {
+
+                const items = subThemeWrapper.querySelectorAll('.select-list li');
+
+                items.forEach(item => {
+                    item.style.display = item.dataset.theme === themeName ? '' : 'none';
+                });
+
+                subThemeInput.value = '';
+                subThemeDisplay.innerText = 'Select Sub-theme';
+            }
+
+            themeWrapper.querySelectorAll('.select-list li').forEach(li => {
+
+                li.addEventListener('click', function () {
+
+                    // wait until your existing dropdown code updates the hidden input
+                    setTimeout(() => {
+                        filterSubThemes(this.dataset.theme);
+                    }, 0);
+
+                });
+
+            });
+
+            // On page load (edit mode)
+            if (themeInput.value) {
+                const selected = fundThemes.find(x => x.id == themeInput.value);
+
+                if (selected) {
+                    filterSubThemes(selected.theme_name);
+                }
+            }
 
         });
     </script>

@@ -1753,6 +1753,24 @@
                     .replace(/[_-]/g, ' ')
                     .replace(/\b\w/g, char => char.toUpperCase());
             }
+            const categoryMap = {
+                government: "Government",
+                csr_corporate: "CSR - Corporate",
+                csr_psu: "CSR - PSU",
+                foreign_institutions: "Foreign Institutions",
+                individual_donor: "Individual Donor",
+                promoter_money: "Promoter Money"
+            };
+
+            const purposeMap = {
+                project: "Project",
+                program: "Program",
+                org_development: "Organization Development",
+                infrastructure: "Infrastructure",
+                staff_training: "Staff Training",
+                technology: "Technology",
+                others: "Others"
+            };
 
             function loadFunders() {
                 fetch(API.list)
@@ -1760,33 +1778,28 @@
                     .then(res => {
                         fundersTable.innerHTML = '';
 
-
                         res.data.forEach((funder, index) => {
-                            const category = funder.category || 'â€”';
-                            const purpose = funder.purpose || 'â€”';
-                            const amount = funder.amount
-
                             fundersTable.innerHTML += `
-                                                        <tr
-                                                            data-id="${funder.id}"
-                                                            data-category="${funder.category}"
-                                                            data-purpose="${funder.purpose}"
-                                                        >
-                                                            <td>${index + 1}</td>
-                                                            <td>${funder.name}</td>
-                                                            <td>${formatLabel(funder.category)}</td>
-                                                            <td>${funder.year}</td>
-                                                            <td>${formatLabel(funder.purpose)}</td>
-                                                            <td>${Number(funder.amount).toLocaleString('en-IN')}</td>
-                                                            <td>
-                                                                <button type="button" class="edit editFunder">
-                                                                    <i class="bi bi-pencil-square"></i>
-                                                                </button>
-                                                                <button type="button" class="trash deleteFunder">
-                                                                    <i class="bi bi-trash3"></i>
-                                                                </button>
-                                                            </td>
-                                                        </tr>`;
+                        <tr
+                            data-id="${funder.id}"
+                            data-category="${funder.category}"
+                            data-purpose="${funder.purpose}"
+                        >
+                            <td>${index + 1}</td>
+                            <td>${funder.name}</td>
+                            <td>${categoryMap[funder.category] || '—'}</td>
+                            <td>${funder.year}</td>
+                            <td>${purposeMap[funder.purpose] || '—'}</td>
+                            <td>${Number(funder.amount).toLocaleString('en-IN')}</td>
+                            <td>
+                                <button type="button" class="edit editFunder">
+                                    <i class="bi bi-pencil-square"></i>
+                                </button>
+                                <button type="button" class="trash deleteFunder">
+                                    <i class="bi bi-trash3"></i>
+                                </button>
+                            </td>
+                        </tr>`;
                         });
                     })
                     .catch(() => {
@@ -1902,37 +1915,37 @@
             /* =========================
                EDIT CLICK
             ========================= */
-            document.addEventListener('click', (e) => {
-                if (e.target.closest('.editFunder')) {
 
-                    let row = e.target.closest('tr');
 
-                    document.getElementById('funder_id').value = row.dataset.id;
-                    document.getElementById('funder_name').value = row.children[1].innerText.trim();
-                    document.getElementById('funder_year').value = row.children[3].innerText.trim();
-                    document.getElementById('funder_amount').value =
-                        row.children[5].innerText.replace(/,/g, '');
+          document.addEventListener('click', (e) => {
+    if (e.target.closest('.editFunder')) {
 
-                    // values
-                    let category = row.dataset.category || '';
-                    let purpose = row.dataset.purpose || '';
+        let row = e.target.closest('tr');
 
-                    // hidden inputs
-                    document.getElementById('funder_category').value = category;
-                    document.getElementById('funder_purpose').value = purpose;
+        document.getElementById('funder_id').value = row.dataset.id;
+        document.getElementById('funder_name').value = row.children[1].innerText.trim();
+        document.getElementById('funder_year').value = row.children[3].innerText.trim();
+        document.getElementById('funder_amount').value =
+            row.children[5].innerText.replace(/,/g, '');
 
-                    // IMPORTANT: update correct UI elements
-                    let selects = document.querySelectorAll('#funderModal .custom-select');
+        // Saved values
+        const category = row.dataset.category || '';
+        const purpose = row.dataset.purpose || '';
 
-                    // 0 = category
-                    selects[0].innerText = category ? capitalize(category) : 'Select an option';
+        // Hidden inputs
+        document.getElementById('funder_category').value = category;
+        document.getElementById('funder_purpose').value = purpose;
 
-                    // 1 = purpose
-                    selects[1].innerText = purpose ? capitalize(purpose) : 'Select an option';
+        // Update dropdown text
+        const selects = document.querySelectorAll('#funderModal .custom-select');
 
-                    funderModal.show();
-                }
-            });
+        selects[0].innerText = categoryMap[category] || 'Select an option';
+        selects[1].innerText = purposeMap[purpose] || 'Select an option';
+
+        funderModal.show();
+    }
+});
+
 
             function capitalize(str) {
                 return str.replace(/_/g, ' ')
@@ -2004,8 +2017,8 @@
         document.addEventListener("DOMContentLoaded", function () {
 
             const selectedBox = document.getElementById('selectedStatesBox');
-             const dropdown = document.querySelector('.checkbox-list:not(#domainCheckboxList)');
-    const checkboxes = document.querySelectorAll('.checkbox-list:not(#domainCheckboxList) input[type="checkbox"]');
+            const dropdown = document.querySelector('.checkbox-list:not(#domainCheckboxList)');
+            const checkboxes = document.querySelectorAll('.checkbox-list:not(#domainCheckboxList) input[type="checkbox"]');
             const hiddenInput = document.getElementById('hiddenStates');
             const panIndiaCheckbox = document.getElementById('s0');
 
@@ -2080,9 +2093,9 @@
                         tag.className = 'state-tag';
 
                         tag.innerHTML = `
-                                                                                                            <span>${cb.value}</span>
-                                                                                                            <span class="remove-tag" data-value="${cb.value}">&times;</span>
-                                                                                                        `;
+                                                                                                                <span>${cb.value}</span>
+                                                                                                                <span class="remove-tag" data-value="${cb.value}">&times;</span>
+                                                                                                            `;
 
                         selectedBox.appendChild(tag);
                     }
@@ -2161,9 +2174,9 @@
                         tag.className = 'state-tag';
 
                         tag.innerHTML = `
-                            <span>${cb.value}</span>
-                            <span class="remove-tag" data-value="${cb.value}">&times;</span>
-                        `;
+                                <span>${cb.value}</span>
+                                <span class="remove-tag" data-value="${cb.value}">&times;</span>
+                            `;
 
                         selectedBox.appendChild(tag);
                     }

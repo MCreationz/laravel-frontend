@@ -115,7 +115,7 @@
 
                         <input type="text" name="organization_name" class="form-control"
                             placeholder="Name of the Organization"
-                            value="{{ old('organization_name', auth('organization')->user()->organization_name) }}" readonly
+                            value="{{ old('organization_name', auth('organization')->user()->profile->legal_name) }}" readonly
                             required>
                     </div>
                     <div class="col-12 col-md-6 px-md-2">

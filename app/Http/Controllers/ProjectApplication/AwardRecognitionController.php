@@ -24,6 +24,7 @@ class AwardRecognitionController extends Controller
             ->where('status', 'draft')
             ->update([
                 'status' => 'active',
+                 'current_step'=>'application_evaluation'
             ]);
 
         return view('projects.apply.awards-recognition.index', compact(
