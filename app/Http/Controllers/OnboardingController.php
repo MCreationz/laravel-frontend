@@ -8,10 +8,11 @@ use App\Models\OrganizationProfile;
 use App\Services\NotificationService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
+
 class OnboardingController extends Controller
 {
     public function stepOne()
@@ -227,77 +228,74 @@ class OnboardingController extends Controller
         return redirect()->route('dashboard');
     }
 
-
-
-public function verifyPan(Request $request)
-{
-    $request->validate([
-        'pan_number' => 'required|string|size:10',
-    ]);
-
-    try {
-
-        $response = Http::withHeaders([
-            'apiKey' => env('PAN_API_KEY'),
-            'Content-Type' => 'application/json',
-            'Accept' => 'application/json',
-        ])->post('https://api.apigalaxy.in/kyc/v1/verify/pan/plus', [
-            'requested_orderId'   => 'ORD-' . time(),
-            'customer_pan_number' => strtoupper($request->pan_number),
-            'service_id'          => 'AG1035',
-            'name_to_match'       => 'dummy',
+    public function verifyPan(Request $request)
+    {
+        $request->validate([
+            'pan_number' => 'required|string|size:10',
         ]);
 
-        $data = $response->json();
+        try {
 
-        if (!$response->successful() || !($data['success'] ?? false)) {
+            $response = Http::withHeaders([
+                'apiKey' => env('PAN_API_KEY'),
+                'Content-Type' => 'application/json',
+                'Accept' => 'application/json',
+            ])->post('https://api.apigalaxy.in/kyc/v1/verify/pan/plus', [
+                'requested_orderId' => 'ORD-'.time(),
+                'customer_pan_number' => strtoupper($request->pan_number),
+                'service_id' => 'AG1035',
+                'name_to_match' => 'dummy',
+            ]);
+
+            $data = $response->json();
+
+            if (! $response->successful() || ! ($data['success'] ?? false)) {
+                return response()->json([
+                    'success' => false,
+                    'message' => $data['response_message'] ?? 'PAN verification failed.',
+                ], 422);
+            }
+
+            $result = $data['result'] ?? [];
+
+            // Reject Individual PAN
+            $panType = strtolower(trim($result['pan_type'] ?? ''));
+
+            if (str_contains($panType, 'individual') || str_contains($panType, 'person')) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Individual PAN is not allowed. Please provide a Company/LLP PAN.',
+                ], 422);
+            }
+
+            return response()->json([
+                'success' => true,
+                'message' => 'PAN verified successfully.',
+                'data' => [
+                    'pan_number' => $result['pan_number'] ?? null,
+                    'organization_name' => $result['user_full_name'] ?? null,
+                    'pan_type' => $result['pan_type'] ?? null,
+                    'incorporation_date' => ! empty($result['user_dob'])
+                        ? str_replace('/', '-', $result['user_dob'])
+                        : null,
+                    'email' => $result['user_email'] ?? null,
+                    'phone' => $result['user_phone_number'] ?? null,
+                    'address' => $result['user_address'] ?? [],
+                    'aadhaar_linked' => $result['aadhaar_linked_status'] ?? null,
+                    'match_score' => $result['name_match_score'] ?? null,
+                ],
+            ]);
+
+        } catch (\Throwable $e) {
+
+            Log::error('PAN Verification Error', [
+                'message' => $e->getMessage(),
+            ]);
+
             return response()->json([
                 'success' => false,
-                'message' => $data['response_message'] ?? 'PAN verification failed.',
-            ], 422);
+                'message' => 'Something went wrong while verifying PAN.',
+            ], 500);
         }
-
-        $result = $data['result'] ?? [];
-
-        // Reject Individual PAN
-      $panType = strtolower(trim($result['pan_type'] ?? ''));
-
-if (str_contains($panType, 'individual') || str_contains($panType, 'person')) {
-    return response()->json([
-        'success' => false,
-        'message' => 'Individual PAN is not allowed. Please provide a Company/LLP PAN.',
-    ], 422);
-}
-
-        return response()->json([
-            'success' => true,
-            'message' => 'PAN verified successfully.',
-            'data' => [
-                'pan_number'         => $result['pan_number'] ?? null,
-                'organization_name'  => $result['user_full_name'] ?? null,
-                'pan_type'           => $result['pan_type'] ?? null,
-                'incorporation_date' => !empty($result['user_dob'])
-                    ? str_replace('/', '-', $result['user_dob'])
-                    : null,
-                'email'              => $result['user_email'] ?? null,
-                'phone'              => $result['user_phone_number'] ?? null,
-                'address'            => $result['user_address'] ?? [],
-                'aadhaar_linked'     => $result['aadhaar_linked_status'] ?? null,
-                'match_score'        => $result['name_match_score'] ?? null,
-            ],
-        ]);
-
-    } catch (\Throwable $e) {
-
-        Log::error('PAN Verification Error', [
-            'message' => $e->getMessage(),
-        ]);
-
-        return response()->json([
-            'success' => false,
-            'message' => 'Something went wrong while verifying PAN.',
-        ], 500);
     }
-}
-
 }
