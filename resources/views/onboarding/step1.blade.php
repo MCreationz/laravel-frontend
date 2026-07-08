@@ -66,6 +66,7 @@
 
 
     <div class="">
+
         
         <div class="card-body p-0">
             <form id="step1Form" method="POST" action="{{ route('onboarding.step1.store') }}">
