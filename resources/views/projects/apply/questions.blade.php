@@ -325,51 +325,50 @@
     </script>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function () {
 
-            const themeWrapper = document.querySelector('input[name="theme_id"]').closest('.select-wrapper');
-            const subThemeWrapper = document.querySelector('input[name="sub_theme_id"]').closest('.select-wrapper');
+    const themeWrapper = document.querySelector('input[name="theme_id"]').closest('.select-wrapper');
+    const subThemeWrapper = document.querySelector('input[name="sub_theme_id"]').closest('.select-wrapper');
 
-            const themeInput = themeWrapper.querySelector('.hidden-select');
-            const subThemeInput = subThemeWrapper.querySelector('.hidden-select');
-            const subThemeDisplay = subThemeWrapper.querySelector('.custom-select');
+    const themeInput = themeWrapper.querySelector('.hidden-select');
+    const subThemeInput = subThemeWrapper.querySelector('.hidden-select');
+    const subThemeDisplay = subThemeWrapper.querySelector('.custom-select');
 
-            function filterSubThemes(themeName) {
+function filterSubThemes(themeName, reset = true) {
 
-                const items = subThemeWrapper.querySelectorAll('.select-list li');
+    const items = subThemeWrapper.querySelectorAll('.select-list li');
 
-                items.forEach(item => {
-                    item.style.display = item.dataset.theme === themeName ? '' : 'none';
-                });
+    items.forEach(item => {
+        item.style.display = item.dataset.theme === themeName ? '' : 'none';
+    });
 
-                subThemeInput.value = '';
-                subThemeDisplay.innerText = 'Select Sub-theme';
-            }
+    // Only clear when user changes the theme
+    if (reset) {
+        subThemeInput.value = '';
+        subThemeDisplay.innerText = 'Select Sub-theme';
+    }
+}
 
-            themeWrapper.querySelectorAll('.select-list li').forEach(li => {
+   // Theme changed by user
+themeWrapper.querySelectorAll('.select-list li').forEach(li => {
+    li.addEventListener('click', function () {
+        setTimeout(() => {
+            filterSubThemes(this.dataset.theme, true);
+        }, 0);
+    });
+});
 
-                li.addEventListener('click', function () {
+// Page load
+if (themeInput.value) {
+    const selectedTheme = fundThemes.find(x => x.id == themeInput.value);
 
-                    // wait until your existing dropdown code updates the hidden input
-                    setTimeout(() => {
-                        filterSubThemes(this.dataset.theme);
-                    }, 0);
+    if (selectedTheme) {
+        filterSubThemes(selectedTheme.theme_name, false);
+    }
+}
 
-                });
-
-            });
-
-            // On page load (edit mode)
-            if (themeInput.value) {
-                const selected = fundThemes.find(x => x.id == themeInput.value);
-
-                if (selected) {
-                    filterSubThemes(selected.theme_name);
-                }
-            }
-
-        });
-    </script>
+});
+</script>
 @endsection
 
 @section('scripts')
