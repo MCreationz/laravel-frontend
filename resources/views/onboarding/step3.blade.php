@@ -65,7 +65,7 @@
 
         </div>
     </div>
-    
+
     <div class="card-body p-0">
 
         <form id="onboardingForm" method="POST" action="{{ route('onboarding.step3.store') }}"> @csrf
@@ -136,67 +136,268 @@
                             <label class="form-label">Domain of Expertise<span>*</span></label>
 
                             @php
-                                $domain = old('domain_of_expertise', $operationalDetail->domain_of_expertise ?? '');
-                            @endphp
+                                $selectedDomains = old('domain_of_expertise', $operationalDetail->domain_of_expertise ?? '');
 
-                            <div class="select-wrapper w-100 position-relative">
-                                <div class="custom-select form-control @error('domain_of_expertise') is-invalid @enderror">
-                                    {{ $domain ? $domain : 'Select expertise' }}
+                                if (is_string($selectedDomains)) {
+                                    $selectedDomains = explode(',', $selectedDomains);
+                                }
+
+                                $selectedDomains = array_map('trim', $selectedDomains);
+                            @endphp
+                            <div class="select-wrapper w-100 position-relative checkbox-wrap">
+
+                                <div id="selectedDomainsBox"
+                                    class="custom-select form-control d-flex flex-wrap gap-2 align-items-center @error('domain_of_expertise') is-invalid @enderror">
+                                    <span class="placeholder">Select expertise</span>
                                 </div>
 
-                                <ul class="select-list">
-                                    <li data-value="school-Education">School Education (Primary & Secondary)</li>
-                                    <li data-value="Higher-Education">Higher Education Support</li>
-                                    <li data-value="Scholarships-&-Fellowships">Scholarships & Fellowships</li>
-                                    <li data-value="Digital">Digital Education</li>
-                                    <li data-value="STEM">STEM Education</li>
-                                    <li data-value="Special">Special Education (Children with Disabilities)</li>
-                                    <li data-value="Vocational">Vocational Training & Skill Development</li>
-                                    <li data-value="Employability">Employability & Livelihood Programs</li>
-                                    <li data-value="Healthcare">Primary Healthcare</li>
-                                    <li data-value="Maternal">Maternal & Child Health</li>
-                                    <li data-value="Nutrition">Nutrition & Malnutrition</li>
-                                    <li data-value="Mental">Mental Health</li>
-                                    <li data-value="Disability">Disability Rehabilitation</li>
-                                    <li data-value="Sanitation">Public Health & Sanitation</li>
-                                    <li data-value="Preventive">Preventive Healthcare & Awareness</li>
-                                    <li data-value="HIV/AIDS">HIV/AIDS & Communicable Diseases</li>
-                                    <li data-value="Empowerment">Women Empowerment</li>
-                                    <li data-value="Gender-Equality">Gender Equality</li>
-                                    <li data-value="Violence">Prevention of Domestic Violence</li>
-                                    <li data-value="Development">Girl Child Development</li>
-                                    <li data-value="Protection">Child Protection & Child Rights</li>
-                                    <li data-value="Livelihoods">Rural Livelihoods</li>
-                                    <li data-value="Urban">Urban Livelihoods</li>
-                                    <li data-value="Self-Help">Self-Help Groups (SHGs)</li>
-                                    <li data-value="Microfinance">Microfinance & Financial Inclusion</li>
-                                    <li data-value="Entrepreneurship">Entrepreneurship Development</li>
-                                    <li data-value="Environmental">Environmental Conservation</li>
-                                    <li data-value="Climate">Climate Action</li>
-                                    <li data-value="Afforestation">Afforestation</li>
-                                    <li data-value="Water">Water Conservation</li>
-                                    <li data-value="Waste-Management">Waste Management</li>
-                                    <li data-value="Renewable">Renewable Energy Access</li>
-                                    <li data-value="Biodiversity">Biodiversity Protection</li>
-                                    <li data-value="Rural">Rural Development Projects</li>
-                                    <li data-value="Infrastructure">Infrastructure Development (Community Assets)</li>
-                                    <li data-value="Drinking">Drinking Water Projects</li>
-                                    <li data-value="Sanitation">Sanitation & Hygiene (WASH)</li>
-                                    <li data-value="Rights">Human Rights</li>
-                                    <li data-value="Legal">Legal Aid & Access to Justice</li>
-                                    <li data-value="Governance">Governance & Civic Participation</li>
-                                    <li data-value="Transparency">Transparency & Accountability</li>
-                                    <li data-value="Senior">Senior Citizens Welfare</li>
-                                    <li data-value="Persons">Persons with Disabilities</li>
-                                    <li data-value="Tribal">Tribal Development</li>
-                                    <li data-value="Minority">Minority Welfare</li>
-                                    <li data-value="Migrant">Migrant Workers Support</li>
-                                    <li data-value="Disaster">Disaster Relief & Rehabilitation</li>
-                                    <li data-value="Emergency">Emergency Response & Humanitarian Aid</li>
+                                <ul class="select-list checkbox-list" id="domainCheckboxList">
+
+                                    <li>
+                                        <input type="checkbox" value="School Education (Primary & Secondary)" id="d1" {{ in_array('School Education (Primary & Secondary)', $selectedDomains) ? 'checked' : '' }}>
+                                        <label for="d1">School Education (Primary & Secondary)</label>
+                                    </li>
+
+                                    <li>
+                                        <input type="checkbox" value="Higher Education Support" id="d2" {{ in_array('Higher Education Support', $selectedDomains) ? 'checked' : '' }}>
+                                        <label for="d2">Higher Education Support</label>
+                                    </li>
+
+                                    <li>
+                                        <input type="checkbox" value="Scholarships & Fellowships" id="d3" {{ in_array('Scholarships & Fellowships', $selectedDomains) ? 'checked' : '' }}>
+                                        <label for="d3">Scholarships & Fellowships</label>
+                                    </li>
+
+                                    <li>
+                                        <input type="checkbox" value="Digital Education" id="d4" {{ in_array('Digital Education', $selectedDomains) ? 'checked' : '' }}>
+                                        <label for="d4">Digital Education</label>
+                                    </li>
+
+                                    <li>
+                                        <input type="checkbox" value="STEM Education" id="d5" {{ in_array('STEM Education', $selectedDomains) ? 'checked' : '' }}>
+                                        <label for="d5">STEM Education</label>
+                                    </li>
+
+                                    <li>
+                                        <input type="checkbox" value="Special Education (Children with Disabilities)" id="d6" {{ in_array('Special Education (Children with Disabilities)', $selectedDomains) ? 'checked' : '' }}>
+                                        <label for="d6">Special Education (Children with Disabilities)</label>
+                                    </li>
+
+                                    <li>
+                                        <input type="checkbox" value="Vocational Training & Skill Development" id="d7" {{ in_array('Vocational Training & Skill Development', $selectedDomains) ? 'checked' : '' }}>
+                                        <label for="d7">Vocational Training & Skill Development</label>
+                                    </li>
+
+                                    <li>
+                                        <input type="checkbox" value="Employability & Livelihood Programs" id="d8" {{ in_array('Employability & Livelihood Programs', $selectedDomains) ? 'checked' : '' }}>
+                                        <label for="d8">Employability & Livelihood Programs</label>
+                                    </li>
+
+                                    <li>
+                                        <input type="checkbox" value="Primary Healthcare" id="d9" {{ in_array('Primary Healthcare', $selectedDomains) ? 'checked' : '' }}>
+                                        <label for="d9">Primary Healthcare</label>
+                                    </li>
+
+                                    <li>
+                                        <input type="checkbox" value="Maternal & Child Health" id="d10" {{ in_array('Maternal & Child Health', $selectedDomains) ? 'checked' : '' }}>
+                                        <label for="d10">Maternal & Child Health</label>
+                                    </li>
+
+                                    <li>
+                                        <input type="checkbox" value="Nutrition & Malnutrition" id="d11" {{ in_array('Nutrition & Malnutrition', $selectedDomains) ? 'checked' : '' }}>
+                                        <label for="d11">Nutrition & Malnutrition</label>
+                                    </li>
+
+                                    <li>
+                                        <input type="checkbox" value="Mental Health" id="d12" {{ in_array('Mental Health', $selectedDomains) ? 'checked' : '' }}>
+                                        <label for="d12">Mental Health</label>
+                                    </li>
+
+                                    <li>
+                                        <input type="checkbox" value="Disability Rehabilitation" id="d13" {{ in_array('Disability Rehabilitation', $selectedDomains) ? 'checked' : '' }}>
+                                        <label for="d13">Disability Rehabilitation</label>
+                                    </li>
+
+                                    <li>
+                                        <input type="checkbox" value="Public Health & Sanitation" id="d14" {{ in_array('Public Health & Sanitation', $selectedDomains) ? 'checked' : '' }}>
+                                        <label for="d14">Public Health & Sanitation</label>
+                                    </li>
+
+                                    <li>
+                                        <input type="checkbox" value="Preventive Healthcare & Awareness" id="d15" {{ in_array('Preventive Healthcare & Awareness', $selectedDomains) ? 'checked' : '' }}>
+                                        <label for="d15">Preventive Healthcare & Awareness</label>
+                                    </li>
+
+                                    <li>
+                                        <input type="checkbox" value="HIV/AIDS & Communicable Diseases" id="d16" {{ in_array('HIV/AIDS & Communicable Diseases', $selectedDomains) ? 'checked' : '' }}>
+                                        <label for="d16">HIV/AIDS & Communicable Diseases</label>
+                                    </li>
+
+                                    <li>
+                                        <input type="checkbox" value="Women Empowerment" id="d17" {{ in_array('Women Empowerment', $selectedDomains) ? 'checked' : '' }}>
+                                        <label for="d17">Women Empowerment</label>
+                                    </li>
+
+                                    <li>
+                                        <input type="checkbox" value="Gender Equality" id="d18" {{ in_array('Gender Equality', $selectedDomains) ? 'checked' : '' }}>
+                                        <label for="d18">Gender Equality</label>
+                                    </li>
+
+                                    <li>
+                                        <input type="checkbox" value="Prevention of Domestic Violence" id="d19" {{ in_array('Prevention of Domestic Violence', $selectedDomains) ? 'checked' : '' }}>
+                                        <label for="d19">Prevention of Domestic Violence</label>
+                                    </li>
+
+                                    <li>
+                                        <input type="checkbox" value="Girl Child Development" id="d20" {{ in_array('Girl Child Development', $selectedDomains) ? 'checked' : '' }}>
+                                        <label for="d20">Girl Child Development</label>
+                                    </li>
+
+                                    <li>
+                                        <input type="checkbox" value="Child Protection & Child Rights" id="d21" {{ in_array('Child Protection & Child Rights', $selectedDomains) ? 'checked' : '' }}>
+                                        <label for="d21">Child Protection & Child Rights</label>
+                                    </li>
+
+                                    <li>
+                                        <input type="checkbox" value="Rural Livelihoods" id="d22" {{ in_array('Rural Livelihoods', $selectedDomains) ? 'checked' : '' }}>
+                                        <label for="d22">Rural Livelihoods</label>
+                                    </li>
+
+                                    <li>
+                                        <input type="checkbox" value="Urban Livelihoods" id="d23" {{ in_array('Urban Livelihoods', $selectedDomains) ? 'checked' : '' }}>
+                                        <label for="d23">Urban Livelihoods</label>
+                                    </li>
+
+                                    <li>
+                                        <input type="checkbox" value="Self-Help Groups (SHGs)" id="d24" {{ in_array('Self-Help Groups (SHGs)', $selectedDomains) ? 'checked' : '' }}>
+                                        <label for="d24">Self-Help Groups (SHGs)</label>
+                                    </li>
+
+                                    <li>
+                                        <input type="checkbox" value="Microfinance & Financial Inclusion" id="d25" {{ in_array('Microfinance & Financial Inclusion', $selectedDomains) ? 'checked' : '' }}>
+                                        <label for="d25">Microfinance & Financial Inclusion</label>
+                                    </li>
+
+                                    <li>
+                                        <input type="checkbox" value="Entrepreneurship Development" id="d26" {{ in_array('Entrepreneurship Development', $selectedDomains) ? 'checked' : '' }}>
+                                        <label for="d26">Entrepreneurship Development</label>
+                                    </li>
+
+                                    <li>
+                                        <input type="checkbox" value="Environmental Conservation" id="d27" {{ in_array('Environmental Conservation', $selectedDomains) ? 'checked' : '' }}>
+                                        <label for="d27">Environmental Conservation</label>
+                                    </li>
+
+                                    <li>
+                                        <input type="checkbox" value="Climate Action" id="d28" {{ in_array('Climate Action', $selectedDomains) ? 'checked' : '' }}>
+                                        <label for="d28">Climate Action</label>
+                                    </li>
+
+                                    <li>
+                                        <input type="checkbox" value="Afforestation" id="d29" {{ in_array('Afforestation', $selectedDomains) ? 'checked' : '' }}>
+                                        <label for="d29">Afforestation</label>
+                                    </li>
+
+                                    <li>
+                                        <input type="checkbox" value="Water Conservation" id="d30" {{ in_array('Water Conservation', $selectedDomains) ? 'checked' : '' }}>
+                                        <label for="d30">Water Conservation</label>
+                                    </li>
+
+                                    <li>
+                                        <input type="checkbox" value="Waste Management" id="d31" {{ in_array('Waste Management', $selectedDomains) ? 'checked' : '' }}>
+                                        <label for="d31">Waste Management</label>
+                                    </li>
+
+                                    <li>
+                                        <input type="checkbox" value="Renewable Energy Access" id="d32" {{ in_array('Renewable Energy Access', $selectedDomains) ? 'checked' : '' }}>
+                                        <label for="d32">Renewable Energy Access</label>
+                                    </li>
+
+                                    <li>
+                                        <input type="checkbox" value="Biodiversity Protection" id="d33" {{ in_array('Biodiversity Protection', $selectedDomains) ? 'checked' : '' }}>
+                                        <label for="d33">Biodiversity Protection</label>
+                                    </li>
+
+                                    <li>
+                                        <input type="checkbox" value="Rural Development Projects" id="d34" {{ in_array('Rural Development Projects', $selectedDomains) ? 'checked' : '' }}>
+                                        <label for="d34">Rural Development Projects</label>
+                                    </li>
+
+                                    <li>
+                                        <input type="checkbox" value="Infrastructure Development (Community Assets)" id="d35" {{ in_array('Infrastructure Development (Community Assets)', $selectedDomains) ? 'checked' : '' }}>
+                                        <label for="d35">Infrastructure Development (Community Assets)</label>
+                                    </li>
+
+                                    <li>
+                                        <input type="checkbox" value="Drinking Water Projects" id="d36" {{ in_array('Drinking Water Projects', $selectedDomains) ? 'checked' : '' }}>
+                                        <label for="d36">Drinking Water Projects</label>
+                                    </li>
+
+                                    <li>
+                                        <input type="checkbox" value="Sanitation & Hygiene (WASH)" id="d37" {{ in_array('Sanitation & Hygiene (WASH)', $selectedDomains) ? 'checked' : '' }}>
+                                        <label for="d37">Sanitation & Hygiene (WASH)</label>
+                                    </li>
+
+                                    <li>
+                                        <input type="checkbox" value="Human Rights" id="d38" {{ in_array('Human Rights', $selectedDomains) ? 'checked' : '' }}>
+                                        <label for="d38">Human Rights</label>
+                                    </li>
+
+                                    <li>
+                                        <input type="checkbox" value="Legal Aid & Access to Justice" id="d39" {{ in_array('Legal Aid & Access to Justice', $selectedDomains) ? 'checked' : '' }}>
+                                        <label for="d39">Legal Aid & Access to Justice</label>
+                                    </li>
+
+                                    <li>
+                                        <input type="checkbox" value="Governance & Civic Participation" id="d40" {{ in_array('Governance & Civic Participation', $selectedDomains) ? 'checked' : '' }}>
+                                        <label for="d40">Governance & Civic Participation</label>
+                                    </li>
+
+                                    <li>
+                                        <input type="checkbox" value="Transparency & Accountability" id="d41" {{ in_array('Transparency & Accountability', $selectedDomains) ? 'checked' : '' }}>
+                                        <label for="d41">Transparency & Accountability</label>
+                                    </li>
+
+                                    <li>
+                                        <input type="checkbox" value="Senior Citizens Welfare" id="d42" {{ in_array('Senior Citizens Welfare', $selectedDomains) ? 'checked' : '' }}>
+                                        <label for="d42">Senior Citizens Welfare</label>
+                                    </li>
+
+                                    <li>
+                                        <input type="checkbox" value="Persons with Disabilities" id="d43" {{ in_array('Persons with Disabilities', $selectedDomains) ? 'checked' : '' }}>
+                                        <label for="d43">Persons with Disabilities</label>
+                                    </li>
+
+                                    <li>
+                                        <input type="checkbox" value="Tribal Development" id="d44" {{ in_array('Tribal Development', $selectedDomains) ? 'checked' : '' }}>
+                                        <label for="d44">Tribal Development</label>
+                                    </li>
+
+                                    <li>
+                                        <input type="checkbox" value="Minority Welfare" id="d45" {{ in_array('Minority Welfare', $selectedDomains) ? 'checked' : '' }}>
+                                        <label for="d45">Minority Welfare</label>
+                                    </li>
+
+                                    <li>
+                                        <input type="checkbox" value="Migrant Workers Support" id="d46" {{ in_array('Migrant Workers Support', $selectedDomains) ? 'checked' : '' }}>
+                                        <label for="d46">Migrant Workers Support</label>
+                                    </li>
+
+                                    <li>
+                                        <input type="checkbox" value="Disaster Relief & Rehabilitation" id="d47" {{ in_array('Disaster Relief & Rehabilitation', $selectedDomains) ? 'checked' : '' }}>
+                                        <label for="d47">Disaster Relief & Rehabilitation</label>
+                                    </li>
+
+                                    <li>
+                                        <input type="checkbox" value="Emergency Response & Humanitarian Aid" id="d48" {{ in_array('Emergency Response & Humanitarian Aid', $selectedDomains) ? 'checked' : '' }}>
+                                        <label for="d48">Emergency Response & Humanitarian Aid</label>
+                                    </li>
+
                                 </ul>
 
-                                <input type="hidden" name="domain_of_expertise" class="hidden-select" value="{{ $domain }}"
-                                    required>
+                                <input type="hidden" name="domain_of_expertise" id="hiddenDomains"
+                                    value="{{ implode(',', $selectedDomains) }}" required>
+
                             </div>
 
                             @error('domain_of_expertise')
@@ -1566,26 +1767,26 @@
                             const amount = funder.amount
 
                             fundersTable.innerHTML += `
-                                                <tr
-                                                    data-id="${funder.id}"
-                                                    data-category="${funder.category}"
-                                                    data-purpose="${funder.purpose}"
-                                                >
-                                                    <td>${index + 1}</td>
-                                                    <td>${funder.name}</td>
-                                                    <td>${formatLabel(funder.category)}</td>
-                                                    <td>${funder.year}</td>
-                                                    <td>${formatLabel(funder.purpose)}</td>
-                                                    <td>${Number(funder.amount).toLocaleString('en-IN')}</td>
-                                                    <td>
-                                                        <button type="button" class="edit editFunder">
-                                                            <i class="bi bi-pencil-square"></i>
-                                                        </button>
-                                                        <button type="button" class="trash deleteFunder">
-                                                            <i class="bi bi-trash3"></i>
-                                                        </button>
-                                                    </td>
-                                                </tr>`;
+                                                        <tr
+                                                            data-id="${funder.id}"
+                                                            data-category="${funder.category}"
+                                                            data-purpose="${funder.purpose}"
+                                                        >
+                                                            <td>${index + 1}</td>
+                                                            <td>${funder.name}</td>
+                                                            <td>${formatLabel(funder.category)}</td>
+                                                            <td>${funder.year}</td>
+                                                            <td>${formatLabel(funder.purpose)}</td>
+                                                            <td>${Number(funder.amount).toLocaleString('en-IN')}</td>
+                                                            <td>
+                                                                <button type="button" class="edit editFunder">
+                                                                    <i class="bi bi-pencil-square"></i>
+                                                                </button>
+                                                                <button type="button" class="trash deleteFunder">
+                                                                    <i class="bi bi-trash3"></i>
+                                                                </button>
+                                                            </td>
+                                                        </tr>`;
                         });
                     })
                     .catch(() => {
@@ -1797,12 +1998,14 @@
 
         });
     </script>
+
+
     <script>
         document.addEventListener("DOMContentLoaded", function () {
 
             const selectedBox = document.getElementById('selectedStatesBox');
-            const dropdown = document.querySelector('.checkbox-list');
-            const checkboxes = document.querySelectorAll('.checkbox-list input[type="checkbox"]');
+             const dropdown = document.querySelector('.checkbox-list:not(#domainCheckboxList)');
+    const checkboxes = document.querySelectorAll('.checkbox-list:not(#domainCheckboxList) input[type="checkbox"]');
             const hiddenInput = document.getElementById('hiddenStates');
             const panIndiaCheckbox = document.getElementById('s0');
 
@@ -1877,9 +2080,9 @@
                         tag.className = 'state-tag';
 
                         tag.innerHTML = `
-                                                                                                    <span>${cb.value}</span>
-                                                                                                    <span class="remove-tag" data-value="${cb.value}">&times;</span>
-                                                                                                `;
+                                                                                                            <span>${cb.value}</span>
+                                                                                                            <span class="remove-tag" data-value="${cb.value}">&times;</span>
+                                                                                                        `;
 
                         selectedBox.appendChild(tag);
                     }
@@ -1912,8 +2115,89 @@
 
             });
 
+
         });
     </script>
+
+    <script>
+
+        document.addEventListener("DOMContentLoaded", function () {
+
+            const selectedBox = document.getElementById('selectedDomainsBox');
+            const dropdown = document.getElementById('domainCheckboxList');
+            const checkboxes = dropdown.querySelectorAll('input[type="checkbox"]');
+            const hiddenInput = document.getElementById('hiddenDomains');
+
+            selectedBox.addEventListener('click', function (e) {
+                if (e.target.classList.contains('remove-tag')) return;
+                e.stopPropagation();
+                dropdown.classList.toggle('show');
+            });
+
+            document.addEventListener('click', function () {
+                dropdown.classList.remove('show');
+            });
+
+            dropdown.addEventListener('click', function (e) {
+                e.stopPropagation();
+            });
+
+            checkboxes.forEach(cb => {
+                cb.addEventListener('change', updateSelectedDomain);
+            });
+
+            function updateSelectedDomain() {
+
+                let selected = [];
+                selectedBox.innerHTML = '';
+
+                checkboxes.forEach(cb => {
+
+                    if (cb.checked) {
+
+                        selected.push(cb.value);
+
+                        const tag = document.createElement('div');
+                        tag.className = 'state-tag';
+
+                        tag.innerHTML = `
+                            <span>${cb.value}</span>
+                            <span class="remove-tag" data-value="${cb.value}">&times;</span>
+                        `;
+
+                        selectedBox.appendChild(tag);
+                    }
+                });
+
+                if (selected.length === 0) {
+                    selectedBox.innerHTML =
+                        '<span class="placeholder">Select expertise</span>';
+                }
+
+                hiddenInput.value = selected.join(',');
+            }
+
+            selectedBox.addEventListener('click', function (e) {
+
+                if (e.target.classList.contains('remove-tag')) {
+
+                    e.stopPropagation();
+
+                    const checkbox = [...checkboxes].find(cb => cb.value === e.target.dataset.value);
+
+                    if (checkbox) {
+                        checkbox.checked = false;
+                        checkbox.dispatchEvent(new Event('change'));
+                    }
+                }
+            });
+
+            updateSelectedDomain();
+
+        });
+    </script>
+
+
 
 
     <script>

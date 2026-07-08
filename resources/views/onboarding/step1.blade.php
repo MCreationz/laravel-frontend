@@ -132,7 +132,11 @@
                             </div>
                             <div class="error-message text-danger" style="display:none;"></div>
                         </div> --}}
-<div class="col-12 col-md-6 col-xl-4 px-md-2">
+
+
+
+
+                        <div class="col-12 col-md-6 col-xl-4 px-md-2">
     <label class="form-label">Date of Incorporation as per PAN<span>*</span></label>
 
     <input

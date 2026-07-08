@@ -94,7 +94,6 @@
                         <input type="text" name="office_city" class="form-control" placeholder="Enter Your City"
                             value="{{ old('office_city', $address?->office_city) }}">
                     </div>
-                    <hr class="mb-0">
 
                     <div class="col-12 col-md-6 col-xl-4 px-md-2">
                         <label class="form-label">Pin Code<span>*</span></label>
@@ -163,7 +162,7 @@
                                 value="{{ old('portal_city', $address?->portal_city) }}">
                         </div>
 
-                        <hr class="mb-0">
+                      
 
 
                         <div class="col-12 col-md-6 col-xl-4 px-md-2">
