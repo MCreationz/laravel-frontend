@@ -79,7 +79,11 @@
            class="text-decoration-none text-reset">
 
 @php
-    $name = trim(auth('organization')->user()->profile->legal_name);
+   $name = trim(
+    optional(auth('organization')->user()->profile)->legal_name
+    ?? auth('organization')->user()->organization_name
+    ?? '-'
+);
 
     $words = preg_split('/\s+/', $name);
 
