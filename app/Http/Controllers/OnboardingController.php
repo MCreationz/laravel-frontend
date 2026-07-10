@@ -219,13 +219,12 @@ class OnboardingController extends Controller
             $data
         );
 
-        NotificationService::createOnce(
-            $organization,
-            'onboarding_completed',
-            'Profile Completed',
-            'Your organization profile has been successfully completed. You now have access to the dashboard and can begin exploring available features and opportunities.'
-        );
-
+    NotificationService::createOnce(
+    $organization,
+    'onboarding_completed',
+    'Organization Details Saved',
+    'Your organization details are saved. Continue to the Application Form to keep your Fundink application moving.'
+);
     $organizationName = $organization->profile?->legal_name
     ?? $organization->organization_name
     ?? 'New Organization';

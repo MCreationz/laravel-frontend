@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\Fund;
 use App\Models\FundApplication;
 use App\Models\FundApplicationFinancialDocument;
+use App\Services\NotificationService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class FinancialDocumentController extends Controller
 {
@@ -64,13 +66,36 @@ class FinancialDocumentController extends Controller
 
         $organization = auth('organization')->user();
 
+        $subject = 'Your Fundink Application Has Been Received';
+
+        $body = view('emails.application-received', [
+            'application' => $fundApplication,
+        ])->render();
+
+        Mail::html($body, function ($message) use ($organization, $subject) {
+            $message->to($organization->work_email)
+                ->subject($subject);
+        });
+
+        NotificationService::createOnce(
+            $organization,
+            'application_under_review_'.$fund->id,
+            'Application Under Review',
+            "All documents received for {$organization->profile->legal_name}. Your application is now under review — we'll notify you soon.",
+            [
+                'fund_id' => $fund->id,
+                'organization_id' => $organization->id,
+                'application_id' => $fundApplication->id,
+            ]
+        );
+
         if ($organization->role === 'fund_seeker') {
             FundApplication::where('fund_id', $fund->id)
                 ->where('organization_id', auth('organization')->id())
                 ->where('status', 'draft')
                 ->update([
                     'status' => 'active',
-                    'current_step'=>'application_evaluation'
+                    'current_step' => 'application_evaluation',
                 ]);
 
             return redirect()

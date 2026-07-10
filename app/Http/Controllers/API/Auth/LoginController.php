@@ -296,8 +296,8 @@ public function sendResetLink(Request $request)
         'token' => $token
     ]);
 
-    Mail::to($organization->work_email)
-        ->send(new ResetPasswordMail($resetUrl));
+Mail::to($organization->work_email)
+    ->send(new ResetPasswordMail($resetUrl, $organization));
 
     return back()->with(
         'success',
@@ -382,8 +382,20 @@ public function resetPassword(Request $request)
 
     $reset->delete();
 
+    \App\Services\NotificationService::create(
+    $organization,
+    'password_reset',
+    'Password Reset',
+    'Your password has been reset.',
+    [
+        'action' => 'password_reset',
+    ]
+);
+
     return redirect()
         ->route('login')
         ->with('success', 'Password has been reset successfully.');
 }
+
+
 }

@@ -13,16 +13,18 @@ class ResetPasswordMail extends Mailable
     use Queueable, SerializesModels;
 
     public string $resetUrl;
+    public $organization;
 
-    public function __construct(string $resetUrl)
+    public function __construct(string $resetUrl, $organization)
     {
         $this->resetUrl = $resetUrl;
+        $this->organization = $organization;
     }
 
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Reset Your Password',
+            subject: 'Reset Your Fundink Password',
         );
     }
 
@@ -30,6 +32,10 @@ class ResetPasswordMail extends Mailable
     {
         return new Content(
             view: 'emails.reset-password',
+            with: [
+                'resetUrl' => $this->resetUrl,
+                'organization' => $this->organization,
+            ],
         );
     }
 

@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <title>Fundink Reset Password</title>
+    <title>Fundink Registration Complete</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -19,41 +18,40 @@
             display: inline-block;
             padding: 12px 20px;
             background: #1a73e8;
-            color: #ffffff !important;
+            color: #fff;
             text-decoration: none;
             border-radius: 4px;
             margin: 20px 0;
         }
-        .note {
-            font-size: 14px;
-            color: #666;
-        }
     </style>
 </head>
-
 <body>
     <div class="container">
 
         <p>Dear {{ $organization->organization_name }},</p>
 
+        <p>Welcome to Fundink!</p>
+
         <p>
-            We received a request to reset the password for your Fundink account.
-            Click the link below to set a new password:
+            Your registration has been successfully completed, and we're thrilled
+            to have you join the Fundink community.
         </p>
 
         <p>
-            <a href="{{ $resetUrl }}" class="button" style="color: #ffffff !important;">
-                Reset Password
-            </a>
+            You can now log in using the password you created and complete your
+            organization profile to explore hundreds of funding opportunities.
         </p>
 
-        <p class="note">
-            This link is valid for 30 minutes.
-        </p>
+      <p>
+    <a href="{{ route('login') }}" class="button" style="color: #ffffff !important;">
+        Login to Fundink
+    </a>
+</p>
 
         <p>
-            If you did not request a password reset, please ignore this email —
-            your password will remain unchanged.
+            From concept notes to detailed proposals, we're here to make your
+            funding journey smoother, faster, and more transparent.
+            If you need any assistance getting started, feel free to reach out anytime.
         </p>
 
         <p>

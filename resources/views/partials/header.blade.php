@@ -202,9 +202,9 @@ document.addEventListener('DOMContentLoaded', function () {
             badge.innerText = count;
             badge.style.display = 'inline-block';
 
-            if (typeof toastr !== 'undefined') {
-                toastr.success(notification.message, notification.title);
-            }
+            // if (typeof toastr !== 'undefined') {
+            //     toastr.success(notification.message, notification.title);
+            // }
 
         });
 

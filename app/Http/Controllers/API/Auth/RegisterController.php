@@ -94,22 +94,18 @@ class RegisterController extends Controller
         ->with('success', 'OTP sent to your email.');
 }
 
-    private function sendOtpMail($organization, $otp, $expiryMinutes)
-    {
-        $subject = $organization->role === 'fund_seeker'
-            ? 'Your Fundink OTP – Let’s Get You Started'
-            : 'Your Fundink OTP – Verify Your Email';
+private function sendOtpMail($organization, $otp, $expiryMinutes)
+{
+    $subject = 'Your Fundink OTP – Let’s Get You Started';
 
-        $body = $organization->role === 'fund_seeker'
-            ? view('emails.fund_seeker_otp', compact('organization', 'otp', 'expiryMinutes'))->render()
-            : view('emails.funder_otp', compact('organization', 'otp', 'expiryMinutes'))->render();
+    $body = view('emails.fund_seeker_otp', compact('organization', 'otp', 'expiryMinutes'))
+        ->render();
 
-        // Correct way to send HTML email
-        Mail::html($body, function ($message) use ($organization, $subject) {
-            $message->to($organization->work_email)
-                ->subject($subject);
-        });
-    }
+    Mail::html($body, function ($message) use ($organization, $subject) {
+        $message->to($organization->work_email)
+            ->subject($subject);
+    });
+}
 
     public function verifyOtp(Request $request)
     {
@@ -162,6 +158,7 @@ class RegisterController extends Controller
             'otp_expires_at' => null,
             'email_verified_at' => now(),
         ]);
+        $this->sendRegistrationCompleteMail($organization);
 
         // LOGIN USER (this is the key change)
         Auth::guard('organization')->login($organization);
@@ -174,6 +171,19 @@ class RegisterController extends Controller
             ->route('dashboard')
             ->with('success', 'Email verified successfully');
     }
+
+    private function sendRegistrationCompleteMail($organization)
+{
+    $subject = 'Welcome to Fundink – Your Registration is Complete';
+
+    $body = view('emails.registration_complete', compact('organization'))
+        ->render();
+
+    Mail::html($body, function ($message) use ($organization, $subject) {
+        $message->to($organization->work_email)
+            ->subject($subject);
+    });
+}
 
     public function resendOtp(Request $request)
     {

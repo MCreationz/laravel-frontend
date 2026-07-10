@@ -12,7 +12,7 @@ class CheckOrganizationOnboarding
     {
         $organization = Auth::guard('organization')->user();
 
-        if (!$organization) {
+        if (! $organization) {
             return redirect()->route('login');
         }
 
@@ -25,9 +25,14 @@ class CheckOrganizationOnboarding
             'onboarding.step2.store',
             'onboarding.step3',
             'onboarding.step3.store',
-            'onboarding.verify-pan'
+            'onboarding.verify-pan',
+            'notifications.index',
+            'notifications.unread-count',
+            'notifications.read',
+            'notifications.read-all',
+            'notifications.delete',
         ];
-          // If onboarding is already complete, don't allow onboarding pages
+        // If onboarding is already complete, don't allow onboarding pages
         // if ($organization->isProfileComplete() && in_array($routeName, $onboardingRoutes)) {
         //     return redirect()->route('dashboard');
         // }
@@ -42,17 +47,17 @@ class CheckOrganizationOnboarding
         }
 
         // Step 1: Profile
-        if (!$organization->profile()->exists()) {
+        if (! $organization->profile()->exists()) {
             return redirect()->route('onboarding.step1');
         }
 
         // Step 2: Address
-        if (!$organization->address()->exists()) {
+        if (! $organization->address()->exists()) {
             return redirect()->route('onboarding.step2');
         }
 
         // Step 3: Operational Details
-        if (!$organization->operationalDetail()->exists()) {
+        if (! $organization->operationalDetail()->exists()) {
             return redirect()->route('onboarding.step3');
         }
 

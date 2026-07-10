@@ -2,34 +2,61 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Login OTP</title>
+    <title>Fundink Login OTP</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            color: #333;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #eee;
+        }
+        .otp {
+            font-size: 28px;
+            font-weight: bold;
+            letter-spacing: 4px;
+            margin: 20px 0;
+        }
+        .note {
+            font-size: 14px;
+            color: #666;
+        }
+    </style>
 </head>
-<body style="font-family: Arial, sans-serif;">
 
-    <h2>Hello {{ $organization->organization_name }}</h2>
+<body>
+    <div class="container">
 
-    <p>
-        Your one-time login code is:
-    </p>
+        <p>Dear {{ $organization->organization_name }},</p>
 
-    <h1 style="letter-spacing:4px;">
-        {{ $otp }}
-    </h1>
+        <p>
+            As requested, here is your new One-Time Password to log in to your Fundink account:
+        </p>
 
-    <p>
-        This code will expire in {{ $expiryMinutes }} minutes.
-    </p>
+        <p>Your OTP:</p>
 
-    <p>
-        If you did not request this login, please ignore this email.
-    </p>
+        <div class="otp">
+            {{ $otp }}
+        </div>
 
-    <br>
+        <p class="note">
+            This OTP is valid for {{ $expiryMinutes }} minutes.
+            Please do not share this code with anyone.
+        </p>
 
-    <p>
-        Thanks,<br>
-        Fundink Team
-    </p>
+        <p>
+            Warm regards,<br>
+            Team Fundink
+        </p>
 
+        <p>
+            Simplifying funding. Accelerating impact.
+        </p>
+
+    </div>
 </body>
 </html>
