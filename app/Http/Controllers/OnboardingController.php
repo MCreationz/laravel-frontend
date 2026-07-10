@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\OrganizationAddress;
 use App\Models\OrganizationOperationalDetail;
 use App\Models\OrganizationProfile;
+use App\Models\User;
 use App\Services\NotificationService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -219,12 +220,33 @@ class OnboardingController extends Controller
         );
 
         NotificationService::createOnce(
+            $organization,
             'onboarding_completed',
             'Profile Completed',
-            'Your organization profile has been successfully completed. You now have access to the dashboard and can begin exploring available features and opportunities.',
-            $organization->id
+            'Your organization profile has been successfully completed. You now have access to the dashboard and can begin exploring available features and opportunities.'
         );
 
+    $organizationName = $organization->profile?->legal_name
+    ?? $organization->organization_name
+    ?? 'New Organization';
+
+
+User::whereHas('role', function ($query) {
+    $query->where('name', 'super_admin');
+})
+->each(function ($superAdmin) use ($organization, $organizationName) {
+
+    NotificationService::createOnce(
+        $superAdmin,
+        'organization_registered_' . $organization->id,
+        'New Organization Registered',
+        "{$organizationName} has successfully completed the organization registration process.",
+        [
+            'organization_id' => $organization->id,
+        ]
+    );
+
+});
         return redirect()->route('dashboard');
     }
 
@@ -298,5 +320,4 @@ class OnboardingController extends Controller
             ], 500);
         }
     }
-    
 }

@@ -2,51 +2,63 @@
 
 namespace App\Services;
 
+use App\Events\NotificationCreated;
 use App\Models\Notification;
+use Illuminate\Database\Eloquent\Model;
 
 class NotificationService
 {
+    /**
+     * Create a notification.
+     */
     public static function create(
+        Model $recipient,
         string $type,
         string $title,
         string $message,
-        ?int $organizationId = null,
-        ?int $reviewerId = null,
-        ?int $adminId = null,
         array $data = []
     ): Notification {
-        return Notification::create([
-            'organization_id' => $organizationId,
-            'reviewer_id' => $reviewerId,
-            'admin_id' => $adminId,
-            'type' => $type,
-            'title' => $title,
-            'message' => $message,
-            'data' => $data,
+        $notification = Notification::create([
+            'notifiable_type' => $recipient::class,
+            'notifiable_id'   => $recipient->getKey(),
+            'type'            => $type,
+            'title'           => $title,
+            'message'         => $message,
+            'data'            => $data,
         ]);
+
+        event(new NotificationCreated($notification));
+
+        return $notification;
     }
 
+    /**
+     * Create the notification only if one doesn't already exist.
+     */
     public static function createOnce(
+        Model $recipient,
         string $type,
         string $title,
         string $message,
-        ?int $organizationId = null,
-        ?int $reviewerId = null,
-        ?int $adminId = null,
         array $data = []
     ): Notification {
-        return Notification::firstOrCreate(
+        $notification = Notification::firstOrCreate(
             [
-                'organization_id' => $organizationId,
-                'reviewer_id' => $reviewerId,
-                'admin_id' => $adminId,
-                'type' => $type,
+                'notifiable_type' => $recipient::class,
+                'notifiable_id'   => $recipient->getKey(),
+                'type'            => $type,
             ],
             [
-                'title' => $title,
+                'title'   => $title,
                 'message' => $message,
-                'data' => $data,
+                'data'    => $data,
             ]
         );
+
+        if ($notification->wasRecentlyCreated) {
+            event(new NotificationCreated($notification));
+        }
+
+        return $notification;
     }
 }

@@ -14,6 +14,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    @vite('resources/js/app.js')
 </head>
 
 <body class="bg-light dashboard light-bg">

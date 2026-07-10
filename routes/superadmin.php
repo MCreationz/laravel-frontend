@@ -8,6 +8,7 @@ use App\Http\Controllers\SuperAdmin\CompanyController;
 use App\Http\Controllers\SuperAdmin\DashboardController;
 use App\Http\Controllers\SuperAdmin\FundController;
 use App\Http\Controllers\SuperAdmin\FundingCategoryController;
+use App\Http\Controllers\SuperAdmin\NotificationController;
 use App\Http\Controllers\SuperAdmin\ProjectController;
 use App\Http\Controllers\SuperAdmin\ReviewerController;
 use App\Http\Controllers\SuperAdmin\SectorController;
@@ -168,5 +169,26 @@ Route::prefix('super-admin')
         // Funds
         Route::get('/funds', [FundController::class, 'index'])
             ->name('funds.index');
+
+     Route::prefix('notifications')
+    ->name('notifications.')
+    ->group(function () {
+
+        Route::get('/', [NotificationController::class, 'index'])
+            ->name('index');
+
+        Route::get('/unread-count', [NotificationController::class, 'unreadCount'])
+            ->name('unread-count');
+
+        Route::post('/{id}/read', [NotificationController::class, 'markAsRead'])
+            ->name('read');
+
+        Route::post('/read-all', [NotificationController::class, 'markAllAsRead'])
+            ->name('read-all');
+
+        Route::delete('/{id}', [NotificationController::class, 'destroy'])
+            ->name('destroy');
+
+    });
 
     });

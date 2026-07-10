@@ -7,6 +7,7 @@ use App\Http\Controllers\ClientAdmin\FundController;
 use App\Http\Controllers\ClientAdmin\FundDocumentController;
 use App\Http\Controllers\ClientAdmin\FundQuestionnaireController;
 use App\Http\Controllers\ClientAdmin\FundThemeController;
+use App\Http\Controllers\ClientAdmin\NotificationController;
 use App\Http\Controllers\ClientAdmin\ReviewerController;
 use Illuminate\Support\Facades\Route;
 
@@ -122,7 +123,7 @@ Route::prefix('client-admin')->group(function () {
             ->name('client-admin.reviewers.delete');
         Route::post('/reviewers/assign-funds', [ReviewerController::class, 'assignFunds'])
             ->name('client-admin.reviewers.assign-funds');
-            /*
+        /*
         |--------------------------------------------------------------------------
         | Fund Themes
         |--------------------------------------------------------------------------
@@ -217,6 +218,25 @@ Route::prefix('client-admin')->group(function () {
 
         Route::post('/change-password', [DashboardController::class, 'updatePassword'])
             ->name('client-admin.change-password.update');
+
+        Route::prefix('notifications')->name('client-admin.notifications.')->group(function () {
+
+            Route::get('/', [NotificationController::class, 'index'])
+                ->name('index');
+
+            Route::get('/unread-count', [NotificationController::class, 'unreadCount'])
+                ->name('unread-count');
+
+            Route::post('/{id}/read', [NotificationController::class, 'markAsRead'])
+                ->name('read');
+
+            Route::post('/read-all', [NotificationController::class, 'markAllAsRead'])
+                ->name('read-all');
+
+            Route::delete('/{id}', [NotificationController::class, 'destroy'])
+                ->name('destroy');
+
+        });
 
         /*
         |--------------------------------------------------------------------------

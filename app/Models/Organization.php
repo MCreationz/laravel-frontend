@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class Organization extends Authenticatable
@@ -58,6 +59,9 @@ class Organization extends Authenticatable
         ->exists();
 }
 
-
+public function notifications(): MorphMany
+{
+    return $this->morphMany(Notification::class, 'notifiable');
+}
 
 }

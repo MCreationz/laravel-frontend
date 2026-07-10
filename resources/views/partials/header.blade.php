@@ -117,32 +117,43 @@
 <script>
 document.addEventListener('DOMContentLoaded', function () {
 
+    const list = document.getElementById('notification-list');
+    const badge = document.getElementById('notification-count');
+
     loadNotifications();
 
-    async function loadNotifications()
-    {
+    function renderNotification(item) {
+        return `
+            <div
+                class="border-bottom p-3 notification-item"
+                data-id="${item.id}"
+                style="${item.is_read ? '' : 'background:#dbe9f6'}">
+
+                <div class="fw-semibold">
+                    ${item.title}
+                </div>
+
+                <div class="small text-muted mt-1">
+                    ${item.message}
+                </div>
+
+                <div class="small text-muted mt-2">
+                    ${new Date(item.created_at).toLocaleString()}
+                </div>
+
+            </div>
+        `;
+    }
+
+    async function loadNotifications() {
+
         try {
 
-            const response = await fetch(
-                "{{ route('notifications.index') }}"
-            );
-
+            const response = await fetch("{{ route('notifications.index') }}");
             const data = await response.json();
 
-            const list = document.getElementById(
-                'notification-list'
-            );
-
-            const count = document.getElementById(
-                'notification-count'
-            );
-
-            count.innerText = data.unread_count;
-
-            count.style.display =
-                data.unread_count > 0
-                    ? 'inline-block'
-                    : 'none';
+            badge.innerText = data.unread_count;
+            badge.style.display = data.unread_count > 0 ? 'inline-block' : 'none';
 
             if (!data.notifications.data.length) {
 
@@ -155,35 +166,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 return;
             }
 
-            let html = '';
-
-            data.notifications.data.forEach(item => {
-
-                html += `
-                    <div
-                        class="border-bottom p-3 notification-item"
-                        data-id="${item.id}"
-                        style="${item.is_read ? '' : 'background:#dbe9f6'}">
-
-                        <div class="fw-semibold">
-                            ${item.title}
-                        </div>
-
-                        <div class="small text-muted mt-1">
-                            ${item.message}
-                        </div>
-
-                        <div class="small text-muted mt-2">
-                            ${new Date(item.created_at)
-                                .toLocaleString()}
-                        </div>
-
-                    </div>
-                `;
-
-            });
-
-            list.innerHTML = html;
+            list.innerHTML = data.notifications.data
+                .map(renderNotification)
+                .join('');
 
         } catch (e) {
 
@@ -192,7 +177,42 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    document.addEventListener('click', async function(e) {
+    // -----------------------------
+    // REAL-TIME NOTIFICATIONS
+    // -----------------------------
+
+    window.Echo
+        .private('organization.{{ auth("organization")->id() }}')
+        .listen('.notification.created', function (notification) {
+
+            console.log('Realtime notification', notification);
+
+            if (list.innerHTML.includes('No notifications found')) {
+                list.innerHTML = '';
+            }
+
+            list.insertAdjacentHTML(
+                'afterbegin',
+                renderNotification(notification)
+            );
+
+            let count = parseInt(badge.innerText || '0');
+            count++;
+
+            badge.innerText = count;
+            badge.style.display = 'inline-block';
+
+            if (typeof toastr !== 'undefined') {
+                toastr.success(notification.message, notification.title);
+            }
+
+        });
+
+    // -----------------------------
+    // MARK AS READ
+    // -----------------------------
+
+    document.addEventListener('click', async function (e) {
 
         const item = e.target.closest('.notification-item');
 
@@ -203,34 +223,46 @@ document.addEventListener('DOMContentLoaded', function () {
         await fetch(`/notifications/${id}/read`, {
             method: 'POST',
             headers: {
-                'X-CSRF-TOKEN':
-                    document.querySelector(
-                        'meta[name="csrf-token"]'
-                    ).content
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
             }
         });
 
-        loadNotifications();
+        item.style.background = '';
+
+        let count = parseInt(badge.innerText || '0');
+
+        if (count > 0) {
+            count--;
+        }
+
+        badge.innerText = count;
+
+        if (count === 0) {
+            badge.style.display = 'none';
+        }
 
     });
 
+    // -----------------------------
+    // MARK ALL AS READ
+    // -----------------------------
+
     document.getElementById('mark-all-read')
-        ?.addEventListener('click', async function() {
+        ?.addEventListener('click', async function () {
 
-            await fetch(
-                "{{ route('notifications.read-all') }}",
-                {
-                    method: 'POST',
-                    headers: {
-                        'X-CSRF-TOKEN':
-                            document.querySelector(
-                                'meta[name="csrf-token"]'
-                            ).content
-                    }
+            await fetch("{{ route('notifications.read-all') }}", {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
                 }
-            );
+            });
 
-            loadNotifications();
+            document.querySelectorAll('.notification-item').forEach(item => {
+                item.style.background = '';
+            });
+
+            badge.innerText = 0;
+            badge.style.display = 'none';
 
         });
 

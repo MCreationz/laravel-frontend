@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\ClientAdmin;
 
-use App\Models\Notification;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 
@@ -10,16 +10,16 @@ class NotificationController extends Controller
 {
     public function index(): JsonResponse
     {
-        $organization = Auth::guard('organization')->user();
+        $admin = Auth::guard('client_admin')->user();
 
-        $notifications = $organization->notifications()
+        $notifications = $admin->notifications()
             ->latest()
             ->paginate(20);
 
         return response()->json([
             'success' => true,
             'notifications' => $notifications,
-            'unread_count' => $organization->notifications()
+            'unread_count' => $admin->notifications()
                 ->where('is_read', false)
                 ->count(),
         ]);
@@ -27,11 +27,11 @@ class NotificationController extends Controller
 
     public function unreadCount(): JsonResponse
     {
-        $organization = Auth::guard('organization')->user();
+        $admin = Auth::guard('client_admin')->user();
 
         return response()->json([
             'success' => true,
-            'count' => $organization->notifications()
+            'count' => $admin->notifications()
                 ->where('is_read', false)
                 ->count(),
         ]);
@@ -39,10 +39,9 @@ class NotificationController extends Controller
 
     public function markAsRead(int $id): JsonResponse
     {
-        $organization = Auth::guard('organization')->user();
+        $admin = Auth::guard('client_admin')->user();
 
-        $notification = $organization->notifications()
-            ->findOrFail($id);
+        $notification = $admin->notifications()->findOrFail($id);
 
         if (! $notification->is_read) {
             $notification->update([
@@ -53,15 +52,14 @@ class NotificationController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Notification marked as read.',
         ]);
     }
 
     public function markAllAsRead(): JsonResponse
     {
-        $organization = Auth::guard('organization')->user();
+        $admin = Auth::guard('client_admin')->user();
 
-        $organization->notifications()
+        $admin->notifications()
             ->where('is_read', false)
             ->update([
                 'is_read' => true,
@@ -70,22 +68,19 @@ class NotificationController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'All notifications marked as read.',
         ]);
     }
 
     public function destroy(int $id): JsonResponse
     {
-        $organization = Auth::guard('organization')->user();
+        $admin = Auth::guard('client_admin')->user();
 
-        $notification = $organization->notifications()
-            ->findOrFail($id);
+        $notification = $admin->notifications()->findOrFail($id);
 
         $notification->delete();
 
         return response()->json([
             'success' => true,
-            'message' => 'Notification deleted successfully.',
         ]);
     }
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Events\TestMessageSent;
 use App\Http\Controllers\API\Auth\LoginController as AuthLoginController;
 use App\Http\Controllers\API\Auth\RegisterController;
 use App\Http\Controllers\DashboardController;
@@ -27,6 +28,14 @@ Route::get('/', function () {
 // Route::get('/login', function () {
 //     return view('auth.login');
 // })->name('login');
+
+Route::get('/broadcast-test', function () {
+    broadcast(new TestMessageSent('Hello from Reverb!'));
+
+    return response()->json([
+    'success' => true,
+]);
+});
 
 // Step 1: Ask user to choose organization type
 Route::get('/organization-type', function () {

@@ -7,15 +7,16 @@ use Illuminate\Foundation\Configuration\Middleware;
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
         web: [
-            __DIR__ . '/../routes/web.php',
-            __DIR__ . '/../routes/superadmin.php',
-            __DIR__ . '/../routes/client-admin.php'
+            __DIR__.'/../routes/web.php',
+            __DIR__.'/../routes/superadmin.php',
+            __DIR__.'/../routes/client-admin.php',
         ],
 
-        api: __DIR__ . '/../routes/api.php',
+        api: __DIR__.'/../routes/api.php',
 
+        channels: __DIR__.'/../routes/channels.php',
 
-        commands: __DIR__ . '/../routes/console.php',
+        commands: __DIR__.'/../routes/console.php',
 
         health: '/up',
     )
@@ -26,43 +27,42 @@ return Application::configure(basePath: dirname(__DIR__))
             'superadmin' => \App\Http\Middleware\SuperAdminMiddleware::class,
             'check.onboarding' => \App\Http\Middleware\CheckOrganizationOnboarding::class,
 
-
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
 
-$exceptions->render(function (Throwable $e, $request) {
-    $status = method_exists($e, 'getStatusCode') ? $e->getStatusCode() : 500;
+        $exceptions->render(function (Throwable $e, $request) {
+            $status = method_exists($e, 'getStatusCode') ? $e->getStatusCode() : 500;
 
-    // Only force JSON for API routes
-    if ($request->is('api/*')) {
-        if ($e instanceof \Illuminate\Auth\AuthenticationException) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Unauthenticated.'
-            ], 401);
-        }
+            // Only force JSON for API routes
+            if ($request->is('api/*')) {
+                if ($e instanceof \Illuminate\Auth\AuthenticationException) {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Unauthenticated.',
+                    ], 401);
+                }
 
-        if (config('app.debug')) {
-            return response()->json([
-                'success' => false,
-                'message' => $e->getMessage(),
-                'exception' => class_basename($e),
-                'file' => $e->getFile(),
-                'line' => $e->getLine(),
-                'trace' => $e->getTrace(),
-            ], $status);
-        }
+                if (config('app.debug')) {
+                    return response()->json([
+                        'success' => false,
+                        'message' => $e->getMessage(),
+                        'exception' => class_basename($e),
+                        'file' => $e->getFile(),
+                        'line' => $e->getLine(),
+                        'trace' => $e->getTrace(),
+                    ], $status);
+                }
 
-        return response()->json([
-            'success' => false,
-            'message' => 'Something went wrong. Please try again later.',
-        ], $status);
-    }
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Something went wrong. Please try again later.',
+                ], $status);
+            }
 
-    // For web routes, return null so Laravel handles it (redirect, error page)
-    return null;
-});
+            // For web routes, return null so Laravel handles it (redirect, error page)
+            return null;
+        });
     })
 
     ->create();

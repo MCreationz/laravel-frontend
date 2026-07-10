@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
@@ -49,4 +51,13 @@ class User extends Authenticatable
             'role_id'    // FK on role_user table pointing to roles.id
         );
     }
+//     public function roles(): BelongsToMany
+// {
+//     return $this->belongsToMany(RoleUser::class, 'role_user');
+// }
+
+    public function notifications(): MorphMany
+{
+    return $this->morphMany(Notification::class, 'notifiable');
+}
 }

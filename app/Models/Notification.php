@@ -3,13 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class Notification extends Model
 {
     protected $fillable = [
-        'organization_id',
-        'reviewer_id',
-        'admin_id',
+        'notifiable_type',
+        'notifiable_id',
         'type',
         'title',
         'message',
@@ -23,4 +23,9 @@ class Notification extends Model
         'is_read' => 'boolean',
         'read_at' => 'datetime',
     ];
+
+    public function notifiable(): MorphTo
+    {
+        return $this->morphTo();
+    }
 }
