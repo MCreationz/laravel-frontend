@@ -22,108 +22,191 @@
             <img src="{{ asset('img/FundInk-logo.svg') }}" alt="Fundink" width="124" height="">
         </div>
 
-      <div class="col-auto">
-    <div class="header-links d-flex justify-content-end align-items-center gap-2 gap-lg-3">
+        <div class="col-auto">
+            <div class="header-links d-flex justify-content-end align-items-center gap-2 gap-lg-3">
 
-        @yield('header_extra')
+                @yield('header_extra')
 
-        <div class="dropdown">
+                <!-- Notification dropdown here -->
+                <div class="dropdown">
 
-            <a href="#"
-               class="icon position-relative"
-               data-bs-toggle="dropdown"
-               aria-expanded="false">
+                    <a href="javascript:void(0);" class="text-decoration-none text-reset" data-bs-toggle="dropdown"
+                        data-bs-auto-close="outside" aria-expanded="false">
 
-                <img src="{{ asset('img/notification.svg') }}"
-                     alt="Notifications"
-                     width="19"
-                     height="20">
+                        @php
+                            $name = trim(
+                                optional(auth('organization')->user()->profile)->legal_name
+                                ?? auth('organization')->user()->organization_name
+                                ?? '-'
+                            );
 
-                <span id="notification-count"
-                      class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-                      style="display:none;">
-                    0
-                </span>
+                            $words = preg_split('/\s+/', $name);
 
-            </a>
+                            if (count($words) >= 2) {
+                                $initials = strtoupper(substr($words[0], 0, 1) . substr(end($words), 0, 1));
+                            } else {
+                                $initials = strtoupper(substr($name, 0, 2));
+                            }
+                        @endphp
 
-            <div class="dropdown-menu dropdown-menu-end p-0 shadow"
-                 style="width:380px; max-height:500px; overflow-y:auto;">
+                        <div class="d-flex align-items-center ps-2 ps-lg-3">
 
-                <div class="d-flex justify-content-between align-items-center p-2 border-bottom">
+                            <div class="flex-shrink-0 rounded-circle d-flex align-items-center justify-content-center"
+                                style="width:36px;height:36px;background:#1E2746;color:#fff;font-weight:600;font-size:14px;">
+                                <span class="text-white">{{ $initials }}</span>
+                            </div>
 
-                    <strong>Notifications</strong>
+                            <div class="flex-grow-1 ms-2 ms-lg-3 profile-name text-truncate">
+                                {{ $name }}
+                            </div>
 
-                    <button
-                        type="button"
-                        id="mark-all-read"
-                        class="btn btn-sm btn-link text-decoration-none p-1">
-                        Mark all read
-                    </button>
+                        </div>
 
-                </div>
+                    </a>
 
-                <div id="notification-list">
+                    <div class="dropdown-menu dropdown-menu-end border-0 rounded-4 shadow p-3 mt-3"
+                        style="width:330px;font-size:13px;">
 
-                    <div class="p-3 text-center text-muted">
-                        Loading...
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-        <a href="{{ route('profile.show') }}"
-           class="text-decoration-none text-reset">
-
-@php
-   $name = trim(
-    optional(auth('organization')->user()->profile)->legal_name
+                        <div class="d-flex align-items-start mb-2">
+                            <div style="width:38%;" class="fw-semibold">
+                                <i class="bi bi-shop me-1 text-secondary"></i>
+                                Brand Name:
+                            </div>
+                            <div class="flex-grow-1 text-break">
+                                {{ optional(auth('organization')->user()->profile)->brand_name
     ?? auth('organization')->user()->organization_name
-    ?? '-'
-);
+    ?? '-' }}
+                            </div>
+                        </div>
 
-    $words = preg_split('/\s+/', $name);
+                        <div class="d-flex align-items-start mb-2">
+                            <div style="width:38%;" class="fw-semibold">
+                                <i class="bi bi-building me-1 text-secondary"></i>
+                                Organization:
+                            </div>
+                            <div class="flex-grow-1 text-break">
+                                {{ auth('organization')->user()->organization_name ?? '-' }}
+                            </div>
+                        </div>
 
-    if (count($words) >= 2) {
-        $initials = strtoupper(substr($words[0], 0, 1) . substr(end($words), 0, 1));
-    } else {
-        $initials = strtoupper(substr($name, 0, 2));
-    }
-@endphp
+                        <div class="d-flex align-items-start mb-2">
+                            <div style="width:38%;" class="fw-semibold">
+                                <i class="bi bi-diagram-3 me-1 text-secondary"></i>
+                                Type:
+                            </div>
+                            {{-- {{ dd(auth('organization')->user()->operationalDetail) }} --}}
+                            <div class="flex-grow-1 text-break">
+                                {{ \Illuminate\Support\Str::title(optional(auth('organization')->user()->operationalDetail)->registration_type ?? '-') }}
+                            </div>
+                        </div>
 
-<div class="d-flex align-items-center ps-2 ps-lg-3">
+                        <div class="d-flex align-items-start mb-2">
+                            <div style="width:38%;" class="fw-semibold">
+                                <i class="bi bi-envelope me-1 text-secondary"></i>
+                                Email:
+                            </div>
+                            <div class="flex-grow-1 text-break">
+                                <a href="mailto:{{ auth('organization')->user()->work_email }}">
+                                    {{ auth('organization')->user()->work_email ?? '-' }}
+                                </a>
+                            </div>
+                        </div>
 
-    <div class="flex-shrink-0 rounded-circle d-flex align-items-center justify-content-center"
-         style="width:36px;height:36px;background:#1E2746;color:#fff !important;font-weight:600;font-size:14px;">
-        <span style="color:#fff !important;">{{ $initials }}</span>
-    </div>
+                        <div class="d-flex align-items-start mb-2">
+                            <div style="width:38%;" class="fw-semibold">
+                                <i class="bi bi-person me-1 text-secondary"></i>
+                                Contact:
+                            </div>
+                            <div class="flex-grow-1 text-break">
+                                {{ optional(auth('organization')->user()->profile)->contact_name ?? '-' }}
+                            </div>
+                        </div>
 
-    <div class="flex-grow-1 ms-2 ms-lg-3 profile-name text-truncate">
-        {{ $name }}
-    </div>
+                        <div class="d-flex align-items-start mb-2">
+                            <div style="width:38%;" class="fw-semibold">
+                                <i class="bi bi-telephone me-1 text-secondary"></i>
+                                Mobile:
+                            </div>
+                            <div class="flex-grow-1 text-break">
+                                {{ optional(auth('organization')->user()->profile)->mobile_no ?? '-' }}
+                            </div>
+                        </div>
 
-</div>
+                        <div class="d-flex align-items-start mb-2">
+                            <div style="width:38%;" class="fw-semibold">
+                                <i class="bi bi-geo-alt me-1 text-secondary"></i>
+                                State:
+                            </div>
+                            <div class="flex-grow-1 text-break">
+                                {{ optional(auth('organization')->user()->address)->office_state ?? '-' }}
+                            </div>
+                        </div>
 
-        </a>
+                        <div class="d-flex align-items-start mb-2">
+                            <div style="width:38%;" class="fw-semibold">
+                                <i class="bi bi-globe me-1 text-secondary"></i>
+                                Website:
+                            </div>
+                            <div class="flex-grow-1 text-break">
+                                @if(optional(auth('organization')->user()->profile)->website_url)
+                                    <a href="{{ optional(auth('organization')->user()->profile)->website_url }}"
+                                        target="_blank">
+                                        {{ optional(auth('organization')->user()->profile)->website_url }}
+                                    </a>
+                                @else
+                                    -
+                                @endif
+                            </div>
+                        </div>
 
-    </div>
-</div>
-    </div>
+                        <div class="d-flex align-items-start mb-3">
+                            <div style="width:38%;" class="fw-semibold">
+                                <i class="bi bi-linkedin me-1 text-secondary"></i>
+                                LinkedIn:
+                            </div>
+                            <div class="flex-grow-1 text-break">
+                                @if(optional(auth('organization')->user()->profile)->linkedin_url)
+                                    <a href="{{ optional(auth('organization')->user()->profile)->linkedin_url }}"
+                                        target="_blank">
+                                        View Profile
+                                    </a>
+                                @else
+                                    -
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="text-center my-3">
+                            <a href="{{ route('profile.show') }}" class="text-decoration-none">Edit Profile</a>
+                            <span class="mx-2 text-muted">|</span>
+                            <a href="{{ route('settings.show') }}" class="text-decoration-none">Change Password</a>
+                        </div>
+
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <button type="submit" class="btn btn-danger w-100 py-2">
+                                <i class="bi bi-box-arrow-right me-1"></i>
+                                Logout
+                            </button>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
 </header>
 
+
+
 <script>
-document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function () {
 
-    const list = document.getElementById('notification-list');
-    const badge = document.getElementById('notification-count');
+        const list = document.getElementById('notification-list');
+        const badge = document.getElementById('notification-count');
 
-    loadNotifications();
+        loadNotifications();
 
-    function renderNotification(item) {
-        return `
+        function renderNotification(item) {
+            return `
             <div
                 class="border-bottom p-3 notification-item"
                 data-id="${item.id}"
@@ -143,128 +226,128 @@ document.addEventListener('DOMContentLoaded', function () {
 
             </div>
         `;
-    }
+        }
 
-    async function loadNotifications() {
+        async function loadNotifications() {
 
-        try {
+            try {
 
-            const response = await fetch("{{ route('notifications.index') }}");
-            const data = await response.json();
+                const response = await fetch("{{ route('notifications.index') }}");
+                const data = await response.json();
 
-            badge.innerText = data.unread_count;
-            badge.style.display = data.unread_count > 0 ? 'inline-block' : 'none';
+                badge.innerText = data.unread_count;
+                badge.style.display = data.unread_count > 0 ? 'inline-block' : 'none';
 
-            if (!data.notifications.data.length) {
+                if (!data.notifications.data.length) {
 
-                list.innerHTML = `
+                    list.innerHTML = `
                     <div class="p-3 text-center text-muted">
                         No notifications found
                     </div>
                 `;
 
-                return;
+                    return;
+                }
+
+                list.innerHTML = data.notifications.data
+                    .map(renderNotification)
+                    .join('');
+
+            } catch (e) {
+
+                console.error(e);
+
             }
-
-            list.innerHTML = data.notifications.data
-                .map(renderNotification)
-                .join('');
-
-        } catch (e) {
-
-            console.error(e);
-
-        }
-    }
-
-    // -----------------------------
-    // REAL-TIME NOTIFICATIONS
-    // -----------------------------
-
-    window.Echo
-        .private('organization.{{ auth("organization")->id() }}')
-        .listen('.notification.created', function (notification) {
-
-            console.log('Realtime notification', notification);
-
-            if (list.innerHTML.includes('No notifications found')) {
-                list.innerHTML = '';
-            }
-
-            list.insertAdjacentHTML(
-                'afterbegin',
-                renderNotification(notification)
-            );
-
-            let count = parseInt(badge.innerText || '0');
-            count++;
-
-            badge.innerText = count;
-            badge.style.display = 'inline-block';
-
-            // if (typeof toastr !== 'undefined') {
-            //     toastr.success(notification.message, notification.title);
-            // }
-
-        });
-
-    // -----------------------------
-    // MARK AS READ
-    // -----------------------------
-
-    document.addEventListener('click', async function (e) {
-
-        const item = e.target.closest('.notification-item');
-
-        if (!item) return;
-
-        const id = item.dataset.id;
-
-        await fetch(`/notifications/${id}/read`, {
-            method: 'POST',
-            headers: {
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-            }
-        });
-
-        item.style.background = '';
-
-        let count = parseInt(badge.innerText || '0');
-
-        if (count > 0) {
-            count--;
         }
 
-        badge.innerText = count;
+        // -----------------------------
+        // REAL-TIME NOTIFICATIONS
+        // -----------------------------
 
-        if (count === 0) {
-            badge.style.display = 'none';
-        }
+        window.Echo
+            .private('organization.{{ auth("organization")->id() }}')
+            .listen('.notification.created', function (notification) {
 
-    });
+                console.log('Realtime notification', notification);
 
-    // -----------------------------
-    // MARK ALL AS READ
-    // -----------------------------
+                if (list.innerHTML.includes('No notifications found')) {
+                    list.innerHTML = '';
+                }
 
-    document.getElementById('mark-all-read')
-        ?.addEventListener('click', async function () {
+                list.insertAdjacentHTML(
+                    'afterbegin',
+                    renderNotification(notification)
+                );
 
-            await fetch("{{ route('notifications.read-all') }}", {
+                let count = parseInt(badge.innerText || '0');
+                count++;
+
+                badge.innerText = count;
+                badge.style.display = 'inline-block';
+
+                // if (typeof toastr !== 'undefined') {
+                //     toastr.success(notification.message, notification.title);
+                // }
+
+            });
+
+        // -----------------------------
+        // MARK AS READ
+        // -----------------------------
+
+        document.addEventListener('click', async function (e) {
+
+            const item = e.target.closest('.notification-item');
+
+            if (!item) return;
+
+            const id = item.dataset.id;
+
+            await fetch(`/notifications/${id}/read`, {
                 method: 'POST',
                 headers: {
                     'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
                 }
             });
 
-            document.querySelectorAll('.notification-item').forEach(item => {
-                item.style.background = '';
-            });
+            item.style.background = '';
 
-            badge.innerText = 0;
-            badge.style.display = 'none';
+            let count = parseInt(badge.innerText || '0');
+
+            if (count > 0) {
+                count--;
+            }
+
+            badge.innerText = count;
+
+            if (count === 0) {
+                badge.style.display = 'none';
+            }
 
         });
 
-});
+        // -----------------------------
+        // MARK ALL AS READ
+        // -----------------------------
+
+        document.getElementById('mark-all-read')
+            ?.addEventListener('click', async function () {
+
+                await fetch("{{ route('notifications.read-all') }}", {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                    }
+                });
+
+                document.querySelectorAll('.notification-item').forEach(item => {
+                    item.style.background = '';
+                });
+
+                badge.innerText = 0;
+                badge.style.display = 'none';
+
+            });
+
+    });
 </script>

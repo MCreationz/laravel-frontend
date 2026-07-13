@@ -13,7 +13,7 @@
 @endsection
 
 @section('content')
-    <form id="onboardingForm" method="POST">
+    <form id="onboardingForm" method="POST" action="{{ route('profile.update') }}">
         @csrf
 
         <div class="card p-3 p-md-4 border-0 mb-3">
@@ -84,19 +84,19 @@
                 <div class="col-12 col-md-6 col-xl-4 px-md-2">
                     <label class="form-label">Address Line 1</label>
                     <input type="text" name="office_address_line_1" class="form-control"
-                        value="{{ old('office_address_line_1', $address?->office_address_line_1) }}">
+                        value="{{ old('office_address_line_1', $address?->office_address_line_1) }}" disabled>
                 </div>
 
                 <div class="col-12 col-md-6 col-xl-4 px-md-2">
                     <label class="form-label">Address Line 2</label>
                     <input type="text" name="office_address_line_2" class="form-control"
-                        value="{{ old('office_address_line_2', $address?->office_address_line_2) }}">
+                        value="{{ old('office_address_line_2', $address?->office_address_line_2) }}" disabled>
                 </div>
 
                 <div class="col-12 col-md-6 col-xl-4 px-md-2">
                     <label class="form-label">City</label>
                     <input type="text" name="office_city" class="form-control"
-                        value="{{ old('office_city', $address?->office_city) }}">
+                        value="{{ old('office_city', $address?->office_city) }}" disabled>
                 </div>
 
                 <hr class="mb-0">
@@ -104,7 +104,7 @@
                 <div class="col-12 col-md-6 col-xl-4 px-md-2">
                     <label class="form-label">Pin Code</label>
                     <input type="text" name="office_pin_code" class="form-control"
-                        value="{{ old('office_pin_code', $address?->office_pin_code) }}">
+                        value="{{ old('office_pin_code', $address?->office_pin_code) }}" disabled>
                 </div>
 
                 <div class="col-12 col-md-6 col-xl-4 px-md-2 position-relative">
@@ -112,7 +112,7 @@
                     <label class="form-label">State</label>
 
                     <input type="text" name="office_state" id="office_state" class="form-control" autocomplete="off"
-                        value="{{ old('office_state', $address?->office_state) }}">
+                        value="{{ old('office_state', $address?->office_state) }}" disabled>
 
                     <div id="office_state_suggestions" class="list-group position-absolute w-100 shadow bg-white"
                         style="z-index:1000; max-height:200px; overflow-y:auto;">
@@ -122,7 +122,7 @@
 
                     <label class="form-label">District</label>
 
-                    <select name="office_district" id="office_district" class="form-control">
+                    <select name="office_district" id="office_district" class="form-control" disabled>
                         <option value="">Select District</option>
                     </select>
                 </div>
@@ -133,15 +133,15 @@
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <h2 class="top-heading mb-0">Registered Office Address</h2>
 
-                <div class="form-check only-checkbox">
+                {{-- <div class="form-check only-checkbox">
                     <input class="form-check-input" type="checkbox" name="is_portal_same_as_office" id="sameAsOffice"
-                        value="1"
-                        {{ old('is_portal_same_as_office', $address?->is_portal_same_as_office) ? 'checked' : '' }}>
+                        value="1" {{ old('is_portal_same_as_office', $address?->is_portal_same_as_office) ? 'checked' : ''
+                    }} disabled>
 
                     <label class="form-check-label" for="sameAsOffice">
                         Same as Head Office Address
                     </label>
-                </div>
+                </div> --}}
             </div>
 
             <div id="portal-address-fields" class="row flex-wrap row-gap-4">
@@ -149,19 +149,19 @@
                 <div class="col-12 col-md-6 col-xl-4 px-md-2">
                     <label class="form-label">Address Line 1</label>
                     <input type="text" name="portal_address_line_1" class="form-control"
-                        value="{{ old('portal_address_line_1', $address?->portal_address_line_1) }}">
+                        value="{{ old('portal_address_line_1', $address?->portal_address_line_1) }}" disabled>
                 </div>
 
                 <div class="col-12 col-md-6 col-xl-4 px-md-2">
                     <label class="form-label">Address Line 2</label>
                     <input type="text" name="portal_address_line_2" class="form-control"
-                        value="{{ old('portal_address_line_2', $address?->portal_address_line_2) }}">
+                        value="{{ old('portal_address_line_2', $address?->portal_address_line_2) }}" disabled>
                 </div>
 
                 <div class="col-12 col-md-6 col-xl-4 px-md-2">
                     <label class="form-label">City</label>
                     <input type="text" name="portal_city" class="form-control"
-                        value="{{ old('portal_city', $address?->portal_city) }}">
+                        value="{{ old('portal_city', $address?->portal_city) }}" disabled>
                 </div>
 
                 <hr class="mb-0">
@@ -169,7 +169,7 @@
                 <div class="col-12 col-md-6 col-xl-4 px-md-2">
                     <label class="form-label">Pin Code</label>
                     <input type="text" name="portal_pin_code" class="form-control"
-                        value="{{ old('portal_pin_code', $address?->portal_pin_code) }}">
+                        value="{{ old('portal_pin_code', $address?->portal_pin_code) }}" disabled>
                 </div>
 
                 <div class="col-12 col-md-6 col-xl-4 px-md-2 position-relative">
@@ -177,7 +177,7 @@
                     <label class="form-label">State</label>
 
                     <input type="text" name="portal_state" id="portal_state" class="form-control" autocomplete="off"
-                        value="{{ old('portal_state', $address?->portal_state) }}">
+                        value="{{ old('portal_state', $address?->portal_state) }}" disabled>
 
                     <div id="portal_state_suggestions" class="list-group position-absolute w-100 shadow bg-white"
                         style="z-index:1000; max-height:200px; overflow-y:auto;">
@@ -189,7 +189,7 @@
 
                     <label class="form-label">District</label>
 
-                    <select name="portal_district" id="portal_district" class="form-control">
+                    <select name="portal_district" id="portal_district" class="form-control" disabled>
                         <option value="">Select District</option>
                     </select>
 
@@ -197,810 +197,945 @@
 
             </div>
         </div>
-        
- 
 
-          <div class="card-body p-0">
 
-            <div style="border-radius:0px;" class="card p-3 p-md-4 border-0 mb-3 rounded-3">
-                <div class="mb-4">
-                    @php
-                        $role = auth('organization')->user()?->role;
-                    @endphp
 
-                    <h1 class="top-heading mb-2">
-                        {{ $role === 'fund_seeker' ? 'Startup Credentials' : 'NPO Credentials' }}
-                    </h1>
-                    <p>Tell us about your organisation's legal structure and financial track record</p>
-                </div>
-                <div class="row mb-3 flex-wrap row-gap-3 row-gap-md-4 px-md-1">
-                    <!-- State -->
-                    <!-- Registration Type -->
-                    <div class="col-12 col-md-6 {{ $role === 'fund_seeker' ? 'col-xl-6' : 'col-xl-4' }} px-md-2"> <label
-                            class="form-label">Organization Legal Type<span>*</span></label>
+        <div class="card-body p-0">
 
+            <form id="onboardingForm" method="POST" action="{{ route('onboarding.step3.store') }}"> @csrf
+                <div style="border-radius:0px;" class="card p-3 p-md-4 border-0 mb-3 rounded-3">
+                    <div class="mb-4">
                         @php
-                            $registrationType = old('registration_type', $operationalDetail->registration_type ?? '');
-
-                            if ($role === 'fund_seeker') {
-                                $labels = [
-                                    'private_limited' => 'Private Limited',
-                                    'llp' => 'LLP',
-                                    'opc' => 'OPC',
-                                ];
-                            } else {
-                                $labels = [
-                                    'society' => 'Society',
-                                    'trust' => 'Trust',
-                                    'section_8_company' => 'Section 8 Company',
-                                ];
-                            }
+                            $role = auth('organization')->user()?->role;
                         @endphp
 
-                        <div class="select-wrapper w-100 position-relative">
-                            <div class="custom-select form-control">
-                                {{ $registrationType ? $labels[$registrationType] ?? 'Select' : 'Select entity type' }}
-                            </div>
-
-                            <ul class="select-list">
-                                @if ($role === 'fund_seeker')
-                                    <li data-value="private_limited">Private Limited</li>
-                                    <li data-value="llp">LLP</li>
-                                    <li data-value="opc">OPC</li>
-                                @else
-                                    <li data-value="society">Society</li>
-                                    <li data-value="trust">Trust</li>
-                                    <li data-value="section_8_company">Section 8 Company</li>
-                                @endif
-                            </ul>
-
-                            <input type="hidden" name="registration_type" class="hidden-select"
-                                value="{{ $registrationType }}" required>
-                        </div>
-
-                        @error('registration_type')
-                            <div class="text-danger small">{{ $message }}</div>
-                        @enderror
+                        <h1 class="top-heading mb-2">
+                            {{ $role === 'fund_seeker' ? 'Startup Credentials' : 'NPO Credentials' }}
+                        </h1>
+                        <p>Tell us about your organisation's legal structure and financial track record</p>
                     </div>
-
-                    @if ($role !== 'fund_seeker')
-                        <!-- Domain of Expertise -->
-                        <div class="col-12 col-md-6 col-xl-4 px-md-2">
-                            <label class="form-label">Domain of Expertise<span>*</span></label>
+                    <div class="row mb-3 flex-wrap row-gap-3 row-gap-md-4 px-md-1">
+                        <!-- State -->
+                        <!-- Registration Type -->
+                        <div class="col-12 col-md-6 {{ $role === 'fund_seeker' ? 'col-xl-6' : 'col-xl-4' }} px-md-2"> <label
+                                class="form-label">Organization Legal Type<span>*</span></label>
 
                             @php
-                                $domain = old('domain_of_expertise', $operationalDetail->domain_of_expertise ?? '');
+                                $registrationType = old('registration_type', $operationalDetail->registration_type ?? '');
+
+                                if ($role === 'fund_seeker') {
+                                    $labels = [
+                                        'private_limited' => 'Private Limited',
+                                        'llp' => 'LLP',
+                                        'opc' => 'OPC',
+                                    ];
+                                } else {
+                                    $labels = [
+                                        'society' => 'Society',
+                                        'trust' => 'Trust',
+                                        'section_8_company' => 'Section 8 Company',
+                                    ];
+                                }
                             @endphp
 
-                            <div class="select-wrapper w-100 position-relative">
-                                <div class="custom-select form-control @error('domain_of_expertise') is-invalid @enderror">
-                                    {{ $domain ? $domain : 'Select expertise' }}
-                                </div>
+                         <div class="select-wrapper w-100 position-relative" style="pointer-events: none;">
+    <div class="custom-select form-control bg-light">
+        {{ $registrationType ? $labels[$registrationType] ?? 'Select' : 'Select entity type' }}
+    </div>
 
-                                <ul class="select-list">
-                                    <li data-value="school-Education">School Education (Primary & Secondary)</li>
-                                    <li data-value="Higher-Education">Higher Education Support</li>
-                                    <li data-value="Scholarships-&-Fellowships">Scholarships & Fellowships</li>
-                                    <li data-value="Digital">Digital Education</li>
-                                    <li data-value="STEM">STEM Education</li>
-                                    <li data-value="Special">Special Education (Children with Disabilities)</li>
-                                    <li data-value="Vocational">Vocational Training & Skill Development</li>
-                                    <li data-value="Employability">Employability & Livelihood Programs</li>
-                                    <li data-value="Healthcare">Primary Healthcare</li>
-                                    <li data-value="Maternal">Maternal & Child Health</li>
-                                    <li data-value="Nutrition">Nutrition & Malnutrition</li>
-                                    <li data-value="Mental">Mental Health</li>
-                                    <li data-value="Disability">Disability Rehabilitation</li>
-                                    <li data-value="Sanitation">Public Health & Sanitation</li>
-                                    <li data-value="Preventive">Preventive Healthcare & Awareness</li>
-                                    <li data-value="HIV/AIDS">HIV/AIDS & Communicable Diseases</li>
-                                    <li data-value="Empowerment">Women Empowerment</li>
-                                    <li data-value="Gender-Equality">Gender Equality</li>
-                                    <li data-value="Violence">Prevention of Domestic Violence</li>
-                                    <li data-value="Development">Girl Child Development</li>
-                                    <li data-value="Protection">Child Protection & Child Rights</li>
-                                    <li data-value="Livelihoods">Rural Livelihoods</li>
-                                    <li data-value="Urban">Urban Livelihoods</li>
-                                    <li data-value="Self-Help">Self-Help Groups (SHGs)</li>
-                                    <li data-value="Microfinance">Microfinance & Financial Inclusion</li>
-                                    <li data-value="Entrepreneurship">Entrepreneurship Development</li>
-                                    <li data-value="Environmental">Environmental Conservation</li>
-                                    <li data-value="Climate">Climate Action</li>
-                                    <li data-value="Afforestation">Afforestation</li>
-                                    <li data-value="Water">Water Conservation</li>
-                                    <li data-value="Waste-Management">Waste Management</li>
-                                    <li data-value="Renewable">Renewable Energy Access</li>
-                                    <li data-value="Biodiversity">Biodiversity Protection</li>
-                                    <li data-value="Rural">Rural Development Projects</li>
-                                    <li data-value="Infrastructure">Infrastructure Development (Community Assets)</li>
-                                    <li data-value="Drinking">Drinking Water Projects</li>
-                                    <li data-value="Sanitation">Sanitation & Hygiene (WASH)</li>
-                                    <li data-value="Rights">Human Rights</li>
-                                    <li data-value="Legal">Legal Aid & Access to Justice</li>
-                                    <li data-value="Governance">Governance & Civic Participation</li>
-                                    <li data-value="Transparency">Transparency & Accountability</li>
-                                    <li data-value="Senior">Senior Citizens Welfare</li>
-                                    <li data-value="Persons">Persons with Disabilities</li>
-                                    <li data-value="Tribal">Tribal Development</li>
-                                    <li data-value="Minority">Minority Welfare</li>
-                                    <li data-value="Migrant">Migrant Workers Support</li>
-                                    <li data-value="Disaster">Disaster Relief & Rehabilitation</li>
-                                    <li data-value="Emergency">Emergency Response & Humanitarian Aid</li>
-                                </ul>
+    <ul class="select-list">
+        @if ($role === 'fund_seeker')
+            <li data-value="private_limited">Private Limited</li>
+            <li data-value="llp">LLP</li>
+            <li data-value="opc">OPC</li>
+        @else
+            <li data-value="society">Society</li>
+            <li data-value="trust">Trust</li>
+            <li data-value="section_8_company">Section 8 Company</li>
+        @endif
+    </ul>
 
-                                <input type="hidden" name="domain_of_expertise" class="hidden-select" value="{{ $domain }}"
-                                    required>
-                            </div>
+    <input type="hidden" name="registration_type" class="hidden-select"
+        value="{{ $registrationType }}">
+</div>
 
-                            @error('domain_of_expertise')
+                            @error('registration_type')
                                 <div class="text-danger small">{{ $message }}</div>
                             @enderror
                         </div>
-                    @endif
-                    @php
-                        $selectedStates = old('state', $operationalDetail->state ?? '');
 
-                        if (is_string($selectedStates)) {
-                            $selectedStates = explode(',', $selectedStates);
-                        }
+                        @if ($role !== 'fund_seeker')
+                            <!-- Domain of Expertise -->
+                            <div class="col-12 col-md-6 col-xl-4 px-md-2">
+                                <label class="form-label">Domain of Expertise<span>*</span></label>
 
-                        $selectedStates = array_map('trim', $selectedStates);
-                    @endphp
+                                @php
+                                    $selectedDomains = old('domain_of_expertise', $operationalDetail->domain_of_expertise ?? '');
 
+                                    if (is_string($selectedDomains)) {
+                                        $selectedDomains = explode(',', $selectedDomains);
+                                    }
 
-                    @php
-                        $selectedStates = old('state', $operationalDetail->state ?? '');
+                                    $selectedDomains = array_map('trim', $selectedDomains);
+                                @endphp
+                                <div class="select-wrapper w-100 position-relative checkbox-wrap">
 
-                        if (is_string($selectedStates)) {
-                            $selectedStates = explode(',', $selectedStates);
-                        }
+                                    <div id="selectedDomainsBox"
+                                        class="custom-select form-control d-flex flex-wrap gap-2 align-items-center @error('domain_of_expertise') is-invalid @enderror">
+                                        <span class="placeholder">Select expertise</span>
+                                    </div>
 
-                        $selectedStates = array_map('trim', $selectedStates);
-                    @endphp
+                                    <ul class="select-list checkbox-list" id="domainCheckboxList">
 
-                    <div class="col-12 col-md-6 {{ $role === 'fund_seeker' ? 'col-xl-6' : 'col-xl-4' }} px-md-2">
-                        <label class="form-label">
-                            Operational States<span>*</span>
-                        </label>
+                                        <li>
+                                            <input type="checkbox" value="School Education (Primary & Secondary)" id="d1" {{ in_array('School Education (Primary & Secondary)', $selectedDomains) ? 'checked' : '' }}>
+                                            <label for="d1">School Education (Primary & Secondary)</label>
+                                        </li>
 
-                        <div class="select-wrapper w-100 position-relative checkbox-wrap">
+                                        <li>
+                                            <input type="checkbox" value="Higher Education Support" id="d2" {{ in_array('Higher Education Support', $selectedDomains) ? 'checked' : '' }}>
+                                            <label for="d2">Higher Education Support</label>
+                                        </li>
 
-                            <div id="selectedStatesBox"
-                                class="custom-select form-control d-flex flex-wrap gap-2 align-items-center">
-                                <span class="placeholder">Select State</span>
-                            </div>
+                                        <li>
+                                            <input type="checkbox" value="Scholarships & Fellowships" id="d3" {{ in_array('Scholarships & Fellowships', $selectedDomains) ? 'checked' : '' }}>
+                                            <label for="d3">Scholarships & Fellowships</label>
+                                        </li>
 
-                            <ul class="select-list checkbox-list">
+                                        <li>
+                                            <input type="checkbox" value="Digital Education" id="d4" {{ in_array('Digital Education', $selectedDomains) ? 'checked' : '' }}>
+                                            <label for="d4">Digital Education</label>
+                                        </li>
 
-                                <li>
-                                    <input type="checkbox" value="Pan India" id="s0" {{ in_array('Pan India', $selectedStates) ? 'checked' : '' }}>
-                                    <label for="s0">Pan India</label>
-                                </li>
+                                        <li>
+                                            <input type="checkbox" value="STEM Education" id="d5" {{ in_array('STEM Education', $selectedDomains) ? 'checked' : '' }}>
+                                            <label for="d5">STEM Education</label>
+                                        </li>
 
-                                <li>
-                                    <input type="checkbox" value="Andhra Pradesh" id="s1" {{ in_array('Andhra Pradesh', $selectedStates) ? 'checked' : '' }}>
-                                    <label for="s1">Andhra Pradesh</label>
-                                </li>
+                                        <li>
+                                            <input type="checkbox" value="Special Education (Children with Disabilities)"
+                                                id="d6" {{ in_array('Special Education (Children with Disabilities)', $selectedDomains) ? 'checked' : '' }}>
+                                            <label for="d6">Special Education (Children with Disabilities)</label>
+                                        </li>
 
-                                <li>
-                                    <input type="checkbox" value="Arunachal Pradesh" id="s2" {{ in_array('Arunachal Pradesh', $selectedStates) ? 'checked' : '' }}>
-                                    <label for="s2">Arunachal Pradesh</label>
-                                </li>
+                                        <li>
+                                            <input type="checkbox" value="Vocational Training & Skill Development" id="d7" {{ in_array('Vocational Training & Skill Development', $selectedDomains) ? 'checked' : '' }}>
+                                            <label for="d7">Vocational Training & Skill Development</label>
+                                        </li>
 
-                                <li>
-                                    <input type="checkbox" value="Assam" id="s3" {{ in_array('Assam', $selectedStates) ? 'checked' : '' }}>
-                                    <label for="s3">Assam</label>
-                                </li>
+                                        <li>
+                                            <input type="checkbox" value="Employability & Livelihood Programs" id="d8" {{ in_array('Employability & Livelihood Programs', $selectedDomains) ? 'checked' : '' }}>
+                                            <label for="d8">Employability & Livelihood Programs</label>
+                                        </li>
 
-                                <li>
-                                    <input type="checkbox" value="Bihar" id="s4" {{ in_array('Bihar', $selectedStates) ? 'checked' : '' }}>
-                                    <label for="s4">Bihar</label>
-                                </li>
+                                        <li>
+                                            <input type="checkbox" value="Primary Healthcare" id="d9" {{ in_array('Primary Healthcare', $selectedDomains) ? 'checked' : '' }}>
+                                            <label for="d9">Primary Healthcare</label>
+                                        </li>
 
-                                <li>
-                                    <input type="checkbox" value="Chhattisgarh" id="s5" {{ in_array('Chhattisgarh', $selectedStates) ? 'checked' : '' }}>
-                                    <label for="s5">Chhattisgarh</label>
-                                </li>
+                                        <li>
+                                            <input type="checkbox" value="Maternal & Child Health" id="d10" {{ in_array('Maternal & Child Health', $selectedDomains) ? 'checked' : '' }}>
+                                            <label for="d10">Maternal & Child Health</label>
+                                        </li>
 
-                                <li>
-                                    <input type="checkbox" value="Goa" id="s6" {{ in_array('Goa', $selectedStates) ? 'checked' : '' }}>
-                                    <label for="s6">Goa</label>
-                                </li>
+                                        <li>
+                                            <input type="checkbox" value="Nutrition & Malnutrition" id="d11" {{ in_array('Nutrition & Malnutrition', $selectedDomains) ? 'checked' : '' }}>
+                                            <label for="d11">Nutrition & Malnutrition</label>
+                                        </li>
 
-                                <li>
-                                    <input type="checkbox" value="Gujarat" id="s7" {{ in_array('Gujarat', $selectedStates) ? 'checked' : '' }}>
-                                    <label for="s7">Gujarat</label>
-                                </li>
+                                        <li>
+                                            <input type="checkbox" value="Mental Health" id="d12" {{ in_array('Mental Health', $selectedDomains) ? 'checked' : '' }}>
+                                            <label for="d12">Mental Health</label>
+                                        </li>
 
-                                <li>
-                                    <input type="checkbox" value="Haryana" id="s8" {{ in_array('Haryana', $selectedStates) ? 'checked' : '' }}>
-                                    <label for="s8">Haryana</label>
-                                </li>
+                                        <li>
+                                            <input type="checkbox" value="Disability Rehabilitation" id="d13" {{ in_array('Disability Rehabilitation', $selectedDomains) ? 'checked' : '' }}>
+                                            <label for="d13">Disability Rehabilitation</label>
+                                        </li>
 
-                                <li>
-                                    <input type="checkbox" value="Himachal Pradesh" id="s9" {{ in_array('Himachal Pradesh', $selectedStates) ? 'checked' : '' }}>
-                                    <label for="s9">Himachal Pradesh</label>
-                                </li>
+                                        <li>
+                                            <input type="checkbox" value="Public Health & Sanitation" id="d14" {{ in_array('Public Health & Sanitation', $selectedDomains) ? 'checked' : '' }}>
+                                            <label for="d14">Public Health & Sanitation</label>
+                                        </li>
 
-                                <li>
-                                    <input type="checkbox" value="Jharkhand" id="s10" {{ in_array('Jharkhand', $selectedStates) ? 'checked' : '' }}>
-                                    <label for="s10">Jharkhand</label>
-                                </li>
+                                        <li>
+                                            <input type="checkbox" value="Preventive Healthcare & Awareness" id="d15" {{ in_array('Preventive Healthcare & Awareness', $selectedDomains) ? 'checked' : '' }}>
+                                            <label for="d15">Preventive Healthcare & Awareness</label>
+                                        </li>
 
-                                <li>
-                                    <input type="checkbox" value="Karnataka" id="s11" {{ in_array('Karnataka', $selectedStates) ? 'checked' : '' }}>
-                                    <label for="s11">Karnataka</label>
-                                </li>
+                                        <li>
+                                            <input type="checkbox" value="HIV/AIDS & Communicable Diseases" id="d16" {{ in_array('HIV/AIDS & Communicable Diseases', $selectedDomains) ? 'checked' : '' }}>
+                                            <label for="d16">HIV/AIDS & Communicable Diseases</label>
+                                        </li>
 
-                                <li>
-                                    <input type="checkbox" value="Kerala" id="s12" {{ in_array('Kerala', $selectedStates) ? 'checked' : '' }}>
-                                    <label for="s12">Kerala</label>
-                                </li>
+                                        <li>
+                                            <input type="checkbox" value="Women Empowerment" id="d17" {{ in_array('Women Empowerment', $selectedDomains) ? 'checked' : '' }}>
+                                            <label for="d17">Women Empowerment</label>
+                                        </li>
 
-                                <li>
-                                    <input type="checkbox" value="Madhya Pradesh" id="s13" {{ in_array('Madhya Pradesh', $selectedStates) ? 'checked' : '' }}>
-                                    <label for="s13">Madhya Pradesh</label>
-                                </li>
+                                        <li>
+                                            <input type="checkbox" value="Gender Equality" id="d18" {{ in_array('Gender Equality', $selectedDomains) ? 'checked' : '' }}>
+                                            <label for="d18">Gender Equality</label>
+                                        </li>
 
-                                <li>
-                                    <input type="checkbox" value="Maharashtra" id="s14" {{ in_array('Maharashtra', $selectedStates) ? 'checked' : '' }}>
-                                    <label for="s14">Maharashtra</label>
-                                </li>
+                                        <li>
+                                            <input type="checkbox" value="Prevention of Domestic Violence" id="d19" {{ in_array('Prevention of Domestic Violence', $selectedDomains) ? 'checked' : '' }}>
+                                            <label for="d19">Prevention of Domestic Violence</label>
+                                        </li>
 
-                                <li>
-                                    <input type="checkbox" value="Manipur" id="s15" {{ in_array('Manipur', $selectedStates) ? 'checked' : '' }}>
-                                    <label for="s15">Manipur</label>
-                                </li>
+                                        <li>
+                                            <input type="checkbox" value="Girl Child Development" id="d20" {{ in_array('Girl Child Development', $selectedDomains) ? 'checked' : '' }}>
+                                            <label for="d20">Girl Child Development</label>
+                                        </li>
 
-                                <li>
-                                    <input type="checkbox" value="Meghalaya" id="s16" {{ in_array('Meghalaya', $selectedStates) ? 'checked' : '' }}>
-                                    <label for="s16">Meghalaya</label>
-                                </li>
+                                        <li>
+                                            <input type="checkbox" value="Child Protection & Child Rights" id="d21" {{ in_array('Child Protection & Child Rights', $selectedDomains) ? 'checked' : '' }}>
+                                            <label for="d21">Child Protection & Child Rights</label>
+                                        </li>
 
-                                <li>
-                                    <input type="checkbox" value="Mizoram" id="s17" {{ in_array('Mizoram', $selectedStates) ? 'checked' : '' }}>
-                                    <label for="s17">Mizoram</label>
-                                </li>
+                                        <li>
+                                            <input type="checkbox" value="Rural Livelihoods" id="d22" {{ in_array('Rural Livelihoods', $selectedDomains) ? 'checked' : '' }}>
+                                            <label for="d22">Rural Livelihoods</label>
+                                        </li>
 
-                                <li>
-                                    <input type="checkbox" value="Nagaland" id="s18" {{ in_array('Nagaland', $selectedStates) ? 'checked' : '' }}>
-                                    <label for="s18">Nagaland</label>
-                                </li>
+                                        <li>
+                                            <input type="checkbox" value="Urban Livelihoods" id="d23" {{ in_array('Urban Livelihoods', $selectedDomains) ? 'checked' : '' }}>
+                                            <label for="d23">Urban Livelihoods</label>
+                                        </li>
 
-                                <li>
-                                    <input type="checkbox" value="Odisha" id="s19" {{ in_array('Odisha', $selectedStates) ? 'checked' : '' }}>
-                                    <label for="s19">Odisha</label>
-                                </li>
+                                        <li>
+                                            <input type="checkbox" value="Self-Help Groups (SHGs)" id="d24" {{ in_array('Self-Help Groups (SHGs)', $selectedDomains) ? 'checked' : '' }}>
+                                            <label for="d24">Self-Help Groups (SHGs)</label>
+                                        </li>
 
-                                <li>
-                                    <input type="checkbox" value="Punjab" id="s20" {{ in_array('Punjab', $selectedStates) ? 'checked' : '' }}>
-                                    <label for="s20">Punjab</label>
-                                </li>
+                                        <li>
+                                            <input type="checkbox" value="Microfinance & Financial Inclusion" id="d25" {{ in_array('Microfinance & Financial Inclusion', $selectedDomains) ? 'checked' : '' }}>
+                                            <label for="d25">Microfinance & Financial Inclusion</label>
+                                        </li>
 
-                                <li>
-                                    <input type="checkbox" value="Rajasthan" id="s21" {{ in_array('Rajasthan', $selectedStates) ? 'checked' : '' }}>
-                                    <label for="s21">Rajasthan</label>
-                                </li>
+                                        <li>
+                                            <input type="checkbox" value="Entrepreneurship Development" id="d26" {{ in_array('Entrepreneurship Development', $selectedDomains) ? 'checked' : '' }}>
+                                            <label for="d26">Entrepreneurship Development</label>
+                                        </li>
 
-                                <li>
-                                    <input type="checkbox" value="Sikkim" id="s22" {{ in_array('Sikkim', $selectedStates) ? 'checked' : '' }}>
-                                    <label for="s22">Sikkim</label>
-                                </li>
+                                        <li>
+                                            <input type="checkbox" value="Environmental Conservation" id="d27" {{ in_array('Environmental Conservation', $selectedDomains) ? 'checked' : '' }}>
+                                            <label for="d27">Environmental Conservation</label>
+                                        </li>
 
-                                <li>
-                                    <input type="checkbox" value="Tamil Nadu" id="s23" {{ in_array('Tamil Nadu', $selectedStates) ? 'checked' : '' }}>
-                                    <label for="s23">Tamil Nadu</label>
-                                </li>
+                                        <li>
+                                            <input type="checkbox" value="Climate Action" id="d28" {{ in_array('Climate Action', $selectedDomains) ? 'checked' : '' }}>
+                                            <label for="d28">Climate Action</label>
+                                        </li>
 
-                                <li>
-                                    <input type="checkbox" value="Telangana" id="s24" {{ in_array('Telangana', $selectedStates) ? 'checked' : '' }}>
-                                    <label for="s24">Telangana</label>
-                                </li>
+                                        <li>
+                                            <input type="checkbox" value="Afforestation" id="d29" {{ in_array('Afforestation', $selectedDomains) ? 'checked' : '' }}>
+                                            <label for="d29">Afforestation</label>
+                                        </li>
 
-                                <li>
-                                    <input type="checkbox" value="Tripura" id="s25" {{ in_array('Tripura', $selectedStates) ? 'checked' : '' }}>
-                                    <label for="s25">Tripura</label>
-                                </li>
+                                        <li>
+                                            <input type="checkbox" value="Water Conservation" id="d30" {{ in_array('Water Conservation', $selectedDomains) ? 'checked' : '' }}>
+                                            <label for="d30">Water Conservation</label>
+                                        </li>
 
-                                <li>
-                                    <input type="checkbox" value="Uttar Pradesh" id="s26" {{ in_array('Uttar Pradesh', $selectedStates) ? 'checked' : '' }}>
-                                    <label for="s26">Uttar Pradesh</label>
-                                </li>
+                                        <li>
+                                            <input type="checkbox" value="Waste Management" id="d31" {{ in_array('Waste Management', $selectedDomains) ? 'checked' : '' }}>
+                                            <label for="d31">Waste Management</label>
+                                        </li>
 
-                                <li>
-                                    <input type="checkbox" value="Uttarakhand" id="s27" {{ in_array('Uttarakhand', $selectedStates) ? 'checked' : '' }}>
-                                    <label for="s27">Uttarakhand</label>
-                                </li>
+                                        <li>
+                                            <input type="checkbox" value="Renewable Energy Access" id="d32" {{ in_array('Renewable Energy Access', $selectedDomains) ? 'checked' : '' }}>
+                                            <label for="d32">Renewable Energy Access</label>
+                                        </li>
 
-                                <li>
-                                    <input type="checkbox" value="West Bengal" id="s28" {{ in_array('West Bengal', $selectedStates) ? 'checked' : '' }}>
-                                    <label for="s28">West Bengal</label>
-                                </li>
+                                        <li>
+                                            <input type="checkbox" value="Biodiversity Protection" id="d33" {{ in_array('Biodiversity Protection', $selectedDomains) ? 'checked' : '' }}>
+                                            <label for="d33">Biodiversity Protection</label>
+                                        </li>
 
-                                <li>
-                                    <input type="checkbox" value="Andaman and Nicobar Islands" id="s29" {{ in_array('Andaman and Nicobar Islands', $selectedStates) ? 'checked' : '' }}>
-                                    <label for="s29">Andaman and Nicobar Islands</label>
-                                </li>
+                                        <li>
+                                            <input type="checkbox" value="Rural Development Projects" id="d34" {{ in_array('Rural Development Projects', $selectedDomains) ? 'checked' : '' }}>
+                                            <label for="d34">Rural Development Projects</label>
+                                        </li>
 
-                                <li>
-                                    <input type="checkbox" value="Chandigarh" id="s30" {{ in_array('Chandigarh', $selectedStates) ? 'checked' : '' }}>
-                                    <label for="s30">Chandigarh</label>
-                                </li>
+                                        <li>
+                                            <input type="checkbox" value="Infrastructure Development (Community Assets)"
+                                                id="d35" {{ in_array('Infrastructure Development (Community Assets)', $selectedDomains) ? 'checked' : '' }}>
+                                            <label for="d35">Infrastructure Development (Community Assets)</label>
+                                        </li>
 
-                                <li>
-                                    <input type="checkbox" value="Dadra and Nagar Haveli and Daman and Diu" id="s31" {{ in_array('Dadra and Nagar Haveli and Daman and Diu', $selectedStates) ? 'checked' : '' }}>
-                                    <label for="s31">Dadra and Nagar Haveli and Daman and Diu</label>
-                                </li>
+                                        <li>
+                                            <input type="checkbox" value="Drinking Water Projects" id="d36" {{ in_array('Drinking Water Projects', $selectedDomains) ? 'checked' : '' }}>
+                                            <label for="d36">Drinking Water Projects</label>
+                                        </li>
 
-                                <li>
-                                    <input type="checkbox" value="Delhi" id="s32" {{ in_array('Delhi', $selectedStates) ? 'checked' : '' }}>
-                                    <label for="s32">Delhi</label>
-                                </li>
+                                        <li>
+                                            <input type="checkbox" value="Sanitation & Hygiene (WASH)" id="d37" {{ in_array('Sanitation & Hygiene (WASH)', $selectedDomains) ? 'checked' : '' }}>
+                                            <label for="d37">Sanitation & Hygiene (WASH)</label>
+                                        </li>
 
-                                <li>
-                                    <input type="checkbox" value="Jammu and Kashmir" id="s33" {{ in_array('Jammu and Kashmir', $selectedStates) ? 'checked' : '' }}>
-                                    <label for="s33">Jammu and Kashmir</label>
-                                </li>
+                                        <li>
+                                            <input type="checkbox" value="Human Rights" id="d38" {{ in_array('Human Rights', $selectedDomains) ? 'checked' : '' }}>
+                                            <label for="d38">Human Rights</label>
+                                        </li>
 
-                                <li>
-                                    <input type="checkbox" value="Ladakh" id="s34" {{ in_array('Ladakh', $selectedStates) ? 'checked' : '' }}>
-                                    <label for="s34">Ladakh</label>
-                                </li>
+                                        <li>
+                                            <input type="checkbox" value="Legal Aid & Access to Justice" id="d39" {{ in_array('Legal Aid & Access to Justice', $selectedDomains) ? 'checked' : '' }}>
+                                            <label for="d39">Legal Aid & Access to Justice</label>
+                                        </li>
 
-                                <li>
-                                    <input type="checkbox" value="Lakshadweep" id="s35" {{ in_array('Lakshadweep', $selectedStates) ? 'checked' : '' }}>
-                                    <label for="s35">Lakshadweep</label>
-                                </li>
+                                        <li>
+                                            <input type="checkbox" value="Governance & Civic Participation" id="d40" {{ in_array('Governance & Civic Participation', $selectedDomains) ? 'checked' : '' }}>
+                                            <label for="d40">Governance & Civic Participation</label>
+                                        </li>
 
-                                <li>
-                                    <input type="checkbox" value="Puducherry" id="s36" {{ in_array('Puducherry', $selectedStates) ? 'checked' : '' }}>
-                                    <label for="s36">Puducherry</label>
-                                </li>
+                                        <li>
+                                            <input type="checkbox" value="Transparency & Accountability" id="d41" {{ in_array('Transparency & Accountability', $selectedDomains) ? 'checked' : '' }}>
+                                            <label for="d41">Transparency & Accountability</label>
+                                        </li>
 
-                            </ul>
+                                        <li>
+                                            <input type="checkbox" value="Senior Citizens Welfare" id="d42" {{ in_array('Senior Citizens Welfare', $selectedDomains) ? 'checked' : '' }}>
+                                            <label for="d42">Senior Citizens Welfare</label>
+                                        </li>
 
-                            <input type="hidden" name="state" id="hiddenStates" value="{{ implode(',', $selectedStates) }}"
-                                required>
-                        </div>
+                                        <li>
+                                            <input type="checkbox" value="Persons with Disabilities" id="d43" {{ in_array('Persons with Disabilities', $selectedDomains) ? 'checked' : '' }}>
+                                            <label for="d43">Persons with Disabilities</label>
+                                        </li>
 
-                        @error('state')
-                            <div class="text-danger small">{{ $message }}</div>
-                        @enderror
-                    </div>
+                                        <li>
+                                            <input type="checkbox" value="Tribal Development" id="d44" {{ in_array('Tribal Development', $selectedDomains) ? 'checked' : '' }}>
+                                            <label for="d44">Tribal Development</label>
+                                        </li>
 
-                </div>
-                @php
-                    $ideaFallsIn = old('idea_falls_in', $operationalDetail->idea_falls_in ?? '');
-                    $currentStage = old('current_stage', $operationalDetail->current_stage ?? '');
-                @endphp
+                                        <li>
+                                            <input type="checkbox" value="Minority Welfare" id="d45" {{ in_array('Minority Welfare', $selectedDomains) ? 'checked' : '' }}>
+                                            <label for="d45">Minority Welfare</label>
+                                        </li>
 
+                                        <li>
+                                            <input type="checkbox" value="Migrant Workers Support" id="d46" {{ in_array('Migrant Workers Support', $selectedDomains) ? 'checked' : '' }}>
+                                            <label for="d46">Migrant Workers Support</label>
+                                        </li>
 
-                @if ($role === 'fund_seeker')
-                    <div class="row mb-3 flex-wrap row-gap-3 row-gap-md-4 px-md-1">
-                        <div class="col-12 col-md-6 px-md-2">
-                            <label class="form-label">You idea/product fall in<span>*</span></label>
+                                        <li>
+                                            <input type="checkbox" value="Disaster Relief & Rehabilitation" id="d47" {{ in_array('Disaster Relief & Rehabilitation', $selectedDomains) ? 'checked' : '' }}>
+                                            <label for="d47">Disaster Relief & Rehabilitation</label>
+                                        </li>
 
-                            <div class="select-wrapper w-100 position-relative">
-                                <div class="custom-select form-control d-flex flex-wrap gap-2 align-items-center">
-                                    {{ $ideaFallsIn ?: 'Select sector' }}
+                                        <li>
+                                            <input type="checkbox" value="Emergency Response & Humanitarian Aid" id="d48" {{ in_array('Emergency Response & Humanitarian Aid', $selectedDomains) ? 'checked' : '' }}>
+                                            <label for="d48">Emergency Response & Humanitarian Aid</label>
+                                        </li>
+
+                                    </ul>
+
+                                    <input type="hidden" name="domain_of_expertise" id="hiddenDomains"
+                                        value="{{ implode(',', $selectedDomains) }}" required>
+
                                 </div>
 
-                                <ul class="select-list">
-                                    <li data-value="FinTech">FinTech</li>
-                                    <li data-value="EdTech">EdTech</li>
-                                    <li data-value="HealthTech">HealthTech</li>
-                                    <li data-value="AgriTech">AgriTech</li>
-                                    <li data-value="SaaS">SaaS (Software as a Service)</li>
-                                    <li data-value="ai">AI & Machine Learning</li>
-                                    <li data-value="DeepTech">DeepTech</li>
-                                    <li data-value="Blockchain">Blockchain & Web3</li>
-                                    <li data-value="Cybersecurity">Cybersecurity</li>
-                                    <li data-value="CloudDevOps">Cloud & DevOps</li>
-                                    <li data-value="E-commerce">E-commerce</li>
-                                    <li data-value="d2c">D2C (Direct-to-Consumer) Brands</li>
-                                    <li data-value="RetailTech">RetailTech</li>
-                                    <li data-value="FoodTech">FoodTech</li>
-                                    <li data-value="Q-Commerce">Q-Commerce</li>
-                                    <li data-value="Consumer">Consumer Internet</li>
-                                    <li data-value="FashionTech">FashionTech</li>
-                                    <li data-value="Beauty">Beauty & Personal Care</li>
-                                    <li data-value="CleanTech">CleanTech</li>
-                                    <li data-value="ClimateTech">ClimateTech</li>
-                                    <li data-value="Renewable">Renewable Energy</li>
-                                    <li data-value="EV-Mobility">EV & Mobility</li>
-                                    <li data-value="Logistics">Logistics & Supply Chain</li>
-                                    <li data-value="ManufacturingTech">ManufacturingTech</li>
-                                    <li data-value="SpaceTech">SpaceTech</li>
-                                    <li data-value="DefenceTech">DefenceTech</li>
-                                    <li data-value="PropTech">PropTech (Real Estate Tech)</li>
-                                    <li data-value="InsurTech">InsurTech</li>
-                                    <li data-value="WealthTech">WealthTech</li>
-                                    <li data-value="RegTech">RegTech</li>
-                                    <li data-value="HRTech">HRTech</li>
-                                    <li data-value="LegalTech">LegalTech</li>
-                                    <li data-value="GovTech">GovTech</li>
-                                    <li data-value="EnterpriseTech">EnterpriseTech</li>
-                                    <li data-value="Social-Impact">Social Impact</li>
-                                    <li data-value="CircularEconomy">Circular Economy</li>
-                                    <li data-value="Waste-Management">Waste Management</li>
-                                    <li data-value="WaterTech">WaterTech</li>
-                                    <li data-value="RuralTech">RuralTech</li>
-                                    <li data-value="Skill-Development">Skill Development</li>
-                                    <li data-value="Gaming-Esports">Gaming & Esports</li>
-                                    <li data-value="Media-ContentTech">Media & ContentTech</li>
-                                    <li data-value="Creator-Economy">Creator Economy</li>
-                                    <li data-value="TravelTech">TravelTech</li>
-                                    <li data-value="SportsTech">SportsTech</li>
-                                    <li data-value="AR-VR-Metaverse">AR/VR & Metaverse</li>
-                                    <li data-value="Robotics-Automation">Robotics & Automation</li>
-                                    <li data-value="Biotechnology">Biotechnology</li>
-                                </ul>
-
-                                <input type="hidden" name="idea_falls_in" class="hidden-select" value="{{ $ideaFallsIn }}">
-                            </div>
-                        </div>
-
-                        <div class="col-12 col-md-6 px-md-2">
-                            <label class="form-label">Current Stage<span>*</span></label>
-
-                            <div class="select-wrapper w-100 position-relative">
-                                <div class="custom-select form-control d-flex flex-wrap gap-2 align-items-center">
-                                    {{ $currentStage ?: 'Select stage' }}
-                                </div>
-
-                                <ul class="select-list">
-                                    <li data-value="Idea">Idea</li>
-                                    <li data-value="Early-Revenue">Early Revenue</li>
-                                    <li data-value="Growth">Growth</li>
-                                    <li data-value="Scale-up">Scale-up</li>
-                                </ul>
-
-                                <input type="hidden" name="current_stage" class="hidden-select" value="{{ $currentStage }}">
-                            </div>
-                        </div>
-                    </div>
-                @endif
-
-
-
-                <div class="inner-fields mt-4" id="section_non_profit">
-                    <!-- Toggles -->
-                    @php
-                        $status12a = old('status_12a', $operationalDetail->status_12a ?? 0);
-                        $status80g = old('status_80g', $operationalDetail->status_80g ?? 0);
-                        $statusFcra = old('status_fcra', $operationalDetail->status_fcra ?? 0);
-                        $csr1 = old('csr_1_registration', $operationalDetail->csr_1_registration ?? 0);
-                    @endphp
-                </div>
-
-
-                <div class="inner-fields">
-                    <div class="mb-4">
-                        <h2 class="inner-title">Applicable Registration & Certification</h2>
-                    </div>
-
-                    <div class="row toggle-container mb-3 justify-content-start gap-0 row-gap-3">
-
-                        @if ($role === 'fund_seeker')
-                            <div class="col-12 col-sm-6 col-md-auto toggle-item">
-                                <div class="toggle-wrap">
-                                    <span class="font-small">DPIIT Registration</span>
-                                    <label class="switch mb-0">
-                                        <input type="hidden" name="dpiit_registration" value="0">
-                                        <input type="checkbox" name="dpiit_registration" value="1" {{ !empty($operationalDetail->dpiit_registration) ? 'checked' : '' }}>
-                                        <span class="slider"></span>
-                                    </label>
-                                </div>
-                            </div>
-
-                            <div class="col-12 col-sm-6 col-md-auto toggle-item">
-                                <div class="toggle-wrap">
-                                    <span class="font-small">MSME Registration</span>
-                                    <label class="switch mb-0">
-                                        <input type="hidden" name="msme_registration" value="0">
-                                        <input type="checkbox" name="msme_registration" value="1" {{ !empty($operationalDetail->msme_registration) ? 'checked' : '' }}>
-                                        <span class="slider"></span>
-                                    </label>
-                                </div>
-                            </div>
-
-                            <div class="col-12 col-sm-6 col-md-auto toggle-item">
-                                <div class="toggle-wrap">
-                                    <span class="font-small">GSTIN Registration</span>
-                                    <label class="switch mb-0">
-                                        <input type="hidden" name="gstin_registration" value="0">
-                                        <input type="checkbox" name="gstin_registration" value="1" {{ !empty($operationalDetail->gstin_registration) ? 'checked' : '' }}>
-                                        <span class="slider"></span>
-                                    </label>
-                                </div>
-                            </div>
-
-                            <div class="col-12 col-sm-6 col-md-auto toggle-item">
-                                <div class="toggle-wrap">
-                                    <span class="font-small">Patent Available</span>
-                                    <label class="switch mb-0">
-                                        <input type="hidden" name="patent_available" value="0">
-                                        <input type="checkbox" name="patent_available" value="1" {{ !empty($operationalDetail->patent_available) ? 'checked' : '' }}>
-                                        <span class="slider"></span>
-                                    </label>
-                                </div>
-                            </div>
-                        @else
-                            <div class="col-12 col-sm-6 col-md-auto toggle-item">
-                                <div class="toggle-wrap">
-                                    <span class="font-small">12A Registration</span>
-                                    <label class="switch mb-0">
-                                        <input type="hidden" name="status_12a" value="0">
-                                        <input type="checkbox" name="status_12a" value="1" {{ $status12a ? 'checked' : '' }}>
-                                        <span class="slider"></span>
-                                    </label>
-                                </div>
-                            </div>
-
-                            <div class="col-12 col-sm-6 col-md-auto toggle-item">
-                                <div class="toggle-wrap">
-                                    <span class="font-small">80G Registration</span>
-                                    <label class="switch mb-0">
-                                        <input type="hidden" name="status_80g" value="0">
-                                        <input type="checkbox" name="status_80g" value="1" {{ $status80g ? 'checked' : '' }}>
-                                        <span class="slider"></span>
-                                    </label>
-                                </div>
-                            </div>
-
-                            <div class="col-12 col-sm-6 col-md-auto toggle-item">
-                                <div class="toggle-wrap">
-                                    <span class="font-small">FCRA Registration</span>
-                                    <label class="switch mb-0">
-                                        <input type="hidden" name="status_fcra" value="0">
-                                        <input type="checkbox" name="status_fcra" value="1" {{ $statusFcra ? 'checked' : '' }}>
-                                        <span class="slider"></span>
-                                    </label>
-                                </div>
-                            </div>
-
-                            <div class="col-12 col-sm-6 col-md-auto toggle-item">
-                                <div class="toggle-wrap">
-                                    <span class="font-small">CSR-1 Registration</span>
-                                    <label class="switch mb-0">
-                                        <input type="hidden" name="csr_1_registration" value="0">
-                                        <input type="checkbox" name="csr_1_registration" value="1" {{ $csr1 ? 'checked' : '' }}>
-                                        <span class="slider"></span>
-                                    </label>
-                                </div>
+                                @error('domain_of_expertise')
+                                    <div class="text-danger small">{{ $message }}</div>
+                                @enderror
                             </div>
                         @endif
+                        @php
+                            $selectedStates = old('state', $operationalDetail->state ?? '');
 
-                    </div>
-                </div>
+                            if (is_string($selectedStates)) {
+                                $selectedStates = explode(',', $selectedStates);
+                            }
+
+                            $selectedStates = array_map('trim', $selectedStates);
+                        @endphp
 
 
-                <hr class="mb-0">
-                {{-- --}}
-                <div class="inner-fields mt-4">
+                        @php
+                            $selectedStates = old('state', $operationalDetail->state ?? '');
 
-                    <div class="mb-4">
-                        <h2 class="top-heading mb-0">Track Record</h2>
-                    </div>
+                            if (is_string($selectedStates)) {
+                                $selectedStates = explode(',', $selectedStates);
+                            }
 
-                    @php
-                        $years = old('years_of_operation_months', $operationalDetail->years_of_operation_months ?? '');
-                        $beneficiaries = old('total_beneficiaries', $operationalDetail->total_beneficiaries ?? '');
-                        $achievements = old('key_achievements', $operationalDetail->key_achievements ?? '');
-                    @endphp
+                            $selectedStates = array_map('trim', $selectedStates);
+                        @endphp
 
-                    <div class="row mb-3 flex-wrap row-gap-3 row-gap-md-4 px-md-1">
-
-                        <!-- Years of Operation -->
-                        <div class="col-12 col-md-6 px-md-2">
-                            <label class="form-label">Years of Operation (in Years)<span>*</span></label>
-
-                            <input type="number" name="years_of_operation_months"
-                                class="form-control @error('years_of_operation_months') is-invalid @enderror"
-                                value="{{ $years }}" placeholder="Enter in years" required>
-
-                            @error('years_of_operation_months')
-                                <div class="text-danger small">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        <!-- Total Beneficiaries -->
-                        <div class="col-12 col-md-6 px-md-2">
+                        <div class="col-12 col-md-6 {{ $role === 'fund_seeker' ? 'col-xl-6' : 'col-xl-4' }} px-md-2">
                             <label class="form-label">
-                                {{ auth('organization')->user()?->role === 'fund_seeker' ? 'Total Paid Customers' : 'Total Beneficiaries Served' }}
-                                <span>*</span>
+                                Operational States<span>*</span>
                             </label>
-                            <input type="number" name="total_beneficiaries"
-                                class="form-control @error('total_beneficiaries') is-invalid @enderror"
-                                value="{{ $beneficiaries }}" placeholder="Only numbers shall be taken as input..." required>
 
-                            @error('total_beneficiaries')
-                                <div class="text-danger small">{{ $message }}</div>
-                            @enderror
-                        </div>
+                            <div class="select-wrapper w-100 position-relative checkbox-wrap">
 
-                        <!-- Key Achievements -->
-                        <div class="col-12 px-md-2">
-                            {{-- <div class="textarea-label d-flex justify-content-between gap-1">
-                                <label class="form-label">Key Achievements<span>*</span></label>
-                                <p class="font-small">
-                                    Word Limit: 100
-                                </p>
-                            </div> --}}
+                                <div id="selectedStatesBox"
+                                    class="custom-select form-control d-flex flex-wrap gap-2 align-items-center">
+                                    <span class="placeholder">Select State</span>
+                                </div>
 
-                            <textarea name="key_achievements" rows="5" class="form-control" required
-                                placeholder="Enter Achievements">{{ $achievements }}</textarea>
+                                <ul class="select-list checkbox-list" id="stateCheckboxList">
 
-                            @error('key_achievements')
+                                    <li>
+                                        <input type="checkbox" value="Pan India" id="s0" {{ in_array('Pan India', $selectedStates) ? 'checked' : '' }}>
+                                        <label for="s0">Pan India</label>
+                                    </li>
+
+                                    <li>
+                                        <input type="checkbox" value="Andhra Pradesh" id="s1" {{ in_array('Andhra Pradesh', $selectedStates) ? 'checked' : '' }}>
+                                        <label for="s1">Andhra Pradesh</label>
+                                    </li>
+
+                                    <li>
+                                        <input type="checkbox" value="Arunachal Pradesh" id="s2" {{ in_array('Arunachal Pradesh', $selectedStates) ? 'checked' : '' }}>
+                                        <label for="s2">Arunachal Pradesh</label>
+                                    </li>
+
+                                    <li>
+                                        <input type="checkbox" value="Assam" id="s3" {{ in_array('Assam', $selectedStates) ? 'checked' : '' }}>
+                                        <label for="s3">Assam</label>
+                                    </li>
+
+                                    <li>
+                                        <input type="checkbox" value="Bihar" id="s4" {{ in_array('Bihar', $selectedStates) ? 'checked' : '' }}>
+                                        <label for="s4">Bihar</label>
+                                    </li>
+
+                                    <li>
+                                        <input type="checkbox" value="Chhattisgarh" id="s5" {{ in_array('Chhattisgarh', $selectedStates) ? 'checked' : '' }}>
+                                        <label for="s5">Chhattisgarh</label>
+                                    </li>
+
+                                    <li>
+                                        <input type="checkbox" value="Goa" id="s6" {{ in_array('Goa', $selectedStates) ? 'checked' : '' }}>
+                                        <label for="s6">Goa</label>
+                                    </li>
+
+                                    <li>
+                                        <input type="checkbox" value="Gujarat" id="s7" {{ in_array('Gujarat', $selectedStates) ? 'checked' : '' }}>
+                                        <label for="s7">Gujarat</label>
+                                    </li>
+
+                                    <li>
+                                        <input type="checkbox" value="Haryana" id="s8" {{ in_array('Haryana', $selectedStates) ? 'checked' : '' }}>
+                                        <label for="s8">Haryana</label>
+                                    </li>
+
+                                    <li>
+                                        <input type="checkbox" value="Himachal Pradesh" id="s9" {{ in_array('Himachal Pradesh', $selectedStates) ? 'checked' : '' }}>
+                                        <label for="s9">Himachal Pradesh</label>
+                                    </li>
+
+                                    <li>
+                                        <input type="checkbox" value="Jharkhand" id="s10" {{ in_array('Jharkhand', $selectedStates) ? 'checked' : '' }}>
+                                        <label for="s10">Jharkhand</label>
+                                    </li>
+
+                                    <li>
+                                        <input type="checkbox" value="Karnataka" id="s11" {{ in_array('Karnataka', $selectedStates) ? 'checked' : '' }}>
+                                        <label for="s11">Karnataka</label>
+                                    </li>
+
+                                    <li>
+                                        <input type="checkbox" value="Kerala" id="s12" {{ in_array('Kerala', $selectedStates) ? 'checked' : '' }}>
+                                        <label for="s12">Kerala</label>
+                                    </li>
+
+                                    <li>
+                                        <input type="checkbox" value="Madhya Pradesh" id="s13" {{ in_array('Madhya Pradesh', $selectedStates) ? 'checked' : '' }}>
+                                        <label for="s13">Madhya Pradesh</label>
+                                    </li>
+
+                                    <li>
+                                        <input type="checkbox" value="Maharashtra" id="s14" {{ in_array('Maharashtra', $selectedStates) ? 'checked' : '' }}>
+                                        <label for="s14">Maharashtra</label>
+                                    </li>
+
+                                    <li>
+                                        <input type="checkbox" value="Manipur" id="s15" {{ in_array('Manipur', $selectedStates) ? 'checked' : '' }}>
+                                        <label for="s15">Manipur</label>
+                                    </li>
+
+                                    <li>
+                                        <input type="checkbox" value="Meghalaya" id="s16" {{ in_array('Meghalaya', $selectedStates) ? 'checked' : '' }}>
+                                        <label for="s16">Meghalaya</label>
+                                    </li>
+
+                                    <li>
+                                        <input type="checkbox" value="Mizoram" id="s17" {{ in_array('Mizoram', $selectedStates) ? 'checked' : '' }}>
+                                        <label for="s17">Mizoram</label>
+                                    </li>
+
+                                    <li>
+                                        <input type="checkbox" value="Nagaland" id="s18" {{ in_array('Nagaland', $selectedStates) ? 'checked' : '' }}>
+                                        <label for="s18">Nagaland</label>
+                                    </li>
+
+                                    <li>
+                                        <input type="checkbox" value="Odisha" id="s19" {{ in_array('Odisha', $selectedStates) ? 'checked' : '' }}>
+                                        <label for="s19">Odisha</label>
+                                    </li>
+
+                                    <li>
+                                        <input type="checkbox" value="Punjab" id="s20" {{ in_array('Punjab', $selectedStates) ? 'checked' : '' }}>
+                                        <label for="s20">Punjab</label>
+                                    </li>
+
+                                    <li>
+                                        <input type="checkbox" value="Rajasthan" id="s21" {{ in_array('Rajasthan', $selectedStates) ? 'checked' : '' }}>
+                                        <label for="s21">Rajasthan</label>
+                                    </li>
+
+                                    <li>
+                                        <input type="checkbox" value="Sikkim" id="s22" {{ in_array('Sikkim', $selectedStates) ? 'checked' : '' }}>
+                                        <label for="s22">Sikkim</label>
+                                    </li>
+
+                                    <li>
+                                        <input type="checkbox" value="Tamil Nadu" id="s23" {{ in_array('Tamil Nadu', $selectedStates) ? 'checked' : '' }}>
+                                        <label for="s23">Tamil Nadu</label>
+                                    </li>
+
+                                    <li>
+                                        <input type="checkbox" value="Telangana" id="s24" {{ in_array('Telangana', $selectedStates) ? 'checked' : '' }}>
+                                        <label for="s24">Telangana</label>
+                                    </li>
+
+                                    <li>
+                                        <input type="checkbox" value="Tripura" id="s25" {{ in_array('Tripura', $selectedStates) ? 'checked' : '' }}>
+                                        <label for="s25">Tripura</label>
+                                    </li>
+
+                                    <li>
+                                        <input type="checkbox" value="Uttar Pradesh" id="s26" {{ in_array('Uttar Pradesh', $selectedStates) ? 'checked' : '' }}>
+                                        <label for="s26">Uttar Pradesh</label>
+                                    </li>
+
+                                    <li>
+                                        <input type="checkbox" value="Uttarakhand" id="s27" {{ in_array('Uttarakhand', $selectedStates) ? 'checked' : '' }}>
+                                        <label for="s27">Uttarakhand</label>
+                                    </li>
+
+                                    <li>
+                                        <input type="checkbox" value="West Bengal" id="s28" {{ in_array('West Bengal', $selectedStates) ? 'checked' : '' }}>
+                                        <label for="s28">West Bengal</label>
+                                    </li>
+
+                                    <li>
+                                        <input type="checkbox" value="Andaman and Nicobar Islands" id="s29" {{ in_array('Andaman and Nicobar Islands', $selectedStates) ? 'checked' : '' }}>
+                                        <label for="s29">Andaman and Nicobar Islands</label>
+                                    </li>
+
+                                    <li>
+                                        <input type="checkbox" value="Chandigarh" id="s30" {{ in_array('Chandigarh', $selectedStates) ? 'checked' : '' }}>
+                                        <label for="s30">Chandigarh</label>
+                                    </li>
+
+                                    <li>
+                                        <input type="checkbox" value="Dadra and Nagar Haveli and Daman and Diu" id="s31" {{ in_array('Dadra and Nagar Haveli and Daman and Diu', $selectedStates) ? 'checked' : '' }}>
+                                        <label for="s31">Dadra and Nagar Haveli and Daman and Diu</label>
+                                    </li>
+
+                                    <li>
+                                        <input type="checkbox" value="Delhi" id="s32" {{ in_array('Delhi', $selectedStates) ? 'checked' : '' }}>
+                                        <label for="s32">Delhi</label>
+                                    </li>
+
+                                    <li>
+                                        <input type="checkbox" value="Jammu and Kashmir" id="s33" {{ in_array('Jammu and Kashmir', $selectedStates) ? 'checked' : '' }}>
+                                        <label for="s33">Jammu and Kashmir</label>
+                                    </li>
+
+                                    <li>
+                                        <input type="checkbox" value="Ladakh" id="s34" {{ in_array('Ladakh', $selectedStates) ? 'checked' : '' }}>
+                                        <label for="s34">Ladakh</label>
+                                    </li>
+
+                                    <li>
+                                        <input type="checkbox" value="Lakshadweep" id="s35" {{ in_array('Lakshadweep', $selectedStates) ? 'checked' : '' }}>
+                                        <label for="s35">Lakshadweep</label>
+                                    </li>
+
+                                    <li>
+                                        <input type="checkbox" value="Puducherry" id="s36" {{ in_array('Puducherry', $selectedStates) ? 'checked' : '' }}>
+                                        <label for="s36">Puducherry</label>
+                                    </li>
+
+                                </ul>
+
+                                <input type="hidden" name="state" id="hiddenStates"
+                                    value="{{ implode(',', $selectedStates) }}" required>
+                            </div>
+
+                            @error('state')
                                 <div class="text-danger small">{{ $message }}</div>
                             @enderror
                         </div>
 
                     </div>
-
-                </div>
-
-
-            </div>
-            <div class="card p-3 p-md-4 border-0 mb-3 rounded-3">
-                <div class="inner-fields mt-4 small-label">
-
-                    <div class="mb-4">
-                        <h2 class="top-heading mb-0">Financial Record</h2>
-                    </div>
-
                     @php
-                        $lifetime = old('lifetime_revenue_lakh', $operationalDetail->lifetime_revenue_lakh ?? '');
-                        $ongoing = old(
-                            'ongoing_year_revenue_lakh',
-                            $operationalDetail->ongoing_year_revenue_lakh ?? '',
-                        );
-                        $lastYear = old('last_year_revenue_lakh', $operationalDetail->last_year_revenue_lakh ?? '');
-                        $lastToLast = old(
-                            'last_to_last_year_revenue_lakh',
-                            $operationalDetail->last_to_last_year_revenue_lakh ?? '',
-                        );
+                        $ideaFallsIn = old('idea_falls_in', $operationalDetail->idea_falls_in ?? '');
+                        $currentStage = old('current_stage', $operationalDetail->current_stage ?? '');
                     @endphp
 
-                    <div class="row mb-3 flex-wrap row-gap-3 row-gap-md-4 px-md-1">
 
-                        <!-- Lifetime Revenue -->
-                        <div class="col-12 col-md-6 col-lg-4 px-md-2">
-                            <label class="form-label">Ongoing Year Turnover (till last month) (₹)<span>*</span></label>
+                    @if ($role === 'fund_seeker')
+                        <div class="row mb-3 flex-wrap row-gap-3 row-gap-md-4 px-md-1">
+                            <div class="col-12 col-md-6 px-md-2">
+                                <label class="form-label">You idea/product fall in<span>*</span></label>
 
-                            <input type="text" inputmode="numeric" name="lifetime_revenue_lakh"
-                                class="form-control @error('lifetime_revenue_lakh') is-invalid @enderror"
-                                value="{{ $lifetime }}" placeholder="Enter amount, if you have zero turnover just put 0"
-                                required>
+                                <div class="select-wrapper w-100 position-relative">
+                                    <div class="custom-select form-control d-flex flex-wrap gap-2 align-items-center">
+                                        {{ $ideaFallsIn ?: 'Select sector' }}
+                                    </div>
 
-                            @error('lifetime_revenue_lakh')
-                                <div class="text-danger small">{{ $message }}</div>
-                            @enderror
+                                    <ul class="select-list">
+                                        <li data-value="FinTech">FinTech</li>
+                                        <li data-value="EdTech">EdTech</li>
+                                        <li data-value="HealthTech">HealthTech</li>
+                                        <li data-value="AgriTech">AgriTech</li>
+                                        <li data-value="SaaS">SaaS (Software as a Service)</li>
+                                        <li data-value="ai">AI & Machine Learning</li>
+                                        <li data-value="DeepTech">DeepTech</li>
+                                        <li data-value="Blockchain">Blockchain & Web3</li>
+                                        <li data-value="Cybersecurity">Cybersecurity</li>
+                                        <li data-value="CloudDevOps">Cloud & DevOps</li>
+                                        <li data-value="E-commerce">E-commerce</li>
+                                        <li data-value="d2c">D2C (Direct-to-Consumer) Brands</li>
+                                        <li data-value="RetailTech">RetailTech</li>
+                                        <li data-value="FoodTech">FoodTech</li>
+                                        <li data-value="Q-Commerce">Q-Commerce</li>
+                                        <li data-value="Consumer">Consumer Internet</li>
+                                        <li data-value="FashionTech">FashionTech</li>
+                                        <li data-value="Beauty">Beauty & Personal Care</li>
+                                        <li data-value="CleanTech">CleanTech</li>
+                                        <li data-value="ClimateTech">ClimateTech</li>
+                                        <li data-value="Renewable">Renewable Energy</li>
+                                        <li data-value="EV-Mobility">EV & Mobility</li>
+                                        <li data-value="Logistics">Logistics & Supply Chain</li>
+                                        <li data-value="ManufacturingTech">ManufacturingTech</li>
+                                        <li data-value="SpaceTech">SpaceTech</li>
+                                        <li data-value="DefenceTech">DefenceTech</li>
+                                        <li data-value="PropTech">PropTech (Real Estate Tech)</li>
+                                        <li data-value="InsurTech">InsurTech</li>
+                                        <li data-value="WealthTech">WealthTech</li>
+                                        <li data-value="RegTech">RegTech</li>
+                                        <li data-value="HRTech">HRTech</li>
+                                        <li data-value="LegalTech">LegalTech</li>
+                                        <li data-value="GovTech">GovTech</li>
+                                        <li data-value="EnterpriseTech">EnterpriseTech</li>
+                                        <li data-value="Social-Impact">Social Impact</li>
+                                        <li data-value="CircularEconomy">Circular Economy</li>
+                                        <li data-value="Waste-Management">Waste Management</li>
+                                        <li data-value="WaterTech">WaterTech</li>
+                                        <li data-value="RuralTech">RuralTech</li>
+                                        <li data-value="Skill-Development">Skill Development</li>
+                                        <li data-value="Gaming-Esports">Gaming & Esports</li>
+                                        <li data-value="Media-ContentTech">Media & ContentTech</li>
+                                        <li data-value="Creator-Economy">Creator Economy</li>
+                                        <li data-value="TravelTech">TravelTech</li>
+                                        <li data-value="SportsTech">SportsTech</li>
+                                        <li data-value="AR-VR-Metaverse">AR/VR & Metaverse</li>
+                                        <li data-value="Robotics-Automation">Robotics & Automation</li>
+                                        <li data-value="Biotechnology">Biotechnology</li>
+                                    </ul>
+
+                                    <input type="hidden" name="idea_falls_in" class="hidden-select" value="{{ $ideaFallsIn }}">
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-md-6 px-md-2">
+                                <label class="form-label">Current Stage<span>*</span></label>
+
+                                <div class="select-wrapper w-100 position-relative">
+                                    <div class="custom-select form-control d-flex flex-wrap gap-2 align-items-center">
+                                        {{ $currentStage ?: 'Select stage' }}
+                                    </div>
+
+                                    <ul class="select-list">
+                                        <li data-value="Idea">Idea</li>
+                                        <li data-value="Early-Revenue">Early Revenue</li>
+                                        <li data-value="Growth">Growth</li>
+                                        <li data-value="Scale-up">Scale-up</li>
+                                    </ul>
+
+                                    <input type="hidden" name="current_stage" class="hidden-select" value="{{ $currentStage }}">
+                                </div>
+                            </div>
+                        </div>
+                    @endif
+
+
+
+                    <div class="inner-fields mt-4" id="section_non_profit">
+                        <!-- Toggles -->
+                        @php
+                            $status12a = old('status_12a', $operationalDetail->status_12a ?? 0);
+                            $status80g = old('status_80g', $operationalDetail->status_80g ?? 0);
+                            $statusFcra = old('status_fcra', $operationalDetail->status_fcra ?? 0);
+                            $csr1 = old('csr_1_registration', $operationalDetail->csr_1_registration ?? 0);
+                        @endphp
+                    </div>
+
+
+                    <div class="inner-fields">
+                        <div class="mb-4">
+                            <h2 class="inner-title">Applicable Registration & Certification</h2>
                         </div>
 
-                        <!-- Ongoing Year -->
-                        <div class="col-12 col-md-6 col-lg-4 px-md-2">
-                            <label class="form-label">Last Year Turnover (₹)<span>*</span></label>
+                        <div class="row toggle-container mb-3 justify-content-start gap-0 row-gap-3">
 
-                            <input type="text" inputmode="numeric" name="ongoing_year_revenue_lakh"
-                                class="form-control @error('ongoing_year_revenue_lakh') is-invalid @enderror"
-                                value="{{ $ongoing }}" placeholder="Enter amount, if you have zero turnover just put 0"
-                                required>
+                            @if ($role === 'fund_seeker')
+                                <div class="col-12 col-sm-6 col-md-auto toggle-item">
+                                    <div class="toggle-wrap">
+                                        <span class="font-small">DPIIT Registration</span>
+                                        <label class="switch mb-0">
+                                            <input type="hidden" name="dpiit_registration" value="0">
+                                            <input type="checkbox" name="dpiit_registration" value="1" {{ !empty($operationalDetail->dpiit_registration) ? 'checked' : '' }}>
+                                            <span class="slider"></span>
+                                        </label>
+                                    </div>
+                                </div>
 
-                            @error('ongoing_year_revenue_lakh')
-                                <div class="text-danger small">{{ $message }}</div>
-                            @enderror
+                                <div class="col-12 col-sm-6 col-md-auto toggle-item">
+                                    <div class="toggle-wrap">
+                                        <span class="font-small">MSME Registration</span>
+                                        <label class="switch mb-0">
+                                            <input type="hidden" name="msme_registration" value="0">
+                                            <input type="checkbox" name="msme_registration" value="1" {{ !empty($operationalDetail->msme_registration) ? 'checked' : '' }}>
+                                            <span class="slider"></span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-6 col-md-auto toggle-item">
+                                    <div class="toggle-wrap">
+                                        <span class="font-small">GSTIN Registration</span>
+                                        <label class="switch mb-0">
+                                            <input type="hidden" name="gstin_registration" value="0">
+                                            <input type="checkbox" name="gstin_registration" value="1" {{ !empty($operationalDetail->gstin_registration) ? 'checked' : '' }}>
+                                            <span class="slider"></span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-6 col-md-auto toggle-item">
+                                    <div class="toggle-wrap">
+                                        <span class="font-small">Patent Available</span>
+                                        <label class="switch mb-0">
+                                            <input type="hidden" name="patent_available" value="0">
+                                            <input type="checkbox" name="patent_available" value="1" {{ !empty($operationalDetail->patent_available) ? 'checked' : '' }}>
+                                            <span class="slider"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            @else
+                                <div class="col-12 col-sm-6 col-md-auto toggle-item">
+                                    <div class="toggle-wrap">
+                                        <span class="font-small">12A Registration</span>
+                                        <label class="switch mb-0">
+                                            <input type="hidden" name="status_12a" value="0">
+                                            <input type="checkbox" name="status_12a" value="1" {{ $status12a ? 'checked' : '' }}>
+                                            <span class="slider"></span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-6 col-md-auto toggle-item">
+                                    <div class="toggle-wrap">
+                                        <span class="font-small">80G Registration</span>
+                                        <label class="switch mb-0">
+                                            <input type="hidden" name="status_80g" value="0">
+                                            <input type="checkbox" name="status_80g" value="1" {{ $status80g ? 'checked' : '' }}>
+                                            <span class="slider"></span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-6 col-md-auto toggle-item">
+                                    <div class="toggle-wrap">
+                                        <span class="font-small">FCRA Registration</span>
+                                        <label class="switch mb-0">
+                                            <input type="hidden" name="status_fcra" value="0">
+                                            <input type="checkbox" name="status_fcra" value="1" {{ $statusFcra ? 'checked' : '' }}>
+                                            <span class="slider"></span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-6 col-md-auto toggle-item">
+                                    <div class="toggle-wrap">
+                                        <span class="font-small">CSR-1 Registration</span>
+                                        <label class="switch mb-0">
+                                            <input type="hidden" name="csr_1_registration" value="0">
+                                            <input type="checkbox" name="csr_1_registration" value="1" {{ $csr1 ? 'checked' : '' }}>
+                                            <span class="slider"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            @endif
+
+                        </div>
+                    </div>
+
+
+                    <hr class="mb-0">
+                    {{-- --}}
+                    <div class="inner-fields mt-4">
+
+                        <div class="mb-4">
+                            <h2 class="top-heading mb-0">Track Record</h2>
                         </div>
 
-                        <!-- Last Year -->
-                        <div class="col-12 col-md-6 col-lg-4 px-md-2">
-                            <label class="form-label">Last to Last Year Turnover (₹)<span>*</span></label>
+                        @php
+                            $years = old('years_of_operation_months', $operationalDetail->years_of_operation_months ?? '');
+                            $beneficiaries = old('total_beneficiaries', $operationalDetail->total_beneficiaries ?? '');
+                            $achievements = old('key_achievements', $operationalDetail->key_achievements ?? '');
+                        @endphp
 
-                            <input type="text" inputmode="numeric" name="last_year_revenue_lakh"
-                                class="form-control @error('last_year_revenue_lakh') is-invalid @enderror"
-                                value="{{ $lastYear }}" placeholder="Enter amount, If you have zero turnover then put 0"
-                                required>
+                        <div class="row mb-3 flex-wrap row-gap-3 row-gap-md-4 px-md-1">
 
-                            @error('last_year_revenue_lakh')
-                                <div class="text-danger small">{{ $message }}</div>
-                            @enderror
+                            <!-- Years of Operation -->
+                            <div class="col-12 col-md-6 px-md-2">
+                                <label class="form-label">Years of Operation (in Years)<span>*</span></label>
+
+                                <input type="number" name="years_of_operation_months"
+                                    class="form-control @error('years_of_operation_months') is-invalid @enderror"
+                                    value="{{ $years }}" placeholder="Enter in years" required>
+
+                                @error('years_of_operation_months')
+                                    <div class="text-danger small">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <!-- Total Beneficiaries -->
+                            <div class="col-12 col-md-6 px-md-2">
+                                <label class="form-label">
+                                    {{ auth('organization')->user()?->role === 'fund_seeker' ? 'Total Paid Customers' : 'Total Beneficiaries Served' }}
+                                    <span>*</span>
+                                </label>
+                                <input type="number" name="total_beneficiaries"
+                                    class="form-control @error('total_beneficiaries') is-invalid @enderror"
+                                    value="{{ $beneficiaries }}" placeholder="Only numbers shall be taken as input..."
+                                    required>
+
+                                @error('total_beneficiaries')
+                                    <div class="text-danger small">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <!-- Key Achievements -->
+                            <div class="col-12 px-md-2">
+                                <div class="textarea-label d-flex justify-content-between gap-1">
+                                    <label class="form-label">Key Achievements<span>*</span></label>
+                                    <p class="font-small">
+                                        Word Limit: 100
+                                    </p>
+                                </div>
+
+                                <textarea name="key_achievements" rows="5" class="form-control" required
+                                    placeholder="Enter Achievements">{{ $achievements }}</textarea>
+
+                                @error('key_achievements')
+                                    <div class="text-danger small">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+                <div class="card p-3 p-md-4 border-0 mb-3 rounded-3">
+                    <div class="inner-fields mt-4 small-label">
+
+                        <div class="mb-4">
+                            <h2 class="top-heading mb-0">Financial Record</h2>
+                        </div>
+
+                        @php
+                            $lifetime = old('lifetime_revenue_lakh', $operationalDetail->lifetime_revenue_lakh ?? '');
+                            $ongoing = old(
+                                'ongoing_year_revenue_lakh',
+                                $operationalDetail->ongoing_year_revenue_lakh ?? '',
+                            );
+                            $lastYear = old('last_year_revenue_lakh', $operationalDetail->last_year_revenue_lakh ?? '');
+                            $lastToLast = old(
+                                'last_to_last_year_revenue_lakh',
+                                $operationalDetail->last_to_last_year_revenue_lakh ?? '',
+                            );
+                        @endphp
+
+                        <div class="row mb-3 flex-wrap row-gap-3 row-gap-md-4 px-md-1">
+
+                            <!-- Lifetime Revenue -->
+                            <div class="col-12 col-md-6 col-lg-4 px-md-2">
+                                <label class="form-label">Ongoing Year Turnover (till last month) (₹)<span>*</span></label>
+
+                                <input type="text" inputmode="numeric" name="lifetime_revenue_lakh"
+                                    class="form-control @error('lifetime_revenue_lakh') is-invalid @enderror"
+                                    value="{{ $lifetime }}" placeholder="Enter amount, if you have zero turnover just put 0"
+                                    required>
+
+                                @error('lifetime_revenue_lakh')
+                                    <div class="text-danger small">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <!-- Ongoing Year -->
+                            <div class="col-12 col-md-6 col-lg-4 px-md-2">
+                                <label class="form-label">Last Year Turnover (₹)<span>*</span></label>
+
+                                <input type="text" inputmode="numeric" name="ongoing_year_revenue_lakh"
+                                    class="form-control @error('ongoing_year_revenue_lakh') is-invalid @enderror"
+                                    value="{{ $ongoing }}" placeholder="Enter amount, if you have zero turnover just put 0"
+                                    required>
+
+                                @error('ongoing_year_revenue_lakh')
+                                    <div class="text-danger small">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <!-- Last Year -->
+                            <div class="col-12 col-md-6 col-lg-4 px-md-2">
+                                <label class="form-label">Last to Last Year Turnover (₹)<span>*</span></label>
+
+                                <input type="text" inputmode="numeric" name="last_year_revenue_lakh"
+                                    class="form-control @error('last_year_revenue_lakh') is-invalid @enderror"
+                                    value="{{ $lastYear }}" placeholder="Enter amount, If you have zero turnover then put 0"
+                                    required>
+
+                                @error('last_year_revenue_lakh')
+                                    <div class="text-danger small">{{ $message }}</div>
+                                @enderror
+                            </div>
+
                         </div>
 
                     </div>
 
                 </div>
 
-            </div>
+
+                {{-- third card --}}
+               
+                <div>
+
+            </form>
+        </div>
+    </form>
 
 
-            {{-- third card --}}
-            {{-- <div class="card p-0 border-0 rounded-3">
-                <div class="inner-fields d-flex justify-content-between align-items-center p-3 p-md-4">
-                    <div class="">
-                        <h2 class="top-heading mb-0">Major Funders</h2>
-                    </div>
-                    <div class="btn-wrap">
-                        <button type="button" class="btn btn-primary add-fund gradient-btn" id="addFunderBtn"
-                            data-bs-toggle="modal" data-bs-target="#funderModal">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="ms-0 me-2" width="11" height="11"
-                                viewBox="0 0 11 11" fill="none">
-                                <path d="M5.125 0.75V9.5M9.5 5.125H0.75" stroke="white" stroke-width="1.5"
-                                    stroke-linecap="round" stroke-linejoin="round" />
-                            </svg> Add Funders
-
-                    </div>
-                </div>
-                <div class="table-wrap major-funders-table-wrap">
-                    <table class="table major-funders-table mb-0">
-                        <thead>
-                            <tr>
-                                <th scope="col">SN</th>
-                                <th scope="col">Funder Name</th>
-                                <th scope="col">Category</th>
-                                <th scope="col">Year</th>
-                                <th scope="col">Purpose</th>
-                                <th scope="col">Amount</th>
-                            </tr>
-                        </thead>
-                        <tbody id="fundersTable"></tbody>
-                    </table>
-                </div>
-
-            </div> --}}
-
-
-
-
-            <div>
-
-                
-       
+    <div class="text-end">
+        <button type="submit" class="btn btn-primary px-4">
+            Save Changes
+        </button>
     </div>
-       </form>
-
-        {{-- <div class="card border-0 shadow-sm mb-4">
-            <div class="card-header bg-white">
-                <h5 class="mb-0">Operational Details</h5>
-            </div>
-
-            <div class="card-body">
-                <div class="row g-3">
-
-                    <div class="col-md-6">
-                        <label class="form-label">Domain of Expertise</label>
-                        <textarea class="form-control"
-                                  rows="3"
-                                  name="domain_of_expertise">{{ old('domain_of_expertise', $operationalDetail?->domain_of_expertise) }}</textarea>
-                    </div>
-
-                    <div class="col-md-6">
-                        <label class="form-label">Key Achievements</label>
-                        <textarea class="form-control"
-                                  rows="3"
-                                  name="key_achievements">{{ old('key_achievements', $operationalDetail?->key_achievements) }}</textarea>
-                    </div>
-
-                    <div class="col-md-4">
-                        <label class="form-label">Total Beneficiaries</label>
-                        <input type="number"
-                               class="form-control"
-                               name="total_beneficiaries"
-                               value="{{ old('total_beneficiaries', $operationalDetail?->total_beneficiaries) }}">
-                    </div>
-
-                </div>
-            </div>
-        </div> --}}
-
-        {{-- <div class="text-end">
-            <button type="submit" class="btn btn-primary px-4">
-                Save Changes
-            </button>
-        </div> --}}
 
 
     <script>
-        document.addEventListener('DOMContentLoaded', async function() {
+        document.addEventListener('DOMContentLoaded', async function () {
 
             // =========================
             // Fetch JSON
@@ -1039,7 +1174,7 @@
             // OFFICE STATE AUTOCOMPLETE
             // =====================================================
 
-            officeStateInput.addEventListener('input', function() {
+            officeStateInput.addEventListener('input', function () {
 
                 const value = this.value.toLowerCase();
 
@@ -1065,7 +1200,7 @@
 
                     button.textContent = item.state;
 
-                    button.addEventListener('click', function() {
+                    button.addEventListener('click', function () {
 
                         officeStateInput.value = item.state;
 
@@ -1088,7 +1223,7 @@
             // PORTAL STATE AUTOCOMPLETE
             // =====================================================
 
-            portalStateInput.addEventListener('input', function() {
+            portalStateInput.addEventListener('input', function () {
 
                 const value = this.value.toLowerCase();
 
@@ -1114,7 +1249,7 @@
 
                     button.textContent = item.state;
 
-                    button.addEventListener('click', function() {
+                    button.addEventListener('click', function () {
 
                         portalStateInput.value = item.state;
 
@@ -1156,14 +1291,14 @@
 
                     const selected =
                         district === selectedDistrict ?
-                        'selected' :
-                        '';
+                            'selected' :
+                            '';
 
                     dropdown.innerHTML += `
-                    <option value="${district}" ${selected}>
-                        ${district}
-                    </option>
-                `;
+                        <option value="${district}" ${selected}>
+                            ${district}
+                        </option>
+                    `;
 
                 });
 
@@ -1203,7 +1338,7 @@
             // HIDE SUGGESTIONS ON OUTSIDE CLICK
             // =====================================================
 
-            document.addEventListener('click', function(e) {
+            document.addEventListener('click', function (e) {
 
                 if (
                     !officeStateInput.contains(e.target) &&
@@ -1226,7 +1361,7 @@
             // =====================================================
 
             document.getElementById('sameAsOffice')
-                .addEventListener('change', function() {
+                .addEventListener('change', function () {
 
                     if (this.checked) {
 
@@ -1261,7 +1396,7 @@
         });
     </script>
 
-       <script>
+    {{-- <script>
         document.addEventListener("DOMContentLoaded", function () {
 
             const selectedBox = document.getElementById('selectedStatesBox');
@@ -1341,9 +1476,9 @@
                         tag.className = 'state-tag';
 
                         tag.innerHTML = `
-                                                                                                <span>${cb.value}</span>
-                                                                                                <span class="remove-tag" data-value="${cb.value}">&times;</span>
-                                                                                            `;
+                                                                                                    <span>${cb.value}</span>
+                                                                                                    <span class="remove-tag" data-value="${cb.value}">&times;</span>
+                                                                                                `;
 
                         selectedBox.appendChild(tag);
                     }
@@ -1377,39 +1512,10 @@
             });
 
         });
-    </script>
+    </script> --}}
 
 
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-
-    const form = document.getElementById('onboardingForm');
-
-    if (!form) return;
-
-    // Disable all native form controls
-    form.querySelectorAll('input, select, textarea, button').forEach(function (el) {
-        el.disabled = true;
-    });
-
-    // Disable custom selects
-    form.querySelectorAll('.custom-select').forEach(function (el) {
-        el.style.pointerEvents = 'none';
-        el.style.opacity = '0.6';
-        el.style.backgroundColor = '#f8f9fa';
-        el.style.cursor = 'not-allowed';
-    });
-
-    // Disable clickable custom controls inside the form
-    form.querySelectorAll('[data-bs-toggle], .dropdown-toggle').forEach(function (el) {
-        el.style.pointerEvents = 'none';
-        el.style.opacity = '0.6';
-        el.style.cursor = 'not-allowed';
-    });
-
-});
-</script>
-
+ 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
 
@@ -1868,6 +1974,24 @@ document.addEventListener('DOMContentLoaded', function () {
                     .replace(/[_-]/g, ' ')
                     .replace(/\b\w/g, char => char.toUpperCase());
             }
+            const categoryMap = {
+                government: "Government",
+                csr_corporate: "CSR - Corporate",
+                csr_psu: "CSR - PSU",
+                foreign_institutions: "Foreign Institutions",
+                individual_donor: "Individual Donor",
+                promoter_money: "Promoter Money"
+            };
+
+            const purposeMap = {
+                project: "Project",
+                program: "Program",
+                org_development: "Organization Development",
+                infrastructure: "Infrastructure",
+                staff_training: "Staff Training",
+                technology: "Technology",
+                others: "Others"
+            };
 
             function loadFunders() {
                 fetch(API.list)
@@ -1875,33 +1999,28 @@ document.addEventListener('DOMContentLoaded', function () {
                     .then(res => {
                         fundersTable.innerHTML = '';
 
-
                         res.data.forEach((funder, index) => {
-                            const category = funder.category || 'â€”';
-                            const purpose = funder.purpose || 'â€”';
-                            const amount = funder.amount
-
                             fundersTable.innerHTML += `
-                                            <tr
-                                                data-id="${funder.id}"
-                                                data-category="${funder.category}"
-                                                data-purpose="${funder.purpose}"
-                                            >
-                                                <td>${index + 1}</td>
-                                                <td>${funder.name}</td>
-                                                <td>${formatLabel(funder.category)}</td>
-                                                <td>${funder.year}</td>
-                                                <td>${formatLabel(funder.purpose)}</td>
-                                                <td>${Number(funder.amount).toLocaleString('en-IN')}</td>
-                                                <td>
-                                                    <button type="button" class="edit editFunder">
-                                                        <i class="bi bi-pencil-square"></i>
-                                                    </button>
-                                                    <button type="button" class="trash deleteFunder">
-                                                        <i class="bi bi-trash3"></i>
-                                                    </button>
-                                                </td>
-                                            </tr>`;
+                            <tr
+                                data-id="${funder.id}"
+                                data-category="${funder.category}"
+                                data-purpose="${funder.purpose}"
+                            >
+                                <td>${index + 1}</td>
+                                <td>${funder.name}</td>
+                                <td>${categoryMap[funder.category] || '—'}</td>
+                                <td>${funder.year}</td>
+                                <td>${purposeMap[funder.purpose] || '—'}</td>
+                                <td>${Number(funder.amount).toLocaleString('en-IN')}</td>
+                                <td>
+                                    <button type="button" class="edit editFunder">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </button>
+                                    <button type="button" class="trash deleteFunder">
+                                        <i class="bi bi-trash3"></i>
+                                    </button>
+                                </td>
+                            </tr>`;
                         });
                     })
                     .catch(() => {
@@ -1965,13 +2084,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 let id = document.getElementById('funder_id').value;
 
-              let data = {
-    name: document.getElementById('funder_name').value,
-    year: document.getElementById('funder_year').value,
-    amount: document.getElementById('funder_amount').value.replace(/,/g, ''),
-    category: document.getElementById('funder_category')?.value || '',
-    purpose: document.getElementById('funder_purpose')?.value || ''
-};
+                let data = {
+                    name: document.getElementById('funder_name').value,
+                    year: document.getElementById('funder_year').value,
+                    amount: document.getElementById('funder_amount').value.replace(/,/g, ''),
+                    category: document.getElementById('funder_category')?.value || '',
+                    purpose: document.getElementById('funder_purpose')?.value || ''
+                };
 
                 try {
                     if (id) {
@@ -2017,6 +2136,8 @@ document.addEventListener('DOMContentLoaded', function () {
             /* =========================
                EDIT CLICK
             ========================= */
+
+
             document.addEventListener('click', (e) => {
                 if (e.target.closest('.editFunder')) {
 
@@ -2028,26 +2149,24 @@ document.addEventListener('DOMContentLoaded', function () {
                     document.getElementById('funder_amount').value =
                         row.children[5].innerText.replace(/,/g, '');
 
-                    // values
-                    let category = row.dataset.category || '';
-                    let purpose = row.dataset.purpose || '';
+                    // Saved values
+                    const category = row.dataset.category || '';
+                    const purpose = row.dataset.purpose || '';
 
-                    // hidden inputs
+                    // Hidden inputs
                     document.getElementById('funder_category').value = category;
                     document.getElementById('funder_purpose').value = purpose;
 
-                    // IMPORTANT: update correct UI elements
-                    let selects = document.querySelectorAll('#funderModal .custom-select');
+                    // Update dropdown text
+                    const selects = document.querySelectorAll('#funderModal .custom-select');
 
-                    // 0 = category
-                    selects[0].innerText = category ? capitalize(category) : 'Select an option';
-
-                    // 1 = purpose
-                    selects[1].innerText = purpose ? capitalize(purpose) : 'Select an option';
+                    selects[0].innerText = categoryMap[category] || 'Select an option';
+                    selects[1].innerText = purposeMap[purpose] || 'Select an option';
 
                     funderModal.show();
                 }
             });
+
 
             function capitalize(str) {
                 return str.replace(/_/g, ' ')
@@ -2113,12 +2232,94 @@ document.addEventListener('DOMContentLoaded', function () {
 
         });
     </script>
+
+    
+    <script>
+
+        document.addEventListener("DOMContentLoaded", function () {
+
+            const selectedBox = document.getElementById('selectedDomainsBox');
+            const dropdown = document.getElementById('domainCheckboxList');
+            const checkboxes = dropdown.querySelectorAll('input[type="checkbox"]');
+            const hiddenInput = document.getElementById('hiddenDomains');
+
+            selectedBox.addEventListener('click', function (e) {
+                if (e.target.classList.contains('remove-tag')) return;
+                e.stopPropagation();
+                dropdown.classList.toggle('show');
+            });
+
+            document.addEventListener('click', function () {
+                dropdown.classList.remove('show');
+            });
+
+            dropdown.addEventListener('click', function (e) {
+                e.stopPropagation();
+            });
+
+            checkboxes.forEach(cb => {
+                cb.addEventListener('change', updateSelectedDomain);
+            });
+
+            function updateSelectedDomain() {
+
+                let selected = [];
+                selectedBox.innerHTML = '';
+
+                checkboxes.forEach(cb => {
+
+                    if (cb.checked) {
+
+                        selected.push(cb.value);
+
+                        const tag = document.createElement('div');
+                        tag.className = 'state-tag';
+
+                        tag.innerHTML = `
+                                    <span>${cb.value}</span>
+                                    <span class="remove-tag" data-value="${cb.value}">&times;</span>
+                                `;
+
+                        selectedBox.appendChild(tag);
+                    }
+                });
+
+                if (selected.length === 0) {
+                    selectedBox.innerHTML =
+                        '<span class="placeholder">Select expertise</span>';
+                }
+
+                hiddenInput.value = selected.join(',');
+            }
+
+            selectedBox.addEventListener('click', function (e) {
+
+                if (e.target.classList.contains('remove-tag')) {
+
+                    e.stopPropagation();
+
+                    const checkbox = [...checkboxes].find(cb => cb.value === e.target.dataset.value);
+
+                    if (checkbox) {
+                        checkbox.checked = false;
+                        checkbox.dispatchEvent(new Event('change'));
+                    }
+                }
+            });
+
+            updateSelectedDomain();
+
+        });
+    </script>
+
+
+
     <script>
         document.addEventListener("DOMContentLoaded", function () {
 
             const selectedBox = document.getElementById('selectedStatesBox');
-            const dropdown = document.querySelector('.checkbox-list');
-            const checkboxes = document.querySelectorAll('.checkbox-list input[type="checkbox"]');
+            const dropdown = document.getElementById('stateCheckboxList');
+            const checkboxes = dropdown.querySelectorAll('input[type="checkbox"]');
             const hiddenInput = document.getElementById('hiddenStates');
             const panIndiaCheckbox = document.getElementById('s0');
 
@@ -2193,9 +2394,9 @@ document.addEventListener('DOMContentLoaded', function () {
                         tag.className = 'state-tag';
 
                         tag.innerHTML = `
-                                                                                                <span>${cb.value}</span>
-                                                                                                <span class="remove-tag" data-value="${cb.value}">&times;</span>
-                                                                                            `;
+                                                                                                                    <span>${cb.value}</span>
+                                                                                                                    <span class="remove-tag" data-value="${cb.value}">&times;</span>
+                                                                                                                `;
 
                         selectedBox.appendChild(tag);
                     }
@@ -2227,6 +2428,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
 
             });
+
 
         });
     </script>
@@ -2264,4 +2466,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
         });
     </script>
+
+
 @endsection
