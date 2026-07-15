@@ -22,6 +22,7 @@ class ApplicantController extends Controller
     ->when($request->fund_id, function ($query, $fundId) {
         $query->where('fund_id', $fundId);
     })
+    
 
     // Search
     ->when($request->search, function ($query, $search) {
@@ -31,7 +32,7 @@ class ApplicantController extends Controller
         });
     })
 
-    
+
 
 
     // Type filter
