@@ -8,55 +8,69 @@ use Illuminate\Http\Request;
 
 class ApplicantController extends Controller
 {
-    public function index(Request $request)
-    {
-       $applicants = FundApplication::with([
+  public function index(Request $request)
+{
+    $applicants = FundApplication::with([
         'organization.profile',
         'organization.operationalDetail',
     ])
     ->whereHas('fund', function ($q) {
         $q->where('client_id', auth('client_admin')->id());
     })
-            ->when($request->search, function ($query, $search) {
-                $query->whereHas('organization', function ($q) use ($search) {
-                    $q->where('organization_name', 'like', "%{$search}%")
-                        ->orWhere('work_email', 'like', "%{$search}%");
-                });
-            })
-            ->when($request->type, function ($query, $type) {
 
-                $role = match ($type) {
-                    'npo' => 'funder',
-                    'startup' => 'fund_seeker',
-                    default => null,
-                };
+    // Filter by fund
+    ->when($request->fund_id, function ($query, $fundId) {
+        $query->where('fund_id', $fundId);
+    })
 
-                if ($role) {
-                    $query->whereHas('organization', function ($q) use ($role) {
-                        $q->where('role', $role);
-                    });
-                }
-            })
-            ->when($request->status, function ($query, $status) {
+    // Search
+    ->when($request->search, function ($query, $search) {
+        $query->whereHas('organization', function ($q) use ($search) {
+            $q->where('organization_name', 'like', "%{$search}%")
+                ->orWhere('work_email', 'like', "%{$search}%");
+        });
+    })
 
-                $query->whereHas('organization', function ($q) use ($status) {
+    // Type filter
+    ->when($request->type, function ($query, $type) {
 
-                    if ($status === 'active') {
-                        $q->whereNotNull('email_verified_at');
-                    }
+        $role = match ($type) {
+            'npo' => 'funder',
+            'startup' => 'fund_seeker',
+            default => null,
+        };
 
-                    if ($status === 'inactive') {
-                        $q->whereNull('email_verified_at');
-                    }
-                });
-            })
-            ->latest()
-            ->paginate(20)
-            ->withQueryString();
+        if ($role) {
+            $query->whereHas('organization', function ($q) use ($role) {
+                $q->where('role', $role);
+            });
+        }
+    })
 
-        return view('client-admin.applicants.index', compact('applicants'));
-    }
+    // Status filter
+    ->when($request->status, function ($query, $status) {
 
+        $query->whereHas('organization', function ($q) use ($status) {
+
+            if ($status === 'active') {
+                $q->whereNotNull('email_verified_at');
+            }
+
+            if ($status === 'inactive') {
+                $q->whereNull('email_verified_at');
+            }
+
+        });
+
+    })
+
+    ->latest()
+    ->paginate(20)
+    ->withQueryString();
+
+
+    return view('client-admin.applicants.index', compact('applicants'));
+}
     public function create()
     {
         //

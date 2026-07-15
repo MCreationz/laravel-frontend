@@ -100,7 +100,7 @@
         </div>
 
     </div>
-    <div class="sidebar-boxes mt-5 d-flex flex-wrap gap-2.5">
+    <!-- <div class="sidebar-boxes mt-5 d-flex flex-wrap gap-2.5">
 
         <div class="col single-item">
             <div class="single-box applicants">
@@ -136,7 +136,7 @@
             </div>
         </div>
 
-    </div>
+    </div> -->
 </div>
 
 </div>

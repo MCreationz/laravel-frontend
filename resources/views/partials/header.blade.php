@@ -28,6 +28,54 @@
                 @yield('header_extra')
 
                 <!-- Notification dropdown here -->
+                 <div class="dropdown">
+
+    <a href="#"
+       class="icon px-2 px-lg-3 position-relative"
+       data-bs-toggle="dropdown"
+       aria-expanded="false">
+
+        <img src="{{ asset('img/notification.svg') }}"
+             alt="Notifications"
+             width="18"
+             height="20">
+
+        <span id="notification-count"
+              class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+              style="display:none;">
+            0
+        </span>
+
+    </a>
+
+    <div class="dropdown-menu dropdown-menu-end p-0 shadow"
+         style="width:380px;max-height:500px;overflow-y:auto;">
+
+        <div class="d-flex justify-content-between align-items-center p-2 border-bottom">
+
+            <strong>Notifications</strong>
+
+            <button
+                type="button"
+                id="mark-all-read"
+                class="btn btn-sm btn-link text-decoration-none p-1">
+                Mark all read
+            </button>
+
+        </div>
+
+        <div id="notification-list">
+
+            <div class="p-3 text-center text-muted">
+                Loading...
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
                 <div class="dropdown">
 
                     <a href="javascript:void(0);" class="text-decoration-none text-reset" data-bs-toggle="dropdown"

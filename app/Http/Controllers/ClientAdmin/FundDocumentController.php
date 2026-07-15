@@ -96,49 +96,87 @@ class FundDocumentController extends Controller
     | Update
     |--------------------------------------------------------------------------
     */
-    public function update(Request $request, $id)
-    {
-        $document = FundDocument::find($id);
+  /*
+|--------------------------------------------------------------------------
+| Edit (Get Data For Edit)
+|--------------------------------------------------------------------------
+*/
+public function edit($id)
+{
+    $document = FundDocument::find($id);
 
-        if (!$document) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Document not found'
-            ], 404);
-        }
-
-        $validator = Validator::make($request->all(), [
-            'document_name'     => 'required|string|max:255',
-            'instruction'       => 'nullable|string',
-            'document_type'     => 'required|string|max:50',
-            'max_file_size_mb'   => 'required|integer|min:1',
-            'is_required'       => 'nullable|boolean',
-            'uploaded_file'     => 'nullable|file|max:5120',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'success' => false,
-                'errors'  => $validator->errors()
-            ], 422);
-        }
-
-        $data = $validator->validated();
-
-        if ($request->hasFile('uploaded_file')) {
-            $data['uploaded_file'] = $request->file('uploaded_file')
-                ->store('fund-documents', 'public');
-        }
-
-        $document->update($data);
-
+    if (!$document) {
         return response()->json([
-            'success' => true,
-            'message' => 'Document updated successfully',
-            'data'    => $document
-        ]);
+            'success' => false,
+            'message' => 'Document not found'
+        ], 404);
     }
 
+    return response()->json([
+        'success' => true,
+        'data' => $document
+    ]);
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| Update
+|--------------------------------------------------------------------------
+*/
+public function update(Request $request, $id)
+{
+    $document = FundDocument::find($id);
+
+    if (!$document) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Document not found'
+        ], 404);
+    }
+
+    $validator = Validator::make($request->all(), [
+        'document_name'      => 'required|string|max:255',
+        'instruction'        => 'nullable|string',
+        'document_type'      => 'required|string|max:50',
+        'max_file_size_mb'   => 'required|integer|min:1',
+        'is_required'        => 'nullable|boolean',
+        'uploaded_file'      => 'nullable|file|max:5120',
+    ]);
+
+    if ($validator->fails()) {
+        return response()->json([
+            'success' => false,
+            'errors' => $validator->errors()
+        ], 422);
+    }
+
+
+    $data = [
+        'document_name'    => $request->document_name,
+        'instruction'      => $request->instruction,
+        'document_type'    => $request->document_type,
+        'max_file_size_mb' => $request->max_file_size_mb,
+        'is_required'      => $request->is_required ?? false,
+    ];
+
+
+    if ($request->hasFile('uploaded_file')) {
+
+        $data['uploaded_file'] = $request->file('uploaded_file')
+            ->store('fund-documents', 'public');
+    }
+
+
+    $document->update($data);
+
+
+    return response()->json([
+        'success' => true,
+        'message' => 'Document updated successfully',
+        'data' => $document->fresh()
+    ]);
+}
     /*
     |--------------------------------------------------------------------------
     | Delete

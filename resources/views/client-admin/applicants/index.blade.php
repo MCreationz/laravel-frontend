@@ -37,16 +37,29 @@
                             <option value="startup" {{ request('type') == 'startup' ? 'selected' : '' }}>Startup</option>
                         </select>
                     </div>
+                    @php
+    use App\Models\Fund;
+
+    $funds = Fund::where('client_id', auth('client_admin')->id())
+        ->latest()
+        ->get();
+       
+@endphp
 
                     <!-- Status -->
-                    <div style="max-width:126px;">
-                        <select name="status" class="form-control" onchange="this.form.submit()">
-                            <option value="">All Status</option>
-                            <option value="active" {{ request('status') == 'active' ? 'selected' : '' }}>Active</option>
-                            <option value="inactive" {{ request('status') == 'inactive' ? 'selected' : '' }}>Inactive
-                            </option>
-                        </select>
-                    </div>
+                  <div style="max-width:220px;">
+    <select name="fund_id" class="form-control" onchange="this.form.submit()">
+        <option value="">All Funds</option>
+
+        @foreach($funds as $fund)
+            <option value="{{ $fund->id }}"
+                {{ request('fund_id') == $fund->id ? 'selected' : '' }}>
+                {{ $fund->fund_name }}
+            </option>
+        @endforeach
+
+    </select>
+</div>
 
                 </form>
 
@@ -66,9 +79,7 @@
                         <th class="text-center">Contact</th>
                         <th class="text-center">PAN</th>
                         <th class="text-center">Vintage</th>
-                        <th class="text-center">Turnover</th>
-                        <th class="text-center">Applications</th>
-                        <th class="text-center">Status</th>
+                  
                         <th class="text-center">Action</th>
                     </tr>
                 </thead>
@@ -131,19 +142,9 @@
                                 @endif
                             </td>
 
-                            <td class="text-center">
-                                ₹{{ number_format($applicant->financialDocument->last_year_turnover ?? 0) }}
-                            </td>
-
-                            <td class="text-center">
-                                {{ $organization->fundApplications_count ?? 1 }}
-                            </td>
-
-                            <td class="text-center">
-                                <span class="badge {{ $statusClass }}">
-                                    {{ $organization?->email_verified_at ? 'Active' : 'Pending' }}
-                                </span>
-                            </td>
+                           
+                       
+                           
 
                             <td class="text-center action-btn">
                                 <a href="{{ route('client-admin.applicants.edit', $organization->id) }}" class="edit-btn">
