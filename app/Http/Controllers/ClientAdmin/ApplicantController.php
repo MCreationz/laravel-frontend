@@ -30,6 +30,7 @@ class ApplicantController extends Controller
                 ->orWhere('work_email', 'like', "%{$search}%");
         });
     })
+    
 
     // Type filter
     ->when($request->type, function ($query, $type) {
