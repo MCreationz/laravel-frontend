@@ -22,6 +22,7 @@ class ApplicantController extends Controller
     ->when($request->fund_id, function ($query, $fundId) {
         $query->where('fund_id', $fundId);
     })
+
     
 
     // Search
