@@ -104,80 +104,148 @@
         <form class="step2Form" method="POST" action="{{ route('projects.apply.documents.startup.store', $fund->id) }}"
             enctype="multipart/form-data">
             @csrf
-            <div class="card p-3 p-md-4 border-0 mb-3">
-                <div class="mb-4">
-                    <h1 class="top-heading mb-0">Organizational Details</h1>
+
+          <div class="card p-3 p-md-4 border-0 mb-3">
+    <div class="mb-4">
+        <h1 class="top-heading mb-0">Organizational Details</h1>
+    </div>
+
+    <div class="row flex-wrap row-gap-3 row-gap-md-4 px-md-1">
+        <div class="col-12 col-md-4 px-md-2">
+            <label class="form-label">Name of the Organization<span>*</span></label>
+
+            <input type="text" name="organization_name" class="form-control"
+                placeholder="Name of the Organization"
+                value="{{ old('organization_name', auth('organization')->user()->profile->legal_name) }}"
+                readonly required>
+        </div>
+
+        <div class="col-12 col-md-4 px-md-2">
+            <label class="form-label">Registration Number<span>*</span></label>
+            <input type="text" name="registration_number" class="form-control"
+                placeholder="Enter Registration Number"
+                value="{{ old('registration_number', $document?->registration_number) }}" required>
+        </div>
+
+        <div class="col-12 col-md-4 px-md-2">
+            <label class="form-label">PAN Card Number <span>*</span></label>
+            <input type="text"
+                name="pan_number"
+                class="form-control"
+                placeholder="ABCDE1234F"
+                value="{{ old('pan_number', auth('organization')->user()->profile->pan_number) }}"
+                readonly
+                required>
+        </div>
+
+        <div class="col-12 col-md-6 px-md-2 position-relative pb-5">
+            <label class="form-label">Upload Registration Certificate <span class="text-danger">*</span></label>
+
+            <input type="file" id="registration_certificate" name="registration_certificate" hidden required>
+
+            <label for="registration_certificate" class="upload-label">
+                <div class="upload-content">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26"
+                        fill="none">
+                        <g opacity="0.2">
+                            <path d="M9.75 11.917V18.417L11.9167 16.2503" stroke="#292D32" stroke-width="1.5"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M9.7526 18.4167L7.58594 16.25" stroke="#292D32" stroke-width="1.5"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                            <path
+                                d="M23.8307 10.8337V16.2503C23.8307 21.667 21.6641 23.8337 16.2474 23.8337H9.7474C4.33073 23.8337 2.16406 21.667 2.16406 16.2503V9.75032C2.16406 4.33366 4.33073 2.16699 9.7474 2.16699H15.1641"
+                                stroke="#292D32" stroke-width="1.5" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path
+                                d="M23.8307 10.8337H19.4974C16.2474 10.8337 15.1641 9.75033 15.1641 6.50033V2.16699L23.8307 10.8337Z"
+                                stroke="#292D32" stroke-width="1.5" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </g>
+                    </svg>
+                    <p class="mt-2">Upload pdf/JPG upto 5 MB</p>
+                    <small id="registration-certificate-help"></small>
                 </div>
-                <div class="row flex-wrap row-gap-3 row-gap-md-4 px-md-1">
-                    <div class="col-12 col-md-6 px-md-2">
-                        <label class="form-label">Name of the Organization<span>*</span></label>
-                        <input type="text" name="organization_name" class="form-control"
-                            placeholder="Name of the Organization" required
-                            value="{{ old('organization_name',auth('organization')->user()->profile->legal_name) }}"
-                            readonly>
-                    </div>
-                    <div class="col-12 col-md-6 px-md-2">
-                        <label class="form-label">Registration Number<span>*</span></label>
-                        <input type="text" name="registration_number" class="form-control"
-                            placeholder="Enter Registration Number"
-                            value="{{ old('registration_number', $document->registration_number ?? '') }}" required>
-                    </div>
-                    <div class="col-12 px-md-2 position-relative pb-5">
-                        <label class="form-label">Upload Registration Certificate <span class="text-danger">*</span></label>
+            </label>
 
-                        <input type="file" id="registration_certificate" name="registration_certificate" hidden required>
+            @if ($document?->registration_certificate)
+                @php
+                    $extension = strtolower(pathinfo($document->registration_certificate, PATHINFO_EXTENSION));
 
-                        <label for="registration_certificate" class="upload-label">
-                            <div class="upload-content">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26"
-                                    fill="none">
-                                    <g opacity="0.2">
-                                        <path d="M9.75 11.917V18.417L11.9167 16.2503" stroke="#292D32" stroke-width="1.5"
-                                            stroke-linecap="round" stroke-linejoin="round" />
-                                        <path d="M9.7526 18.4167L7.58594 16.25" stroke="#292D32" stroke-width="1.5"
-                                            stroke-linecap="round" stroke-linejoin="round" />
-                                        <path
-                                            d="M23.8307 10.8337V16.2503C23.8307 21.667 21.6641 23.8337 16.2474 23.8337H9.7474C4.33073 23.8337 2.16406 21.667 2.16406 16.2503V9.75032C2.16406 4.33366 4.33073 2.16699 9.7474 2.16699H15.1641"
-                                            stroke="#292D32" stroke-width="1.5" stroke-linecap="round"
-                                            stroke-linejoin="round" />
-                                        <path
-                                            d="M23.8307 10.8337H19.4974C16.2474 10.8337 15.1641 9.75033 15.1641 6.50033V2.16699L23.8307 10.8337Z"
-                                            stroke="#292D32" stroke-width="1.5" stroke-linecap="round"
-                                            stroke-linejoin="round" />
-                                    </g>
-                                </svg>
-                                <p class="mt-2">Upload pdf/JPG upto 5 MB</p>
-                              
-                                <small id="registration-certificate-help"></small>
-                            </div>
-                        </label>
+                    $icon = match ($extension) {
+                        'pdf' => asset('img/pdf-icon.png'),
+                        'doc', 'docx' => asset('img/docx.svg'),
+                        'xls', 'xlsx', 'csv' => asset('img/excel.svg'),
+                        default => asset('img/docx.svg'),
+                    };
+                @endphp
 
-                                             @if (!empty($document->registration_certificate))
-    @php
-        $extension = strtolower(pathinfo($document->registration_certificate, PATHINFO_EXTENSION));
-
-        $icon = match ($extension) {
-            'pdf' => asset('img/pdf-icon.png'),
-            'doc', 'docx' => asset('img/docx.svg'),
-            'xls', 'xlsx', 'csv' => asset('img/excel.svg'),
-            default => asset('img/docx.svg'),
-        };
-    @endphp
-
-    <a href="{{ asset('storage/' . $document->registration_certificate) }}"
-        target="_blank" class="text-success d-block mb-1 uploaded-doc">
-        <img src="{{ $icon }}" alt="" width="20" height="20">
-        View registration document
-    </a>
-@endif
-
-                    </div>
-
+                <div class="mt-2">
+                    <a href="{{ asset('storage/' . $document->registration_certificate) }}" target="_blank"
+                        class="text-success d-block mb-1 uploaded-doc">
+                        <img src="{{ $icon }}" alt="" width="20" height="20">
+                        View registration certificate
+                    </a>
                 </div>
-            </div>
+            @endif
+        </div>
+
+        <div class="col-12 col-md-6 px-md-2 position-relative pb-5">
+            <label class="form-label">Upload Your PAN Card <span class="text-danger">*</span></label>
+
+            <input type="file" id="pan-card" name="pan_card" hidden required>
+
+            <label for="pan-card" class="upload-label">
+                <div class="upload-content">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26"
+                        fill="none">
+                        <g opacity="0.2">
+                            <path d="M9.75 11.917V18.417L11.9167 16.2503" stroke="#292D32" stroke-width="1.5"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M9.7526 18.4167L7.58594 16.25" stroke="#292D32" stroke-width="1.5"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                            <path
+                                d="M23.8307 10.8337V16.2503C23.8307 21.667 21.6641 23.8337 16.2474 23.8337H9.7474C4.33073 23.8337 2.16406 21.667 2.16406 16.2503V9.75032C2.16406 4.33366 4.33073 2.16699 9.7474 2.16699H15.1641"
+                                stroke="#292D32" stroke-width="1.5" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path
+                                d="M23.8307 10.8337H19.4974C16.2474 10.8337 15.1641 9.75033 15.1641 6.50033V2.16699L23.8307 10.8337Z"
+                                stroke="#292D32" stroke-width="1.5" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </g>
+                    </svg>
+                    <p class="mt-2">Upload PDF/JPG up to 5 MB</p>
+                    <small id="pan-card-name"></small>
+                </div>
+            </label>
+
+            @if ($document?->pan_card)
+                @php
+                    $extension = strtolower(pathinfo($document->pan_card, PATHINFO_EXTENSION));
+
+                    $icon = match ($extension) {
+                        'pdf' => asset('img/pdf-icon.png'),
+                        'doc', 'docx' => asset('img/docx.svg'),
+                        'xls', 'xlsx', 'csv' => asset('img/excel.svg'),
+                        default => asset('img/docx.svg'),
+                    };
+                @endphp
+
+                <div class="mt-2">
+                    <a href="{{ asset('storage/' . $document->pan_card) }}" target="_blank"
+                        class="text-success d-block mb-1 uploaded-doc">
+                        <img src="{{ $icon }}" alt="" width="20" height="20">
+                        View PAN Card
+                    </a>
+                </div>
+            @endif
+        </div>
+    </div>
+</div>
+ @if ($op->dpiit_registration == 1)
+
             <div class="card p-3 p-md-4 border-0 mb-3">
                 <div class="row flex-wrap row-gap-3 row-gap-md-4 px-md-1">
-                    @if ($op->dpiit_registration == 1)
+                   
                         <div class="col-12 px-md-2">
                             <label class="form-label">DPIIT Registration Number<span>*</span></label>
                             <input type="text" name="dpiit_registration_number" class="form-control"
@@ -233,9 +301,10 @@
     </a>
 @endif
                         </div>
-                    @endif
+                 
                 </div>
             </div>
+               @endif
             <div class="card p-3 p-md-4 border-0 mb-3">
                 <div class="row flex-wrap row-gap-3 row-gap-md-4 px-md-1">
                     {{-- radio --}}
@@ -295,9 +364,10 @@
                     </div>
                 </div>
             </div>
+              @if ($op->gstin_registration == 1)
             <div class="card p-3 p-md-4 border-0 mb-3">
                 <div class="row flex-wrap row-gap-3 row-gap-md-4 px-md-1">
-                    @if ($op->gstin_registration == 1)
+                  
 
                         <div class="col-12 px-md-2">
                             <label class="form-label">GST Registration No<span>*</span></label>
@@ -352,12 +422,14 @@
     </a>
 @endif
                         </div>
-                    @endif
+                  
                 </div>
             </div>
+              @endif
+               @if ($op->msme_registration == 1)
             <div class="card p-3 p-md-4 border-0">
                 <div class="row flex-wrap row-gap-3 row-gap-md-4 px-md-1">
-                    @if ($op->msme_registration == 1)
+                   
                         <div class="col-12 col-md-6 px-md-2">
                             <label class="form-label">MSME Registration Number<span>*</span></label>
                             <input type="text" name="msme_registration_number" class="form-control"
@@ -372,9 +444,10 @@
                                 value="{{ old('msme_registration_validity', $document->msme_registration_validity ?? '') }}"
                                 required>
                         </div>
-                    @endif
+                 
                 </div>
             </div>
+               @endif
             <div style="border-radius:0px 0px 8px 8px;"
                 class="d-flex justify-content-center justify-content-md-end gap-2 gap-md-3 steps-btn pe-lg-4 flex-wrap">
                 <div class="btn-wrap">

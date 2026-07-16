@@ -33,9 +33,6 @@ class ApplicantController extends Controller
         });
     })
 
-
-
-
     // Type filter
     ->when($request->type, function ($query, $type) {
 

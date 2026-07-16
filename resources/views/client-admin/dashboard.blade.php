@@ -3,75 +3,8 @@
 @section('title', 'Dashboard')
 
 @section('content')
-    <div class="dashboard-v2">
-        <div class="dashboard-v2-summary-card mb-3">
-            <div class="dashboard-col-wrap d-flex justify-content-between align-items-center flex-wrap gap-2 gap-lg-0">
-                <div class="left-content col-12 col-lg-4 col-xl-5 flex-shrink-0">
-                    <p class="dashboard-v2-welcome mb-2">Client Admin</p>
-                    <h2 class="dashboard-v2-name mb-1">
-                        Fundlink Control Centre
-                    </h2>
-                </div>
-                <div
-                    class="col-12 col-lg-7 flex-grow-1 flex-wrap flex-lg-nowrap dashboar-cards-wrap d-flex gap-1 justify-content-lg-end row-cols-1 row-cols-sm-2 row-cols-md-4">
 
-                    <div class="col">
-                        <div class="dashboard-v2-kpi">
-                            <p class="mb-0 value">
-                                ₹0
-                            </p>
-                            <p class="mb-0 label">Funding Available</p>
-                        </div>
-                    </div>
-
-                    <div class="col">
-                        <div class="dashboard-v2-kpi">
-                            <p class="mb-0 value">
-                                {{ \App\Models\FundApplication::whereHas('fund', function ($q) {
-                                    $q->where('client_id', auth('client_admin')->id());
-                                })->count() }}
-                            </p>
-                            <p class="mb-0 label">Total Applications</p>
-                        </div>
-                    </div>
-
-                    <div class="col">
-                        <div class="dashboard-v2-kpi">
-                            <p class="mb-0 value">
-                                {{ \App\Models\FundApplication::whereHas('fund', function ($q) {
-                                    $q->where('client_id', auth('client_admin')->id());
-                                })->where('status', 'ongoing')->count() }}
-                            </p>
-                            <p class="mb-0 label">Ongoing</p>
-                        </div>
-                    </div>
-
-                    <div class="col">
-                        <div class="dashboard-v2-kpi">
-                            <p class="mb-0 value">
-                                {{ \App\Models\FundApplication::whereHas('fund', function ($q) {
-                                    $q->where('client_id', auth('client_admin')->id());
-                                })->where('status', 'selected')->count() }}
-                            </p>
-                            <p class="mb-0 label">Selected</p>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="dashboard-v2-kpi">
-                            <p class="mb-0 value">
-                                {{ \App\Models\FundApplication::whereHas('fund', function ($q) {
-                                    $q->where('client_id', auth('client_admin')->id());
-                                })->where('status', 'selected')->count() }}
-                            </p>
-                            <p class="mb-0 label">Selected</p>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </div>
-    @php
+   @php
 
         $clientId = auth('client_admin')->id();
 
@@ -114,7 +47,7 @@
 
         $closedFunds = (clone $fundsQuery)->where('status', 'closed')->count();
 
-        $suspendedFunds = (clone $fundsQuery)->where('status', 'suspended')->count();
+        $suspendedFunds = (clone $fundsQuery)->where('status', 'revoked')->count();
 
         $draftFunds = (clone $fundsQuery)->where('status', 'draft')->count();
 
@@ -132,9 +65,110 @@
             })
             ->latest()
             ->take(4)
-            ->get();
+            ->get();   
+
+            if (!function_exists('formatIndianCurrencyShort')) {
+    function formatIndianCurrencyShort($amount): string
+    {
+        if ($amount >= 10000000) { // 1 Crore
+            return '₹' . round($amount / 10000000, 2) . ' Cr';
+        }
+
+        if ($amount >= 100000) { // 1 Lakh
+            return '₹' . round($amount / 100000, 2) . ' L';
+        }
+
+        if ($amount >= 1000) { // 1 Thousand
+            return '₹' . round($amount / 1000, 2) . ' K';
+        }
+
+        return '₹' . number_format($amount);
+    }
+} 
 
     @endphp
+    <div class="dashboard-v2">
+        <div class="dashboard-v2-summary-card mb-3">
+            <div class="dashboard-col-wrap d-flex justify-content-between align-items-center flex-wrap gap-2 gap-lg-0">
+                <div class="left-content col-12 col-lg-4 col-xl-5 flex-shrink-0">
+                    <p class="dashboard-v2-welcome mb-2">Client Admin</p>
+                    <h2 class="dashboard-v2-name mb-1">
+                        Fundlink Control Centre
+                    </h2>
+                </div>
+                <div
+                    class="col-12 col-lg-7 flex-grow-1 flex-wrap flex-lg-nowrap dashboar-cards-wrap d-flex gap-1 justify-content-lg-end row-cols-1 row-cols-sm-2 row-cols-md-4">
+
+                    <div class="col">
+                        <div class="dashboard-v2-kpi">
+                            <p class="mb-0 value">
+                                {{ $activeReviewers }}
+                            </p>
+                            <p class="mb-0 label">Active Reviewers</p>
+                        </div>
+                    </div>
+<div class="col">
+    <div class="dashboard-v2-kpi">
+        <p class="mb-0 value">
+            {{ \App\Models\Fund::where('client_id', auth('client_admin')->id())->count() }}
+        </p>
+        <p class="mb-0 label">Funds Offered</p>
+    </div>
+</div>
+
+                    <div class="col">
+                        <div class="dashboard-v2-kpi">
+                            <p class="mb-0 value">
+                                {{ \App\Models\FundApplication::whereHas('fund', function ($q) {
+                                    $q->where('client_id', auth('client_admin')->id());
+                                })->where('status', 'ongoing')->count() }}
+                            </p>
+                            <p class="mb-0 label">Ongoing</p>
+                        </div>
+                    </div>
+                   <div class="col">
+    <div class="dashboard-v2-kpi">
+        <p class="mb-0 value">
+            {{ \App\Models\FundApplication::whereHas('fund', function ($q) {
+                $q->where('client_id', auth('client_admin')->id());
+            })->where('status', 'completed')->count() }}
+        </p>
+        <p class="mb-0 label">Completed</p>
+    </div>
+</div>
+
+                    <div class="col">
+                        <div class="dashboard-v2-kpi">
+                            <p class="mb-0 value">
+                                {{ \App\Models\FundApplication::whereHas('fund', function ($q) {
+                                    $q->where('client_id', auth('client_admin')->id());
+                                })->count() }}
+                            </p>
+                            <p class="mb-0 label">Total Applications</p>
+                        </div>
+                    </div>
+
+                   <div class="col">
+    <div class="dashboard-v2-kpi">
+      <p class="mb-0 value">
+    {{
+        formatIndianCurrencyShort(
+            \App\Models\FundSnapshot::whereHas('fund', function ($q) {
+                $q->where('client_id', auth('client_admin')->id())
+                  ->where('status', 'completed');
+            })->sum('fund_outlay')
+        )
+    }}
+</p>
+        <p class="mb-0 label">Funds Disbursed</p>
+    </div>
+</div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+ 
 
     {{-- <div class="dashboard-status d-flex d-flex row-cols-2 row-cols-md-3 flex-wrap row-gap-2">
         <div class="col px-1">
@@ -287,7 +321,7 @@
 
                             <div class="status-row">
                                 <div class="status-header">
-                                    <span><strong>Suspended</strong></span>
+                                    <span><strong>Revoked</strong></span>
                                     <span>{{ $suspendedFunds }}</span>
                                 </div>
 

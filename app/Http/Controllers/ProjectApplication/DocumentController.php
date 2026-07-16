@@ -84,6 +84,11 @@ public function startup(Fund $fund)
                 ->file('certificate_csr1')
                 ->store('fund-applications/npo-documents', 'public');
         }
+        if ($request->hasFile('pan_card')) {
+    $document->pan_card = $request
+        ->file('pan_card')
+        ->store('fund-applications/npo-documents', 'public');
+}
 
         $document->save();
 
@@ -141,6 +146,11 @@ public function startup(Fund $fund)
             ->file('gst_certificate')
             ->store('fund-applications/startup-documents', 'public');
     }
+    if ($request->hasFile('pan_card')) {
+    $document->pan_card = $request
+        ->file('pan_card')
+        ->store('fund-applications/startup-documents', 'public');
+}
 
     $document->save();
 
