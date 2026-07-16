@@ -41,7 +41,7 @@
               <div class="dropdown">
 
     <a href="#"
-       class="icon position-relative"
+       class="icon  position-relative"
        data-bs-toggle="dropdown"
        aria-expanded="false">
 

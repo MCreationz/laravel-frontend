@@ -30,7 +30,7 @@
                 <!-- Notification dropdown here -->
                 <div class="dropdown">
 
-                    <a href="#" class="icon px-2 px-lg-3 position-relative" data-bs-toggle="dropdown"
+                    <a href="#" class="icon  position-relative" data-bs-toggle="dropdown"
                         aria-expanded="false">
 
                         <img src="{{ asset('img/notification.svg') }}" alt="Notifications" width="18"
