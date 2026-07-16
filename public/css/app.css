@@ -3345,6 +3345,22 @@ span#notification-count {
             align-items: center;
             gap: 10px;
         }
+.dropdown-menu * {
+    font-size: 12px !important;
+}
+.drop-item {
+    border-bottom: 1px solid #F3F3F3;
+    padding-bottom: 6px;
+    margin-bottom: 6px;
+}
+a.btn.simple-btn.blue {
+    border-color: var(--accent-color) !important;
+}
+
+a.btn.simple-btn.blue:hover {
+    background: var(--accent-color) !important;
+    color: var(--white-color) !important;
+}
 @media (max-width: 1200px) {
     .dashboard-v2-summary-grid {
         grid-template-columns: repeat(3, minmax(120px, 1fr));

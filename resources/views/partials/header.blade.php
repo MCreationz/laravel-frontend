@@ -28,53 +28,47 @@
                 @yield('header_extra')
 
                 <!-- Notification dropdown here -->
-                 <div class="dropdown">
+                <div class="dropdown">
 
-    <a href="#"
-       class="icon px-2 px-lg-3 position-relative"
-       data-bs-toggle="dropdown"
-       aria-expanded="false">
+                    <a href="#" class="icon px-2 px-lg-3 position-relative" data-bs-toggle="dropdown"
+                        aria-expanded="false">
 
-        <img src="{{ asset('img/notification.svg') }}"
-             alt="Notifications"
-             width="18"
-             height="20">
+                        <img src="{{ asset('img/notification.svg') }}" alt="Notifications" width="18"
+                            height="20">
 
-        <span id="notification-count"
-              class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-              style="display:none;">
-            0
-        </span>
+                        <span id="notification-count"
+                            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                            style="display:none;">
+                            0
+                        </span>
 
-    </a>
+                    </a>
 
-    <div class="dropdown-menu dropdown-menu-end p-0 shadow"
-         style="width:380px;max-height:500px;overflow-y:auto;">
+                    <div class="dropdown-menu dropdown-menu-end p-0 shadow"
+                        style="width:380px;max-height:500px;overflow-y:auto;">
 
-        <div class="d-flex justify-content-between align-items-center p-2 border-bottom">
+                        <div class="d-flex justify-content-between align-items-center p-2 border-bottom">
 
-            <strong>Notifications</strong>
+                            <strong>Notifications</strong>
 
-            <button
-                type="button"
-                id="mark-all-read"
-                class="btn btn-sm btn-link text-decoration-none p-1">
-                Mark all read
-            </button>
+                            <button type="button" id="mark-all-read"
+                                class="btn btn-sm btn-link text-decoration-none p-1">
+                                Mark all read
+                            </button>
 
-        </div>
+                        </div>
 
-        <div id="notification-list">
+                        <div id="notification-list">
 
-            <div class="p-3 text-center text-muted">
-                Loading...
-            </div>
+                            <div class="p-3 text-center text-muted">
+                                Loading...
+                            </div>
 
-        </div>
+                        </div>
 
-    </div>
+                    </div>
 
-</div>
+                </div>
 
                 <div class="dropdown">
 
@@ -83,9 +77,8 @@
 
                         @php
                             $name = trim(
-                                optional(auth('organization')->user()->profile)->legal_name
-                                ?? auth('organization')->user()->organization_name
-                                ?? '-'
+                                optional(auth('organization')->user()->profile)->legal_name ??
+                                    (auth('organization')->user()->organization_name ?? '-'),
                             );
 
                             $words = preg_split('/\s+/', $name);
@@ -115,21 +108,18 @@
                     <div class="dropdown-menu dropdown-menu-end border-0 rounded-4 shadow p-3 mt-3"
                         style="width:330px;font-size:13px;">
 
-                        <div class="d-flex align-items-start mb-2">
-                            <div style="width:38%;" class="fw-semibold">
-                                <i class="bi bi-shop me-1 text-secondary"></i>
+                        <div class="d-flex align-items-start drop-item">
+                            <div style="" class="col-5 fw-semibold">
                                 Brand Name:
                             </div>
                             <div class="flex-grow-1 text-break">
-                                {{ optional(auth('organization')->user()->profile)->brand_name
-    ?? auth('organization')->user()->organization_name
-    ?? '-' }}
+                                {{ optional(auth('organization')->user()->profile)->brand_name ??
+                                    (auth('organization')->user()->organization_name ?? '-') }}
                             </div>
                         </div>
 
-                        <div class="d-flex align-items-start mb-2">
-                            <div style="width:38%;" class="fw-semibold">
-                                <i class="bi bi-building me-1 text-secondary"></i>
+                        <div class="d-flex align-items-start drop-item">
+                            <div style="" class="col-5 fw-semibold">
                                 Organization:
                             </div>
                             <div class="flex-grow-1 text-break">
@@ -137,9 +127,8 @@
                             </div>
                         </div>
 
-                        <div class="d-flex align-items-start mb-2">
-                            <div style="width:38%;" class="fw-semibold">
-                                <i class="bi bi-diagram-3 me-1 text-secondary"></i>
+                        <div class="d-flex align-items-start drop-item">
+                            <div style="" class="col-5 fw-semibold">
                                 Type:
                             </div>
                             {{-- {{ dd(auth('organization')->user()->operationalDetail) }} --}}
@@ -148,9 +137,8 @@
                             </div>
                         </div>
 
-                        <div class="d-flex align-items-start mb-2">
-                            <div style="width:38%;" class="fw-semibold">
-                                <i class="bi bi-envelope me-1 text-secondary"></i>
+                        <div class="d-flex align-items-start drop-item">
+                           <div style="" class="col-5 fw-semibold">
                                 Email:
                             </div>
                             <div class="flex-grow-1 text-break">
@@ -160,9 +148,8 @@
                             </div>
                         </div>
 
-                        <div class="d-flex align-items-start mb-2">
-                            <div style="width:38%;" class="fw-semibold">
-                                <i class="bi bi-person me-1 text-secondary"></i>
+                        <div class="d-flex align-items-start drop-item">
+                            <div style="" class="col-5 fw-semibold">
                                 Contact:
                             </div>
                             <div class="flex-grow-1 text-break">
@@ -170,9 +157,8 @@
                             </div>
                         </div>
 
-                        <div class="d-flex align-items-start mb-2">
-                            <div style="width:38%;" class="fw-semibold">
-                                <i class="bi bi-telephone me-1 text-secondary"></i>
+                        <div class="d-flex align-items-start drop-item">
+                            <div style="" class="col-5 fw-semibold">
                                 Mobile:
                             </div>
                             <div class="flex-grow-1 text-break">
@@ -180,9 +166,8 @@
                             </div>
                         </div>
 
-                        <div class="d-flex align-items-start mb-2">
-                            <div style="width:38%;" class="fw-semibold">
-                                <i class="bi bi-geo-alt me-1 text-secondary"></i>
+                        <div class="d-flex align-items-start drop-item">
+                            <div style="" class="col-5 fw-semibold">
                                 State:
                             </div>
                             <div class="flex-grow-1 text-break">
@@ -190,13 +175,12 @@
                             </div>
                         </div>
 
-                        <div class="d-flex align-items-start mb-2">
-                            <div style="width:38%;" class="fw-semibold">
-                                <i class="bi bi-globe me-1 text-secondary"></i>
+                        <div class="d-flex align-items-start drop-item">
+                            <div style="" class="col-5 fw-semibold">
                                 Website:
                             </div>
                             <div class="flex-grow-1 text-break">
-                                @if(optional(auth('organization')->user()->profile)->website_url)
+                                @if (optional(auth('organization')->user()->profile)->website_url)
                                     <a href="{{ optional(auth('organization')->user()->profile)->website_url }}"
                                         target="_blank">
                                         {{ optional(auth('organization')->user()->profile)->website_url }}
@@ -208,12 +192,11 @@
                         </div>
 
                         <div class="d-flex align-items-start mb-3">
-                            <div style="width:38%;" class="fw-semibold">
-                                <i class="bi bi-linkedin me-1 text-secondary"></i>
+                            <div style="" class="col-5 fw-semibold">
                                 LinkedIn:
                             </div>
                             <div class="flex-grow-1 text-break">
-                                @if(optional(auth('organization')->user()->profile)->linkedin_url)
+                                @if (optional(auth('organization')->user()->profile)->linkedin_url)
                                     <a href="{{ optional(auth('organization')->user()->profile)->linkedin_url }}"
                                         target="_blank">
                                         View Profile
@@ -224,16 +207,14 @@
                             </div>
                         </div>
 
-                        <div class="text-center my-3">
-                            <a href="{{ route('profile.show') }}" class="text-decoration-none">Edit Profile</a>
-                            <span class="mx-2 text-muted">|</span>
-                            <a href="{{ route('settings.show') }}" class="text-decoration-none">Change Password</a>
+                        <div class="d-flex gap-2 my-3 justify-content-center">
+                            <a href="{{ route('profile.show') }}" class="btn simple-btn blue">Edit Profile</a>
+                            <a href="{{ route('settings.show') }}" class="btn simple-btn blue">Change Password</a>
                         </div>
 
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
-                            <button type="submit" class="btn btn-danger w-100 py-2">
-                                <i class="bi bi-box-arrow-right me-1"></i>
+                            <button type="submit" class="btn btn-primary w-100 py-2">
                                 Logout
                             </button>
                         </form>
@@ -246,7 +227,7 @@
 
 
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function() {
 
         const list = document.getElementById('notification-list');
         const badge = document.getElementById('notification-count');
@@ -313,8 +294,8 @@
         // -----------------------------
 
         window.Echo
-            .private('organization.{{ auth("organization")->id() }}')
-            .listen('.notification.created', function (notification) {
+            .private('organization.{{ auth('organization')->id() }}')
+            .listen('.notification.created', function(notification) {
 
                 console.log('Realtime notification', notification);
 
@@ -343,7 +324,7 @@
         // MARK AS READ
         // -----------------------------
 
-        document.addEventListener('click', async function (e) {
+        document.addEventListener('click', async function(e) {
 
             const item = e.target.closest('.notification-item');
 
@@ -354,7 +335,8 @@
             await fetch(`/notifications/${id}/read`, {
                 method: 'POST',
                 headers: {
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')
+                        .content
                 }
             });
 
@@ -379,12 +361,13 @@
         // -----------------------------
 
         document.getElementById('mark-all-read')
-            ?.addEventListener('click', async function () {
+            ?.addEventListener('click', async function() {
 
                 await fetch("{{ route('notifications.read-all') }}", {
                     method: 'POST',
                     headers: {
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')
+                            .content
                     }
                 });
 
