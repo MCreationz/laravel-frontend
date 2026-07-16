@@ -110,21 +110,27 @@
                     <h1 class="top-heading mb-0">Organizational Details</h1>
                 </div>
                 <div class="row flex-wrap row-gap-3 row-gap-md-4 px-md-1">
-                    <div class="col-12 col-md-6 px-md-2">
+                    <div class="col-12 col-md-4 px-md-2">
                         <label class="form-label">Name of the Organization<span>*</span></label>
 
                         <input type="text" name="organization_name" class="form-control"
                             placeholder="Name of the Organization"
-                            value="{{ old('organization_name', auth('organization')->user()->profile->legal_name) }}" readonly
-                            required>
+                            value="{{ old('organization_name', auth('organization')->user()->profile->legal_name) }}"
+                            readonly required>
                     </div>
-                    <div class="col-12 col-md-6 px-md-2">
+                    <div class="col-12 col-md-4 px-md-2">
                         <label class="form-label">Registration Number<span>*</span></label>
                         <input type="text" name="registration_number" class="form-control"
                             placeholder="Enter Registration Number"
                             value="{{ old('registration_number', $document?->registration_number) }}" required>
                     </div>
-                    <div class="col-12 px-md-2 position-relative pb-5">
+                    <div class="col-12 col-md-4 px-md-2">
+                        <label class="form-label">PAN Card Number<span>*</span></label>
+                        <input type="text" name="pan_number" class="form-control"
+                            placeholder="2346EBNH1J"
+                            value="{{ old('registration_number', $document?->registration_number) }}" required>
+                    </div>
+                    <div class="col-12 col-md-6 px-md-2 position-relative pb-5">
                         <label class="form-label">Upload Registration Certificate <span class="text-danger">*</span></label>
 
                         <input type="file" id="registration-certificate" name="registration_certificate" hidden required>
@@ -150,29 +156,83 @@
                                 <p class="mt-2">Upload pdf/JPG upto 5 MB</p>
                                 <small id="registration-certificate"></small>
 
-                              
+
                             </div>
                         </label>
                         @if ($document?->registration_certificate)
-    @php
-        $extension = strtolower(pathinfo($document->registration_certificate, PATHINFO_EXTENSION));
+                            @php
+                                $extension = strtolower(
+                                    pathinfo($document->registration_certificate, PATHINFO_EXTENSION),
+                                );
 
-        $icon = match ($extension) {
-            'pdf' => asset('img/pdf-icon.png'),
-            'doc', 'docx' => asset('img/docx.svg'),
-            'xls', 'xlsx', 'csv' => asset('img/excel.svg'),
-            default => asset('img/docx.svg'),
-        };
-    @endphp
+                                $icon = match ($extension) {
+                                    'pdf' => asset('img/pdf-icon.png'),
+                                    'doc', 'docx' => asset('img/docx.svg'),
+                                    'xls', 'xlsx', 'csv' => asset('img/excel.svg'),
+                                    default => asset('img/docx.svg'),
+                                };
+                            @endphp
 
-    <div class="mt-2">
-          <a href="{{ asset('storage/' . $document->registration_certificate) }}"
-            target="_blank" class="text-success d-block mb-1 uploaded-doc">
-            <img src="{{ $icon }}" alt="" width="20" height="20">
-            View registration certificate
-        </a>
-    </div>
-@endif
+                            <div class="mt-2">
+                                <a href="{{ asset('storage/' . $document->registration_certificate) }}" target="_blank"
+                                    class="text-success d-block mb-1 uploaded-doc">
+                                    <img src="{{ $icon }}" alt="" width="20" height="20">
+                                    View registration certificate
+                                </a>
+                            </div>
+                        @endif
+                    </div>
+                                        <div class="col-12 col-md-6 px-md-2 position-relative pb-5">
+                        <label class="form-label">Upload Your PAN Card <span class="text-danger">*</span></label>
+
+                        <input type="file" id="registration-certificate" name="registration_certificate" hidden required>
+                        <label for="registration-certificate" class="upload-label">
+                            <div class="upload-content">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26"
+                                    fill="none">
+                                    <g opacity="0.2">
+                                        <path d="M9.75 11.917V18.417L11.9167 16.2503" stroke="#292D32" stroke-width="1.5"
+                                            stroke-linecap="round" stroke-linejoin="round" />
+                                        <path d="M9.7526 18.4167L7.58594 16.25" stroke="#292D32" stroke-width="1.5"
+                                            stroke-linecap="round" stroke-linejoin="round" />
+                                        <path
+                                            d="M23.8307 10.8337V16.2503C23.8307 21.667 21.6641 23.8337 16.2474 23.8337H9.7474C4.33073 23.8337 2.16406 21.667 2.16406 16.2503V9.75032C2.16406 4.33366 4.33073 2.16699 9.7474 2.16699H15.1641"
+                                            stroke="#292D32" stroke-width="1.5" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                        <path
+                                            d="M23.8307 10.8337H19.4974C16.2474 10.8337 15.1641 9.75033 15.1641 6.50033V2.16699L23.8307 10.8337Z"
+                                            stroke="#292D32" stroke-width="1.5" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                    </g>
+                                </svg>
+                                <p class="mt-2">Upload pdf/JPG upto 5 MB</p>
+                                <small id="registration-certificate"></small>
+
+
+                            </div>
+                        </label>
+                        @if ($document?->registration_certificate)
+                            @php
+                                $extension = strtolower(
+                                    pathinfo($document->registration_certificate, PATHINFO_EXTENSION),
+                                );
+
+                                $icon = match ($extension) {
+                                    'pdf' => asset('img/pdf-icon.png'),
+                                    'doc', 'docx' => asset('img/docx.svg'),
+                                    'xls', 'xlsx', 'csv' => asset('img/excel.svg'),
+                                    default => asset('img/docx.svg'),
+                                };
+                            @endphp
+
+                            <div class="mt-2">
+                                <a href="{{ asset('storage/' . $document->registration_certificate) }}" target="_blank"
+                                    class="text-success d-block mb-1 uploaded-doc">
+                                    <img src="{{ $icon }}" alt="" width="20" height="20">
+                                    View registration certificate
+                                </a>
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -215,29 +275,29 @@
                                     <p class="mt-2">Upload pdf/JPG upto 5 MB</p>
                                     <small id="registration-certificate"></small>
 
-                             
+
                                 </div>
                             </label>
                             @if ($document?->certificate_12a)
-    @php
-        $extension = strtolower(pathinfo($document->certificate_12a, PATHINFO_EXTENSION));
+                                @php
+                                    $extension = strtolower(pathinfo($document->certificate_12a, PATHINFO_EXTENSION));
 
-        $icon = match ($extension) {
-            'pdf' => asset('img/pdf-icon.png'),
-            'doc', 'docx' => asset('img/docx.svg'),
-            'xls', 'xlsx', 'csv' => asset('img/excel.svg'),
-            default => asset('img/docx.svg'),
-        };
-    @endphp
+                                    $icon = match ($extension) {
+                                        'pdf' => asset('img/pdf-icon.png'),
+                                        'doc', 'docx' => asset('img/docx.svg'),
+                                        'xls', 'xlsx', 'csv' => asset('img/excel.svg'),
+                                        default => asset('img/docx.svg'),
+                                    };
+                                @endphp
 
-    <div class="mt-2">
-        <a href="{{ asset('storage/' . $document->certificate_12a) }}"
-            target="_blank" class="text-success d-block mb-1 uploaded-doc">
-            <img src="{{ $icon }}" alt="" width="20" height="20">
-            View 12A certificate
-        </a>
-    </div>
-@endif
+                                <div class="mt-2">
+                                    <a href="{{ asset('storage/' . $document->certificate_12a) }}" target="_blank"
+                                        class="text-success d-block mb-1 uploaded-doc">
+                                        <img src="{{ $icon }}" alt="" width="20" height="20">
+                                        View 12A certificate
+                                    </a>
+                                </div>
+                            @endif
                         </div>
                     @endif
                 </div>
@@ -282,29 +342,29 @@
                                     </svg>
                                     <p class="mt-2">Upload pdf/JPG upto 5 MB</p>
                                     <small id="80g-certificate"></small>
-                                   
+
                                 </div>
                             </label>
                             @if ($document?->certificate_80g)
-    @php
-        $extension = strtolower(pathinfo($document->certificate_80g, PATHINFO_EXTENSION));
+                                @php
+                                    $extension = strtolower(pathinfo($document->certificate_80g, PATHINFO_EXTENSION));
 
-        $icon = match ($extension) {
-            'pdf' => asset('img/pdf-icon.png'),
-            'doc', 'docx' => asset('img/docx.svg'),
-            'xls', 'xlsx', 'csv' => asset('img/excel.svg'),
-            default => asset('img/docx.svg'),
-        };
-    @endphp
+                                    $icon = match ($extension) {
+                                        'pdf' => asset('img/pdf-icon.png'),
+                                        'doc', 'docx' => asset('img/docx.svg'),
+                                        'xls', 'xlsx', 'csv' => asset('img/excel.svg'),
+                                        default => asset('img/docx.svg'),
+                                    };
+                                @endphp
 
-    <div class="mt-2">
-        <a href="{{ asset('storage/' . $document->certificate_80g) }}"
-            target="_blank" class="text-success d-block mb-1 uploaded-doc">
-            <img src="{{ $icon }}" alt="" width="20" height="20">
-            View 80G certificate
-        </a>
-    </div>
-@endif
+                                <div class="mt-2">
+                                    <a href="{{ asset('storage/' . $document->certificate_80g) }}" target="_blank"
+                                        class="text-success d-block mb-1 uploaded-doc">
+                                        <img src="{{ $icon }}" alt="" width="20" height="20">
+                                        View 80G certificate
+                                    </a>
+                                </div>
+                            @endif
                         </div>
                     @endif
                 </div>
@@ -348,29 +408,29 @@
                                         </g>
                                     </svg>
                                     <p class="mt-2">Upload pdf/JPG upto 5 MB</p>
-                                 
+
                                 </div>
                             </label>
                             @if ($document?->certificate_fcra)
-    @php
-        $extension = strtolower(pathinfo($document->certificate_fcra, PATHINFO_EXTENSION));
+                                @php
+                                    $extension = strtolower(pathinfo($document->certificate_fcra, PATHINFO_EXTENSION));
 
-        $icon = match ($extension) {
-            'pdf' => asset('img/pdf-icon.png'),
-            'doc', 'docx' => asset('img/docx.svg'),
-            'xls', 'xlsx', 'csv' => asset('img/excel.svg'),
-            default => asset('img/docx.svg'),
-        };
-    @endphp
+                                    $icon = match ($extension) {
+                                        'pdf' => asset('img/pdf-icon.png'),
+                                        'doc', 'docx' => asset('img/docx.svg'),
+                                        'xls', 'xlsx', 'csv' => asset('img/excel.svg'),
+                                        default => asset('img/docx.svg'),
+                                    };
+                                @endphp
 
-    <div class="mt-2">
-        <a href="{{ asset('storage/' . $document->certificate_fcra) }}"
-            target="_blank" class="text-success d-block mb-1 uploaded-doc">
-            <img src="{{ $icon }}" alt="" width="20" height="20">
-            View FCRA certificate
-        </a>
-    </div>
-@endif
+                                <div class="mt-2">
+                                    <a href="{{ asset('storage/' . $document->certificate_fcra) }}" target="_blank"
+                                        class="text-success d-block mb-1 uploaded-doc">
+                                        <img src="{{ $icon }}" alt="" width="20" height="20">
+                                        View FCRA certificate
+                                    </a>
+                                </div>
+                            @endif
                         </div>
                     @endif
                 </div>
@@ -415,29 +475,29 @@
                                         </g>
                                     </svg>
                                     <p class="mt-2">Upload pdf/JPG upto 5 MB</p>
-                                    
+
                                 </div>
                             </label>
                             @if ($document?->certificate_csr1)
-    @php
-        $extension = strtolower(pathinfo($document->certificate_csr1, PATHINFO_EXTENSION));
+                                @php
+                                    $extension = strtolower(pathinfo($document->certificate_csr1, PATHINFO_EXTENSION));
 
-        $icon = match ($extension) {
-            'pdf' => asset('img/pdf-icon.png'),
-            'doc', 'docx' => asset('img/docx.svg'),
-            'xls', 'xlsx', 'csv' => asset('img/excel.svg'),
-            default => asset('img/docx.svg'),
-        };
-    @endphp
+                                    $icon = match ($extension) {
+                                        'pdf' => asset('img/pdf-icon.png'),
+                                        'doc', 'docx' => asset('img/docx.svg'),
+                                        'xls', 'xlsx', 'csv' => asset('img/excel.svg'),
+                                        default => asset('img/docx.svg'),
+                                    };
+                                @endphp
 
-    <div class="mt-2">
-        <a href="{{ asset('storage/' . $document->certificate_csr1) }}"
-            target="_blank" class="text-success d-block mb-1 uploaded-doc">
-            <img src="{{ $icon }}" alt="" width="20" height="20">
-            View CSR-1 certificate
-        </a>
-    </div>
-@endif
+                                <div class="mt-2">
+                                    <a href="{{ asset('storage/' . $document->certificate_csr1) }}" target="_blank"
+                                        class="text-success d-block mb-1 uploaded-doc">
+                                        <img src="{{ $icon }}" alt="" width="20" height="20">
+                                        View CSR-1 certificate
+                                    </a>
+                                </div>
+                            @endif
                         </div>
                     @endif
                 </div>
@@ -498,25 +558,25 @@
         });
     </script>
 
-<script>
-    function toggleFileRequired(inputId, hasFile) {
-        const input = document.getElementById(inputId);
+    <script>
+        function toggleFileRequired(inputId, hasFile) {
+            const input = document.getElementById(inputId);
 
-        if (!input) {
-            return;
+            if (!input) {
+                return;
+            }
+
+            if (hasFile) {
+                input.removeAttribute('required');
+            } else {
+                input.setAttribute('required', 'required');
+            }
         }
 
-        if (hasFile) {
-            input.removeAttribute('required');
-        } else {
-            input.setAttribute('required', 'required');
-        }
-    }
-
-    toggleFileRequired('registration-certificate', {{ $document?->registration_certificate ? 'true' : 'false' }});
-    toggleFileRequired('certificate-12a', {{ $document?->certificate_12a ? 'true' : 'false' }});
-    toggleFileRequired('certificate-80g', {{ $document?->certificate_80g ? 'true' : 'false' }});
-    toggleFileRequired('certificate-fcra', {{ $document?->certificate_fcra ? 'true' : 'false' }});
-    toggleFileRequired('certificate-csr1', {{ $document?->certificate_csr1 ? 'true' : 'false' }});
-</script>
+        toggleFileRequired('registration-certificate', {{ $document?->registration_certificate ? 'true' : 'false' }});
+        toggleFileRequired('certificate-12a', {{ $document?->certificate_12a ? 'true' : 'false' }});
+        toggleFileRequired('certificate-80g', {{ $document?->certificate_80g ? 'true' : 'false' }});
+        toggleFileRequired('certificate-fcra', {{ $document?->certificate_fcra ? 'true' : 'false' }});
+        toggleFileRequired('certificate-csr1', {{ $document?->certificate_csr1 ? 'true' : 'false' }});
+    </script>
 @endsection
