@@ -95,6 +95,7 @@ return '₹' . number_format($amount);
                 <h2 class="dashboard-v2-name mb-1">
                     Fundlink Control Centre
                 </h2>
+                <p>Full platform oversight - clients, applicants, reviewers, and funds</p>
             </div>
             <div
                 class="col-12 col-lg-7 flex-grow-1 flex-wrap flex-lg-nowrap dashboar-cards-wrap d-flex gap-1 justify-content-lg-end row-cols-1 row-cols-sm-2 row-cols-md-4">
@@ -226,6 +227,7 @@ return '₹' . number_format($amount);
                 <div class="top-title-wrap px-2 px-md-3 pt-3 pt-md-4 pb-2">
                     <h3 class="top-title mb-0 font-inter h5 fw-bold">
                         Recent Applications
+                        <span class="no-of-apps">(10)</span>
                     </h3>
                 </div>
 
@@ -259,7 +261,7 @@ return '₹' . number_format($amount);
 
                         <div>
                             <a href="#" class="btn btn-primary response">
-                                View
+                                Responses
                             </a>
                         </div>
 

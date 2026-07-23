@@ -4,14 +4,14 @@
 
 @section('content')
 
-<div class="card-box bg-white rounded">
+<div class="card-box bg-white rounded card-box-applicants">
 
     <!-- Header -->
     <div class="top-search-wrap p-3 mb-2">
         <div class="row justify-content-between align-items-center row-gap-2">
 
             <div class="col-auto">
-                <div class="mb-0 fw-bold table-heading">
+                <div class="mb-1 fw-bold table-heading">
                     Applicants
                 </div>
 
@@ -131,7 +131,7 @@
                         {{ $profile->contact_name ?? '-' }}
                         @if ($profile?->mobile_no)
                         <br>
-                        <small>{{ $profile->mobile_no }}</small>
+                        <small class="text-muted">{{ $profile->mobile_no }}</small>
                         @endif
                     </td>
 

@@ -24,14 +24,14 @@
 
 </p>
 
-<div class="card-box bg-white rounded">
+<div class="card-box bg-white rounded card-box-reviewers">
 
     <!-- Header -->
     <div class="top-search-wrap p-3 mb-2">
         <div class="row justify-content-between align-items-center row-gap-2">
 
             <div class="col-auto">
-                <div class="mb-0 fw-bold table-heading">
+                <div class="mb-1 fw-bold table-heading">
                     Reviewers
                 </div>
 
@@ -49,7 +49,7 @@
 
                 <!-- Add Button -->
                 <button class="btn btn-primary add-btn" data-bs-toggle="modal" data-bs-target="#reviewerModal">
-                    + Reviewer
+                    + Add Reviewer
                 </button>
 
             </div>
@@ -64,11 +64,11 @@
             <thead class="table-light">
                 <tr>
                     <th>Name</th>
-                    <th>Email</th>
-                    <th>Phone</th>
+                    {{-- <th>Email</th>
+                    <th>Phone</th> --}}
                     <th>Role</th>
                     <th>Expertise</th>
-
+                    <th>Assigned Funds</th>
                     <th class="text-center">Assigned</th>
                     <th class="text-center">Completed</th>
                     <th class="text-center">Pending</th>
@@ -84,30 +84,30 @@
                 <tr>
 
                     <td class="fw-medium">
-                        {{ $reviewer->full_name }}
+                        {{ $reviewer->full_name }}<br>
+                        <span class="text-muted">{{ $reviewer->phone_number ?? '-' }}</span>
                     </td>
 
-                    <td>{{ $reviewer->email }}</td>
+                   {{-- <td>{{ $reviewer->email }}</td>--}}
 
-                    <td>{{ $reviewer->phone_number ?? '-' }}</td>
 
                     <td>{{ $reviewer->role ?? '-' }}</td>
 
                     <td>{{ $reviewer->domain_expertise ?? '-' }}</td>
-
+                    <td><span class="badge bg-success-subtle text-success">AI impact Fund</span>
                     {{-- ASSIGNED --}}
                     <td class="text-center">
-                        {{ $reviewer->assigned_funds_count }}
+                        <span class="text-accent">{{ $reviewer->assigned_funds_count }}</span>
                     </td>
 
                     {{-- COMPLETED --}}
                     <td class="text-center">
-                        {{ $reviewer->completed_funds_count ?? 0 }}
+                        <span class="text-accent">{{ $reviewer->completed_funds_count ?? 0 }}</span>
                     </td>
 
                     {{-- PENDING --}}
                     <td class="text-center">
-                        {{ $reviewer->pending_funds_count ?? 0 }}
+                        <span class="text-accent">{{ $reviewer->pending_funds_count ?? 0 }}</span>
                     </td>
 
                     {{-- STATUS --}}
@@ -190,7 +190,7 @@
         <div class="modal-content">
 
             <!-- Header -->
-            <div class="modal-header border-0 pb-0">
+            <div class="modal-header">
                 <div>
                     <h2 class="modal-title mb-2 inner-title" id="reviewerModalTitle">
                         Add Reviewer
@@ -212,7 +212,7 @@
 
                     @csrf
 
-                    <div class="p-3">
+                    <div class="p-4">
 
                         <input type="hidden" name="reviewer_id" id="reviewer_id">
 
