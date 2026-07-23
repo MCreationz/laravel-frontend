@@ -60,13 +60,13 @@ $totalStatusFunds = max(1, $activeFunds + $closedFunds + $suspendedFunds + $draf
 */
 
 $recentApplications = \App\Models\FundApplication::with(['fund', 'organization'])
-->whereHas('fund', function ($q) use ($clientId) {
-$q->where('client_id', $clientId);
-})
-->latest()
-->take(4)
-->get();
-
+    ->whereHas('fund', function ($q) use ($clientId) {
+        $q->where('client_id', $clientId);
+    })
+    ->where('created_at', '>=', now()->subDay()) // Last 24 hours
+    ->latest()
+    ->take(4)
+    ->get();
 if (!function_exists('formatIndianCurrencyShort')) {
 function formatIndianCurrencyShort($amount): string
 {
@@ -99,14 +99,14 @@ return '₹' . number_format($amount);
             <div
                 class="col-12 col-lg-7 flex-grow-1 flex-wrap flex-lg-nowrap dashboar-cards-wrap d-flex gap-1 justify-content-lg-end row-cols-1 row-cols-sm-2 row-cols-md-4">
 
-                <div class="col">
+                <!-- <div class="col">
                     <div class="dashboard-v2-kpi">
                         <p class="mb-0 value">
                             {{ $activeReviewers }}
                         </p>
                         <p class="mb-0 label">Active Reviewers</p>
                     </div>
-                </div>
+                </div> -->
                 <div class="col">
                     <div class="dashboard-v2-kpi">
                         <p class="mb-0 value">

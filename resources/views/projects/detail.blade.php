@@ -41,15 +41,11 @@
                     <h3 class="sub-heading mt-4">Eligibility</h3>
 
                     @if($fund->snapshot?->eligibility_instruction)
-                    <div class="eligibility-section mb-3">
-
-
-                        <div class="eligibility-content fw-bold">
-                            {!! $fund->snapshot->eligibility_instruction !!}
-                        </div>
+               
+                    <div class="eligibility-content">
+                        {!! $fund->snapshot->eligibility_instruction !!}
                     </div>
                     @endif
-
 
 
                     <ul class="d-inline-flex column-gap-5 flex-wrap">

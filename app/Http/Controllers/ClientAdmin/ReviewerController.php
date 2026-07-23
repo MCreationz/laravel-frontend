@@ -10,27 +10,32 @@ use Illuminate\Support\Facades\Hash;
 
 class ReviewerController extends Controller
 {
-    public function index()
-    {
-        $clientId = auth('client_admin')->id();
+   public function index()
+{
+    $clientId = auth('client_admin')->id();
 
-        $reviewers = Reviewer::where('client_id', $clientId)
-            ->withCount([
-                'funds as assigned_funds_count',
-                'funds as completed_funds_count' => function ($query) {
-                    $query->where('status', 'completed');
-                },
-                'funds as pending_funds_count' => function ($query) {
-                    $query->where('status', '!=', 'completed');
-                },
-            ])
-            ->latest()
-            ->get();
+    $reviewers = Reviewer::where('client_id', $clientId)
+        ->with([
+            'funds:id,fund_name,status'
+        ])
+        ->withCount([
+            'funds as assigned_funds_count',
+            'funds as completed_funds_count' => function ($query) {
+                $query->where('status', 'completed');
+            },
+            'funds as pending_funds_count' => function ($query) {
+                $query->where('status', '!=', 'completed');
+            },
+        ])
+        ->latest()
+        ->get();
 
-        $funds = Fund::where('client_id', $clientId)->get();
+    $funds = Fund::where('client_id', $clientId)
+        ->select('id', 'fund_name')
+        ->get();
 
-        return view('client-admin.reviewers.index', compact('reviewers', 'funds'));
-    }
+    return view('client-admin.reviewers.index', compact('reviewers', 'funds'));
+}
 
     public function store(Request $request)
     {

@@ -265,18 +265,17 @@
 
 
 
-                        <div class="col-12 px-md-2 mb-4">
-                            <label class="form-label">
-                                Eligibility Instruction <span>*</span>
-                            </label>
+                       <div class="col-12 px-md-2 mb-4">
+    <label class="form-label">
+        Eligibility Instruction <span>*</span>
+    </label>
 
-                            <div id="eligibility-editor"></div>
-
-                            <input type="hidden"
-                                name="eligibility_instruction"
-                                id="eligibility_instruction"
-                                value="{{ old('eligibility_instruction', $fundSnapshot->eligibility_instruction ?? '') }}">
-                        </div>
+    <textarea
+        id="eligibility_instruction"
+        name="eligibility_instruction"
+        class="form-control"
+        rows="8">{{ old('eligibility_instruction', $fundSnapshot->eligibility_instruction ?? '') }}</textarea>
+</div>
 
                     </div>
                     <div class="toggle-container d-flex mb-3 justify-content-start gap-2">
@@ -407,8 +406,7 @@
                 <div style="border-radius:0px 0px 8px 8px;"
                     class="d-flex justify-content-center justify-content-md-end gap-2 mt-4 steps-btn pe-lg-4 flex-wrap">
                     <button type="button" class="btn btn-secondary"
-                        onclick="window.location.href='http://127.0.0.1:8000/onboarding/step-2'">
-
+                        onclick="window.location.href='{{ route('client-admin.funds.index') }}'">
                         Cancel
                     </button>
                     <button type="submit" class="btn btn-primary">Next
@@ -713,7 +711,22 @@
 </div>
 
 </div>
+<script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/classic/ckeditor.js"></script>
 <style>
+    .quill-wrapper {
+        border: 1px solid #ccc;
+        border-radius: 6px;
+    }
+
+    .quill-wrapper .ql-container {
+        min-height: 200px;
+    }
+
+    .quill-wrapper .ql-editor {
+        min-height: 200px;
+    }
+</style>
+<!-- <style>
     .ql-toolbar {
         display: none;
     }
@@ -742,23 +755,23 @@
     .ql-editor li::before {
         margin-left: -1em !important;
     }
-</style>
+</style> -->
 
-<script src="https://cdn.jsdelivr.net/npm/quill@2/dist/quill.js"></script>
-
-
+<!-- <script src="https://cdn.jsdelivr.net/npm/quill@2/dist/quill.js"></script> -->
 
 
 
 
 
-<script>
+
+
+<!-- <script>
     document.addEventListener('DOMContentLoaded', function() {
 
         const quill = new Quill('#eligibility-editor', {
             theme: 'snow',
             modules: {
-                toolbar: false
+                toolbar: true
             }
         });
 
@@ -767,41 +780,26 @@
         // Load existing HTML
         if (hiddenInput.value.trim() !== '') {
             quill.root.innerHTML = hiddenInput.value;
-        } else {
-            // Default formatting for new content
-            quill.focus();
-            quill.format('bold', true);
-            quill.format('list', 'bullet');
         }
 
-        // Always keep bold + bullets enabled
-        function applyDefaultFormatting() {
-            quill.format('bold', true);
-            quill.format('list', 'bullet');
-        }
-
-        quill.on('selection-change', function(range) {
-            if (range) {
-                applyDefaultFormatting();
-            }
-        });
-
-        quill.keyboard.addBinding({
-            key: 13
-        }, function(range) {
-            quill.insertText(range.index, '\n', 'list', 'bullet');
-            quill.setSelection(range.index + 1);
-            applyDefaultFormatting();
-            return false;
-        });
-
+        // Sync editor content to hidden input
         quill.on('text-change', function() {
             hiddenInput.value = quill.root.innerHTML;
         });
 
-        applyDefaultFormatting();
+    });
+</script> -->
+
+
+<script>
+    ClassicEditor
+    .create(document.querySelector('#eligibility_instruction'))
+    .catch(error => {
+        console.error(error);
     });
 </script>
+
+
 <script>
     document.addEventListener('DOMContentLoaded', function() {
 
@@ -814,9 +812,9 @@
         const modal = bootstrap.Modal.getOrCreateInstance(modalEl);
 
         const editModalEl = document.getElementById('editDocumentModal');
-const editModal = bootstrap.Modal.getOrCreateInstance(editModalEl);
+        const editModal = bootstrap.Modal.getOrCreateInstance(editModalEl);
 
-let editDocumentId = null;
+        let editDocumentId = null;
 
         const wrapper = document.getElementById('docWrapper');
         const submitBtn = document.getElementById('docSubmitBtn');
@@ -879,78 +877,78 @@ let editDocumentId = null;
         }
 
         document.getElementById('documentModal')
-.addEventListener('show.bs.modal', function () {
+            .addEventListener('show.bs.modal', function() {
 
-    // Reset edit mode
-    editId = null;
+                // Reset edit mode
+                editId = null;
 
-    // Reset title/button
-    document.getElementById('documentModalTitle').innerText =
-        'Add Multiple Documents';
+                // Reset title/button
+                document.getElementById('documentModalTitle').innerText =
+                    'Add Multiple Documents';
 
-    document.getElementById('docSubmitBtn').innerText =
-        'Save Documents';
-
-
-    const wrapper = document.getElementById('docWrapper');
+                document.getElementById('docSubmitBtn').innerText =
+                    'Save Documents';
 
 
-    // Keep only first document block
-    const firstBlock = wrapper.querySelector('.document');
-
-    if (firstBlock) {
-
-        wrapper.innerHTML = '';
-
-        const clone = firstBlock.cloneNode(true);
-
-        // Clear all inputs
-        clone.querySelectorAll('input').forEach(input => {
-
-            input.value = '';
-
-            if(input.type === 'file'){
-                input.value = '';
-            }
-
-        });
+                const wrapper = document.getElementById('docWrapper');
 
 
-        // Reset dropdown
-        const selectText = clone.querySelector('.custom-select');
+                // Keep only first document block
+                const firstBlock = wrapper.querySelector('.document');
 
-        if(selectText){
-            selectText.innerText = 'Document Type';
-        }
+                if (firstBlock) {
+
+                    wrapper.innerHTML = '';
+
+                    const clone = firstBlock.cloneNode(true);
+
+                    // Clear all inputs
+                    clone.querySelectorAll('input').forEach(input => {
+
+                        input.value = '';
+
+                        if (input.type === 'file') {
+                            input.value = '';
+                        }
+
+                    });
 
 
-        const hiddenSelect = clone.querySelector('.hidden-select');
+                    // Reset dropdown
+                    const selectText = clone.querySelector('.custom-select');
 
-        if(hiddenSelect){
-            hiddenSelect.value = '';
-        }
-
-
-        wrapper.appendChild(clone);
+                    if (selectText) {
+                        selectText.innerText = 'Document Type';
+                    }
 
 
-        updateTitles();
+                    const hiddenSelect = clone.querySelector('.hidden-select');
 
-        initDocumentTypeDropdown(clone);
+                    if (hiddenSelect) {
+                        hiddenSelect.value = '';
+                    }
 
-    }
 
-});
+                    wrapper.appendChild(clone);
 
-document.getElementById('documentModal')
-.addEventListener('hidden.bs.modal', function () {
 
-    document.body.classList.remove('modal-open');
+                    updateTitles();
 
-    document.querySelectorAll('.modal-backdrop')
-        .forEach(el => el.remove());
+                    initDocumentTypeDropdown(clone);
 
-});
+                }
+
+            });
+
+        document.getElementById('documentModal')
+            .addEventListener('hidden.bs.modal', function() {
+
+                document.body.classList.remove('modal-open');
+
+                document.querySelectorAll('.modal-backdrop')
+                    .forEach(el => el.remove());
+
+            });
 
         // close dropdown on outside click (once)
         // Close dropdown when clicking outside — scope to modal to avoid Bootstrap conflicts
@@ -1145,101 +1143,100 @@ document.getElementById('documentModal')
         | EDIT
         |-----------------------------------------
         */
-       document.addEventListener('click', function(e){
+        document.addEventListener('click', function(e) {
 
-    if(e.target.closest('.edit-doc')){
+            if (e.target.closest('.edit-doc')) {
 
-        const id = e.target.closest('.edit-doc').dataset.id;
+                const id = e.target.closest('.edit-doc').dataset.id;
 
-        editDocumentId = id;
-
-
-        fetch(
-            "{{ route('client-admin.fund-documents.edit', ':id') }}"
-            .replace(':id', id)
-        )
-        .then(res=>res.json())
-        .then(res=>{
-
-            const doc = res.data;
+                editDocumentId = id;
 
 
-            document.getElementById('edit_document_name').value =
-                doc.document_name ?? '';
+                fetch(
+                        "{{ route('client-admin.fund-documents.edit', ':id') }}"
+                        .replace(':id', id)
+                    )
+                    .then(res => res.json())
+                    .then(res => {
 
-            document.getElementById('edit_instruction').value =
-                doc.instruction ?? '';
-
-            document.getElementById('edit_document_type').value =
-                doc.document_type ?? '';
-
-            document.getElementById('edit_max_file_size_mb').value =
-                doc.max_file_size_mb ?? '';
+                        const doc = res.data;
 
 
-            editModal.show();
+                        document.getElementById('edit_document_name').value =
+                            doc.document_name ?? '';
+
+                        document.getElementById('edit_instruction').value =
+                            doc.instruction ?? '';
+
+                        document.getElementById('edit_document_type').value =
+                            doc.document_type ?? '';
+
+                        document.getElementById('edit_max_file_size_mb').value =
+                            doc.max_file_size_mb ?? '';
+
+
+                        editModal.show();
+
+                    });
+
+                document.getElementById('updateDocumentBtn')
+                    .addEventListener('click', function() {
+
+                        const formData = new FormData();
+
+                        formData.append('_token', csrfToken);
+                        formData.append('_method', 'PUT');
+
+
+                        formData.append(
+                            'document_name',
+                            document.getElementById('edit_document_name').value
+                        );
+
+
+                        formData.append(
+                            'instruction',
+                            document.getElementById('edit_instruction').value
+                        );
+
+
+                        formData.append(
+                            'document_type',
+                            document.getElementById('edit_document_type').value
+                        );
+
+
+                        formData.append(
+                            'max_file_size_mb',
+                            document.getElementById('edit_max_file_size_mb').value
+                        );
+
+
+                        fetch(
+                                "{{ route('client-admin.fund-documents.update', ':id') }}"
+                                .replace(':id', editDocumentId), {
+                                    method: 'POST',
+                                    body: formData
+                                }
+                            )
+                            .then(res => res.json())
+                            .then(res => {
+
+                                if (res.success) {
+
+                                    editModal.hide();
+
+                                    loadDocuments();
+
+                                }
+
+                            });
+
+                    });
+
+            }
 
         });
-
-        document.getElementById('updateDocumentBtn')
-.addEventListener('click',function(){
-
-    const formData = new FormData();
-
-    formData.append('_token',csrfToken);
-    formData.append('_method','PUT');
-
-
-    formData.append(
-        'document_name',
-        document.getElementById('edit_document_name').value
-    );
-
-
-    formData.append(
-        'instruction',
-        document.getElementById('edit_instruction').value
-    );
-
-
-    formData.append(
-        'document_type',
-        document.getElementById('edit_document_type').value
-    );
-
-
-    formData.append(
-        'max_file_size_mb',
-        document.getElementById('edit_max_file_size_mb').value
-    );
-
-
-    fetch(
-        "{{ route('client-admin.fund-documents.update', ':id') }}"
-        .replace(':id',editDocumentId),
-        {
-            method:'POST',
-            body:formData
-        }
-    )
-    .then(res=>res.json())
-    .then(res=>{
-
-        if(res.success){
-
-            editModal.hide();
-
-            loadDocuments();
-
-        }
-
-    });
-
-});
-
-    }
-
-});
 
         /*
         |-----------------------------------------

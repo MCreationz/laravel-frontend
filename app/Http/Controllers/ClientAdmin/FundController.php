@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Fund;
 use App\Models\FundSnapshot;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class FundController extends Controller
 {
@@ -17,8 +18,9 @@ class FundController extends Controller
         session()->forget('current_fund_id');
 
         $funds = Fund::with('client')->where(
-                'client_id',
-                auth('client_admin')->id())
+            'client_id',
+            auth('client_admin')->id()
+        )
 
             ->when($request->filled('search'), function ($query) use ($request) {
 
@@ -31,7 +33,6 @@ class FundController extends Controller
                         ->orWhereHas('client', function ($client) use ($search) {
                             $client->where('organization_name', 'like', "%{$search}%");
                         });
-
                 });
             })
             ->when($request->fund_type === 'npo', function ($query) {
@@ -115,6 +116,14 @@ class FundController extends Controller
      */
     public function destroy($id)
     {
+        $clientId = Auth::guard('client_admin')->id();
+
+        $fund = Fund::where('id', $id)
+            ->where('client_id', $clientId)
+            ->firstOrFail();
+
+        $fund->delete();
+
         return redirect()
             ->route('client-admin.funds.index')
             ->with('success', 'Fund deleted successfully.');
