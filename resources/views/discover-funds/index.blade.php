@@ -3,16 +3,21 @@
 @section('page_title', 'Discover Funds')
 
 @section('header_extra')
-  <span class="header-org-chip">
+<span class="header-org-chip">
     @if(auth('organization')->check() && auth('organization')->user()->role === 'funder')
-        Non - Profit Organisation
+    Non - Profit Organisation
     @else
-        Startup
+    Startup
     @endif
-  </span>
+</span>
 @endsection
 
+
+
 @section('content')
+<style>
+    
+</style>
 
 <div class="card-box bg-white rounded">
 
@@ -78,95 +83,102 @@
 
                 @forelse($funds as $fund)
 
-                    <tr>
+                <tr>
 
-                        <!-- Fund Name -->
-                        <td>
-                            <div class="dashboard-v2-name-cell">
+                    <!-- Fund Name -->
+                    <td>
+                     <div class="dashboard-v2-name-cell">
 
-                                <span class="hc-badge">
-                                    {{ strtoupper(substr($fund->fund_name ?? 'F', 0, 2)) }}
-                                </span>
+    @if($fund->fund_logo)
+        <img
+            src="{{ Storage::url($fund->fund_logo) }}"
+            alt="{{ $fund->fund_name }} Logo"
+            style="width:48px;height:48px;object-fit:cover;flex-shrink:0;">
+    @else
+        <span class="hc-badge">
+            {{ strtoupper(substr($fund->fund_name ?? 'F', 0, 2)) }}
+        </span>
+    @endif
 
-                                <span>
-                                    <strong>{{ $fund->fund_name }}</strong>
-                                </span>
+    <span>
+        <strong>{{ $fund->fund_name }}</strong>
+    </span>
 
-                            </div>
+</div>
 
-                            @if($fund->about_fund)
-                                <small class="text-muted d-block mt-1">
-                                    {{ \Illuminate\Support\Str::limit($fund->about_fund, 60) }}
-                                </small>
-                            @endif
-                        </td>
+                        @if($fund->about_fund)
+                        <small class="text-muted d-block mt-1">
+                            {{ \Illuminate\Support\Str::limit($fund->about_fund, 60) }}
+                        </small>
+                        @endif
+                    </td>
 
-                        <!-- Owner -->
-                        <td class="text-center">
-                            {{ $fund->fund_owner ?? '-' }}
-                        </td>
+                    <!-- Owner -->
+                    <td class="text-center">
+                        {{ $fund->fund_owner ?? '-' }}
+                    </td>
 
-                        <!-- Email -->
-                        <td class="text-center">
-                            {{ $fund->fund_owner_email ?? '-' }}
-                        </td>
+                    <!-- Email -->
+                    <td class="text-center">
+                        {{ $fund->fund_owner_email ?? '-' }}
+                    </td>
 
-                        <!-- Duration -->
-                        <td class="text-center text-nowrap">
-                            @if($fund->project_start && $fund->project_end)
-                                {{ $fund->project_start->format('d M Y') }}
-                                <br>
-                                <small class="text-muted">
-                                    to {{ $fund->project_end->format('d M Y') }}
-                                </small>
-                            @else
-                                -
-                            @endif
-                        </td>
+                    <!-- Duration -->
+                    <td class="text-center text-nowrap">
+                        @if($fund->project_start && $fund->project_end)
+                        {{ $fund->project_start->format('d M Y') }}
+                        <br>
+                        <small class="text-muted">
+                            to {{ $fund->project_end->format('d M Y') }}
+                        </small>
+                        @else
+                        -
+                        @endif
+                    </td>
 
-                        <!-- Status -->
-                        <td class="text-center">
-                            @php
-                                $statusClass = match($fund->status) {
-                                    'active' => 'bg-success-subtle text-success',
-                                    'closed' => 'bg-danger-subtle text-danger',
-                                    'draft' => 'bg-warning-subtle text-warning',
-                                    'completed' => 'bg-primary-subtle text-primary',
-                                    default => 'bg-secondary-subtle text-secondary',
-                                };
-                            @endphp
+                    <!-- Status -->
+                    <td class="text-center">
+                        @php
+                        $statusClass = match($fund->status) {
+                        'active' => 'bg-success-subtle text-success',
+                        'closed' => 'bg-danger-subtle text-danger',
+                        'draft' => 'bg-warning-subtle text-warning',
+                        'completed' => 'bg-primary-subtle text-primary',
+                        default => 'bg-secondary-subtle text-secondary',
+                        };
+                        @endphp
 
-                            <span class="badge {{ $statusClass }}">
-                                {{ ucfirst($fund->status ?? 'unknown') }}
-                            </span>
-                        </td>
+                        <span class="badge {{ $statusClass }}">
+                            {{ ucfirst($fund->status ?? 'unknown') }}
+                        </span>
+                    </td>
 
-                        <!-- Actions -->
-                        <td class="text-center">
-                            <div class="d-flex flex-column gap-2 align-items-center">
+                    <!-- Actions -->
+                    <td class="text-center">
+                        <div class="d-flex flex-column gap-2 align-items-center">
 
-                                <a href="{{ route('projects.apply.questions', $fund) }}"
-                                    class="btn btn-primary btn-sm dashboard-v2-apply w-100">
-                                    Apply Now
-                                </a>
+                            <a href="{{ route('projects.apply.questions', $fund) }}"
+                                class="btn btn-primary btn-sm dashboard-v2-apply w-100">
+                                Apply Now
+                            </a>
 
-                                <a href="{{ route('projects.details', $fund->id) }}"
-                                    class="dashboard-v2-view-link">
-                                    View Details
-                                </a>
+                            <a href="{{ route('projects.details', $fund->id) }}"
+                                class="dashboard-v2-view-link">
+                                View Details
+                            </a>
 
-                            </div>
-                        </td>
+                        </div>
+                    </td>
 
-                    </tr>
+                </tr>
 
                 @empty
 
-                    <tr>
-                        <td colspan="6" class="text-center py-4">
-                            No funds available.
-                        </td>
-                    </tr>
+                <tr>
+                    <td colspan="6" class="text-center py-4">
+                        No funds available.
+                    </td>
+                </tr>
 
                 @endforelse
 

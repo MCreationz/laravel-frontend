@@ -37,21 +37,20 @@ public function index(Request $request)
 
 public function show($applicationId)
 {
-  $application = FundApplication::with([
-    'fund:id,fund_name',
-    'theme:id,theme_name',
-    'subTheme:id,sub_theme_name',
-    'answers.questionnaire',    
-])
-->where('id', $applicationId)
-->where('organization_id', auth('organization')->id())
-->firstOrFail();
+    $application = FundApplication::with([
+        'fund:id,fund_name,fund_logo',
+        'theme:id,theme_name',
+        'subTheme:id,sub_theme_name',
+        'answers.questionnaire',
+    ])
+    ->where('id', $applicationId)
+    ->where('organization_id', auth('organization')->id())
+    ->firstOrFail();
 
     return response()->json([
         'success' => true,
         'application' => $application,
     ]);
 }
-
 
 }

@@ -124,12 +124,24 @@
 
                             <tr>
                                 <td>
-                                    <div class="dashboard-v2-name-cell">
-                                        <span class="hc-badge">
-                                            {{ strtoupper(substr($fund->fund_name ?? 'F', 0, 2)) }}
-                                        </span>
-                                        <span>{{ $fund->fund_name }}</span>
-                                    </div>
+                                                      <div class="dashboard-v2-name-cell">
+
+    @if($fund->fund_logo)
+        <img
+            src="{{ Storage::url($fund->fund_logo) }}"
+            alt="{{ $fund->fund_name }} Logo"
+            style="width:48px;height:48px;object-fit:cover;flex-shrink:0;">
+    @else
+        <span class="hc-badge">
+            {{ strtoupper(substr($fund->fund_name ?? 'F', 0, 2)) }}
+        </span>
+    @endif
+
+    <span>
+        <strong>{{ $fund->fund_name }}</strong>
+    </span>
+
+</div>
                                 </td>
 
                                 <td>
