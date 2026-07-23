@@ -19,34 +19,58 @@
             @csrf
 
             <div class="card application-form-card border-0 mb-3">
-                <div class="application-hero">
-                    <div class="application-hero-banner"></div>
+               <div class="application-hero">
 
-                    <div class="application-hero-body px-3 px-md-4 pb-3">
-                        <div class="row align-items-end g-3">
-                            <div class="col-auto">
-                                <div class="application-hero-logo">
-                                    <span class="application-hero-logo-text">
-                                        {{ strtoupper(substr($fund->fund_name, 0, 2)) }}
-                                    </span>
-                                </div>
-                            </div>
+    <div class="application-hero-banner">
+        @if($fund->fund_banner)
+            <img
+                src="{{ Storage::url($fund->fund_banner) }}"
+                alt="{{ $fund->fund_name }} Banner"
+                class="img-fluid w-100 h-100 object-fit-cover">
+        @endif
+    </div>
 
-                            <div class="col">
-                                <h1 class="application-hero-title mb-1">
-                                    {{ $fund->fund_name }}
+    <div class="application-hero-body px-3 px-md-4 pb-3">
+        <div class="row align-items-end g-3">
 
-                                    <img src="{{ asset('img/checkmark.png') }}" alt="Verified" class="verified-badge"
-                                        width="20" height="20">
-                                </h1>
+            <div class="col-auto">
+                <div class="application-hero-logo">
 
-                                <p class="application-hero-org mb-0">
-                                    {{ $fund->client->organization_name }}
-                                </p>
-                            </div>
-                        </div>
-                    </div>
+                    @if($fund->fund_logo)
+                        <img
+                            src="{{ Storage::url($fund->fund_logo) }}"
+                            alt="{{ $fund->fund_name }} Logo"
+                            class="img-fluid w-100 h-100 object-fit-cover">
+                    @else
+                        <span class="application-hero-logo-text">
+                            {{ strtoupper(substr($fund->fund_name, 0, 2)) }}
+                        </span>
+                    @endif
+
                 </div>
+            </div>
+
+            <div class="col">
+                <h1 class="application-hero-title mb-1">
+                    {{ $fund->fund_name }}
+
+                    <img
+                        src="{{ asset('img/checkmark.png') }}"
+                        alt="Verified"
+                        class="verified-badge"
+                        width="20"
+                        height="20">
+                </h1>
+
+                <p class="application-hero-org mb-0">
+                    {{ $fund->client->organization_name }}
+                </p>
+            </div>
+
+        </div>
+    </div>
+
+</div>
 
                 <div class="application-form-fields px-3 px-md-4 pb-4">
 

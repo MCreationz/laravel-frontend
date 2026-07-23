@@ -9,18 +9,31 @@
     <div class="card p-3 border-0 rounded-3">
         <div class="project-detail-wrap">
 
-            <div class="top-profile-bannner">
-            </div>
+             <div class="top-profile-bannner">
+        @if($fund->fund_banner)
+            <img
+                src="{{ Storage::url($fund->fund_banner) }}"
+                alt="{{ $fund->fund_name }} Banner"
+                class="img-fluid w-100 h-100 object-fit-cover">
+        @endif
+    </div>
+
 
             <div class="project-detail-inner px-2 px-md-3 pb-2 pb-md-3">
 
                 <div class="project-content">
-                    <div class="profile-banner">
-                        <h1 class="gradient-text mb-0">
-                            {{ strtoupper(substr($fund->fund_name, 0, 2)) }}
-                        </h1>
-                    </div>
-
+                          <div class="profile-banner">
+                @if($fund->fund_logo)
+                    <img
+                        src="{{ Storage::url($fund->fund_logo) }}"
+                        alt="{{ $fund->fund_name }} Logo"
+                        class="img-fluid w-100 h-100 object-fit-cover">
+                @else
+                    <h1 class="gradient-text mb-0">
+                        {{ strtoupper(substr($fund->fund_name, 0, 2)) }}
+                    </h1>
+                @endif
+            </div>
                     <h2 class="project-title mt-3 mb-1">
                         {{ $fund->fund_name }}
                     </h2>
