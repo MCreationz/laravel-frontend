@@ -2039,7 +2039,7 @@ span.badge.bg-primary-subtle {
     padding: 5px 15px !important;
     /* width: 100%; */
     min-width: 100px;
-    max-width: 100px;
+    /* max-width: 100px; */
     background-color:rgb(217 217 217 / 12%) !important;
 }
 
