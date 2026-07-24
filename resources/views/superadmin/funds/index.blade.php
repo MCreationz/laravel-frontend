@@ -86,7 +86,7 @@
                     <th class="text-center">Type</th>
                     <th class="text-center">Outlay</th>
                     <th class="text-center">Cap</th>
-                    <th class="text-center">Open & Close Date</th>
+                    <th class="text-center text-nowrap">Open & Close Date</th>
                   
                     <th class="text-center">Applications</th>
                     <th class="text-center">Reviewed</th>
@@ -156,7 +156,7 @@
 
                         <!-- Open Date -->
                       <td class="text-center">
-    <div class="d-flex flex-column">
+    <div class="d-flex flex-column text-nowrap">
         <small>
             <strong>Open:</strong>
             {{ optional($fund->project_start)->format('d M Y') ?? '-' }}

@@ -98,7 +98,7 @@ $recentApplications = \App\Models\FundApplication::with(['fund', 'organization']
 {{-- HEADER --}}
 <div class="dashboard-v2">
     <div class="dashboard-v2-summary-card mb-3">
-        <div class="dashboard-col-wrap d-flex justify-content-between align-items-center flex-wrap gap-2">
+        <div class="dashboard-col-wrap d-flex justify-content-between align-items-stretch flex-wrap gap-2">
 
             <div class="left-content col-12 col-lg-4">
                 <p class="dashboard-v2-welcome mb-2">Super Admin</p>

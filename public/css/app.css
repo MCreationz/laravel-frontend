@@ -24,7 +24,7 @@ body, p, span, ul li, ol li, div {
 
 h1,.h1,h2,.h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
     font-family: 'Coolvetica';
-    font-weight: 400 !important;
+    font-weight: 400;
     margin-bottom: 0.938rem !important;
     line-height: 1 !important;
     color: var(--primary-color) !important;
