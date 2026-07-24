@@ -37,9 +37,9 @@ class CheckOrganizationOnboarding
         //     return redirect()->route('dashboard');
         // }
 
-        if (in_array($routeName, $onboardingRoutes)) {
-            return $next($request);
-        }
+        // if (in_array($routeName, $onboardingRoutes)) {
+        //     return $next($request);
+        // }
 
         // If everything is complete, allow access
         if ($organization->isProfileComplete()) {

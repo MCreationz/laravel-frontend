@@ -33,9 +33,12 @@ Route::get('/broadcast-test', function () {
     broadcast(new TestMessageSent('Hello from Reverb!'));
 
     return response()->json([
-    'success' => true,
-]);
+        'success' => true,
+    ]);
 });
+
+Route::get('/pincode/{pincode}', [OnboardingController::class, 'getPincodeDetails'])
+    ->name('pincode.details');
 
 // Step 1: Ask user to choose organization type
 Route::get('/organization-type', function () {
@@ -102,7 +105,7 @@ Route::post('/reset-password', [AuthLoginController::class, 'resetPassword'])
 
 Route::middleware(['check.onboarding', 'auth:organization'])->group(function () {
     Route::post('/onboarding/verify-pan', [OnboardingController::class, 'verifyPan'])
-    ->name('onboarding.verify-pan');
+        ->name('onboarding.verify-pan');
 
     Route::get('/dashboard', [DashboardController::class, 'index'])
         ->name('dashboard');
@@ -199,7 +202,6 @@ Route::middleware(['check.onboarding', 'auth:organization'])->group(function () 
             Route::post('/password', [SettingController::class, 'updatePassword'])
                 ->name('password.update');
         });
-
 });
 
 Route::prefix('projects/{fund}/apply')
@@ -257,7 +259,6 @@ Route::prefix('projects/{fund}/apply')
 
         Route::delete('/awards-recognition/{awardRecognition}', [AwardRecognitionController::class, 'destroy'])
             ->name('awards-recognition.destroy');
-
     });
 
 Route::post('/funders/store', [OrganizationFunderController::class, 'store'])

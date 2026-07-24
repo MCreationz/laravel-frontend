@@ -319,4 +319,20 @@ User::whereHas('role', function ($query) {
             ], 500);
         }
     }
+
+
+public function getPincodeDetails($pincode)
+{
+    if (!preg_match('/^\d{6}$/', $pincode)) {
+        return response()->json([
+            'message' => 'Invalid pincode.'
+        ], 422);
+    }
+
+    $response = Http::get("https://api.pincodeapi.in/api/v1/pincode/{$pincode}");
+
+    return response()->json($response->json(), $response->status());
+}
+
+
 }
