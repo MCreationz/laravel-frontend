@@ -121,8 +121,7 @@
         </div>
     </div>
     <div style="border-radius:0px 0px 8px 8px;"
-        class="d-flex justify-content-center justify-content-md-end gap-2 gap-md-3 mt-4 steps-btn pe-lg-4 flex-wrap">
-        <div class="btn-wrap">
+        class="d-flex justify-content-center justify-content-md-end gap-2 gap-md-3 mt-4 steps-btn flex-wrap">
             <button type="button" class="btn btn-secondary"
                 onclick="window.location.href='{{ route('client-admin.funds.funding-snapshot') }}'">
                 Back
@@ -131,7 +130,6 @@
                 onclick="window.location.href='{{ route('client-admin.funds.index') }}'">
                 Continue
             </button>
-        </div>
     </div>
 
 
@@ -200,13 +198,12 @@
 
                         <!-- Footer -->
                         <div style="border-radius:0px 0px 8px 8px;"
-                            class="modal-footer border-0 d-flex justify-content-center justify-content-md-end gap-2 steps-btn pe-lg-4 flex-wrap">
-
+                            class="modal-footer border-0 d-flex justify-content-center justify-content-md-end gap-2 steps-btn flex-wrap">
                             <button type="button" class="btn btn-secondary m-0" data-bs-dismiss="modal">
                                 Cancel
                             </button>
 
-                            <button type="submit" id="" class="btn btn-primary m-0">
+                            <button type="submit" id="" class="btn btn-primary blue-btn m-0">
                                 Submit
                             </button>
 

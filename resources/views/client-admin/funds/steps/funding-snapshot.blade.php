@@ -265,7 +265,7 @@
 
 
 
-                       <div class="col-12 px-md-2 mb-4">
+                       <div class="col-12 px-md-2">
     <label class="form-label">
         Eligibility Instruction <span>*</span>
     </label>
@@ -404,12 +404,12 @@
                 </div>
 
                 <div style="border-radius:0px 0px 8px 8px;"
-                    class="d-flex justify-content-center justify-content-md-end gap-2 mt-4 steps-btn pe-lg-4 flex-wrap">
+                    class="d-flex justify-content-center justify-content-md-end gap-2 mt-2 steps-btn pb-4 pe-lg-4 flex-wrap">
                     <button type="button" class="btn btn-secondary"
                         onclick="window.location.href='{{ route('client-admin.funds.index') }}'">
                         Cancel
                     </button>
-                    <button type="submit" class="btn btn-primary">Next
+                    <button type="submit" class="btn btn-primary blue-btn">Next
                         </svg></button>
                 </div>
 

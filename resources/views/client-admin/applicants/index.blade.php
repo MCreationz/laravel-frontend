@@ -48,7 +48,7 @@
 
                 <!-- Status -->
                 <div style="max-width:220px;">
-                    <select name="fund_id" class="form-control" onchange="this.form.submit()">
+                    <select name="fund_id" class="form-control btn-select" onchange="this.form.submit()">
                         <option value="">All Funds</option>
 
                         @foreach($funds as $fund)

@@ -1,4 +1,4 @@
-<header class="header px-3 px-lg-4 position-fixed top-0 small-header">
+<header class="header px-3 px-lg-4 position-fixed top-0 small-header client-admin">
     <div class="row justify-content-between align-items-center h-100">
         <div class="col-auto d-flex gap-3 align-items-center">
             <div class="header-toggle">
@@ -24,19 +24,13 @@
             </p>
         </div>
 
-        <div class="col-auto logo mobile d-none text-center flex-grow">
+        <div class="col-auto logo mobile d-none text-center flex-grow p-0">
             <img src="{{ asset('img/FundInk-logo.svg') }}" alt="FundInk site logo" width="124px">
         </div>
 
         <div class="col-auto d-flex align-items-center ms-auto">
-            <div class="access-content-wrap">
-                <div class="access-content">
-                    <div class="access-title">Client Admin</div>
-                </div>
-            </div>
-
-            <div class="header-links d-flex justify-content-end align-items-center">
-
+            <div class="header-links d-flex justify-content-end align-items-center ">
+                    <span class="header-org-chip me-3">Client Admin</span>
                 {{-- Notifications --}}
               <div class="dropdown">
 
@@ -99,7 +93,7 @@
                     }
                 @endphp
 
-                <div class="dropdown ps-1 ps-lg-3">
+                <div class="dropdown ps-1 ps-3">
 
                     <div class="d-flex align-items-center profile-dropdown-toggle" role="button"
                         data-bs-toggle="dropdown" aria-expanded="false">
@@ -121,7 +115,7 @@
 
                     <button type="submit" class="btn logout-btn">
 
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                        <svg class="m-0" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
                             <polyline points="16 17 21 12 16 7" />
