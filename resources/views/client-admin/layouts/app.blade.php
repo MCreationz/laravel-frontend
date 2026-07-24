@@ -45,7 +45,7 @@
 
         <!-- Footer -->
         <footer class="text-center py-3 border-top bg-light">
-            &copy; {{ date('Y') }} Super Admin Panel. All rights reserved.
+            &copy; {{ date('Y') }} Client Admin Panel. All rights reserved.
         </footer>
 
     </div>
