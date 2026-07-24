@@ -394,6 +394,11 @@
         // =====================================================
         // POPULATE DISTRICTS
         // =====================================================
+        function toTitleCase(str) {
+            return str
+                .toLowerCase()
+                .replace(/\b\w/g, c => c.toUpperCase());
+        }
 
         function populateDistricts(
             stateName,
@@ -543,27 +548,26 @@
             }
 
             $.getJSON(
-                "https://api.pincodeapi.in/api/v1/pincode/" + pincode,
+                "https://aniket-thapa.github.io/india-pincode-api/pincodes/" + pincode + ".json",
                 function(res) {
 
-                    if (res.status === "success" && res.data && res.data.length > 0) {
+                    if (res.state && res.district) {
 
-                        let office = res.data[0];
-
-                        // Fill state
-                        officeStateInput.value = office.statename;
-
-                        // Hide suggestions if open
-                        officeSuggestionsBox.innerHTML = '';
-
+                        const state = toTitleCase(res.state);
                         const district = normalizeDistrict(
-                            office.statename,
-                            office.district
+                            state,
+                            toTitleCase(res.district)
                         );
 
-                        // Populate districts and select the one from API
+                        // Fill state
+                        officeStateInput.value = state;
+
+                        // Hide suggestions
+                        officeSuggestionsBox.innerHTML = '';
+
+                        // Populate districts
                         populateDistricts(
-                            office.statename,
+                            state,
                             officeDistrictDropdown,
                             district
                         );
@@ -573,9 +577,9 @@
                         $('#office_district').html('<option value="">Select District</option>');
                     }
                 }
-            ).fail(function(xhr, status, error) {
-                console.error('Pincode API Error:', status, error);
-                console.log(xhr.responseText);
+            ).fail(function() {
+                $('#office_state').val('');
+                $('#office_district').html('<option value="">Select District</option>');
             });
 
         });
@@ -593,44 +597,46 @@
 
             lastPortalPincode = pincode;
 
-            $.getJSON(
-                "{{ route('pincode.details', ':pincode') }}".replace(':pincode', pincode),
-                function(res) {
+          $.getJSON(
+    "https://aniket-thapa.github.io/india-pincode-api/pincodes/" + pincode + ".json",
+    function(res) {
 
-                    if (res.status === "success" && res.data.length) {
+        if (res.state && res.district) {
 
-                        let office = res.data[0];
-
-                        // Fill state
-                        portalStateInput.value = office.statename;
-
-                        // Hide suggestions
-                        portalSuggestionsBox.innerHTML = '';
-                        const district = normalizeDistrict(
-                            office.statename,
-                            office.district
-                        );
-
-                        console.log(district);
-
-                        // Populate districts and select the returned district
-                        populateDistricts(
-                            office.statename,
-                            portalDistrictDropdown,
-                            district
-                        );
-
-                    } else {
-
-                        portalStateInput.value = '';
-
-                        portalDistrictDropdown.innerHTML =
-                            '<option value="">Select District</option>';
-                    }
-                }
+            const state = toTitleCase(res.state);
+            const district = normalizeDistrict(
+                state,
+                toTitleCase(res.district)
             );
 
+            // Fill state
+            portalStateInput.value = state;
 
+            // Hide suggestions
+            portalSuggestionsBox.innerHTML = '';
+
+            // Populate districts and select the returned district
+            populateDistricts(
+                state,
+                portalDistrictDropdown,
+                district
+            );
+
+        } else {
+
+            portalStateInput.value = '';
+
+            portalDistrictDropdown.innerHTML =
+                '<option value="">Select District</option>';
+        }
+    }
+).fail(function() {
+
+    portalStateInput.value = '';
+
+    portalDistrictDropdown.innerHTML =
+        '<option value="">Select District</option>';
+});
 
         });
     });
