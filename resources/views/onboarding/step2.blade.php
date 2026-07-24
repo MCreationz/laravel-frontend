@@ -548,26 +548,25 @@
             }
 
             $.getJSON(
-                "https://aniket-thapa.github.io/india-pincode-api/pincodes/" + pincode + ".json",
+                "{{ route('pincode.details', ':pincode') }}".replace(':pincode', pincode),
                 function(res) {
 
-                    if (res.state && res.district) {
+                    if (res.status === "success") {
 
-                        const state = toTitleCase(res.state);
                         const district = normalizeDistrict(
-                            state,
-                            toTitleCase(res.district)
+                            res.state,
+                            res.district
                         );
 
                         // Fill state
-                        officeStateInput.value = state;
+                        officeStateInput.value = res.state;
 
                         // Hide suggestions
                         officeSuggestionsBox.innerHTML = '';
 
                         // Populate districts
                         populateDistricts(
-                            state,
+                            res.state,
                             officeDistrictDropdown,
                             district
                         );
@@ -598,15 +597,15 @@
             lastPortalPincode = pincode;
 
             $.getJSON(
-                "https://aniket-thapa.github.io/india-pincode-api/pincodes/" + pincode + ".json",
+                "{{ route('pincode.details', ':pincode') }}".replace(':pincode', pincode),
                 function(res) {
 
-                    if (res.state && res.district) {
+                    if (res.status === "success") {
 
-                        const state = toTitleCase(res.state);
+                        const state = res.state;
                         const district = normalizeDistrict(
                             state,
-                            toTitleCase(res.district)
+                            res.district
                         );
 
                         // Fill state
@@ -637,7 +636,6 @@
                 portalDistrictDropdown.innerHTML =
                     '<option value="">Select District</option>';
             });
-
         });
     });
 </script>

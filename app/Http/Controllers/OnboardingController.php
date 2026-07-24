@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Services\NotificationService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
@@ -329,9 +330,31 @@ public function getPincodeDetails($pincode)
         ], 422);
     }
 
-    $response = Http::get("https://api.pincodeapi.in/api/v1/pincode/{$pincode}");
+    $records = DB::table('pincodes')
+        ->where('Pincode', $pincode)
+        ->get();
 
-    return response()->json($response->json(), $response->status());
+    if ($records->isEmpty()) {
+        return response()->json([
+            'message' => 'Pincode not found.'
+        ], 404);
+    }
+
+    $first = (array) $records->first();
+
+    return response()->json([
+        'status' => 'success',
+        'state' => $first['State'] ?? $first['state'] ?? '',
+        'district' => $first['DistrictsName'] ?? $first['district'] ?? $first['District'] ?? '',
+        'offices' => $records->map(function ($record) {
+            $record = (array) $record;
+
+            return $record['PostOfficeName']
+                ?? $record['post_office_name']
+                ?? $record['office_name']
+                ?? '';
+        })->filter()->values(),
+    ]);
 }
 
 
