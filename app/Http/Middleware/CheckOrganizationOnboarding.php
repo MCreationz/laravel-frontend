@@ -31,6 +31,7 @@ class CheckOrganizationOnboarding
             'notifications.read',
             'notifications.read-all',
             'notifications.delete',
+            'pincode.details',
         ];
         // If onboarding is already complete, don't allow onboarding pages
         // if ($organization->isProfileComplete() && in_array($routeName, $onboardingRoutes)) {
