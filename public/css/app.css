@@ -1139,7 +1139,10 @@ input:checked+.slider:before {
 .modal-content {
     border-radius: 12px;
 }
-
+.modal-footer.steps-btn {
+    background: #F8FAFC;
+    padding: 18px 30px;
+}
 .check-item {
     font-size: 12px;
     font-weight: 400;
