@@ -597,46 +597,46 @@
 
             lastPortalPincode = pincode;
 
-          $.getJSON(
-    "https://aniket-thapa.github.io/india-pincode-api/pincodes/" + pincode + ".json",
-    function(res) {
+            $.getJSON(
+                "https://aniket-thapa.github.io/india-pincode-api/pincodes/" + pincode + ".json",
+                function(res) {
 
-        if (res.state && res.district) {
+                    if (res.state && res.district) {
 
-            const state = toTitleCase(res.state);
-            const district = normalizeDistrict(
-                state,
-                toTitleCase(res.district)
-            );
+                        const state = toTitleCase(res.state);
+                        const district = normalizeDistrict(
+                            state,
+                            toTitleCase(res.district)
+                        );
 
-            // Fill state
-            portalStateInput.value = state;
+                        // Fill state
+                        portalStateInput.value = state;
 
-            // Hide suggestions
-            portalSuggestionsBox.innerHTML = '';
+                        // Hide suggestions
+                        portalSuggestionsBox.innerHTML = '';
 
-            // Populate districts and select the returned district
-            populateDistricts(
-                state,
-                portalDistrictDropdown,
-                district
-            );
+                        // Populate districts and select the returned district
+                        populateDistricts(
+                            state,
+                            portalDistrictDropdown,
+                            district
+                        );
 
-        } else {
+                    } else {
 
-            portalStateInput.value = '';
+                        portalStateInput.value = '';
 
-            portalDistrictDropdown.innerHTML =
-                '<option value="">Select District</option>';
-        }
-    }
-).fail(function() {
+                        portalDistrictDropdown.innerHTML =
+                            '<option value="">Select District</option>';
+                    }
+                }
+            ).fail(function() {
 
-    portalStateInput.value = '';
+                portalStateInput.value = '';
 
-    portalDistrictDropdown.innerHTML =
-        '<option value="">Select District</option>';
-});
+                portalDistrictDropdown.innerHTML =
+                    '<option value="">Select District</option>';
+            });
 
         });
     });
