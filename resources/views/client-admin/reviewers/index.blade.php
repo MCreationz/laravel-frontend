@@ -195,17 +195,17 @@
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
 
-            <!-- Header -->
-            <div class="modal-header">
-                <div>
-                    <h2 class="modal-title mb-2 inner-title" id="reviewerModalTitle">
-                        Add Reviewer
-                    </h2>
+                <!-- Header -->
+                <div class="modal-header">
+                    <div>
+                        <h2 class="modal-title mb-0 inner-title" id="reviewerModalTitle">
+                            Add Reviewer
+                        </h2>
 
-                    <p class="text-muted small mb-0">
-                        Assign domain experts for fund review
-                    </p>
-                </div>
+                        {{-- <p class="text-muted small mb-0">
+                            Assign domain experts for fund review
+                        </p> --}}
+                    </div>
 
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                 </button>
@@ -294,8 +294,8 @@
 
                         </div>
 
-                        <!-- Status -->
-                        <div class="row g-3 mb-3">
+                            <!-- Status -->
+                            <div class="row g-3">
 
                             <div class="col-md-12">
                                 <label class="form-label fw-semibold">

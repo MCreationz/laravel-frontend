@@ -1,6 +1,6 @@
 <header class="header px-3 px-lg-4 position-fixed top-0 small-header client-admin">
     <div class="row justify-content-between align-items-center h-100">
-        <div class="col-auto d-flex gap-3 align-items-center">
+        <div class="col-auto d-flex gap-3 align-items-center toggle-col">
             <div class="header-toggle">
                 <button class="nav-toggle" id="sidebar-toggle">
                     <span></span>
@@ -24,7 +24,7 @@
             </p>
         </div>
 
-        <div class="col-auto logo mobile d-none text-center flex-grow p-0">
+        <div class="col-auto logo mobile d-none flex-grow p-0">
             <img src="{{ asset('img/FundInk-logo.svg') }}" alt="FundInk site logo" width="124px">
         </div>
 

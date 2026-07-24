@@ -1,43 +1,8 @@
-@font-face {
-    font-family: 'Coolvetica';
-    src: url('/fonts/Coolvetica-Regular.woff2') format('woff2'), url('/fonts/Coolvetica-Regular.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'Inter';
-    src: url('/fonts/Inter18pt-SemiBold.woff2') format('woff2'), url('/fonts/Inter18pt-SemiBold.woff') format('woff');
-    font-weight: 600;
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'Inter';
-    src: url('/fonts/Inter18pt-Regular.woff2') format('woff2'), url('/fonts/Inter18pt-Regular.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'Inter';
-    src: url('/fonts/Inter18pt-Bold.woff2') format('woff2'), url('/fonts/Inter18pt-Bold.woff') format('woff');
-    font-weight: bold;
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'Inter';
-    src: url('/fonts/Inter18pt-Medium.woff2') format('woff2'), url('/fonts/Inter18pt-Medium.woff') format('woff');
-    font-weight: 500;
-    font-style: normal;
-    font-display: swap;
-}
-
+@font-face { font-family: 'Coolvetica'; src: url('/fonts/Coolvetica-Regular.woff2') format('woff2'), url('/fonts/Coolvetica-Regular.woff') format('woff');font-weight: normal;  font-style: normal; font-display: swap;}
+@font-face { font-family: 'Inter';  src: url('/fonts/Inter18pt-SemiBold.woff2') format('woff2'), url('/fonts/Inter18pt-SemiBold.woff') format('woff');font-weight: 600; font-style: normal;  font-display: swap;}
+@font-face { font-family: 'Inter';src: url('/fonts/Inter18pt-Regular.woff2') format('woff2'), url('/fonts/Inter18pt-Regular.woff') format('woff');font-weight: normal;   font-style: normal;  font-display: swap;}
+@font-face { font-family: 'Inter'; src: url('/fonts/Inter18pt-Bold.woff2') format('woff2'), url('/fonts/Inter18pt-Bold.woff') format('woff'); font-weight: bold;   font-style: normal; font-display: swap;}
+@font-face { font-family: 'Inter';src: url('/fonts/Inter18pt-Medium.woff2') format('woff2'), url('/fonts/Inter18pt-Medium.woff') format('woff'); font-weight: 500;font-style: normal; font-display: swap;}
 :root {
     --primary-color: #282828;
     --primary-blue: #0F172A;
@@ -47,100 +12,68 @@
     --white-color: #fff;
     --primary-btn: linear-gradient(65.16deg, var(--accent-color) 8.71%, #07CCB5 61.19%);
 }
-
 * {
     box-sizing: border-box;
 }
-
-body,
-p,
-span,
-ul li,
-ol li,
-div {
-    font-family: 'Inter' !important;
-    font-size: 14px !important;
-    line-height: 1.6 !important;
-    color: var(--secondary-color) !important;
+body, p, span, ul li, ol li, div {
+    font-family: 'Inter';
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--secondary-color);
 }
 
-h1,
-.h1,
-h2,
-.h2,
-h3,
-.h3,
-h4,
-.h4,
-h5,
-.h5,
-h6,
-.h6 {
+h1,.h1,h2,.h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
     font-family: 'Coolvetica';
-    font-weight: 400;
+    font-weight: 400 !important;
     margin-bottom: 0.938rem !important;
     line-height: 1 !important;
     color: var(--primary-color) !important;
 }
 .font-inter {
-  font-family: 'Inter' !important;
+  font-family: 'Inter';
 }
-.h1,
-h1 {
+.h1, h1 {
     font-size: 31px !important;
 }
-
-h3,
-.h3 {
+h3, .h3 {
     font-size: 24px !important;
 }
-h4,
-.h4 {
+h4, .h4 {
     font-size: 20px !important;
 }
-h5,
-.h5 {
+h5, .h5 {
     font-size: 18px !important;
 }
 p {
     margin: 0 0 15px;
 }
-
 p:last-child {
     margin: 0;
 }
-
 .text-gray {
-    color: #B3B3B3 !important;
+    color: #B3B3B3 ;
 }
-
 form .form-control::placeholder {
     color: #b9b9b9;
     opacity: 1;
 }
-
 .custom-select.form-control {
     color: #C6D4E2;
 }
-
 .font-sm {
-    font-size: 12px !important;
+    font-size: 12px;
 }
-
-.font-small {
-    font-size: 14px !important;
-}
-
+/* .font-small {
+    font-size: 14px;
+} */
 a {
-    color: var(--accent-color) !important;
-    font-weight: 500 !important;
+    color: var(--accent-color);
+    font-weight: 500;
     transition: all .3s ease;
 }
-
 button {
     transition: all .3s ease;
 }
-
 .alert.alert-success {
     color: #17bc71 !important;
     border: none;
@@ -389,7 +322,7 @@ form .form-control {
     padding: 10px 14px;
     font-size: 0.75rem !important;
     border-radius: 7px;
-    height: 40px;
+    min-height: 40px;
 }
 
 #step1Form {
@@ -559,7 +492,7 @@ button.btn.show-password {
 }
 
 .icon-with-text .flex-grow-1 {
-    font-size: 18px !important;
+    font-size: 18px;
     font-weight: 600;
 }
 
@@ -820,7 +753,7 @@ button.nav-toggle {
     flex-direction: column;
     background: transparent;
     gap: 5px;
-    padding: 0;
+    padding: 10px;
 }
 
 button.nav-toggle span {
@@ -1139,7 +1072,10 @@ input:checked+.slider:before {
 .modal-content {
     border-radius: 12px;
 }
-
+.modal-footer.steps-btn {
+    background: #F8FAFC;
+    padding: 18px 30px;
+}
 .check-item {
     font-size: 12px;
     font-weight: 400;
@@ -1255,10 +1191,14 @@ span.badge.bg-danger-subtle.text-danger {
     background: #F4D4D2 !important;
     color: #E45D50 !important;
 }
+
 span.badge img {
     object-fit: contain;
 }
-
+span.badge.bg-info-subtle.text-info {
+    background: #0160D62E !important;
+    color: #0160D6 !important;
+}
 .card-inner .text {
     font-size: 10px !important;
     color: #6A6A6A !important;
@@ -1339,17 +1279,29 @@ span.badge img {
     background-color: var(--accent-color) !important;
     border-radius: 30px;
     color: #fff;
+    text-align: center;
     border-color: var(--accent-color);
     font-weight: bold;
     background-image: linear-gradient(45deg, transparent 50%, #ffffff 50%), linear-gradient(135deg, #ffffff 50%, transparent 50%), linear-gradient(to right, #cccccc00, #cccccc00);
-    background-position: calc(100% - 20px) calc(1em + 3px),    calc(100% - 15px) calc(1em + 3px),    calc(100% - 2.5em) 0.5em;
+    background-position: calc(100% - 20px) calc(1em + 0px),    calc(100% - 15px) calc(1em + 0px),    calc(100% - 2.5em) 0.5em;
     background-size: 6px 6px, 6px 6px, 1px 1.5em;
     background-repeat: no-repeat;
     max-width: 120px;
     min-width: 120px;
 }
 .search-box input {
-    padding: 6.5px 10px 6.5px 31px;
+	padding: 8px 10px 8px 30px !important;
+	font-size: 11px !important;
+	color: #BABABA;
+	border-color: rgb(30 39 70 / 10%);
+	border-radius: 8px;
+	background-color: transparent;
+	height: auto;
+}
+.dashboard-v2-filters .custom-select {
+	padding: 8px 20px 8px 10px;
+	font-size: 11px !important;
+	color: #6c757d;
 }
 .search-icon {
     position: absolute;
@@ -1792,7 +1744,7 @@ ul.select-list input[type="checkbox"]:checked~label:before {
 }
 
 .custom-select {
-    min-height: 45px;
+    /* min-height: 45px; */
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -1800,7 +1752,7 @@ ul.select-list input[type="checkbox"]:checked~label:before {
 }
 
 .select-box {
-    min-height: 45px;
+    /* min-height: 45px; */
     border: 1px solid #ccc;
     padding: 6px;
     display: flex;
@@ -2096,7 +2048,10 @@ span.badge.bg-primary-subtle {
     min-width: 145px;
     width: auto;
 }
-
+.card-box table th.fund-name {
+    max-width: 185px;
+    min-width: 185px;
+}
 .card-box table th.second-col,
 .card-box table th.third-col {
     max-width: 140px;
@@ -2820,7 +2775,7 @@ p.text-small {
     }
 
     .sidebar {
-        top: 52px;
+        top: 59px;
         height: calc(100vh - 52px);
     }
 
@@ -3086,6 +3041,9 @@ button.btn.btn-primary.add-btn {
         padding: 6.1px 8px;
         min-width: min-content;
     }
+    .toggle-col {
+	padding: 0 !important;
+}
 }
 
 /* dashboard ui v2 */
@@ -3277,12 +3235,11 @@ button.btn.btn-primary.add-btn {
 .tag-pill {
     padding: 10px;
     color: #6A6A6A;
-    text-edge: cap;
     font-family: Inter !important;
     font-size: 10px !important;
     font-style: normal !important;
     font-weight: 500 !important;
-    line-height: 18px;
+    line-height: 1;
     /* 180% */
     text-transform: capitalize;
     border-radius: 20px;
