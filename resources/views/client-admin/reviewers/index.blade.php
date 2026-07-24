@@ -7,788 +7,796 @@
 
 @section('content')
 
-    <p class="mb-3 header-text d-flex align-items-center gap-2 d-md-none">
+<p class="mb-3 header-text d-flex align-items-center gap-2 d-md-none">
 
-        @hasSection('header_back')
-            <a href="@yield('header_back')" class="arrow-icon d-flex align-items-center justify-content-center cursor-pointer">
+    @hasSection('header_back')
+    <a href="@yield('header_back')" class="arrow-icon d-flex align-items-center justify-content-center cursor-pointer">
 
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17" fill="none">
-                    <path d="M8.25 0.75L0.75 8.25L8.25 15.75M0.75 8.25H18.75" stroke="black" stroke-width="1.5"
-                        stroke-linecap="round" stroke-linejoin="round" />
-                </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17" fill="none">
+            <path d="M8.25 0.75L0.75 8.25L8.25 15.75M0.75 8.25H18.75" stroke="black" stroke-width="1.5"
+                stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
 
-            </a>
-        @endif
+    </a>
+    @endif
 
-        @yield('header_title', 'Dashboard')
+    @yield('header_title', 'Dashboard')
 
-    </p>
+</p>
 
-    <div class="card-box bg-white rounded card-box-reviewers">
+<div class="card-box bg-white rounded card-box-reviewers">
 
-        <!-- Header -->
-        <div class="top-search-wrap p-3 mb-2">
-            <div class="row justify-content-between align-items-center row-gap-2">
+    <!-- Header -->
+    <div class="top-search-wrap p-3 mb-2">
+        <div class="row justify-content-between align-items-center row-gap-2">
 
-                <div class="col-auto">
-                    <div class="mb-1 fw-bold table-heading">
-                        Reviewers
-                    </div>
+            <div class="col-auto">
+                <div class="mb-1 fw-bold table-heading">
+                    Reviewers
+                </div>
 
-                    <p class="text-muted mb-0">
-                        {{ \App\Models\Reviewer::count() }} Reviewers
+                <p class="text-muted mb-0">
+                    {{ \App\Models\Reviewer::count() }} Reviewers
+                </p>
+            </div>
+
+            <div class="col-12 col-md-10 d-flex gap-2 justify-content-md-end align-items-center flex-wrap">
+
+                <!-- Search -->
+                <div class="search-bar input-group position-relative" style="max-width: 273px;">
+                    <input type="text" class="form-control search-input" id="searchInput" placeholder="Search">
+                </div>
+
+                <!-- Add Button -->
+                <button class="btn btn-primary add-btn" data-bs-toggle="modal" data-bs-target="#reviewerModal">
+                    + Add Reviewer
+                </button>
+
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Table -->
+    <div class="table-responsive">
+        <table class="table align-middle">
+
+            <thead class="table-light">
+                <tr>
+                    <th>Name</th>
+                    {{-- <th>Email</th>
+                    <th>Phone</th> --}}
+                    <th>Role</th>
+                    <th>Expertise</th>
+                    <th>Assigned Funds</th>
+                    <th class="text-center">Assigned</th>
+                    <th class="text-center">Completed</th>
+                    <th class="text-center">Pending</th>
+
+                    <th class="text-center">Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                @forelse($reviewers as $reviewer)
+                <tr>
+
+                    <td class="fw-medium">
+                        {{ $reviewer->full_name }}<br>
+                        <span class="text-muted">{{ $reviewer->phone_number ?? '-' }}</span>
+                    </td>
+
+                    {{-- <td>{{ $reviewer->email }}</td> --}}
+
+
+                    <td>{{ $reviewer->role ?? '-' }}</td>
+
+                    <td>{{ $reviewer->domain_expertise ?? '-' }}</td>
+                    <td>
+                        @if($reviewer->funds->isNotEmpty())
+                        <span class="badge bg-success-subtle text-success">
+                            {{ $reviewer->funds->pluck('fund_name')->implode(', ') }}
+                        </span>
+                        @else
+                        <span class="badge bg-success-subtle text-success">-</span>
+
+                        @endif
+                    </td> {{-- ASSIGNED --}}
+                    <td class="text-center">
+                        <span class="text-accent">{{ $reviewer->assigned_funds_count }}</span>
+                    </td>
+
+                    {{-- COMPLETED --}}
+                    <td class="text-center">
+                        <span class="text-accent">{{ $reviewer->completed_funds_count ?? 0 }}</span>
+                    </td>
+
+                    {{-- PENDING --}}
+                    <td class="text-center">
+                        <span class="text-accent">{{ $reviewer->pending_funds_count ?? 0 }}</span>
+                    </td>
+
+                    {{-- STATUS --}}
+                    <td class="text-center">
+
+                        @if ($reviewer->status === 'verified')
+                        <span class="badge bg-success-subtle text-success">Verified</span>
+                        @else
+                        <span class="badge bg-danger-subtle text-danger">Non-Verified</span>
+                        @endif
+
+                    </td>
+
+                    {{-- ACTIONS --}}
+                    <td class="action-btn">
+                        <div class="btn-group gap-1">
+
+                            {{-- ASSIGN FUNDS --}}
+                            <button class="btn btn-sm btn-primary assign-fund-btn" data-id="{{ $reviewer->id }}"
+                                data-funds='@json($reviewer->funds->pluck(' id')->values())' data-bs-toggle="modal"
+                                data-bs-target="#assignFundModal">
+                                Assign Fund
+                            </button> {{-- EDIT --}}
+                            <button class="edit-btn edit-reviewer" data-id="{{ $reviewer->id }}"
+                                data-full_name="{{ $reviewer->full_name }}" data-email="{{ $reviewer->email }}"
+                                data-phone_number="{{ $reviewer->phone_number }}"
+                                data-role="{{ $reviewer->role }}"
+                                data-domain_expertise="{{ $reviewer->domain_expertise }}"
+                                data-status="{{ $reviewer->status }}"
+                                data-update-url="{{ route('client-admin.reviewers.update', ':id') }}"
+                                data-bs-toggle="modal" data-bs-target="#reviewerModal">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                    viewBox="0 0 16 16" fill="none">
+                                    <path
+                                        d="M8.8 2.4L3.3 8.2C3.1 8.4 2.9 8.8 2.9 9.1L2.7 11.3C2.6 12.1 3.1 12.6 3.9 12.5L6.1 12.1C6.3 12 6.8 11.8 7 11.6L12.4 5.8C13.4 4.8 13.8 3.7 12.3 2.3C10.9 0.9 9.8 1.4 8.8 2.4Z"
+                                        stroke="#07CCB5" stroke-width="1.2" />
+                                </svg>
+                            </button>
+
+                            {{-- DELETE --}}
+                            <form action="{{ route('client-admin.reviewers.delete', $reviewer->id) }}"
+                                method="POST" onsubmit="return confirm('Delete this reviewer?')">
+
+                                @csrf
+
+                                <button type="submit" class="trash-btn">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="13" height="15"
+                                        viewBox="0 0 13 15" fill="none">
+                                        <path
+                                            d="M7.91257 5.09172L7.68235 11.0801M4.49653 11.0801L4.26631 5.09172M8.58459 2.69172C9.35893 2.75167 10.1308 2.83977 10.8988 2.95587C11.1263 2.99047 11.3526 3.02707 11.5788 3.06632M10.8988 2.95587L10.1881 12.1933C10.1591 12.5694 9.98924 12.9206 9.71242 13.1769C9.43559 13.4331 9.07225 13.5754 8.69505 13.5753H3.48383C3.10663 13.5754 2.74328 13.4331 2.46646 13.1769C2.18964 12.9206 2.01973 12.5694 1.99073 12.1933L1.28011 2.95587M1.28011 2.95587C1.05255 2.98981 0.826325 3.0264 0.600098 3.06566M1.28011 2.95587C2.04804 2.83978 2.81994 2.75167 3.59428 2.69172M8.58459 2.69172V2.08223C8.58459 1.29709 7.9791 0.642363 7.19396 0.617744C6.4578 0.594215 5.72108 0.594215 4.98492 0.617744C4.19977 0.642363 3.59428 1.29776 3.59428 2.08223V2.69172M8.58459 2.69172C6.92363 2.56335 5.25524 2.56335 3.59428 2.69172"
+                                            stroke="#E74C3C" stroke-width="1.2" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                    </svg>
+                                </button>
+
+                            </form>
+
+                        </div>
+                    </td>
+
+                </tr>
+                @empty
+                <tr>
+                    <td colspan="10" class="text-center py-4">
+                        No reviewers found.
+                    </td>
+                </tr>
+                @endforelse
+
+            </tbody>
+
+        </table>
+    </div>
+
+</div>
+<div class="modal fade" id="reviewerModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+
+            <!-- Header -->
+            <div class="modal-header">
+                <div>
+                    <h2 class="modal-title mb-2 inner-title" id="reviewerModalTitle">
+                        Add Reviewer
+                    </h2>
+
+                    <p class="text-muted small mb-0">
+                        Assign domain experts for fund review
                     </p>
                 </div>
 
-                <div class="col-12 col-md-10 d-flex gap-2 justify-content-md-end align-items-center flex-wrap">
-
-                    <!-- Search -->
-                    <div class="search-bar input-group position-relative" style="max-width: 273px;">
-                        <input type="text" class="form-control search-input" id="searchInput" placeholder="Search">
-                    </div>
-
-                    <!-- Add Button -->
-                    <button class="btn btn-primary add-btn" data-bs-toggle="modal" data-bs-target="#reviewerModal">
-                        + Add Reviewer
-                    </button>
-
-                </div>
-
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                </button>
             </div>
-        </div>
 
-        <!-- Table -->
-        <div class="table-responsive">
-            <table class="table align-middle">
+            <!-- Body -->
+            <div class="modal-body p-0">
 
-                <thead class="table-light">
-                    <tr>
-                        <th>Name</th>
-                        {{-- <th>Email</th>
-                    <th>Phone</th> --}}
-                        <th>Role</th>
-                        <th>Expertise</th>
-                        <th>Assigned Funds</th>
-                        <th class="text-center">Assigned</th>
-                        <th class="text-center">Completed</th>
-                        <th class="text-center">Pending</th>
+                <form id="reviewerForm" action="{{ route('client-admin.reviewers.store') }}" method="POST">
 
-                        <th class="text-center">Status</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
+                    @csrf
 
-                <tbody>
+                    <div class="p-4">
 
-                    @forelse($reviewers as $reviewer)
-                        <tr>
+                        <input type="hidden" name="reviewer_id" id="reviewer_id">
 
-                            <td class="fw-medium">
-                                {{ $reviewer->full_name }}<br>
-                                <span class="text-muted">{{ $reviewer->phone_number ?? '-' }}</span>
-                            </td>
+                        <!-- Name + Email -->
+                        <div class="row g-3 mb-3">
 
-                            {{-- <td>{{ $reviewer->email }}</td> --}}
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">
+                                    Full Name
+                                    <span class="text-danger">*</span>
+                                </label>
 
-
-                            <td>{{ $reviewer->role ?? '-' }}</td>
-
-                            <td>{{ $reviewer->domain_expertise ?? '-' }}</td>
-                            <td><span class="badge bg-success-subtle text-success">AI impact Fund</span>
-                                {{-- ASSIGNED --}}
-                            <td class="text-center">
-                                <span class="text-accent">{{ $reviewer->assigned_funds_count }}</span>
-                            </td>
-
-                            {{-- COMPLETED --}}
-                            <td class="text-center">
-                                <span class="text-accent">{{ $reviewer->completed_funds_count ?? 0 }}</span>
-                            </td>
-
-                            {{-- PENDING --}}
-                            <td class="text-center">
-                                <span class="text-accent">{{ $reviewer->pending_funds_count ?? 0 }}</span>
-                            </td>
-
-                            {{-- STATUS --}}
-                            <td class="text-center">
-
-                                @if ($reviewer->status === 'verified')
-                                    <span class="badge bg-success-subtle text-success">Verified</span>
-                                @else
-                                    <span class="badge bg-danger-subtle text-danger">Non-Verified</span>
-                                @endif
-
-                            </td>
-
-                            {{-- ACTIONS --}}
-                            <td class="action-btn">
-                                <div class="btn-group gap-1">
-
-                                    {{-- ASSIGN FUNDS --}}
-                                    <button class="btn btn-sm btn-primary assign-fund-btn" data-id="{{ $reviewer->id }}"
-                                        data-funds='@json($reviewer->funds->pluck('id')->values())' data-bs-toggle="modal"
-                                        data-bs-target="#assignFundModal">
-                                        Assign Fund
-                                    </button> {{-- EDIT --}}
-                                    <button class="edit-btn edit-reviewer" data-id="{{ $reviewer->id }}"
-                                        data-full_name="{{ $reviewer->full_name }}" data-email="{{ $reviewer->email }}"
-                                        data-phone_number="{{ $reviewer->phone_number }}"
-                                        data-role="{{ $reviewer->role }}"
-                                        data-domain_expertise="{{ $reviewer->domain_expertise }}"
-                                        data-status="{{ $reviewer->status }}"
-                                        data-update-url="{{ route('client-admin.reviewers.update', ':id') }}"
-                                        data-bs-toggle="modal" data-bs-target="#reviewerModal">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                            viewBox="0 0 16 16" fill="none">
-                                            <path
-                                                d="M8.8 2.4L3.3 8.2C3.1 8.4 2.9 8.8 2.9 9.1L2.7 11.3C2.6 12.1 3.1 12.6 3.9 12.5L6.1 12.1C6.3 12 6.8 11.8 7 11.6L12.4 5.8C13.4 4.8 13.8 3.7 12.3 2.3C10.9 0.9 9.8 1.4 8.8 2.4Z"
-                                                stroke="#07CCB5" stroke-width="1.2" />
-                                        </svg>
-                                    </button>
-
-                                    {{-- DELETE --}}
-                                    <form action="{{ route('client-admin.reviewers.delete', $reviewer->id) }}"
-                                        method="POST" onsubmit="return confirm('Delete this reviewer?')">
-
-                                        @csrf
-
-                                        <button type="submit" class="trash-btn">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="15"
-                                                viewBox="0 0 13 15" fill="none">
-                                                <path
-                                                    d="M7.91257 5.09172L7.68235 11.0801M4.49653 11.0801L4.26631 5.09172M8.58459 2.69172C9.35893 2.75167 10.1308 2.83977 10.8988 2.95587C11.1263 2.99047 11.3526 3.02707 11.5788 3.06632M10.8988 2.95587L10.1881 12.1933C10.1591 12.5694 9.98924 12.9206 9.71242 13.1769C9.43559 13.4331 9.07225 13.5754 8.69505 13.5753H3.48383C3.10663 13.5754 2.74328 13.4331 2.46646 13.1769C2.18964 12.9206 2.01973 12.5694 1.99073 12.1933L1.28011 2.95587M1.28011 2.95587C1.05255 2.98981 0.826325 3.0264 0.600098 3.06566M1.28011 2.95587C2.04804 2.83978 2.81994 2.75167 3.59428 2.69172M8.58459 2.69172V2.08223C8.58459 1.29709 7.9791 0.642363 7.19396 0.617744C6.4578 0.594215 5.72108 0.594215 4.98492 0.617744C4.19977 0.642363 3.59428 1.29776 3.59428 2.08223V2.69172M8.58459 2.69172C6.92363 2.56335 5.25524 2.56335 3.59428 2.69172"
-                                                    stroke="#E74C3C" stroke-width="1.2" stroke-linecap="round"
-                                                    stroke-linejoin="round" />
-                                            </svg>
-                                        </button>
-
-                                    </form>
-
-                                </div>
-                            </td>
-
-                        </tr>
-                    @empty
-                        <tr>
-                            <td colspan="10" class="text-center py-4">
-                                No reviewers found.
-                            </td>
-                        </tr>
-                    @endforelse
-
-                </tbody>
-
-            </table>
-        </div>
-
-    </div>
-    <div class="modal fade" id="reviewerModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content">
-
-                <!-- Header -->
-                <div class="modal-header">
-                    <div>
-                        <h2 class="modal-title mb-2 inner-title" id="reviewerModalTitle">
-                            Add Reviewer
-                        </h2>
-
-                        <p class="text-muted small mb-0">
-                            Assign domain experts for fund review
-                        </p>
-                    </div>
-
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                    </button>
-                </div>
-
-                <!-- Body -->
-                <div class="modal-body p-0">
-
-                    <form id="reviewerForm" action="{{ route('client-admin.reviewers.store') }}" method="POST">
-
-                        @csrf
-
-                        <div class="p-4">
-
-                            <input type="hidden" name="reviewer_id" id="reviewer_id">
-
-                            <!-- Name + Email -->
-                            <div class="row g-3 mb-3">
-
-                                <div class="col-md-6">
-                                    <label class="form-label fw-semibold">
-                                        Full Name
-                                        <span class="text-danger">*</span>
-                                    </label>
-
-                                    <input type="text" class="form-control py-2" id="full_name" name="full_name"
-                                        placeholder="Enter full name" required>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <label class="form-label fw-semibold">
-                                        Email Address
-                                        <span class="text-danger">*</span>
-                                    </label>
-
-                                    <input type="email" class="form-control py-2" id="email" name="email"
-                                        placeholder="Enter email address" required>
-                                </div>
-
+                                <input type="text" class="form-control py-2" id="full_name" name="full_name"
+                                    placeholder="Enter full name" required>
                             </div>
 
-                            <!-- Phone + Password -->
-                            <div class="row g-3 mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">
+                                    Email Address
+                                    <span class="text-danger">*</span>
+                                </label>
 
-                                <div class="col-md-6">
-                                    <label class="form-label fw-semibold">
-                                        Phone Number
-                                    </label>
-
-                                    <input type="text" class="form-control py-2" id="phone_number"
-                                        name="phone_number" placeholder="Enter phone number">
-                                </div>
-
-                                <div class="col-md-6">
-                                    <label class="form-label fw-semibold">
-                                        Password
-                                        <span class="text-danger">*</span>
-                                    </label>
-
-                                    <input type="password" class="form-control py-2" id="password" name="password"
-                                        placeholder="Enter password" required>
-                                </div>
-
+                                <input type="email" class="form-control py-2" id="email" name="email"
+                                    placeholder="Enter email address" required>
                             </div>
 
-                            <!-- Role + Expertise -->
-                            <div class="row g-3 mb-3">
+                        </div>
 
-                                <div class="col-md-6">
-                                    <label class="form-label fw-semibold">
-                                        Role
-                                    </label>
+                        <!-- Phone + Password -->
+                        <div class="row g-3 mb-3">
 
-                                    <input type="text" class="form-control py-2" id="role" name="role"
-                                        placeholder="e.g. Senior Reviewer">
-                                </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">
+                                    Phone Number
+                                </label>
 
-                                <div class="col-md-6">
-                                    <label class="form-label fw-semibold">
-                                        Domain Expertise
-                                    </label>
-
-                                    <input type="text" class="form-control py-2" id="domain_expertise"
-                                        name="domain_expertise" placeholder="e.g. Healthcare, Tech, Finance">
-                                </div>
-
+                                <input type="text" class="form-control py-2" id="phone_number"
+                                    name="phone_number" placeholder="Enter phone number">
                             </div>
 
-                            <!-- Status -->
-                            <div class="row g-3 mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">
+                                    Password
+                                    <span class="text-danger">*</span>
+                                </label>
 
-                                <div class="col-md-12">
-                                    <label class="form-label fw-semibold">
-                                        Status
-                                        <span class="text-danger">*</span>
-                                    </label>
+                                <input type="password" class="form-control py-2" id="password" name="password"
+                                    placeholder="Enter password" required>
+                            </div>
 
-                                    <div class="select-wrapper w-100 position-relative">
+                        </div>
 
-                                        <div
-                                            class="custom-select form-control py-2 d-flex justify-content-between align-items-center">
-                                            <span class="text-muted">Select Status</span>
-                                        </div>
+                        <!-- Role + Expertise -->
+                        <div class="row g-3 mb-3">
 
-                                        <input type="hidden" name="status" id="status" required
-                                            class="hidden-select">
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">
+                                    Role
+                                </label>
 
-                                        <ul class="select-list" style="display: none;">
-                                            <li data-value="verified">Verified</li>
-                                            <li data-value="non_verified">Non-Verified</li>
-                                        </ul>
+                                <input type="text" class="form-control py-2" id="role" name="role"
+                                    placeholder="e.g. Senior Reviewer">
+                            </div>
 
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">
+                                    Domain Expertise
+                                </label>
+
+                                <input type="text" class="form-control py-2" id="domain_expertise"
+                                    name="domain_expertise" placeholder="e.g. Healthcare, Tech, Finance">
+                            </div>
+
+                        </div>
+
+                        <!-- Status -->
+                        <div class="row g-3 mb-3">
+
+                            <div class="col-md-12">
+                                <label class="form-label fw-semibold">
+                                    Status
+                                    <span class="text-danger">*</span>
+                                </label>
+
+                                <div class="select-wrapper w-100 position-relative">
+
+                                    <div
+                                        class="custom-select form-control py-2 d-flex justify-content-between align-items-center">
+                                        <span class="text-muted">Select Status</span>
                                     </div>
+
+                                    <input type="hidden" name="status" id="status" required
+                                        class="hidden-select">
+
+                                    <ul class="select-list" style="display: none;">
+                                        <li data-value="verified">Verified</li>
+                                        <li data-value="non_verified">Non-Verified</li>
+                                    </ul>
+
                                 </div>
-
                             </div>
 
                         </div>
 
-                        <!-- Footer -->
-                        <div style="border-radius:0px 0px 8px 8px;"
-                            class="modal-footer border-0 d-flex justify-content-center justify-content-md-end gap-2 steps-btn pe-lg-4 flex-wrap">
+                    </div>
 
-                            <button type="button" class="btn simple-btn m-0" data-bs-dismiss="modal">
-                                Cancel
-                            </button>
+                    <!-- Footer -->
+                    <div style="border-radius:0px 0px 8px 8px;"
+                        class="modal-footer border-0 d-flex justify-content-center justify-content-md-end gap-2 steps-btn pe-lg-4 flex-wrap">
 
-                            <button type="submit" id="reviewerSubmitBtn" class="btn gradient-btn m-0">
-                                Save Reviewer
-                            </button>
+                        <button type="button" class="btn simple-btn m-0" data-bs-dismiss="modal">
+                            Cancel
+                        </button>
 
-                        </div>
+                        <button type="submit" id="reviewerSubmitBtn" class="btn gradient-btn m-0">
+                            Save Reviewer
+                        </button>
 
-                    </form>
+                    </div>
 
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="assignFundModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content">
-
-                <div class="modal-header border-0 pb-0">
-                    <h2 class="modal-title inner-title">Assign Funds</h2>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-
-                <div class="modal-body p-3">
-
-                    <form id="assignFundForm" method="POST"
-                        action="{{ route('client-admin.reviewers.assign-funds') }}">
-
-                        @csrf
-
-                        <input type="hidden" name="reviewer_id" id="assign_reviewer_id">
-
-                        <label class="form-label fw-semibold mb-2">
-                            Select Funds
-                        </label>
-
-                        <div class="select-wrapper w-100 position-relative checkbox-wrap fund-wrap">
-
-                            <div id="selectedFundsBox"
-                                class="custom-select form-control d-flex flex-wrap gap-2 align-items-center">
-                                <span class="placeholder">Select Funds</span>
-                            </div>
-
-                            <ul class="select-list checkbox-list">
-                                @foreach ($funds as $fund)
-                                    <li>
-                                        <input type="checkbox" value="{{ $fund->id }}"
-                                            id="fund_{{ $fund->id }}" class="fund-checkbox">
-
-                                        <label for="fund_{{ $fund->id }}">
-                                            {{ $fund->fund_name }}
-                                        </label>
-                                    </li>
-                                @endforeach
-                            </ul>
-
-                            <input type="hidden" name="fund_ids" id="hiddenFunds">
-
-                        </div>
-
-                    </form>
-
-                </div>
-
-                <div class="modal-footer border-0">
-
-                    <button type="button" class="btn simple-btn" data-bs-dismiss="modal">
-                        Cancel
-                    </button>
-
-                    <button type="submit" form="assignFundForm" class="btn gradient-btn">
-                        Assign
-                    </button>
-
-                </div>
+                </form>
 
             </div>
         </div>
     </div>
+</div>
 
-    <style>
-        /* Modal body */
-        #assignFundModal .modal-body {
-            min-height: 350px
-        }
+<div class="modal fade" id="assignFundModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
 
-        /* Selected box */
-        #assignFundModal #selectedFundsBox {
-            min-height: 48px;
-            align-items: flex-start !important;
-            overflow-y: auto;
-        }
+            <div class="modal-header border-0 pb-0">
+                <h2 class="modal-title inner-title">Assign Funds</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
 
-        /* Dropdown */
-        #assignFundModal .select-list {
-            max-height: 180px;
-            /* Approximately 4 items */
-            overflow-y: auto;
-            overflow-x: hidden;
-        }
+            <div class="modal-body p-3">
 
-        /* Optional scrollbar styling */
-        #assignFundModal .select-list::-webkit-scrollbar {
-            width: 6px;
-        }
+                <form id="assignFundForm" method="POST"
+                    action="{{ route('client-admin.reviewers.assign-funds') }}">
 
-        #assignFundModal .select-list::-webkit-scrollbar-thumb {
-            background: #c5c5c5;
-            border-radius: 10px;
-        }
+                    @csrf
 
-        #assignFundModal .select-list::-webkit-scrollbar-track {
-            background: #f5f5f5;
-        }
-    </style>
+                    <input type="hidden" name="reviewer_id" id="assign_reviewer_id">
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
+                    <label class="form-label fw-semibold mb-2">
+                        Select Funds
+                    </label>
 
-            const selectedBox = document.getElementById('selectedFundsBox');
-            const hiddenInput = document.getElementById('hiddenFunds');
-            const reviewerInput = document.getElementById('assign_reviewer_id');
+                    <div class="select-wrapper w-100 position-relative checkbox-wrap fund-wrap">
 
-            function updateSelectedFunds() {
-                const selectedIds = [];
-                selectedBox.innerHTML = '';
+                        <div id="selectedFundsBox"
+                            class="custom-select form-control d-flex flex-wrap gap-2 align-items-center">
+                            <span class="placeholder">Select Funds</span>
+                        </div>
 
-                document.querySelectorAll('.fund-checkbox:checked').forEach(cb => {
-                    selectedIds.push(cb.value);
+                        <ul class="select-list checkbox-list">
+                            @foreach ($funds as $fund)
+                            <li>
+                                <input type="checkbox" value="{{ $fund->id }}"
+                                    id="fund_{{ $fund->id }}" class="fund-checkbox">
 
-                    const label = document.querySelector(`label[for="${cb.id}"]`).innerText;
+                                <label for="fund_{{ $fund->id }}">
+                                    {{ $fund->fund_name }}
+                                </label>
+                            </li>
+                            @endforeach
+                        </ul>
 
-                    const tag = document.createElement('span');
-                    tag.className = 'selected-item';
-                    tag.innerHTML = `
+                        <input type="hidden" name="fund_ids" id="hiddenFunds">
+
+                    </div>
+
+                </form>
+
+            </div>
+
+            <div class="modal-footer border-0">
+
+                <button type="button" class="btn simple-btn" data-bs-dismiss="modal">
+                    Cancel
+                </button>
+
+                <button type="submit" form="assignFundForm" class="btn gradient-btn">
+                    Assign
+                </button>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Modal body */
+    #assignFundModal .modal-body {
+        min-height: 350px
+    }
+
+    /* Selected box */
+    #assignFundModal #selectedFundsBox {
+        min-height: 48px;
+        align-items: flex-start !important;
+        overflow-y: auto;
+    }
+
+    /* Dropdown */
+    #assignFundModal .select-list {
+        max-height: 180px;
+        /* Approximately 4 items */
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    /* Optional scrollbar styling */
+    #assignFundModal .select-list::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    #assignFundModal .select-list::-webkit-scrollbar-thumb {
+        background: #c5c5c5;
+        border-radius: 10px;
+    }
+
+    #assignFundModal .select-list::-webkit-scrollbar-track {
+        background: #f5f5f5;
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+
+        const selectedBox = document.getElementById('selectedFundsBox');
+        const hiddenInput = document.getElementById('hiddenFunds');
+        const reviewerInput = document.getElementById('assign_reviewer_id');
+
+        function updateSelectedFunds() {
+            const selectedIds = [];
+            selectedBox.innerHTML = '';
+
+            document.querySelectorAll('.fund-checkbox:checked').forEach(cb => {
+                selectedIds.push(cb.value);
+
+                const label = document.querySelector(`label[for="${cb.id}"]`).innerText;
+
+                const tag = document.createElement('span');
+                tag.className = 'selected-item';
+                tag.innerHTML = `
                 ${label}
                 <span class="remove-fund" data-id="${cb.value}" style="cursor:pointer;margin-left:6px;">&times;</span>
             `;
 
-                    selectedBox.appendChild(tag);
-                });
+                selectedBox.appendChild(tag);
+            });
 
-                if (!selectedIds.length) {
-                    selectedBox.innerHTML = '<span class="placeholder">Select Funds</span>';
-                }
-
-                hiddenInput.value = selectedIds.join(',');
+            if (!selectedIds.length) {
+                selectedBox.innerHTML = '<span class="placeholder">Select Funds</span>';
             }
 
-            // Open modal
-            document.querySelectorAll('.assign-fund-btn').forEach(button => {
-                button.addEventListener('click', function() {
+            hiddenInput.value = selectedIds.join(',');
+        }
 
-                    reviewerInput.value = this.dataset.id;
+        // Open modal
+        document.querySelectorAll('.assign-fund-btn').forEach(button => {
+            button.addEventListener('click', function() {
 
-                    const assignedFunds = JSON.parse(this.dataset.funds || '[]');
+                reviewerInput.value = this.dataset.id;
 
-                    // Reset
-                    document.querySelectorAll('.fund-checkbox').forEach(cb => {
-                        cb.checked = false;
-                    });
+                const assignedFunds = JSON.parse(this.dataset.funds || '[]');
 
-                    // Check assigned
-                    assignedFunds.forEach(id => {
-                        const checkbox = document.getElementById('fund_' + id);
-                        if (checkbox) {
-                            checkbox.checked = true;
-                        }
-                    });
-
-                    updateSelectedFunds();
+                // Reset
+                document.querySelectorAll('.fund-checkbox').forEach(cb => {
+                    cb.checked = false;
                 });
-            });
 
-            // Checkbox changed
-            document.querySelectorAll('.fund-checkbox').forEach(cb => {
-                cb.addEventListener('change', updateSelectedFunds);
-            });
-
-            // Remove chip
-            selectedBox.addEventListener('click', function(e) {
-                if (!e.target.classList.contains('remove-fund')) {
-                    return;
-                }
-
-                e.preventDefault();
-                e.stopPropagation();
-
-                const id = e.target.dataset.id;
-
-                const checkbox = document.getElementById('fund_' + id);
-                if (checkbox) {
-                    checkbox.checked = false;
-                }
+                // Check assigned
+                assignedFunds.forEach(id => {
+                    const checkbox = document.getElementById('fund_' + id);
+                    if (checkbox) {
+                        checkbox.checked = true;
+                    }
+                });
 
                 updateSelectedFunds();
             });
-
         });
-    </script>
+
+        // Checkbox changed
+        document.querySelectorAll('.fund-checkbox').forEach(cb => {
+            cb.addEventListener('change', updateSelectedFunds);
+        });
+
+        // Remove chip
+        selectedBox.addEventListener('click', function(e) {
+            if (!e.target.classList.contains('remove-fund')) {
+                return;
+            }
+
+            e.preventDefault();
+            e.stopPropagation();
+
+            const id = e.target.dataset.id;
+
+            const checkbox = document.getElementById('fund_' + id);
+            if (checkbox) {
+                checkbox.checked = false;
+            }
+
+            updateSelectedFunds();
+        });
+
+    });
+</script>
 
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
 
-            document.querySelectorAll('.assign-fund-btn').forEach(button => {
+        document.querySelectorAll('.assign-fund-btn').forEach(button => {
 
-                button.addEventListener('click', function() {
+            button.addEventListener('click', function() {
 
-                    document.getElementById('assign_reviewer_id').value =
-                        this.dataset.id;
-
-                });
+                document.getElementById('assign_reviewer_id').value =
+                    this.dataset.id;
 
             });
 
         });
-    </script>
 
-    <script>
-        function debounce(fn, delay) {
-            let timer;
-            return function(...args) {
-                clearTimeout(timer);
-                timer = setTimeout(() => fn.apply(this, args), delay);
-            };
+    });
+</script>
+
+<script>
+    function debounce(fn, delay) {
+        let timer;
+        return function(...args) {
+            clearTimeout(timer);
+            timer = setTimeout(() => fn.apply(this, args), delay);
+        };
+    }
+
+    function updateFilters() {
+
+        const url = new URL(window.location.href);
+        const params = url.searchParams;
+
+        // Search
+        const search = document.getElementById('searchInput')?.value || '';
+
+        if (search.trim()) {
+            params.set('search', search.trim());
+        } else {
+            params.delete('search');
         }
 
-        function updateFilters() {
-
-            const url = new URL(window.location.href);
-            const params = url.searchParams;
-
-            // Search
-            const search = document.getElementById('searchInput')?.value || '';
-
-            if (search.trim()) {
-                params.set('search', search.trim());
-            } else {
-                params.delete('search');
-            }
-
-            // Type (optional - safe fallback)
-            const typeInput = document.querySelector('input[name="type"]');
-            if (typeInput) {
-                const type = typeInput.value;
-                if (type) params.set('type', type);
-                else params.delete('type');
-            }
-
-            // Status (optional - safe fallback)
-            const statusInput = document.querySelector('input[name="status"]');
-            if (statusInput) {
-                const status = statusInput.value;
-                if (status) params.set('status', status);
-                else params.delete('status');
-            }
-
-            // Keep pagination reset when filtering
-            params.delete('page');
-
-            // Reload using current base URL (NOT hardcoded route)
-            window.location.href = `${url.pathname}?${params.toString()}`;
+        // Type (optional - safe fallback)
+        const typeInput = document.querySelector('input[name="type"]');
+        if (typeInput) {
+            const type = typeInput.value;
+            if (type) params.set('type', type);
+            else params.delete('type');
         }
 
-        // Attach debounce
+        // Status (optional - safe fallback)
+        const statusInput = document.querySelector('input[name="status"]');
+        if (statusInput) {
+            const status = statusInput.value;
+            if (status) params.set('status', status);
+            else params.delete('status');
+        }
+
+        // Keep pagination reset when filtering
+        params.delete('page');
+
+        // Reload using current base URL (NOT hardcoded route)
+        window.location.href = `${url.pathname}?${params.toString()}`;
+    }
+
+    // Attach debounce
+    const searchInput = document.getElementById('searchInput');
+
+    if (searchInput) {
+        searchInput.addEventListener('keyup', debounce(updateFilters, 500));
+    }
+</script>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+
+        const url = new URL(window.location.href);
+        const params = url.searchParams;
+
         const searchInput = document.getElementById('searchInput');
 
+        // Restore value on page load
         if (searchInput) {
-            searchInput.addEventListener('keyup', debounce(updateFilters, 500));
-        }
-    </script>
-
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-
-            const url = new URL(window.location.href);
-            const params = url.searchParams;
-
-            const searchInput = document.getElementById('searchInput');
-
-            // Restore value on page load
-            if (searchInput) {
-                const existingSearch = params.get('search');
-                if (existingSearch) {
-                    searchInput.value = existingSearch;
-                }
-
-                // Update URL while typing (debounced)
-                searchInput.addEventListener('input', debounce(function() {
-
-                    const currentUrl = new URL(window.location.href);
-                    const currentParams = currentUrl.searchParams;
-
-                    const value = searchInput.value.trim();
-
-                    if (value) {
-                        currentParams.set('search', value);
-                    } else {
-                        currentParams.delete('search');
-                    }
-
-                    currentParams.delete('page'); // reset pagination
-
-                    window.location.href = `${currentUrl.pathname}?${currentParams.toString()}`;
-
-                }, 500));
+            const existingSearch = params.get('search');
+            if (existingSearch) {
+                searchInput.value = existingSearch;
             }
 
-        });
+            // Update URL while typing (debounced)
+            searchInput.addEventListener('input', debounce(function() {
 
-        // Debounce helper
-        function debounce(fn, delay) {
-            let timer;
-            return function(...args) {
-                clearTimeout(timer);
-                timer = setTimeout(() => fn.apply(this, args), delay);
-            };
+                const currentUrl = new URL(window.location.href);
+                const currentParams = currentUrl.searchParams;
+
+                const value = searchInput.value.trim();
+
+                if (value) {
+                    currentParams.set('search', value);
+                } else {
+                    currentParams.delete('search');
+                }
+
+                currentParams.delete('page'); // reset pagination
+
+                window.location.href = `${currentUrl.pathname}?${currentParams.toString()}`;
+
+            }, 500));
         }
-    </script>
+
+    });
+
+    // Debounce helper
+    function debounce(fn, delay) {
+        let timer;
+        return function(...args) {
+            clearTimeout(timer);
+            timer = setTimeout(() => fn.apply(this, args), delay);
+        };
+    }
+</script>
 
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
 
-            const modal = document.getElementById('reviewerModal');
-            const form = document.getElementById('reviewerForm');
-            const title = document.getElementById('reviewerModalTitle');
+        const modal = document.getElementById('reviewerModal');
+        const form = document.getElementById('reviewerForm');
+        const title = document.getElementById('reviewerModalTitle');
 
-            document.querySelectorAll('.edit-reviewer').forEach(button => {
+        document.querySelectorAll('.edit-reviewer').forEach(button => {
 
-                button.addEventListener('click', function() {
+            button.addEventListener('click', function() {
 
-                    // Change modal title
-                    title.innerText = 'Edit Reviewer';
+                // Change modal title
+                title.innerText = 'Edit Reviewer';
 
-                    // Fill fields
-                    document.getElementById('reviewer_id').value = this.dataset.id;
-                    document.getElementById('full_name').value = this.dataset.full_name;
-                    document.getElementById('email').value = this.dataset.email;
-                    document.getElementById('phone_number').value = this.dataset.phone_number ?? '';
-                    document.getElementById('role').value = this.dataset.role ?? '';
-                    document.getElementById('domain_expertise').value = this.dataset
-                        .domain_expertise ?? '';
+                // Fill fields
+                document.getElementById('reviewer_id').value = this.dataset.id;
+                document.getElementById('full_name').value = this.dataset.full_name;
+                document.getElementById('email').value = this.dataset.email;
+                document.getElementById('phone_number').value = this.dataset.phone_number ?? '';
+                document.getElementById('role').value = this.dataset.role ?? '';
+                document.getElementById('domain_expertise').value = this.dataset
+                    .domain_expertise ?? '';
 
-                    // Status (hidden input)
-                    document.getElementById('status').value = this.dataset.status;
+                // Status (hidden input)
+                document.getElementById('status').value = this.dataset.status;
 
-                    // Update form action (replace :id)
-                    let url = this.dataset.updateUrl.replace(':id', this.dataset.id);
-                    form.action = url;
+                // Update form action (replace :id)
+                let url = this.dataset.updateUrl.replace(':id', this.dataset.id);
+                form.action = url;
 
-                    // Remove password requirement for edit
-                    document.getElementById('password').required = false;
-                    document.getElementById('password').value = '';
-
-                });
-
-            });
-
-            // Reset modal when opening for CREATE
-            document.querySelector('[data-bs-target="#reviewerModal"]').addEventListener('click', function() {
-
-                title.innerText = 'Add Reviewer';
-
-                form.action = "{{ route('client-admin.reviewers.store') }}";
-
-                document.getElementById('reviewer_id').value = '';
-                document.getElementById('full_name').value = '';
-                document.getElementById('email').value = '';
-                document.getElementById('phone_number').value = '';
-                document.getElementById('role').value = '';
-                document.getElementById('domain_expertise').value = '';
-                document.getElementById('status').value = '';
-                document.getElementById('password').required = true;
+                // Remove password requirement for edit
+                document.getElementById('password').required = false;
                 document.getElementById('password').value = '';
 
             });
 
         });
-    </script>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
+        // Reset modal when opening for CREATE
+        document.querySelector('[data-bs-target="#reviewerModal"]').addEventListener('click', function() {
 
-            const selectedBox = document.getElementById('selectedFundsBox');
-            const dropdown = document.querySelector('.fund-wrap .checkbox-list');
-            const checkboxes = document.querySelectorAll('.fund-wrap input[type="checkbox"]');
-            const hiddenInput = document.getElementById('hiddenFunds');
+            title.innerText = 'Add Reviewer';
 
-            // OPEN / CLOSE
-            selectedBox.addEventListener('click', function(e) {
-                if (e.target.classList.contains('remove-tag')) return;
-                e.stopPropagation();
-                dropdown.classList.toggle('show');
-            });
+            form.action = "{{ route('client-admin.reviewers.store') }}";
 
-            document.addEventListener('click', function() {
-                dropdown.classList.remove('show');
-            });
+            document.getElementById('reviewer_id').value = '';
+            document.getElementById('full_name').value = '';
+            document.getElementById('email').value = '';
+            document.getElementById('phone_number').value = '';
+            document.getElementById('role').value = '';
+            document.getElementById('domain_expertise').value = '';
+            document.getElementById('status').value = '';
+            document.getElementById('password').required = true;
+            document.getElementById('password').value = '';
 
-            dropdown.addEventListener('click', function(e) {
-                e.stopPropagation();
-            });
+        });
 
-            // UPDATE UI
-            function updateSelected() {
+    });
+</script>
 
-                let selected = [];
-                selectedBox.innerHTML = '';
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
 
-                checkboxes.forEach(cb => {
+        const selectedBox = document.getElementById('selectedFundsBox');
+        const dropdown = document.querySelector('.fund-wrap .checkbox-list');
+        const checkboxes = document.querySelectorAll('.fund-wrap input[type="checkbox"]');
+        const hiddenInput = document.getElementById('hiddenFunds');
 
-                    if (cb.checked) {
+        // OPEN / CLOSE
+        selectedBox.addEventListener('click', function(e) {
+            if (e.target.classList.contains('remove-tag')) return;
+            e.stopPropagation();
+            dropdown.classList.toggle('show');
+        });
 
-                        selected.push(cb.value);
+        document.addEventListener('click', function() {
+            dropdown.classList.remove('show');
+        });
 
-                        const tag = document.createElement('div');
-                        tag.className = 'state-tag';
+        dropdown.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
 
-                        tag.innerHTML = `
+        // UPDATE UI
+        function updateSelected() {
+
+            let selected = [];
+            selectedBox.innerHTML = '';
+
+            checkboxes.forEach(cb => {
+
+                if (cb.checked) {
+
+                    selected.push(cb.value);
+
+                    const tag = document.createElement('div');
+                    tag.className = 'state-tag';
+
+                    tag.innerHTML = `
                         <span>${cb.nextElementSibling.innerText}</span>
                         <span class="remove-tag" data-value="${cb.value}">&times;</span>
                     `;
 
-                        selectedBox.appendChild(tag);
+                    selectedBox.appendChild(tag);
+                }
+            });
+
+            if (selected.length === 0) {
+                selectedBox.innerHTML = '<span class="placeholder">Select Funds</span>';
+            }
+
+            hiddenInput.value = selected.join(',');
+        }
+
+        // CHECKBOX CHANGE
+        checkboxes.forEach(cb => {
+            cb.addEventListener('change', function() {
+                updateSelected();
+            });
+        });
+
+        // REMOVE CROSS CLICK
+        selectedBox.addEventListener('click', function(e) {
+
+            if (e.target.classList.contains('remove-tag')) {
+
+                e.stopPropagation();
+
+                const value = e.target.getAttribute('data-value');
+
+                checkboxes.forEach(cb => {
+                    if (cb.value === value) {
+                        cb.checked = false;
                     }
                 });
 
-                if (selected.length === 0) {
-                    selectedBox.innerHTML = '<span class="placeholder">Select Funds</span>';
-                }
-
-                hiddenInput.value = selected.join(',');
+                updateSelected();
             }
-
-            // CHECKBOX CHANGE
-            checkboxes.forEach(cb => {
-                cb.addEventListener('change', function() {
-                    updateSelected();
-                });
-            });
-
-            // REMOVE CROSS CLICK
-            selectedBox.addEventListener('click', function(e) {
-
-                if (e.target.classList.contains('remove-tag')) {
-
-                    e.stopPropagation();
-
-                    const value = e.target.getAttribute('data-value');
-
-                    checkboxes.forEach(cb => {
-                        if (cb.value === value) {
-                            cb.checked = false;
-                        }
-                    });
-
-                    updateSelected();
-                }
-            });
-
-            updateSelected();
-
         });
-    </script>
+
+        updateSelected();
+
+    });
+</script>
 @endsection

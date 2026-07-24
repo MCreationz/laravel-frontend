@@ -60,13 +60,13 @@ $totalStatusFunds = max(1, $activeFunds + $closedFunds + $suspendedFunds + $draf
 */
 
 $recentApplications = \App\Models\FundApplication::with(['fund', 'organization'])
-    ->whereHas('fund', function ($q) use ($clientId) {
-        $q->where('client_id', $clientId);
-    })
-    ->where('created_at', '>=', now()->subDay()) // Last 24 hours
-    ->latest()
-    ->take(4)
-    ->get();
+->whereHas('fund', function ($q) use ($clientId) {
+$q->where('client_id', $clientId);
+})
+->where('created_at', '>=', now()->subDay()) // Last 24 hours
+->latest()
+->take(10)
+->get();
 if (!function_exists('formatIndianCurrencyShort')) {
 function formatIndianCurrencyShort($amount): string
 {
@@ -227,7 +227,7 @@ return '₹' . number_format($amount);
                 <div class="top-title-wrap px-2 px-md-3 pt-3 pt-md-4 pb-2">
                     <h3 class="top-title mb-0 font-inter h5 fw-bold">
                         Recent Applications
-                        <span class="no-of-apps">(10)</span>
+                        <span class="no-of-apps">({{ count($recentApplications) ?? 0 }})</span>
                     </h3>
                 </div>
 
