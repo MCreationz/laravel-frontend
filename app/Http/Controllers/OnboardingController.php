@@ -313,6 +313,7 @@ User::whereHas('role', function ($query) {
             Log::error('PAN Verification Error', [
                 'message' => $e->getMessage(),
             ]);
+            
 
             return response()->json([
                 'success' => false,
