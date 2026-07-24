@@ -543,7 +543,7 @@
             }
 
             $.getJSON(
-                "{{ route('pincode.details', ':pincode') }}".replace(':pincode', pincode),
+                "https://api.pincodeapi.in/api/v1/pincode/" + pincode,
                 function(res) {
 
                     if (res.status === "success" && res.data && res.data.length > 0) {
@@ -561,7 +561,6 @@
                             office.district
                         );
 
-
                         // Populate districts and select the one from API
                         populateDistricts(
                             office.statename,
@@ -574,7 +573,11 @@
                         $('#office_district').html('<option value="">Select District</option>');
                     }
                 }
-            );
+            ).fail(function(xhr, status, error) {
+                console.error('Pincode API Error:', status, error);
+                console.log(xhr.responseText);
+            });
+
         });
 
 
