@@ -134,11 +134,16 @@
                         <div class="btn-group gap-1">
 
                             {{-- ASSIGN FUNDS --}}
-                            <button class="btn btn-sm btn-primary assign-fund-btn" data-id="{{ $reviewer->id }}"
-                                data-funds='@json($reviewer->funds->pluck(' id')->values())' data-bs-toggle="modal"
+                            <button
+                                class="btn btn-sm btn-primary assign-fund-btn"
+                                data-id="{{ $reviewer->id }}"
+                                data-funds='@json($reviewer->funds->pluck("id")->values())'
+                                data-bs-toggle="modal"
                                 data-bs-target="#assignFundModal">
                                 Assign Fund
-                            </button> {{-- EDIT --}}
+                            </button>
+
+                            {{-- EDIT --}}
                             <button class="edit-btn edit-reviewer" data-id="{{ $reviewer->id }}"
                                 data-full_name="{{ $reviewer->full_name }}" data-email="{{ $reviewer->email }}"
                                 data-phone_number="{{ $reviewer->phone_number }}"
@@ -195,17 +200,17 @@
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
 
-                <!-- Header -->
-                <div class="modal-header">
-                    <div>
-                        <h2 class="modal-title mb-0 inner-title" id="reviewerModalTitle">
-                            Add Reviewer
-                        </h2>
+            <!-- Header -->
+            <div class="modal-header">
+                <div>
+                    <h2 class="modal-title mb-0 inner-title" id="reviewerModalTitle">
+                        Add Reviewer
+                    </h2>
 
-                        {{-- <p class="text-muted small mb-0">
+                    {{-- <p class="text-muted small mb-0">
                             Assign domain experts for fund review
                         </p> --}}
-                    </div>
+                </div>
 
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                 </button>
@@ -294,8 +299,8 @@
 
                         </div>
 
-                            <!-- Status -->
-                            <div class="row g-3">
+                        <!-- Status -->
+                        <div class="row g-3">
 
                             <div class="col-md-12">
                                 <label class="form-label fw-semibold">
