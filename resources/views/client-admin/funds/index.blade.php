@@ -70,7 +70,7 @@
 
                 <thead class="table-light">
                     <tr>
-                        <th class="first-col">Fund Name</th>
+                        <th class="fund-name">Fund Name</th>
                         <th class="text-center">Client</th>
                         <th class="text-center">Type</th>
                         <th class="text-center">Outlay</th>

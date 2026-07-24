@@ -555,37 +555,7 @@
                                         <input type="number" name="about_fund" placeholder="Enter File Size (MB)"
                                             class="form-control">
                                     </div>
-                                    <!-- <div class="col-12 px-md-2">
-                                        <label class="form-label">Upload File<span>*</span></label>
-                                        <input type="file" id="fund_banner" name="fund_banner" hidden>
-                                        <label for="fund_banner" class="upload-label mb-0">
-                                            <div class="upload-content">
-                                                <div class="upload-icon mb-2">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26"
-                                                        viewBox="0 0 26 26" fill="none">
-                                                        <g opacity="0.2">
-                                                            <path d="M9.75 11.916V18.416L11.9167 16.2493"
-                                                                stroke="#292D32" stroke-width="1.5"
-                                                                stroke-linecap="round" stroke-linejoin="round" />
-                                                            <path d="M9.7526 18.4167L7.58594 16.25" stroke="#292D32"
-                                                                stroke-width="1.5" stroke-linecap="round"
-                                                                stroke-linejoin="round" />
-                                                            <path
-                                                                d="M23.8307 10.8327V16.2493C23.8307 21.666 21.6641 23.8327 16.2474 23.8327H9.7474C4.33073 23.8327 2.16406 21.666 2.16406 16.2493V9.74935C2.16406 4.33268 4.33073 2.16602 9.7474 2.16602H15.1641"
-                                                                stroke="#292D32" stroke-width="1.5"
-                                                                stroke-linecap="round" stroke-linejoin="round" />
-                                                            <path
-                                                                d="M23.8307 10.8327H19.4974C16.2474 10.8327 15.1641 9.74935 15.1641 6.49935V2.16602L23.8307 10.8327Z"
-                                                                stroke="#292D32" stroke-width="1.5"
-                                                                stroke-linecap="round" stroke-linejoin="round" />
-                                                        </g>
-                                                    </svg>
-                                                </div>
-                                                <p class="">Upload PDF/JPG up to 5 MB</p>
-                                                <small id="fund_banner_name" class="d-block mt-2"></small>
-                                            </div>
-                                        </label>
-                                    </div> -->
+                                    
                                 </div>
                             </div>
                         </div>
@@ -594,7 +564,7 @@
 
 
             <div class="btn-wrap px-3 mb-3">
-                <button type="button" class="btn btn-primary mt-2" onclick="addDoc()">+ Add Another
+                <button type="button" class="btn btn-primary blue-btn mt-2" onclick="addDoc()">+ Add Another
                     Document</button>
             </div>
             <div style="border-radius:0px 0px 8px 8px;"
