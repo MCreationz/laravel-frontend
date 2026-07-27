@@ -154,21 +154,25 @@
                     </td>
 
                     <!-- Actions -->
-                    <td class="text-center">
-                        <div class="d-flex flex-column gap-2 align-items-center">
+                         @php
+                        $hasApplied = auth('organization')->check()
+                        && \App\Models\FundApplication::where('fund_id', $fund->id)
+                        ->where('organization_id', auth('organization')->user()->id)
+                        ->exists();
+                        @endphp
 
-                            <a href="{{ route('projects.apply.questions', $fund) }}"
-                                class="btn btn-primary btn-sm dashboard-v2-apply w-100">
-                                Apply Now
-                            </a>
+                        <td class="text-end">
+                            <div class="dashboard-v2-action">
+                                <a href="{{ route('projects.apply.questions', $fund) }}"
+                                    class="btn btn-primary dashboard-v2-apply">
+                                    {{ $hasApplied ? 'Apply Again' : 'Apply Now' }}
+                                </a>
 
-                            <a href="{{ route('projects.details', $fund->id) }}"
-                                class="dashboard-v2-view-link">
-                                View Details
-                            </a>
-
-                        </div>
-                    </td>
+                                <a href="{{ route('projects.details', $fund->id) }}" class="dashboard-v2-view-link">
+                                    View Details
+                                </a>
+                            </div>
+                        </td>
 
                 </tr>
 

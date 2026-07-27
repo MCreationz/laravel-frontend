@@ -311,7 +311,7 @@
 
             </div>
             <div style="border-radius:0px 0px 8px 8px;"
-                class="d-flex justify-content-center justify-content-md-end gap-2 gap-md-3 steps-btn pe-lg-4 flex-wrap">
+                class="d-flex justify-content-center justify-content-md-end gap-2 gap-md-3 steps-btn mt-4  flex-wrap">
                 <div class="btn-wrap">
                     <button type="button" class="btn simple-btn" onclick="">
                         <img src="/img/back.png" class="me-2" width="15" height="6.25">
