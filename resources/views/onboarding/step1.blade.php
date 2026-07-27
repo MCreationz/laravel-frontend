@@ -203,7 +203,7 @@
                 </div>
 
                 <div style="border-radius:0px 0px 8px 8px;"
-                    class="d-flex justify-content-center justify-content-md-end gap-2 gap-md-3 steps-btn pe-lg-4 flex-wrap">
+                    class="d-flex mt-4 justify-content-center justify-content-md-end gap-2 gap-md-3 steps-btn mt-4  flex-wrap">
                     <div class="btn-wrap">
                         <button type="submit" class="btn gradient-btn">Next <svg xmlns="http://www.w3.org/2000/svg"
                                 width="17" height="8" viewBox="0 0 17 8" fill="none">

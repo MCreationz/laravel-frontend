@@ -16,6 +16,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 <script src="https://js.pusher.com/8.4.0/pusher.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 {{-- <script src="{{ asset('js/reverb.js') }}"></script></head> --}}
 @vite('resources/js/app.js')
 </head>

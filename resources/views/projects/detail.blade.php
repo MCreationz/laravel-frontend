@@ -9,31 +9,31 @@
     <div class="card p-3 border-0 rounded-3">
         <div class="project-detail-wrap">
 
-             <div class="top-profile-bannner">
-        @if($fund->fund_banner)
-            <img
-                src="{{ Storage::url($fund->fund_banner) }}"
-                alt="{{ $fund->fund_name }} Banner"
-                class="img-fluid w-100 h-100 object-fit-cover">
-        @endif
-    </div>
+            <div class="top-profile-bannner">
+                @if($fund->fund_banner)
+                <img
+                    src="{{ Storage::url($fund->fund_banner) }}"
+                    alt="{{ $fund->fund_name }} Banner"
+                    class="img-fluid w-100 h-100 object-fit-cover">
+                @endif
+            </div>
 
 
             <div class="project-detail-inner px-2 px-md-3 pb-2 pb-md-3">
 
                 <div class="project-content">
-                          <div class="profile-banner">
-                @if($fund->fund_logo)
-                    <img
-                        src="{{ Storage::url($fund->fund_logo) }}"
-                        alt="{{ $fund->fund_name }} Logo"
-                        class="img-fluid w-100 h-100 object-fit-cover">
-                @else
-                    <h1 class="gradient-text mb-0">
-                        {{ strtoupper(substr($fund->fund_name, 0, 2)) }}
-                    </h1>
-                @endif
-            </div>
+                    <div class="profile-banner">
+                        @if($fund->fund_logo)
+                        <img
+                            src="{{ Storage::url($fund->fund_logo) }}"
+                            alt="{{ $fund->fund_name }} Logo"
+                            class="img-fluid w-100 h-100 object-fit-cover">
+                        @else
+                        <h1 class="gradient-text mb-0">
+                            {{ strtoupper(substr($fund->fund_name, 0, 2)) }}
+                        </h1>
+                        @endif
+                    </div>
                     <h2 class="project-title mt-3 mb-1">
                         {{ $fund->fund_name }}
                     </h2>
@@ -54,7 +54,7 @@
                     <h3 class="sub-heading mt-4">Eligibility</h3>
 
                     @if($fund->snapshot?->eligibility_instruction)
-               
+
                     <div class="eligibility-content">
                         {!! $fund->snapshot->eligibility_instruction !!}
                     </div>
@@ -200,6 +200,15 @@
 
                     </div>
 
+                    @php
+                    $hasApplied = auth('organization')->check()
+                    && \App\Models\FundApplication::where('fund_id', $fund->id)
+                    ->where('organization_id', auth('organization')->user()->id)
+                    ->exists();
+                    @endphp
+
+
+
                     <div class="d-flex justify-content-center justify-content-md-end gap-2 flex-wrap">
 
                         <div class="btn-wrap">
@@ -210,7 +219,7 @@
 
                         <div class="btn-wrap">
                             <a href="{{ route('projects.apply.questions', $fund) }}" class="btn btn-primary">
-                                Apply Now
+                                {{ $hasApplied ? 'Apply Again' : 'Apply Now' }}
                             </a>
                         </div>
 

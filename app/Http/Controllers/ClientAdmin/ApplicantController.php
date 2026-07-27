@@ -73,6 +73,26 @@ class ApplicantController extends Controller
 
     return view('client-admin.applicants.index', compact('applicants'));
 }
+
+    public function show($applicationId)
+    {
+        $application = FundApplication::with([
+                'fund:id,fund_name,fund_logo',
+                'theme:id,theme_name',
+                'subTheme:id,sub_theme_name',
+                'answers.questionnaire',
+            ])
+            ->where('id', $applicationId)
+            // ->whereHas('fund', function ($query) {
+            //     $query->where('client_admin_id', auth('client_admin')->id());
+            // })
+            ->firstOrFail();
+
+        return response()->json([
+            'success' => true,
+            'application' => $application,
+        ]);
+    }
     public function create()
     {
         //

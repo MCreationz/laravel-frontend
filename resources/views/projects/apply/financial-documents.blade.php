@@ -118,7 +118,11 @@
                     @php
                         $lastYearRevenue = old(
                             'last_year_turnover',
-                            $document?->last_year_turnover ?? optional($op)->last_year_revenue_lakh,
+                            $document?->last_year_turnover ?? optional($op)->ongoing_year_revenue_lakh,
+                        );
+                         $lastToLastYearRevenue = old(
+                            'last_to_last_year_turnover',
+                            $document?->last_to_last_year_turnover ?? optional($op)->last_year_revenue_lakh,
                         );
                     @endphp
 
@@ -133,7 +137,7 @@
                         <label class="form-label">Last to Last Year Turnover<span>*</span></label>
                         <input type="text" inputmode="numeric" name="last_to_last_year_turnover" class="form-control"
                             placeholder="Enter Number" required
-                            value="{{ old('last_to_last_year_turnover', $document?->last_to_last_year_turnover) }}">
+                            value="{{$lastToLastYearRevenue}}" readonly>
                     </div>
 
                     <div class="col-12 col-md-6 px-md-2 position-relative pb-5">
@@ -353,7 +357,7 @@
             @endphp
 
             <div style="border-radius:0px 0px 8px 8px;"
-                class="d-flex justify-content-center justify-content-md-end gap-2 gap-md-3 steps-btn pe-lg-4 flex-wrap">
+                class="d-flex justify-content-center justify-content-md-end gap-2 gap-md-3 steps-btn mt-4  flex-wrap">
 
                 <div class="btn-wrap">
                     <button type="button" class="btn simple-btn"

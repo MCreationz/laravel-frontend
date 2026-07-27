@@ -193,27 +193,27 @@
                     <option value="">Select District</option>
                 </select>
 
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-</div>
-<div style="border-radius:0px 0px 8px 8px;"
-    class="d-flex justify-content-center justify-content-md-end gap-2 gap-md-3 steps-btn pe-lg-4 flex-wrap">
-    <div class="btn-wrap">
-        <button type="button" class="btn simple-btn"
-            onclick="window.location.href='{{ route('onboarding.step1') }}'">
-            <img src="/img/back.png" class="me-2" width="15" height="6.25">
-            Back
-        </button>
-    </div>
-    <div class="btn-wrap">
-        <button type="submit" class="btn gradient-btn">Next <svg xmlns="http://www.w3.org/2000/svg" width="17"
-                height="8" viewBox="0 0 17 8" fill="none">
-                <path d="M12.625 7L15.75 3.875L12.625 0.75M15.75 3.875H0.75" stroke="white" stroke-width="1.5"
-                    stroke-linecap="round" stroke-linejoin="round" />
-            </svg></button>
-    </div>
-</div>
+            <div style="border-radius:0px 0px 8px 8px;"
+                class="d-flex justify-content-center justify-content-md-end gap-2 gap-md-3 steps-btn mt-4 mt-4 flex-wrap">
+                <div class="btn-wrap">
+                    <button type="button" class="btn simple-btn"
+                        onclick="window.location.href='{{ route('onboarding.step1') }}'">
+                        <img src="/img/back.png" class="me-2" width="15" height="6.25">
+                        Back
+                    </button>
+                </div>
+                <div class="btn-wrap">
+                    <button type="submit" class="btn gradient-btn">Next <svg xmlns="http://www.w3.org/2000/svg" width="17"
+                            height="8" viewBox="0 0 17 8" fill="none">
+                            <path d="M12.625 7L15.75 3.875L12.625 0.75M15.75 3.875H0.75" stroke="white" stroke-width="1.5"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg></button>
+                </div>
+            </div>
 
 </form>
 </div>
