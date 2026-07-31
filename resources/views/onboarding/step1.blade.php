@@ -477,24 +477,27 @@
                 <div></div>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
+<div class="modal-body p-0">
+    <div class="p-3 px-lg-4 text-center">
 
-            <div class="modal-body p-0">
-                <div class="p-3 px-lg-4 text-center">
+        <div class="edit-top-icon mb-3">
+            <img src="{{ asset('img/edit-icon.png') }}" alt="">
+        </div>
 
-                    <div class="edit-top-icon mb-3">
-                        <img src="{{ asset('img/edit-icon.png') }}" alt="">
-                    </div>
+        <h2 class="modal-title mb-2 inner-title">
+            Confirm PAN Number
+        </h2>
 
-                    <h2 class="modal-title mb-2 inner-title">
-                        Confirm PAN Number
-                    </h2>
+        <p class="text-muted mb-2">
+            Please confirm that this is your organization's PAN and not a personal PAN.
+        </p>
 
-                    <p class="text-muted mb-0">
-                        Please confirm that the PAN entered belongs to your organization and is not a personal PAN. Once verified, the organization details will be fetched automatically.
-                    </p>
+        <p class="text-danger mb-0">
+            Using an incorrect or personal PAN may result in your application being rejected.
+        </p>
 
-                </div>
-            </div>
+    </div>
+</div>
 
             <div class="modal-footer border-0 d-flex justify-content-end gap-2 flex-wrap px-lg-4">
 
