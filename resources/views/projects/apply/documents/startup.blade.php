@@ -192,7 +192,7 @@
         <div class="col-12 col-md-6 px-md-2 position-relative pb-5">
             <label class="form-label">Upload Your PAN Card <span class="text-danger">*</span></label>
 
-            <input type="file" id="pan-card" name="pan_card" hidden required>
+            <input type="file" id="pan-card" name="pan_card" hidden >
 
             <label for="pan-card" class="upload-label">
                 <div class="upload-content">
@@ -527,7 +527,7 @@
         });
     </script>
 
-   <script>
+<script>
     document.addEventListener('DOMContentLoaded', function () {
 
         const fileRules = {
@@ -545,6 +545,12 @@
 
             input.toggleAttribute('required', !hasFile);
         });
+
+        // PAN Number
+        const panInput = document.querySelector('input[name="pan_number"]');
+        if (panInput) {
+            panInput.toggleAttribute('required', !panInput.value.trim());
+        }
 
     });
 </script>

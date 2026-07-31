@@ -477,25 +477,55 @@
                 <div></div>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
-<div class="modal-body p-0">
-    <div class="p-3 px-lg-4 text-center">
+<div class="modal fade" id="confirmPanModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
 
-        <div class="edit-top-icon mb-3">
-            <img src="{{ asset('img/edit-icon.png') }}" alt="">
+            <!-- Header -->
+            <div class="modal-header border-0 pb-0">
+                <div></div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <!-- Body -->
+            <div class="modal-body p-0">
+
+                <div class="p-3 px-lg-4 text-center">
+
+                    <div class="edit-top-icon mb-3">
+                        <img src="{{ asset('img/edit-icon.png') }}" alt="">
+                    </div>
+
+                    <h2 class="modal-title mb-2 inner-title">
+                        Confirm Organization PAN
+                    </h2>
+
+                    <p class="text-muted mb-2">
+                        Please confirm that the PAN entered belongs to your organization and not a personal PAN.
+                    </p>
+
+                    <p class="text-danger mb-0">
+                        Entering an incorrect or personal PAN may result in your application being rejected during review.
+                    </p>
+
+                </div>
+
+            </div>
+
+            <!-- Footer -->
+            <div class="modal-footer border-0 d-flex justify-content-end gap-2 flex-wrap px-lg-4">
+
+                <button type="button" class="btn simple-btn w-100" data-bs-dismiss="modal">
+                    Cancel
+                </button>
+
+                <button type="button" class="btn gradient-btn w-100" id="confirmPanVerification">
+                    Confirm & Verify
+                </button>
+
+            </div>
+
         </div>
-
-        <h2 class="modal-title mb-2 inner-title">
-            Confirm PAN Number
-        </h2>
-
-        <p class="text-muted mb-2">
-            Please confirm that this is your organization's PAN and not a personal PAN.
-        </p>
-
-        <p class="text-danger mb-0">
-            Using an incorrect or personal PAN may result in your application being rejected.
-        </p>
-
     </div>
 </div>
 

@@ -378,45 +378,37 @@
     </div>
 
 
-    <div class="modal fade" id="submitAward" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <!-- Header (same style as main modal) -->
-                <div class="modal-header border-0 pb-0">
-                    <div></div>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <!-- Body -->
-                <div class="modal-body p-0">
-                    <div class="p-3 px-lg-4 text-center">
-                        <div class="edit-top-icon mb-3">
-                            <img src="{{ asset('img/edit-icon.png') }}" alt="">
-                        </div>
-                        <h2 class="modal-title mb-2 inner-title">
-                            Your Application Has Been Submitted Successfully
-                        </h2>
-                        <p class="text-muted mb-0">
-                            Thank you for applying. We have received your application and will review it shortly.
-                        </p>
-                    </div>
-                </div>
-                <!-- Footer (same structure as first modal) -->
-                <div class="modal-footer border-0 d-flex justify-content-end gap-2 flex-wrap px-lg-4">
+   <div class="modal fade" id="submitAward" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
 
-                    <button type="button" class="btn gradient-btn w-100"
-                        onclick="window.location.href='{{ route('dashboard') }}'">
-                        Go To My Projects
-                    </button>
-
-                    <button type="button" class="btn simple-btn w-100" id="goToDocuments">
-                        Back
-                    </button>
-
-                </div>
-
+            <div class="modal-header border-0 pb-0">
+                <div></div>
+                <button type="button" class="btn-close" disabled></button>
             </div>
+
+            <div class="modal-body p-0">
+                <div class="p-3 px-lg-4 text-center">
+
+                    <div class="edit-top-icon mb-3">
+                        <img src="{{ asset('img/edit-icon.png') }}" alt="">
+                    </div>
+
+                    <h2 class="modal-title mb-2 inner-title">
+                        Application Submitted Successfully
+                    </h2>
+
+                    <p class="text-muted mb-0">
+                        Thank you for submitting your application.
+                        You will be redirected to your dashboard shortly.
+                    </p>
+
+                </div>
+            </div>
+
         </div>
     </div>
+</div>
 
     <style>
         .card-box table th {
@@ -545,6 +537,40 @@
         });
     </script>
 
+<script>
+    document.getElementById("continueBtn").addEventListener("click", function () {
+        const modal = new bootstrap.Modal(document.getElementById("confirmSubmitModal"));
+        modal.show();
+    });
+
+   
+</script>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+    document.getElementById("confirmApplicationSubmit").addEventListener("click", function () {
+
+        bootstrap.Modal.getInstance(document.getElementById("confirmSubmitModal")).hide();
+
+        console.log("came");
+
+        setTimeout(function () {
+
+            const successModal = new bootstrap.Modal(document.getElementById("submitAward"));
+            successModal.show();
+
+            setTimeout(function () {
+                window.location.href = "{{ route('dashboard') }}";
+            }, 3000);
+
+        }, 300);
+    });
+
+});
+</script>
+
 
     <script>
         document.getElementById("goToDocuments").addEventListener("click", function () {
@@ -587,4 +613,51 @@
 
         });
     </script>
+
+    <div class="modal fade" id="confirmSubmitModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <div class="modal-header border-0 pb-0">
+                <div></div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body p-0">
+                <div class="p-3 px-lg-4 text-center">
+
+                    <div class="edit-top-icon mb-3">
+                        <img src="{{ asset('img/edit-icon.png') }}" alt="">
+                    </div>
+
+                    <h2 class="modal-title mb-2 inner-title">
+                        Submit Application?
+                    </h2>
+
+                    <p class="text-muted mb-2">
+                        Are you sure you want to submit this application?
+                    </p>
+
+                    <p class="text-danger mb-0">
+                        Once submitted, no further edits will be allowed.
+                    </p>
+
+                </div>
+            </div>
+
+            <div class="modal-footer border-0 d-flex justify-content-end gap-2 flex-wrap px-lg-4">
+
+                <button type="button" class="btn simple-btn w-100" data-bs-dismiss="modal">
+                    Cancel
+                </button>
+
+                <button type="button" class="btn gradient-btn w-100" id="confirmApplicationSubmit">
+                    Yes, Submit
+                </button>
+
+            </div>
+
+        </div>
+    </div>
+</div>
 @endsection
