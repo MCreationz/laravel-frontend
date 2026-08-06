@@ -256,7 +256,9 @@
 
         });
     </script>
-    <script>
+
+
+    <!-- <script>
         toastr.options = {
             closeButton: true,
             progressBar: true,
@@ -289,7 +291,9 @@
                 toastr.error("{{ $error }}");
             @endforeach
         @endif
-    </script>
+    </script> -->
+
+
     <script>
         function closeModal(modalEl) {
             const modal = bootstrap.Modal.getOrCreateInstance(modalEl);

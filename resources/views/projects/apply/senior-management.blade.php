@@ -180,9 +180,8 @@
                             data-appointment="{{ $item->date_of_appointment ? \Carbon\Carbon::parse($item->date_of_appointment)->format('Y-m-d') : '' }}"
                             data-qualification="{{ $item->highest_qualification }}"
                             data-roles="{{ $item->roles_and_responsibilities }}"
-                            data-experience="{{ $item->total_years_of_experience }}" 
-                            data-resume="{{ $item->resume_cv }}"
-                          >
+                            data-experience="{{ $item->total_years_of_experience }}"
+                            data-resume="{{ $item->resume_cv }}">
 
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                 viewBox="0 0 16 16" fill="none">
@@ -357,6 +356,7 @@
 
                                 <input type="date" class="form-control py-2" name="date_of_appointment"
                                     max="{{ now()->format('Y-m-d') }}" required>
+                                <small id="date_of_appointment_error" class="text-danger d-none"></small>
                             </div>
                             <!-- Qualification -->
                             <div class="col-md-6">
@@ -587,10 +587,17 @@
         const uploadLabel = document.querySelector('label[for="resume_cv"]');
         const hasExistingResumeInput = document.getElementById('has_existing_resume');
 
+        const dobInput = document.querySelector('[name="date_of_birth"]');
+        const appointmentInput = document.querySelector('[name="date_of_appointment"]');
+        const appointmentError = document.getElementById('date_of_appointment_error');
+
+
+
         form.addEventListener('submit', function(e) {
 
             const hasExistingResume = hasExistingResumeInput.value === "1";
 
+            // Resume validation
             if (!resumeInput.files.length && !hasExistingResume) {
                 e.preventDefault();
                 errorEl.classList.remove('d-none');
@@ -602,8 +609,33 @@
                 return false;
             }
 
+            // Date validation
+            if (dobInput.value && appointmentInput.value) {
+                const dob = new Date(dobInput.value);
+                const appointment = new Date(appointmentInput.value);
+
+                if (appointment < dob) {
+                    e.preventDefault();
+
+                    appointmentError.textContent =
+                        "Date of Appointment can not be earlier than Director's DoB";
+                    appointmentError.classList.remove('d-none');
+
+                    appointmentInput.classList.add('is-invalid');
+                    appointmentInput.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'center'
+                    });
+
+                    return false;
+                }
+            }
+
             errorEl.classList.add('d-none');
             uploadLabel.style.border = '2px dashed #ccc';
+
+            appointmentError.classList.add('d-none');
+            appointmentInput.classList.remove('is-invalid');
         });
 
         resumeInput.addEventListener('change', function() {
@@ -612,6 +644,11 @@
                 uploadLabel.style.border = '2px dashed #ccc';
                 document.getElementById('resume_cv_name').textContent = this.files[0].name;
             }
+        });
+
+        appointmentInput.addEventListener('change', function() {
+            appointmentError.classList.add('d-none');
+            appointmentInput.classList.remove('is-invalid');
         });
 
     });

@@ -527,8 +527,7 @@
                                             placeholder="Enter Instruction" required>
                                         <div class="error-message text-danger" style="display:none;"></div>
                                     </div>
-                                    <div class="col-12 col-md-6 px-md-2"> <label class="form-label">Organization
-                                            Legal Type<span>*</span></label>
+                                    <div class="col-12 col-md-6 px-md-2"> <label class="form-label">Document Type<span>*</span></label>
 
 
                                         <div class="select-wrapper w-100 position-relative">

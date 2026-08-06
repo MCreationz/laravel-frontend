@@ -96,28 +96,28 @@
                 @endphp
 
                 <tr>
-                <td>
-    <div class="dashboard-v2-name-cell application-details"
-        data-application-id="{{ $application->id }}"
-        style="cursor:pointer;">
+                    <td>
+                        <div class="dashboard-v2-name-cell application-details"
+                            data-application-id="{{ $application->id }}"
+                            style="cursor:pointer;">
 
-        @if($application->fund->fund_logo)
-            <img
-                src="{{ Storage::url($application->fund->fund_logo) }}"
-                alt="{{ $application->fund->fund_name }} Logo"
-                style="width:48px;height:48px;object-fit:cover;flex-shrink:0;">
-        @else
-            <span class="hc-badge">
-                {{ strtoupper(substr($application->fund->fund_name ?? 'F', 0, 2)) }}
-            </span>
-        @endif
+                            @if($application->fund->fund_logo)
+                            <img
+                                src="{{ Storage::url($application->fund->fund_logo) }}"
+                                alt="{{ $application->fund->fund_name }} Logo"
+                                style="width:48px;height:48px;object-fit:cover;flex-shrink:0;">
+                            @else
+                            <span class="hc-badge">
+                                {{ strtoupper(substr($application->fund->fund_name ?? 'F', 0, 2)) }}
+                            </span>
+                            @endif
 
-        <span style="text-decoration: underline;">
-            {{ $application->fund->fund_name ?? '-' }}
-        </span>
+                            <span style="text-decoration: underline;">
+                                {{ $application->fund->fund_name ?? '-' }}
+                            </span>
 
-    </div>
-</td>
+                        </div>
+                    </td>
                     <td class="text-center">
                         {{ $application->fund->fund_owner ?? '-' }}
                     </td>
@@ -138,22 +138,25 @@
                     </td>
 
                     <td class="text-center action-btn">
-                     <a href="javascript:void(0)"
-    class="edit-btn view-application"
-    data-bs-toggle="modal"
-    data-bs-target="#viewApplication"
-    data-fund="{{ $application->fund->fund_name ?? '-' }}"
-    data-owner="{{ $application->fund->fund_owner ?? '-' }}"
-    data-logo="{{ $application->fund->fund_logo ?? '' }}"
-    data-application-id="APP-{{ $application->id }}"
-    data-applied="{{ $application->created_at->format('d/m/Y') }}"
-    data-stage="{{ $application->current_step }}"
-    data-status="{{ ucfirst(str_replace('_', ' ', $application->status)) }}">
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
-                                        fill="none" stroke="#07CCB5" stroke-width="2">
-                                        <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z" />
-                                        <circle cx="12" cy="12" r="3" />
-                                    </svg>
+                        <a href="javascript:void(0)"
+                            class="edit-btn view-application"
+                            data-bs-toggle="modal"
+                            data-bs-target="#viewApplication"
+                            data-fund="{{ $application->fund->fund_name ?? '-' }}"
+                            data-owner="{{ $application->fund->fund_owner ?? '-' }}"
+                            data-logo="{{ $application->fund->fund_logo ?? '' }}"
+                            data-application-id="APP-{{ $application->id }}"
+
+                            data-registration="{{ $application->organization->created_at->format('d/m/Y H:i') }}"
+                            data-application="{{ $application->created_at->format('d/m/Y H:i') }}"
+                            data-applied="{{ $application->created_at->format('d/m/Y') }}"
+                            data-stage="{{ $application->current_step }}"
+                            data-status="{{ ucfirst(str_replace('_', ' ', $application->status)) }}">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                fill="none" stroke="#07CCB5" stroke-width="2">
+                                <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z" />
+                                <circle cx="12" cy="12" r="3" />
+                            </svg>
                     </td>
                 </tr>
 
@@ -176,27 +179,27 @@
         <div class="modal-content">
 
             <!-- Header -->
-        <div class="modal-header border-0" style="border-bottom: 1px solid rgb(0 0 0 / 10%) !important">
+            <div class="modal-header border-0" style="border-bottom: 1px solid rgb(0 0 0 / 10%) !important">
 
-    <div class="d-flex align-items-center gap-3">
+                <div class="d-flex align-items-center gap-3">
 
-        <div class="FD-text" id="modalFundLogoWrapper">
-            <h2 class="gradient-text mb-0" id="modalFundShort">FD</h2>
-        </div>
+                    <div class="FD-text" id="modalFundLogoWrapper">
+                        <h2 class="gradient-text mb-0" id="modalFundShort">FD</h2>
+                    </div>
 
-        <div>
-            <h3 class="mb-0 modal-heading" id="modalFundName">-</h3>
-            <small class="text-muted">
-                Fund Owner:
-                <span id="modalFundOwner">-</span>
-            </small>
-        </div>
+                    <div>
+                        <h3 class="mb-0 modal-heading" id="modalFundName">-</h3>
+                        <small class="text-muted">
+                            Fund Owner:
+                            <span id="modalFundOwner">-</span>
+                        </small>
+                    </div>
 
-    </div>
+                </div>
 
-    <button class="btn-close" data-bs-dismiss="modal"></button>
+                <button class="btn-close" data-bs-dismiss="modal"></button>
 
-</div>
+            </div>
             <!-- Body -->
             <div class="modal-body">
                 <div class="row">
@@ -208,22 +211,24 @@
                             <strong>Application Journey</strong>
                         </p>
 
+                        <!-- Registration -->
                         <div class="timeline-step">
                             <div class="timeline-icon completed">✓</div>
                             <div class="flex-grow-1">
                                 <strong>Registration</strong><br>
-                                <small>01/03/2026 09:00</small>
+                                <small id="modalRegistrationTime">-</small>
                             </div>
                             <span class="status-pill bg-success-subtle text-success">
                                 Completed
                             </span>
                         </div>
 
+                        <!-- Application -->
                         <div class="timeline-step">
                             <div class="timeline-icon submitted">✓</div>
                             <div class="flex-grow-1">
                                 <strong>Application</strong><br>
-                                <small>01/03/2026 09:00</small>
+                                <small id="modalApplicationTime">-</small>
                             </div>
                             <span class="status-pill bg-info-subtle text-info">
                                 Submitted
@@ -242,7 +247,7 @@
                             </div>
                             <div class="flex-grow-1">
                                 <strong>Application Evaluation</strong><br>
-                                <small>01/03/2026 09:00</small>
+                                <small>Not Started yet</small>
                             </div>
                             <span class="status-pill bg-warning-subtle text-warning">
                                 Under Review
@@ -457,6 +462,8 @@
                 const applied = this.dataset.applied;
                 const stage = this.dataset.stage;
                 const status = this.dataset.status;
+                const registration = this.dataset.registration;
+const application = this.dataset.application;
 
                 document.getElementById('modalFundName').textContent = fund;
                 document.getElementById('modalFundOwner').textContent = owner;
@@ -467,28 +474,30 @@
                     .replace(/\b\w/g, c => c.toUpperCase());
                 document.getElementById('modalFounder').textContent = owner;
                 document.getElementById('modalStatus').textContent = status;
+                document.getElementById('modalRegistrationTime').textContent = registration;
+document.getElementById('modalApplicationTime').textContent = application;
 
-           const logo = this.dataset.logo;
-const logoWrapper = document.getElementById('modalFundLogoWrapper');
+                const logo = this.dataset.logo;
+                const logoWrapper = document.getElementById('modalFundLogoWrapper');
 
-if (logo) {
+                if (logo) {
 
-    logoWrapper.innerHTML = `
+                    logoWrapper.innerHTML = `
         <img
             src="/storage/${logo}"
             alt="${fund} Logo"
             class="img-fluid w-100 h-100 object-fit-cover">
     `;
 
-} else {
+                } else {
 
-    logoWrapper.innerHTML = `
+                    logoWrapper.innerHTML = `
         <h2 class="gradient-text mb-0" id="modalFundShort">
             ${fund.substring(0, 2).toUpperCase()}
         </h2>
     `;
 
-}
+                }
             });
 
         });
@@ -541,26 +550,26 @@ if (logo) {
                     return Number(value).toLocaleString('en-IN');
                 }
 
-         const logoWrapper = $('#appFundLogoWrapper');
+                const logoWrapper = $('#appFundLogoWrapper');
 
-if (app.fund.fund_logo) {
+                if (app.fund.fund_logo) {
 
-    logoWrapper.html(`
+                    logoWrapper.html(`
         <img
             src="/storage/${app.fund.fund_logo}"
             alt="${app.fund.fund_name} Logo"
             class="img-fluid w-100 h-100 object-fit-cover">
     `);
 
-} else {
+                } else {
 
-    logoWrapper.html(`
+                    logoWrapper.html(`
         <h2 class="gradient-text mb-0">
             ${app.fund.fund_name.substring(0, 2).toUpperCase()}
         </h2>
     `);
 
-}
+                }
 
                 $('#appFundName').text(app.fund.fund_name);
 

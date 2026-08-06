@@ -305,15 +305,17 @@
                 </div>
             </div>
                @endif
+
+ @if ($op->patent_available == 1)
             <div class="card p-3 p-md-4 border-0 mb-3">
                 <div class="row flex-wrap row-gap-3 row-gap-md-4 px-md-1">
                     {{-- radio --}}
-                    @php
-                        $patentAvailable = old(
-                            'patent_available',
-                            $document->patent_available ?? (optional($op)->patent_available ?? 0),
-                        );
-                    @endphp
+                 @php
+    $patentAvailable = old(
+        'patent_available',
+        optional($op)->patent_available ?? ($document->patent_available ?? 0),
+    );
+@endphp
                     <div class="col-12 px-md-2">
                         <div class="d-flex align-items-center gap-3">
                             <label class="form-label mb-0">Patent Available</label>
@@ -324,7 +326,7 @@
                                 Yes
                             </label>
 
-                            <label class="custom-radio mb-0">
+                            <label class="custom-radio mb-0 d-none">
                                 <input type="radio" name="patent_available" value="0"
                                     {{ $patentAvailable == 0 ? 'checked' : '' }}>
                                 <span class="radio"></span>
@@ -336,34 +338,36 @@
                     <div class="col-12 col-md-6 px-md-2 patent-field">
                         <label class="form-label">Patent No<span>*</span></label>
                         <input type="text" name="patent_number" class="form-control"
-                            value="{{ old('patent_number', $document->patent_number ?? '') }}">
+                            value="{{ old('patent_number', $document->patent_number ?? '') }}" required>
                     </div>
 
                     <div class="col-12 col-md-6 px-md-2 patent-field">
                         <label class="form-label">Application No<span>*</span></label>
                         <input type="text" name="application_number" class="form-control"
-                            value="{{ old('application_number', $document->application_number ?? '') }}">
+                            value="{{ old('application_number', $document->application_number ?? '') }}" required>
                     </div>
 
                     <div class="col-12 col-md-6 px-md-2 patent-field">
                         <label class="form-label">Date of Filing<span>*</span></label>
                         <input type="date" name="date_of_filing" class="form-control"
-                            value="{{ old('date_of_filing', $document->date_of_filing ?? '') }}">
+                            value="{{ old('date_of_filing', $document->date_of_filing ?? '') }}" required>
                     </div>
 
                     <div class="col-12 col-md-6 px-md-2 patent-field">
                         <label class="form-label">Patentee Name<span>*</span></label>
                         <input type="text" name="patentee_name" class="form-control"
-                            value="{{ old('patentee_name', $document->patentee_name ?? '') }}">
+                            value="{{ old('patentee_name', $document->patentee_name ?? '') }}" required>
                     </div>
 
                     <div class="col-12 px-md-2 patent-field">
                         <label class="form-label">Validity of the Patent<span>*</span></label>
                         <input type="date" name="patent_validity" class="form-control"
-                            value="{{ old('patent_validity', $document->patent_validity ?? '') }}">
+                            value="{{ old('patent_validity', $document->patent_validity ?? '') }}" required>
                     </div>
                 </div>
             </div>
+
+@endif
               @if ($op->gstin_registration == 1)
             <div class="card p-3 p-md-4 border-0 mb-3">
                 <div class="row flex-wrap row-gap-3 row-gap-md-4 px-md-1">

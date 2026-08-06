@@ -53,6 +53,15 @@ public function index(Fund $fund)
 
 
         ]);
+        if (
+    $request->filled('date_of_birth') &&
+    $request->filled('date_of_appointment') &&
+    strtotime($request->date_of_appointment) < strtotime($request->date_of_birth)
+) {
+    return back()
+        ->withInput()
+        ->with('error', "Date of Appointment can not be earlier than Director's DoB");
+}
 
         $application = FundApplication::where('fund_id', $fund->id)
             ->where('organization_id', auth('organization')->id())
@@ -99,6 +108,16 @@ public function index(Fund $fund)
             'total_years_of_experience' => 'nullable|integer|min:0',
             'resume_cv' => 'nullable|file|mimes:pdf,doc,docx|max:5120',
         ]);
+
+        if (
+    $request->filled('date_of_birth') &&
+    $request->filled('date_of_appointment') &&
+    strtotime($request->date_of_appointment) < strtotime($request->date_of_birth)
+) {
+    return back()
+        ->withInput()
+        ->with('error', "Date of Appointment can not be earlier than Director's DoB");
+}
 
         $application = FundApplication::where('fund_id', $fund->id)
             ->where('organization_id', auth('organization')->id())
