@@ -861,8 +861,7 @@
 
                     <!-- Years of Operation -->
                     <div class="col-12 col-md-6 px-md-2">
-                        <label class="form-label">Years of Operation (in Years)<span>*</span></label>
-
+                        <label class="form-label">Months of Operation<span>*</span></label>
                         <input type="number" name="years_of_operation_months"
                             class="form-control @error('years_of_operation_months') is-invalid @enderror"
                             value="{{ $years }}" placeholder="Enter in years" required>

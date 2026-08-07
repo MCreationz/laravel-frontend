@@ -100,6 +100,29 @@ class OrganizationDocumentController extends Controller
             ]);
         }
 
+        /*
+|--------------------------------------------------------------------------
+| Organization Documents
+|--------------------------------------------------------------------------
+*/
+        $organizationDocs = OrganizationDocument::where('organization_id', $organizationId)
+            ->latest()
+            ->get();
+
+        foreach ($organizationDocs as $doc) {
+            $documents->push([
+                'type' => 'Organization Documents',
+                'id' => $doc->id,
+                'organization' => null,
+                'fund_application_id' => null,
+                'meta' => [],
+                'items' => [
+                    $doc->name => $doc->file_path,
+                ],
+            ]);
+        }
+        //    return $documents;
+
         return view('organization-documents.index', compact('documents'));
     }
 
