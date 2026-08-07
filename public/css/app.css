@@ -3408,6 +3408,9 @@ a.btn.simple-btn.blue:hover {
     background: var(--accent-color) !important;
     color: var(--white-color) !important;
 }
+.last-col-small th {
+    width: 100%;
+}
 @media (max-width: 1200px) {
     .dashboard-v2-summary-grid {
         grid-template-columns: repeat(3, minmax(120px, 1fr));

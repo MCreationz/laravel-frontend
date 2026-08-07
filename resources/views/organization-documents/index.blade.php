@@ -34,13 +34,13 @@
 
         <div class="table-responsive">
 
-            <table class="table align-middle">
+            <table class="table align-middle last-col-small">
 
                 <thead class="table-light">
                     <tr>
                         <th class="text-nowrap">Document Name</th>
-                        <!-- <th class="text-center text-nowrap">View</th> -->
-                        <th class="text-center text-nowrap">Action</th>
+                        <th class="">Action</th>
+                        <!-- <th class="text-center text-nowrap">Action</th> -->
                     </tr>
                 </thead>
                 <tbody>
@@ -61,7 +61,7 @@
 
                         <!-- VIEW -->
 
-                        <td>
+                        <td class="action-btn">
                             @php
                             $extension = strtolower(pathinfo($file, PATHINFO_EXTENSION));
 
