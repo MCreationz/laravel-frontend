@@ -27,15 +27,15 @@ class FundApplication extends Model
     {
         return $this->hasMany(FundApplicationAnswer::class);
     }
-public function theme()
-{
-    return $this->belongsTo(FundTheme::class, 'theme_id');
-}
+    public function theme()
+    {
+        return $this->belongsTo(FundTheme::class, 'theme_id');
+    }
 
-public function subTheme()
-{
-    return $this->belongsTo(FundTheme::class, 'sub_theme_id');
-}
+    public function subTheme()
+    {
+        return $this->belongsTo(FundTheme::class, 'sub_theme_id');
+    }
     public function seniorManagement()
     {
         return $this->hasMany(FundApplicationSeniorManagement::class);

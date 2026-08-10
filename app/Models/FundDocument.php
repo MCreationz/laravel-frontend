@@ -12,5 +12,6 @@ class FundDocument extends Model
         'document_type',
         'max_file_size_mb',
         'uploaded_file',
+        'fund_id'
     ];
 }

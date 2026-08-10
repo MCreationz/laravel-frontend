@@ -124,16 +124,16 @@ $op = $organization->operationalDetail;
                         placeholder="Enter Registration Number"
                         value="{{ old('registration_number', $document?->registration_number) }}" required>
                 </div>
-               <div class="col-12 col-md-4 px-md-2">
-    <label class="form-label">PAN Card Number <span>*</span></label>
-    <input type="text"
-        name="pan_number"
-        class="form-control"
-        placeholder="ABCDE1234F"
-        value="{{ old('pan_number', auth('organization')->user()->profile->pan_number) }}"
-        readonly
-        required>
-</div>
+                <div class="col-12 col-md-4 px-md-2">
+                    <label class="form-label">PAN Card Number <span>*</span></label>
+                    <input type="text"
+                        name="pan_number"
+                        class="form-control"
+                        placeholder="ABCDE1234F"
+                        value="{{ old('pan_number', auth('organization')->user()->profile->pan_number) }}"
+                        readonly
+                        required>
+                </div>
                 <div class="col-12 col-md-6 px-md-2 position-relative pb-5">
                     <label class="form-label">Upload Registration Certificate <span class="text-danger">*</span></label>
 
@@ -186,61 +186,61 @@ $op = $organization->operationalDetail;
                     </div>
                     @endif
                 </div>
-               <div class="col-12 col-md-6 px-md-2 position-relative pb-5">
-    <label class="form-label">Upload Your PAN Card <span class="text-danger">*</span></label>
+                <div class="col-12 col-md-6 px-md-2 position-relative pb-5">
+                    <label class="form-label">Upload Your PAN Card <span class="text-danger">*</span></label>
 
-    <input type="file" id="pan-card" name="pan_card" hidden required>
-    <label for="pan-card" class="upload-label">
-        <div class="upload-content">
-            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26"
-                fill="none">
-                <g opacity="0.2">
-                    <path d="M9.75 11.917V18.417L11.9167 16.2503" stroke="#292D32" stroke-width="1.5"
-                        stroke-linecap="round" stroke-linejoin="round" />
-                    <path d="M9.7526 18.4167L7.58594 16.25" stroke="#292D32" stroke-width="1.5"
-                        stroke-linecap="round" stroke-linejoin="round" />
-                    <path
-                        d="M23.8307 10.8337V16.2503C23.8307 21.667 21.6641 23.8337 16.2474 23.8337H9.7474C4.33073 23.8337 2.16406 21.667 2.16406 16.2503V9.75032C2.16406 4.33366 4.33073 2.16699 9.7474 2.16699H15.1641"
-                        stroke="#292D32" stroke-width="1.5" stroke-linecap="round"
-                        stroke-linejoin="round" />
-                    <path
-                        d="M23.8307 10.8337H19.4974C16.2474 10.8337 15.1641 9.75033 15.1641 6.50033V2.16699L23.8307 10.8337Z"
-                        stroke="#292D32" stroke-width="1.5" stroke-linecap="round"
-                        stroke-linejoin="round" />
-                </g>
-            </svg>
-            <p class="mt-2">Upload PDF/JPG up to 5 MB</p>
-            <small id="pan-card-name"></small>
-        </div>
-    </label>
+                    <input type="file" id="pan-card" name="pan_card" hidden required>
+                    <label for="pan-card" class="upload-label">
+                        <div class="upload-content">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26"
+                                fill="none">
+                                <g opacity="0.2">
+                                    <path d="M9.75 11.917V18.417L11.9167 16.2503" stroke="#292D32" stroke-width="1.5"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M9.7526 18.4167L7.58594 16.25" stroke="#292D32" stroke-width="1.5"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                    <path
+                                        d="M23.8307 10.8337V16.2503C23.8307 21.667 21.6641 23.8337 16.2474 23.8337H9.7474C4.33073 23.8337 2.16406 21.667 2.16406 16.2503V9.75032C2.16406 4.33366 4.33073 2.16699 9.7474 2.16699H15.1641"
+                                        stroke="#292D32" stroke-width="1.5" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                    <path
+                                        d="M23.8307 10.8337H19.4974C16.2474 10.8337 15.1641 9.75033 15.1641 6.50033V2.16699L23.8307 10.8337Z"
+                                        stroke="#292D32" stroke-width="1.5" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                </g>
+                            </svg>
+                            <p class="mt-2">Upload PDF/JPG up to 5 MB</p>
+                            <small id="pan-card-name"></small>
+                        </div>
+                    </label>
 
-    @if ($document?->pan_card)
-        @php
-            $extension = strtolower(pathinfo($document->pan_card, PATHINFO_EXTENSION));
+                    @if ($document?->pan_card)
+                    @php
+                    $extension = strtolower(pathinfo($document->pan_card, PATHINFO_EXTENSION));
 
-            $icon = match ($extension) {
-                'pdf' => asset('img/pdf-icon.png'),
-                'doc', 'docx' => asset('img/docx.svg'),
-                'xls', 'xlsx', 'csv' => asset('img/excel.svg'),
-                default => asset('img/docx.svg'),
-            };
-        @endphp
+                    $icon = match ($extension) {
+                    'pdf' => asset('img/pdf-icon.png'),
+                    'doc', 'docx' => asset('img/docx.svg'),
+                    'xls', 'xlsx', 'csv' => asset('img/excel.svg'),
+                    default => asset('img/docx.svg'),
+                    };
+                    @endphp
 
-        <div class="mt-2">
-            <a href="{{ asset('storage/' . $document->pan_card) }}" target="_blank"
-                class="text-success d-block mb-1 uploaded-doc">
-                <img src="{{ $icon }}" alt="" width="20" height="20">
-                View PAN Card
-            </a>
-        </div>
-    @endif
-</div>
+                    <div class="mt-2">
+                        <a href="{{ asset('storage/' . $document->pan_card) }}" target="_blank"
+                            class="text-success d-block mb-1 uploaded-doc">
+                            <img src="{{ $icon }}" alt="" width="20" height="20">
+                            View PAN Card
+                        </a>
+                    </div>
+                    @endif
+                </div>
             </div>
         </div>
-           @if ($op?->status_12a)
+        @if ($op?->status_12a)
         <div class="card p-3 p-md-4 border-0 mb-3">
             <div class="row flex-wrap row-gap-3 row-gap-md-4 px-md-1">
-             
+
                 <div class="col-12 col-md-6 px-md-2">
                     <label class="form-label">12A Registration Number<span>*</span></label>
                     <input type="text" name="registration_number_12a" class="form-control"
@@ -301,14 +301,14 @@ $op = $organization->operationalDetail;
                     </div>
                     @endif
                 </div>
-               
+
             </div>
         </div>
-         @endif
-           @if ($op?->status_80g)
+        @endif
+        @if ($op?->status_80g)
         <div class="card p-3 p-md-4 border-0 mb-3">
             <div class="row flex-wrap row-gap-3 row-gap-md-4 px-md-1">
-              
+
                 <div class="col-12 col-md-6 px-md-2">
                     <label class="form-label">80G Registration Number<span>*</span></label>
                     <input type="text" name="registration_number_80g" class="form-control"
@@ -370,14 +370,14 @@ $op = $organization->operationalDetail;
                     </div>
                     @endif
                 </div>
-              
+
             </div>
         </div>
-          @endif
- @if ($op?->status_fcra)
+        @endif
+        @if ($op?->status_fcra)
         <div class="card p-3 p-md-4 border-0 mb-3">
             <div class="row flex-wrap row-gap-3 row-gap-md-4 px-md-1">
-               
+
                 <div class="col-12 col-md-6 px-md-2">
                     <label class="form-label">FCRA Registration Number<span>*</span></label>
                     <input type="text" name="registration_number_fcra" class="form-control"
@@ -437,14 +437,14 @@ $op = $organization->operationalDetail;
                     </div>
                     @endif
                 </div>
-              
+
             </div>
         </div>
-          @endif
-                @if ($op?->csr_1_registration)
+        @endif
+        @if ($op?->csr_1_registration)
         <div class="card p-3 p-md-4 border-0">
             <div class="row flex-wrap row-gap-3 row-gap-md-4 px-md-1">
-          
+
                 <div class="col-12 col-md-6 px-md-2">
                     <label class="form-label">CSR-1 Registration Number<span>*</span></label>
                     <input type="text" name="registration_number_csr1" class="form-control"
@@ -506,10 +506,160 @@ $op = $organization->operationalDetail;
                     </div>
                     @endif
                 </div>
-              
+
             </div>
         </div>
-          @endif
+        @endif
+
+          @if ($fundDocuments->count())
+    <div class="card p-3 p-md-4 border-0">
+        <div class="row flex-wrap row-gap-3 row-gap-md-4 px-md-1">
+
+            @foreach ($fundDocuments as $fundDocument)
+                @php
+                    $applicationDocument = $applicationDocuments
+                        ->where('fund_document_id', $fundDocument->id)
+                        ->first();
+
+                    $fieldName = 'document_' . $fundDocument->id;
+
+                    $documentType = strtolower(trim($fundDocument->document_type));
+
+                    $accept = match ($documentType) {
+                        'pdf' => '.pdf,application/pdf',
+
+                        'jpg', 'jpeg' => '.jpg,.jpeg,image/jpeg',
+
+                        'png' => '.png,image/png',
+
+                        'doc' => '.doc,application/msword',
+
+                        'docx' => '.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+
+                        'xls' => '.xls,application/vnd.ms-excel',
+
+                        'xlsx' => '.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+
+                        'csv' => '.csv,text/csv',
+
+                        'jpg/pdf', 'pdf/jpg', 'pdf,jpg', 'jpg,pdf' =>
+                            '.pdf,.jpg,.jpeg,application/pdf,image/jpeg',
+
+                        default => null,
+                    };
+                @endphp
+
+                <div class="col-12 px-md-2 position-relative pb-5">
+
+                    <label class="form-label">
+                        {{ ucfirst($fundDocument->document_name )}}
+
+                        @if ($fundDocument->is_required)
+                            <span class="text-danger">*</span>
+                        @endif
+                    </label>
+
+                    @if ( $fundDocument->instruction)
+                        <p class="text-muted mb-2">
+                            {{ ucfirst($fundDocument->instruction)}}
+                        </p>
+                    @endif
+
+                    <input
+                        type="file"
+                        id="{{ $fieldName }}"
+                        name="{{ $fieldName }}"
+                        accept="{{ $accept }}"
+                         data-max-size="{{ $fundDocument->max_file_size_mb }}"
+                        hidden
+                        @if ($fundDocument->is_required && !$applicationDocument?->uploaded_file)
+                            required
+                        @endif
+                    >
+
+                    <label for="{{ $fieldName }}" class="upload-label">
+                        <div class="upload-content">
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                width="26"
+                                height="26"
+                                viewBox="0 0 26 26"
+                                fill="none">
+                                <g opacity="0.2">
+                                    <path d="M9.75 11.917V18.417L11.9167 16.2503"
+                                        stroke="#292D32"
+                                        stroke-width="1.5"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round" />
+
+                                    <path d="M9.7526 18.4167L7.58594 16.25"
+                                        stroke="#292D32"
+                                        stroke-width="1.5"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round" />
+
+                                    <path
+                                        d="M23.8307 10.8337V16.2503C23.8307 21.667 21.6641 23.8337 16.2474 23.8337H9.7474C4.33073 23.8337 2.16406 21.667 2.16406 16.2503V9.75032C2.16406 4.33366 4.33073 2.16699 9.7474 2.16699H15.1641"
+                                        stroke="#292D32"
+                                        stroke-width="1.5"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round" />
+
+                                    <path
+                                        d="M23.8307 10.8337H19.4974C16.2474 10.8337 15.1641 9.75033 15.1641 6.50033V2.16699L23.8307 10.8337Z"
+                                        stroke="#292D32"
+                                        stroke-width="1.5"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                </g>
+                            </svg>
+
+                            <p class="mt-2">
+                                Upload
+                                {{ strtoupper($fundDocument->document_type) }}
+                                upto {{ $fundDocument->max_file_size_mb }} MB
+                            </p>
+                        </div>
+                    </label>
+
+                    @if ($applicationDocument?->uploaded_file)
+                        @php
+                            $extension = strtolower(
+                                pathinfo(
+                                    $applicationDocument->uploaded_file,
+                                    PATHINFO_EXTENSION
+                                )
+                            );
+
+                            $icon = match ($extension) {
+                                'pdf' => asset('img/pdf-icon.png'),
+                                'doc', 'docx' => asset('img/docx.svg'),
+                                'xls', 'xlsx', 'csv' => asset('img/excel.svg'),
+                                default => asset('img/docx.svg'),
+                            };
+                        @endphp
+
+                        <div class="mt-2">
+                            <a href="{{ asset('storage/' . $applicationDocument->uploaded_file) }}"
+                                target="_blank"
+                                class="text-success d-block mb-1 uploaded-doc">
+
+                                <img src="{{ $icon }}"
+                                    alt=""
+                                    width="20"
+                                    height="20">
+
+                                View {{ $fundDocument->document_name }}
+                            </a>
+                        </div>
+                    @endif
+
+                </div>
+            @endforeach
+
+        </div>
+    </div>
+@endif
+
         <div style="border-radius:0px 0px 8px 8px;"
             class="d-flex justify-content-center justify-content-md-end gap-2 gap-md-3 steps-btn mt-4  flex-wrap">
             <div class="btn-wrap">
@@ -529,12 +679,55 @@ $op = $organization->operationalDetail;
         </div>
     </form>
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+
+        document.querySelectorAll('input[type="file"][name^="document_"]').forEach(input => {
+
+            input.addEventListener('change', function () {
+
+                if (!this.files.length) {
+                    return;
+                }
+
+                const file = this.files[0];
+
+                const maxSizeMb = parseFloat(this.dataset.maxSize);
+                const maxSizeBytes = maxSizeMb * 1024 * 1024;
+
+                if (file.size > maxSizeBytes) {
+
+                    alert(`File size must not exceed ${maxSizeMb} MB.`);
+
+                    this.value = '';
+
+                    const fileNameEl =
+                        document.getElementById(this.id + '_name');
+
+                    if (fileNameEl) {
+                        fileNameEl.textContent = '';
+                    }
+
+                    return;
+                }
+
+            });
+
+        });
+
+    });
+</script>
 
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
 
         document.querySelectorAll('input[type="file"]').forEach(input => {
+
+            // Skip dynamic fund document uploads
+            if (input.name.startsWith('document_')) {
+                return;
+            }
 
             input.setAttribute(
                 'accept',

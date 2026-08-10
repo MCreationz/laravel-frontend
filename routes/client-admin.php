@@ -33,7 +33,6 @@ Route::prefix('client-admin')->group(function () {
         | Login
         |--------------------------------------------------------------------------
         */
-
     });
 
     /*
@@ -188,8 +187,8 @@ Route::prefix('client-admin')->group(function () {
 | Applicants
 |--------------------------------------------------------------------------
 */
-Route::get('/client-admin/applicants/{application}', [ApplicantController::class, 'show'])
-    ->name('client-admin.applicants.show');
+        Route::get('/client-admin/applicants/{application}', [ApplicantController::class, 'show'])
+            ->name('client-admin.applicants.show');
 
         Route::get('/applicants', [ApplicantController::class, 'index'])
             ->name('client-admin.applicants.index');
@@ -237,7 +236,6 @@ Route::get('/client-admin/applicants/{application}', [ApplicantController::class
 
             Route::delete('/{id}', [NotificationController::class, 'destroy'])
                 ->name('destroy');
-
         });
 
         /*

@@ -8,30 +8,59 @@ use App\Models\FundApplication;
 use App\Models\FundApplicationNpoDocument;
 use App\Models\FundApplicationStartupDocument;
 use Illuminate\Http\Request;
+use App\Models\FundDocument;
+use App\Models\FundApplicationDocument;
 
 class DocumentController extends Controller
 {
-public function npo(Fund $fund)
-{
-    $fundApplication = FundApplication::where('fund_id', $fund->id)
-        ->where('organization_id', auth('organization')->id())
-        ->first();
 
-    return view('projects.apply.documents.npo', compact('fund', 'fundApplication'));
-}
 
-public function startup(Fund $fund)
-{
-    $fundApplication = FundApplication::where('fund_id', $fund->id)
-        ->where('organization_id', auth('organization')->id())
-        ->first();
+    public function npo(Fund $fund)
+    {
+        $fundApplication = FundApplication::where('fund_id', $fund->id)
+            ->where('organization_id', auth('organization')->id())
+            ->first();
 
-    return view('projects.apply.documents.startup', compact('fund', 'fundApplication'));
-}
+        $fundDocuments = FundDocument::where('fund_id', $fund->id)
+            ->latest()
+            ->get();
 
+        $applicationDocuments = $fundApplication
+            ? FundApplicationDocument::where('fund_application_id', $fundApplication->id)->get()
+            : collect();
+
+        return view('projects.apply.documents.npo', compact(
+            'fund',
+            'fundApplication',
+            'fundDocuments',
+            'applicationDocuments'
+        ));
+    }
+
+    public function startup(Fund $fund)
+    {
+        $fundApplication = FundApplication::where('fund_id', $fund->id)
+            ->where('organization_id', auth('organization')->id())
+            ->first();
+
+        $fundDocuments = FundDocument::where('fund_id', $fund->id)
+            ->latest()
+            ->get();
+
+        $applicationDocuments = $fundApplication
+            ? FundApplicationDocument::where('fund_application_id', $fundApplication->id)->get()
+            : collect();
+
+        return view('projects.apply.documents.startup', compact(
+            'fund',
+            'fundApplication',
+            'fundDocuments',
+            'applicationDocuments'
+        ));
+    }
     public function storeNpo(Request $request, Fund $fund)
     {
-       // return $request->all();
+        // return $request->all();
         $fundApplication = FundApplication::where('fund_id', $fund->id)
             ->where('organization_id', auth('organization')->id())
             ->firstOrFail();
@@ -85,10 +114,16 @@ public function startup(Fund $fund)
                 ->store('fund-applications/npo-documents', 'public');
         }
         if ($request->hasFile('pan_card')) {
-    $document->pan_card = $request
-        ->file('pan_card')
-        ->store('fund-applications/npo-documents', 'public');
-}
+            $document->pan_card = $request
+                ->file('pan_card')
+                ->store('fund-applications/npo-documents', 'public');
+        }
+        // Save dynamic fund documents
+        $this->saveFundApplicationDocuments(
+            $request,
+            $fundApplication,
+            $fund
+        );
 
         $document->save();
 
@@ -99,66 +134,101 @@ public function startup(Fund $fund)
     }
 
     public function storeStartup(Request $request, Fund $fund)
-{
+    {
 
-//return $request->all();
-    $fundApplication = FundApplication::where('fund_id', $fund->id)
-        ->where('organization_id', auth('organization')->id())
-        ->firstOrFail();
+        //return $request->all();
+        $fundApplication = FundApplication::where('fund_id', $fund->id)
+            ->where('organization_id', auth('organization')->id())
+            ->firstOrFail();
 
-    $document = FundApplicationStartupDocument::firstOrNew([
-        'fund_application_id' => $fundApplication->id,
-    ]);
+        $document = FundApplicationStartupDocument::firstOrNew([
+            'fund_application_id' => $fundApplication->id,
+        ]);
 
-    $document->organization_name = $request->organization_name;
+        $document->organization_name = $request->organization_name;
 
-    $document->registration_number = $request->registration_number;
+        $document->registration_number = $request->registration_number;
 
-    $document->dpiit_registration_number = $request->dpiit_registration_number;
+        $document->dpiit_registration_number = $request->dpiit_registration_number;
 
-    $document->patent_available = $request->patent_available;
+        $document->patent_available = $request->patent_available;
 
-    $document->patent_number = $request->patent_number;
-    $document->application_number = $request->application_number;
-    $document->date_of_filing = $request->date_of_filing;
-    $document->patentee_name = $request->patentee_name;
-    $document->patent_validity = $request->patent_validity;
+        $document->patent_number = $request->patent_number;
+        $document->application_number = $request->application_number;
+        $document->date_of_filing = $request->date_of_filing;
+        $document->patentee_name = $request->patentee_name;
+        $document->patent_validity = $request->patent_validity;
 
-    $document->gst_registration_number = $request->gst_registration_number;
+        $document->gst_registration_number = $request->gst_registration_number;
 
-    $document->msme_registration_number = $request->msme_registration_number;
-    $document->msme_registration_validity = $request->msme_registration_validity;
+        $document->msme_registration_number = $request->msme_registration_number;
+        $document->msme_registration_validity = $request->msme_registration_validity;
 
-    if ($request->hasFile('registration_certificate')) {
-        $document->registration_certificate = $request
-            ->file('registration_certificate')
-            ->store('fund-applications/startup-documents', 'public');
+        if ($request->hasFile('registration_certificate')) {
+            $document->registration_certificate = $request
+                ->file('registration_certificate')
+                ->store('fund-applications/startup-documents', 'public');
+        }
+
+        if ($request->hasFile('dpiit_certificate')) {
+            $document->dpiit_certificate = $request
+                ->file('dpiit_certificate')
+                ->store('fund-applications/startup-documents', 'public');
+        }
+
+        if ($request->hasFile('gst_certificate')) {
+            $document->gst_certificate = $request
+                ->file('gst_certificate')
+                ->store('fund-applications/startup-documents', 'public');
+        }
+        if ($request->hasFile('pan_card')) {
+            $document->pan_card = $request
+                ->file('pan_card')
+                ->store('fund-applications/startup-documents', 'public');
+        }
+
+        $document->save();
+
+        // Save dynamic fund documents
+        $this->saveFundApplicationDocuments(
+            $request,
+            $fundApplication,
+            $fund
+        );
+
+
+        return redirect()->route(
+            'projects.apply.financial-documents',
+            $fund->id
+        );
     }
 
-    if ($request->hasFile('dpiit_certificate')) {
-        $document->dpiit_certificate = $request
-            ->file('dpiit_certificate')
-            ->store('fund-applications/startup-documents', 'public');
+    private function saveFundApplicationDocuments(
+        Request $request,
+        FundApplication $fundApplication,
+        Fund $fund
+    ) {
+        $fundDocuments = FundDocument::where('fund_id', $fund->id)->get();
+
+        foreach ($fundDocuments as $fundDocument) {
+            $fieldName = 'document_' . $fundDocument->id;
+
+            if (!$request->hasFile($fieldName)) {
+                continue;
+            }
+
+            $applicationDocument = FundApplicationDocument::firstOrNew([
+                'fund_application_id' => $fundApplication->id,
+                'fund_document_id' => $fundDocument->id,
+            ]);
+
+            $applicationDocument->uploaded_file = $request
+                ->file($fieldName)
+                ->store('fund-applications/documents', 'public');
+
+            $applicationDocument->status = 'uploaded';
+
+            $applicationDocument->save();
+        }
     }
-
-    if ($request->hasFile('gst_certificate')) {
-        $document->gst_certificate = $request
-            ->file('gst_certificate')
-            ->store('fund-applications/startup-documents', 'public');
-    }
-    if ($request->hasFile('pan_card')) {
-    $document->pan_card = $request
-        ->file('pan_card')
-        ->store('fund-applications/startup-documents', 'public');
-}
-
-    $document->save();
-
-    return redirect()->route(
-        'projects.apply.financial-documents',
-        $fund->id
-    );
-}
-
-
 }
