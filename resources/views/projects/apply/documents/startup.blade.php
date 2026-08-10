@@ -453,7 +453,7 @@ $op = $organization->operationalDetail;
         </div>
         @endif
 
-      @if ($fundDocuments->count())
+           @if ($fundDocuments->count())
     <div class="card p-3 p-md-4 border-0">
         <div class="row flex-wrap row-gap-3 row-gap-md-4 px-md-1">
 
@@ -494,16 +494,16 @@ $op = $organization->operationalDetail;
                 <div class="col-12 px-md-2 position-relative pb-5">
 
                     <label class="form-label">
-                        {{ $fundDocument->document_name }}
+                        {{ ucfirst($fundDocument->document_name )}}
 
                         @if ($fundDocument->is_required)
                             <span class="text-danger">*</span>
                         @endif
                     </label>
 
-                    @if ($fundDocument->instruction)
+                    @if ( $fundDocument->instruction)
                         <p class="text-muted mb-2">
-                            {{ $fundDocument->instruction }}
+                            {{ ucfirst($fundDocument->instruction)}}
                         </p>
                     @endif
 
@@ -512,7 +512,7 @@ $op = $organization->operationalDetail;
                         id="{{ $fieldName }}"
                         name="{{ $fieldName }}"
                         accept="{{ $accept }}"
-                          data-max-size="{{ $fundDocument->max_file_size_mb }}"
+                         data-max-size="{{ $fundDocument->max_file_size_mb }}"
                         hidden
                         @if ($fundDocument->is_required && !$applicationDocument?->uploaded_file)
                             required
