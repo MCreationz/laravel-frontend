@@ -3,9 +3,13 @@
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\CompanyController;
 use App\Http\Controllers\API\ContactInquiryController;
+use App\Http\Controllers\API\FundController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1')->group(function () {
+
+ Route::get('/funds', [FundController::class, 'index']);
+    Route::get('/funds/{id}', [FundController::class, 'show']);
 
     // Public Routes
     Route::post('user/register', [AuthController::class, 'register']);
