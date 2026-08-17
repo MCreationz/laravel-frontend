@@ -219,20 +219,20 @@
 
 
                             <!-- Edit -->
-                          <a href="#"
-   data-bs-toggle="modal"
-   data-bs-target="#reviewerModal"
-   class="edit-btn">
-    <svg xmlns="http://www.w3.org/2000/svg"
-        width="16"
-        height="16"
-        viewBox="0 0 16 16"
-        fill="none">
-        <path d="M8.8 2.4L3.3 8.2C3.1 8.4 2.9 8.8 2.9 9.1L2.7 11.3C2.6 12.1 3.1 12.6 3.9 12.5L6.1 12.1C6.3 12 6.8 11.8 7 11.6L12.4 5.8C13.4 4.8 13.8 3.7 12.3 2.3C10.9 0.9 9.8 1.4 8.8 2.4Z"
-            stroke="#07CCB5"
-            stroke-width="1.2" />
-    </svg>
-</a>
+                            <a href="#"
+                                data-bs-toggle="modal"
+                                data-bs-target="#reviewerModal"
+                                class="edit-btn">
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                    width="16"
+                                    height="16"
+                                    viewBox="0 0 16 16"
+                                    fill="none">
+                                    <path d="M8.8 2.4L3.3 8.2C3.1 8.4 2.9 8.8 2.9 9.1L2.7 11.3C2.6 12.1 3.1 12.6 3.9 12.5L6.1 12.1C6.3 12 6.8 11.8 7 11.6L12.4 5.8C13.4 4.8 13.8 3.7 12.3 2.3C10.9 0.9 9.8 1.4 8.8 2.4Z"
+                                        stroke="#07CCB5"
+                                        stroke-width="1.2" />
+                                </svg>
+                            </a>
 
                             <!-- Delete -->
                             <form action="{{ route('client-admin.funds.delete', $fund->id) }}"
