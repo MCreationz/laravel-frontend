@@ -305,7 +305,7 @@
                     <!-- Header -->
                     <div class="modal-header">
                         <div>
-                            <h2 class="modal-title mb-0 inner-title" id="reviewerModalTitle">
+                            <h2 class="modal-title mb-2 inner-title" id="reviewerModalTitle">
                                 Edit Fund
                             </h2>
 
