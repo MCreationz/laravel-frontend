@@ -184,26 +184,20 @@
                             </td>
 
                             <td class="text-center action-btn">
-                                <a href="" class="edit-btn">
-
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                            viewBox="0 0 16 16" fill="none">
-
-                                            <path
-                                                d="M8.8198 2.39503L3.35707 8.17714C3.1508 8.39671 2.95119 8.8292 2.91127 9.12862L2.66508 11.2844C2.57858 12.0629 3.1375 12.5952 3.90933 12.4621L6.05184 12.0962C6.35126 12.043 6.77044 11.8234 6.97671 11.5972L12.4394 5.81506C13.3843 4.81699 13.8101 3.6792 12.3396 2.28857C10.8758 0.911245 9.76463 1.39697 8.8198 2.39503Z"
-                                                stroke="#07CCB5" stroke-width="1.2" stroke-miterlimit="10"
-                                                stroke-linecap="round" stroke-linejoin="round" />
-
-                                            <path d="M7.91406 3.35938C8.20017 5.19581 9.69061 6.59975 11.5404 6.78605"
-                                                stroke="#07CCB5" stroke-width="1.2" stroke-miterlimit="10"
-                                                stroke-linecap="round" stroke-linejoin="round" />
-
-                                            <path d="M2 14.6387H13.9767" stroke="#07CCB5" stroke-width="1.2"
-                                                stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
-
-                                        </svg>
-
-                                </a>
+                 <a href="#"
+                                data-bs-toggle="modal"
+                                data-bs-target="#reviewerModal"
+                                class="edit-btn">
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                    width="16"
+                                    height="16"
+                                    viewBox="0 0 16 16"
+                                    fill="none">
+                                    <path d="M8.8 2.4L3.3 8.2C3.1 8.4 2.9 8.8 2.9 9.1L2.7 11.3C2.6 12.1 3.1 12.6 3.9 12.5L6.1 12.1C6.3 12 6.8 11.8 7 11.6L12.4 5.8C13.4 4.8 13.8 3.7 12.3 2.3C10.9 0.9 9.8 1.4 8.8 2.4Z"
+                                        stroke="#07CCB5"
+                                        stroke-width="1.2" />
+                                </svg>
+                            </a>
                             </td>
 
                         </tr>
@@ -225,7 +219,160 @@
 
     </div>
 
+<div class="modal fade" id="reviewerModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
 
+            <!-- Header -->
+            <div class="modal-header">
+                <div>
+                    <h2 class="modal-title mb-0 inner-title" id="reviewerModalTitle">
+                        Add Reviewer
+                    </h2>
+
+                    {{-- <p class="text-muted small mb-0">
+                            Assign domain experts for fund review
+                        </p> --}}
+                </div>
+
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                </button>
+            </div>
+
+            <!-- Body -->
+            <div class="modal-body p-0">
+
+                <form id="reviewerForm" action="{{ route('client-admin.reviewers.store') }}" method="POST">
+
+                    @csrf
+
+                    <div class="p-4">
+
+                        <input type="hidden" name="reviewer_id" id="reviewer_id">
+
+                        <!-- Name + Email -->
+                        <div class="row g-3 mb-3">
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">
+                                    Full Name
+                                    <span class="text-danger">*</span>
+                                </label>
+
+                                <input type="text" class="form-control py-2" id="full_name" name="full_name"
+                                    placeholder="Enter full name" required>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">
+                                    Email Address
+                                    <span class="text-danger">*</span>
+                                </label>
+
+                                <input type="email" class="form-control py-2" id="email" name="email"
+                                    placeholder="Enter email address" required>
+                            </div>
+
+                        </div>
+
+                        <!-- Phone + Password -->
+                        <div class="row g-3 mb-3">
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">
+                                    Phone Number
+                                </label>
+
+                                <input type="text" class="form-control py-2" id="phone_number"
+                                    name="phone_number" placeholder="Enter phone number">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">
+                                    Password
+                                    <span class="text-danger">*</span>
+                                </label>
+
+                                <input type="password" class="form-control py-2" id="password" name="password"
+                                    placeholder="Enter password" required>
+                            </div>
+
+                        </div>
+
+                        <!-- Role + Expertise -->
+                        <div class="row g-3 mb-3">
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">
+                                    Role
+                                </label>
+
+                                <input type="text" class="form-control py-2" id="role" name="role"
+                                    placeholder="e.g. Senior Reviewer">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">
+                                    Domain Expertise
+                                </label>
+
+                                <input type="text" class="form-control py-2" id="domain_expertise"
+                                    name="domain_expertise" placeholder="e.g. Healthcare, Tech, Finance">
+                            </div>
+
+                        </div>
+
+                        <!-- Status -->
+                        <div class="row g-3">
+
+                            <div class="col-md-12">
+                                <label class="form-label fw-semibold">
+                                    Status
+                                    <span class="text-danger">*</span>
+                                </label>
+
+                                <div class="select-wrapper w-100 position-relative">
+
+                                    <div
+                                        class="custom-select form-control py-2 d-flex justify-content-between align-items-center">
+                                        <span class="text-muted">Select Status</span>
+                                    </div>
+
+                                    <input type="hidden" name="status" id="status" required
+                                        class="hidden-select">
+
+                                    <ul class="select-list" style="display: none;">
+                                        <li data-value="verified">Verified</li>
+                                        <li data-value="non_verified">Non-Verified</li>
+                                    </ul>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- Footer -->
+                    <div style="border-radius:0px 0px 8px 8px;"
+                        class="modal-footer border-0 d-flex justify-content-center justify-content-md-end gap-2 steps-btn pe-lg-4 flex-wrap">
+
+                        <button type="button" class="btn simple-btn m-0" data-bs-dismiss="modal">
+                            Cancel
+                        </button>
+
+                        <button type="submit" id="reviewerSubmitBtn" class="btn gradient-btn m-0">
+                            Save Reviewer
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
 
