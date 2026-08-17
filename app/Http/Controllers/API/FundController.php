@@ -12,6 +12,8 @@ class FundController extends Controller
      */
     public function index()
     {
+        $today = now()->toDateString();
+
         $funds = Fund::with([
             'client',
             'reviewers',
@@ -19,7 +21,13 @@ class FundController extends Controller
             'themes',
             'documents',
             'questionnaires',
-        ])->get();
+        ])
+            ->whereDate('project_start', '<=', $today)
+            ->where(function ($query) use ($today) {
+                $query->whereDate('project_end', '>=', $today)
+                    ->orWhereNull('project_end');
+            })
+            ->get();
 
         return response()->json([
             'success' => true,
