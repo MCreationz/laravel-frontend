@@ -166,29 +166,39 @@ Route::prefix('super-admin')
         Route::get('/reviewers', [ReviewerController::class, 'index'])
             ->name('reviewers.index');
 
+        Route::post('reviewers/store', [ReviewerController::class, 'store'])
+            ->name('reviewers.store');
+
+        Route::post('reviewers/{reviewer}/update', [ReviewerController::class, 'update'])
+            ->name('reviewers.update');
+
+        Route::post('reviewers/{reviewer}/delete', [ReviewerController::class, 'destroy'])
+            ->name('reviewers.delete');
+
+        Route::post('/reviewers/assign-funds', [ReviewerController::class, 'assignFunds'])
+            ->name('reviewers.assign-funds');
+
         // Funds
         Route::get('/funds', [FundController::class, 'index'])
             ->name('funds.index');
 
-     Route::prefix('notifications')
-    ->name('notifications.')
-    ->group(function () {
+        Route::prefix('notifications')
+            ->name('notifications.')
+            ->group(function () {
 
-        Route::get('/', [NotificationController::class, 'index'])
-            ->name('index');
+                Route::get('/', [NotificationController::class, 'index'])
+                    ->name('index');
 
-        Route::get('/unread-count', [NotificationController::class, 'unreadCount'])
-            ->name('unread-count');
+                Route::get('/unread-count', [NotificationController::class, 'unreadCount'])
+                    ->name('unread-count');
 
-        Route::post('/{id}/read', [NotificationController::class, 'markAsRead'])
-            ->name('read');
+                Route::post('/{id}/read', [NotificationController::class, 'markAsRead'])
+                    ->name('read');
 
-        Route::post('/read-all', [NotificationController::class, 'markAllAsRead'])
-            ->name('read-all');
+                Route::post('/read-all', [NotificationController::class, 'markAllAsRead'])
+                    ->name('read-all');
 
-        Route::delete('/{id}', [NotificationController::class, 'destroy'])
-            ->name('destroy');
-
-    });
-
+                Route::delete('/{id}', [NotificationController::class, 'destroy'])
+                    ->name('destroy');
+            });
     });
