@@ -296,7 +296,7 @@
                                         required
                                         class="hidden-select">
 
-                                    <ul class="select-list checkbox-list-others"
+                                    <ul class="select-list checkbox-list-others checkbox-list"
                                         style="display: none;">
 
                                         <li data-value="npo">
@@ -390,7 +390,7 @@
 
                                     </div>
 
-                                    <ul class="select-list checkbox-list-others"
+                                    <ul class="select-list checkbox-list-others checkbox-list"
                                         id="applicationStateList">
 
                                         <li>

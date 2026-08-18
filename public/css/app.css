@@ -1797,10 +1797,8 @@ ul.select-list label {
 ul.select-list input[type="checkbox"] {
     appearance: none;
 }
-/* 
-ul.select-list.checkbox-list li:hover {
-    background: transparent;
-} */
+
+
 
 ul.select-list.checkbox-list li:hover label {
     color: var(--accent-color) !important;
@@ -1818,7 +1816,9 @@ ul.select-list label:before {
     cursor: pointer;
     opacity: 0;
 }
-
+.checkbox-wrap ul.select-list.checkbox-list li:hover {
+    background: transparent;
+}
 ul.select-list label:after {
     content: '';
     position: absolute;
