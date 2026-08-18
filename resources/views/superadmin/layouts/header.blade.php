@@ -1,6 +1,6 @@
 <header class="header px-3 px-lg-4 position-fixed top-0">
     <div class="row justify-content-between align-items-center h-100">
-        <div class="col-auto d-flex gap-3 align-items-center">
+        <div class="col-auto d-flex gap-3 align-items-center p-0">
             <div class="header-toggle">
                 <button class="nav-toggle" id="sidebar-toggle">
                     <span></span>
@@ -28,7 +28,7 @@
         <div class="col-auto p-0 logo mobile d-none text-center flex-grow">
             <img src="{{ asset('img/FundInk-logo.svg') }}" alt="FundInk site logo" width="124px" height="">
         </div>
-        <div class="col-auto d-flex align-items-center ms-auto">
+        <div class="col-auto d-flex align-items-center ms-auto pe-0">
             <div class="access-content-wrap">
                 <div class="access-content">
                     <div class="access-title">Super Admin</div>
@@ -89,7 +89,7 @@
                 {{-- Profile Dropdown --}}
                 <div class="dropdown ps-1 ps-lg-3">
 
-                    <div class="d-flex align-items-center profile-dropdown-toggle" role="button"
+                    <div class="d-flex align-items-center profile-dropdown-toggle ms-2" role="button"
                         data-bs-toggle="dropdown" aria-expanded="false">
 
                         <div class="flex-shrink-0 profile-img">
