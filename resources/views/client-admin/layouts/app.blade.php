@@ -152,6 +152,16 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script>
+    const toggleBtn = document.getElementById("sidebar-toggle");
+    const sidebar = document.querySelector("body");
+
+    toggleBtn.addEventListener("click", () => {
+        sidebar.classList.toggle("sidebar-active");
+    });
+</script>
+
+    
+    <script>
         document.querySelectorAll(".select-wrapper").forEach(function (wrapper) {
 
             const selectBox = wrapper.querySelector(".custom-select");

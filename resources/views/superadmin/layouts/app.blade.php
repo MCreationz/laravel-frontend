@@ -246,6 +246,16 @@
         @endforeach
     @endif
 </script>
+
+<script>
+    const toggleBtn = document.getElementById("sidebar-toggle");
+    const sidebar = document.querySelector("body");
+
+    toggleBtn.addEventListener("click", () => {
+        sidebar.classList.toggle("sidebar-active");
+    });
+</script>
+
    <script>
         document.addEventListener('DOMContentLoaded', function () {
 
