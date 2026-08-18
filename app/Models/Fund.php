@@ -59,5 +59,8 @@ public function questionnaires()
         ->where('is_active', true);
 }
 
-
+public function applications()
+{
+    return $this->hasMany(FundApplication::class);
+}
 }

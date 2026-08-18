@@ -183,6 +183,15 @@ Route::prefix('super-admin')
         // Funds
         Route::get('/funds', [FundController::class, 'index'])
             ->name('funds.index');
+            Route::put(
+    '/superadmin/funds/{id}',
+    [FundController::class, 'update']
+)->name('funds.update');
+
+Route::delete(
+    '/superadmin/funds/{id}',
+    [FundController::class, 'destroy']
+)->name('funds.delete');
 
         Route::prefix('notifications')
             ->name('notifications.')

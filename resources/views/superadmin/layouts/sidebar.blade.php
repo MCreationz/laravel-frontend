@@ -97,35 +97,7 @@
         </div>
 
     </div>
-    <div class="sidebar-boxes mt-5 d-flex flex-column-2 flex-wrap gap-2.5">
-    <div class="col single-item">
-        <div class="single-box clients">
-            <div class="number">{{ \App\Models\ClientAdmin::count() }}</div>
-            <div class="text">Clients</div>
-        </div>
-    </div>
-
-    <div class="col single-item">
-        <div class="single-box applicants">
-            <div class="number">{{ \App\Models\FundApplication::count() }}</div>
-            <div class="text">Applicants</div>
-        </div>
-    </div>
-
-    <div class="col single-item">
-        <div class="single-box reviewers">
-            <div class="number">0</div>
-            <div class="text">Reviewers</div>
-        </div>
-    </div>
-
-    <div class="col single-item">
-        <div class="single-box funds">
-            <div class="number">{{ \App\Models\Fund::count() }}</div>
-            <div class="text">Funds</div>
-        </div>
-    </div>
-</div>
+    
 </div>
 
 </div>

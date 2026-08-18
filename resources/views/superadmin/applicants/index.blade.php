@@ -184,18 +184,24 @@
                     </td>
 
                     <td class="text-center action-btn ">
-                        <a href="#"
-                            class="edit-btn edit-application"
+                        <a href=""
+                            class="edit-btn edit-application border-0 bg-transparent p-0"
                             data-application='@json($applicant)'
                             data-bs-toggle="modal"
                             data-bs-target="#applicationModal">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                viewBox="0 0 16 16" fill="none">
+
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                width="16"
+                                height="16"
+                                viewBox="0 0 16 16"
+                                fill="none">
                                 <path
                                     d="M8.8 2.4L3.3 8.2C3.1 8.4 2.9 8.8 2.9 9.1L2.7 11.3C2.6 12.1 3.1 12.6 3.9 12.5L6.1 12.1C6.3 12 6.8 11.8 7 11.6L12.4 5.8C13.4 4.8 13.8 3.7 12.3 2.3C10.9 0.9 9.8 1.4 8.8 2.4Z"
-                                    stroke="#07CCB5" stroke-width="1.2" />
+                                    stroke="#07CCB5"
+                                    stroke-width="1.2" />
                             </svg>
-                        </a>
+
+</a>
                     </td>
 
                 </tr>
@@ -240,7 +246,7 @@
             <div class="modal-body p-0">
 
                 <form id="applicationForm"
-                    action="{{ route('superadmin.applications.update.details') }}"
+
                     method="POST">
 
                     @csrf
@@ -290,7 +296,7 @@
                                         required
                                         class="hidden-select">
 
-                                    <ul class="select-list"
+                                    <ul class="select-list checkbox-list-others"
                                         style="display: none;">
 
                                         <li data-value="npo">
@@ -373,173 +379,244 @@
                                     <span class="text-danger">*</span>
                                 </label>
 
-                                <div class="select-wrapper w-100 position-relative">
+                                <div class="select-wrapper w-100 position-relative checkbox-wrap">
 
-                                    <div
-                                        class="custom-select form-control py-2 d-flex justify-content-between align-items-center">
+                                    <div id="selectedStatesBox"
+                                        class="custom-select form-control d-flex flex-wrap gap-2 align-items-center">
 
-                                        <span class="text-muted">
+                                        <span class="placeholder">
                                             Select State
                                         </span>
 
                                     </div>
 
+                                    <ul class="select-list checkbox-list-others"
+                                        id="applicationStateList">
+
+                                        <li>
+                                            <input type="checkbox" value="Pan India" id="application_state_0">
+                                            <label for="application_state_0">Pan India</label>
+                                        </li>
+
+                                        <li>
+                                            <input type="checkbox" value="Andhra Pradesh" id="application_state_1">
+                                            <label for="application_state_1">Andhra Pradesh</label>
+                                        </li>
+
+                                        <li>
+                                            <input type="checkbox" value="Arunachal Pradesh" id="application_state_2">
+                                            <label for="application_state_2">Arunachal Pradesh</label>
+                                        </li>
+
+                                        <li>
+                                            <input type="checkbox" value="Assam" id="application_state_3">
+                                            <label for="application_state_3">Assam</label>
+                                        </li>
+
+                                        <li>
+                                            <input type="checkbox" value="Bihar" id="application_state_4">
+                                            <label for="application_state_4">Bihar</label>
+                                        </li>
+
+                                        <li>
+                                            <input type="checkbox" value="Chhattisgarh" id="application_state_5">
+                                            <label for="application_state_5">Chhattisgarh</label>
+                                        </li>
+
+                                        <li>
+                                            <input type="checkbox" value="Goa" id="application_state_6">
+                                            <label for="application_state_6">Goa</label>
+                                        </li>
+
+                                        <li>
+                                            <input type="checkbox" value="Gujarat" id="application_state_7">
+                                            <label for="application_state_7">Gujarat</label>
+                                        </li>
+
+                                        <li>
+                                            <input type="checkbox" value="Haryana" id="application_state_8">
+                                            <label for="application_state_8">Haryana</label>
+                                        </li>
+
+                                        <li>
+                                            <input type="checkbox" value="Himachal Pradesh" id="application_state_9">
+                                            <label for="application_state_9">Himachal Pradesh</label>
+                                        </li>
+
+                                        <li>
+                                            <input type="checkbox" value="Jharkhand" id="application_state_10">
+                                            <label for="application_state_10">Jharkhand</label>
+                                        </li>
+
+                                        <li>
+                                            <input type="checkbox" value="Karnataka" id="application_state_11">
+                                            <label for="application_state_11">Karnataka</label>
+                                        </li>
+
+                                        <li>
+                                            <input type="checkbox" value="Kerala" id="application_state_12">
+                                            <label for="application_state_12">Kerala</label>
+                                        </li>
+
+                                        <li>
+                                            <input type="checkbox" value="Madhya Pradesh" id="application_state_13">
+                                            <label for="application_state_13">Madhya Pradesh</label>
+                                        </li>
+
+                                        <li>
+                                            <input type="checkbox" value="Maharashtra" id="application_state_14">
+                                            <label for="application_state_14">Maharashtra</label>
+                                        </li>
+
+                                        <li>
+                                            <input type="checkbox" value="Manipur" id="application_state_15">
+                                            <label for="application_state_15">Manipur</label>
+                                        </li>
+
+                                        <li>
+                                            <input type="checkbox" value="Meghalaya" id="application_state_16">
+                                            <label for="application_state_16">Meghalaya</label>
+                                        </li>
+
+                                        <li>
+                                            <input type="checkbox" value="Mizoram" id="application_state_17">
+                                            <label for="application_state_17">Mizoram</label>
+                                        </li>
+
+                                        <li>
+                                            <input type="checkbox" value="Nagaland" id="application_state_18">
+                                            <label for="application_state_18">Nagaland</label>
+                                        </li>
+
+                                        <li>
+                                            <input type="checkbox" value="Odisha" id="application_state_19">
+                                            <label for="application_state_19">Odisha</label>
+                                        </li>
+
+                                        <li>
+                                            <input type="checkbox" value="Punjab" id="application_state_20">
+                                            <label for="application_state_20">Punjab</label>
+                                        </li>
+
+                                        <li>
+                                            <input type="checkbox" value="Rajasthan" id="application_state_21">
+                                            <label for="application_state_21">Rajasthan</label>
+                                        </li>
+
+                                        <li>
+                                            <input type="checkbox" value="Sikkim" id="application_state_22">
+                                            <label for="application_state_22">Sikkim</label>
+                                        </li>
+
+                                        <li>
+                                            <input type="checkbox" value="Tamil Nadu" id="application_state_23">
+                                            <label for="application_state_23">Tamil Nadu</label>
+                                        </li>
+
+                                        <li>
+                                            <input type="checkbox" value="Telangana" id="application_state_24">
+                                            <label for="application_state_24">Telangana</label>
+                                        </li>
+
+                                        <li>
+                                            <input type="checkbox" value="Tripura" id="application_state_25">
+                                            <label for="application_state_25">Tripura</label>
+                                        </li>
+
+                                        <li>
+                                            <input type="checkbox" value="Uttar Pradesh" id="application_state_26">
+                                            <label for="application_state_26">Uttar Pradesh</label>
+                                        </li>
+
+                                        <li>
+                                            <input type="checkbox" value="Uttarakhand" id="application_state_27">
+                                            <label for="application_state_27">Uttarakhand</label>
+                                        </li>
+
+                                        <li>
+                                            <input type="checkbox" value="West Bengal" id="application_state_28">
+                                            <label for="application_state_28">West Bengal</label>
+                                        </li>
+
+                                        <li>
+                                            <input type="checkbox"
+                                                value="Andaman and Nicobar Islands"
+                                                id="application_state_29">
+                                            <label for="application_state_29">
+                                                Andaman and Nicobar Islands
+                                            </label>
+                                        </li>
+
+                                        <li>
+                                            <input type="checkbox"
+                                                value="Chandigarh"
+                                                id="application_state_30">
+                                            <label for="application_state_30">
+                                                Chandigarh
+                                            </label>
+                                        </li>
+
+                                        <li>
+                                            <input type="checkbox"
+                                                value="Dadra and Nagar Haveli and Daman and Diu"
+                                                id="application_state_31">
+                                            <label for="application_state_31">
+                                                Dadra and Nagar Haveli and Daman and Diu
+                                            </label>
+                                        </li>
+
+                                        <li>
+                                            <input type="checkbox"
+                                                value="Delhi"
+                                                id="application_state_32">
+                                            <label for="application_state_32">
+                                                Delhi
+                                            </label>
+                                        </li>
+
+                                        <li>
+                                            <input type="checkbox"
+                                                value="Jammu and Kashmir"
+                                                id="application_state_33">
+                                            <label for="application_state_33">
+                                                Jammu and Kashmir
+                                            </label>
+                                        </li>
+
+                                        <li>
+                                            <input type="checkbox"
+                                                value="Ladakh"
+                                                id="application_state_34">
+                                            <label for="application_state_34">
+                                                Ladakh
+                                            </label>
+                                        </li>
+
+                                        <li>
+                                            <input type="checkbox"
+                                                value="Lakshadweep"
+                                                id="application_state_35">
+                                            <label for="application_state_35">
+                                                Lakshadweep
+                                            </label>
+                                        </li>
+
+                                        <li>
+                                            <input type="checkbox"
+                                                value="Puducherry"
+                                                id="application_state_36">
+                                            <label for="application_state_36">
+                                                Puducherry
+                                            </label>
+                                        </li>
+
+                                    </ul>
 
                                     <input type="hidden"
                                         name="state"
                                         id="state"
                                         required
                                         class="hidden-select">
-
-
-                                    <ul class="select-list"
-                                        style="display: none; max-height: 250px; overflow-y: auto;">
-
-                                        <li data-value="Andhra Pradesh">
-                                            Andhra Pradesh
-                                        </li>
-
-                                        <li data-value="Arunachal Pradesh">
-                                            Arunachal Pradesh
-                                        </li>
-
-                                        <li data-value="Assam">
-                                            Assam
-                                        </li>
-
-                                        <li data-value="Bihar">
-                                            Bihar
-                                        </li>
-
-                                        <li data-value="Chhattisgarh">
-                                            Chhattisgarh
-                                        </li>
-
-                                        <li data-value="Goa">
-                                            Goa
-                                        </li>
-
-                                        <li data-value="Gujarat">
-                                            Gujarat
-                                        </li>
-
-                                        <li data-value="Haryana">
-                                            Haryana
-                                        </li>
-
-                                        <li data-value="Himachal Pradesh">
-                                            Himachal Pradesh
-                                        </li>
-
-                                        <li data-value="Jharkhand">
-                                            Jharkhand
-                                        </li>
-
-                                        <li data-value="Karnataka">
-                                            Karnataka
-                                        </li>
-
-                                        <li data-value="Kerala">
-                                            Kerala
-                                        </li>
-
-                                        <li data-value="Madhya Pradesh">
-                                            Madhya Pradesh
-                                        </li>
-
-                                        <li data-value="Maharashtra">
-                                            Maharashtra
-                                        </li>
-
-                                        <li data-value="Manipur">
-                                            Manipur
-                                        </li>
-
-                                        <li data-value="Meghalaya">
-                                            Meghalaya
-                                        </li>
-
-                                        <li data-value="Mizoram">
-                                            Mizoram
-                                        </li>
-
-                                        <li data-value="Nagaland">
-                                            Nagaland
-                                        </li>
-
-                                        <li data-value="Odisha">
-                                            Odisha
-                                        </li>
-
-                                        <li data-value="Punjab">
-                                            Punjab
-                                        </li>
-
-                                        <li data-value="Rajasthan">
-                                            Rajasthan
-                                        </li>
-
-                                        <li data-value="Sikkim">
-                                            Sikkim
-                                        </li>
-
-                                        <li data-value="Tamil Nadu">
-                                            Tamil Nadu
-                                        </li>
-
-                                        <li data-value="Telangana">
-                                            Telangana
-                                        </li>
-
-                                        <li data-value="Tripura">
-                                            Tripura
-                                        </li>
-
-                                        <li data-value="Uttar Pradesh">
-                                            Uttar Pradesh
-                                        </li>
-
-                                        <li data-value="Uttarakhand">
-                                            Uttarakhand
-                                        </li>
-
-                                        <li data-value="West Bengal">
-                                            West Bengal
-                                        </li>
-
-                                        <li data-value="Andaman and Nicobar Islands">
-                                            Andaman and Nicobar Islands
-                                        </li>
-
-                                        <li data-value="Chandigarh">
-                                            Chandigarh
-                                        </li>
-
-                                        <li data-value="Dadra and Nagar Haveli and Daman and Diu">
-                                            Dadra and Nagar Haveli and Daman and Diu
-                                        </li>
-
-                                        <li data-value="Delhi">
-                                            Delhi
-                                        </li>
-
-                                        <li data-value="Jammu and Kashmir">
-                                            Jammu and Kashmir
-                                        </li>
-
-                                        <li data-value="Ladakh">
-                                            Ladakh
-                                        </li>
-
-                                        <li data-value="Lakshadweep">
-                                            Lakshadweep
-                                        </li>
-
-                                        <li data-value="Puducherry">
-                                            Puducherry
-                                        </li>
-
-                                    </ul>
 
                                 </div>
 
@@ -577,15 +654,18 @@
                                         class="hidden-select">
 
 
-                                    <ul class="select-list"
+                                    <ul class="select-list checkbox-list"
                                         style="display: none;">
 
-                                        <li data-value="verified">
-                                            Verified
+                                        <li data-value="active">
+                                            Active
+                                        </li>
+                                        <li data-value="inactive">
+                                            In-Active
                                         </li>
 
-                                        <li data-value="non_verified">
-                                            Non-Verified
+                                        <li data-value="draft">
+                                            Draft
                                         </li>
 
                                     </ul>
@@ -640,7 +720,7 @@
                                     Annual Turnover
                                 </label>
 
-                                <input type="text"
+                                <input type="text" inputmode="numeric"
                                     class="form-control py-2"
                                     id="annual_turnover"
                                     name="annual_turnover"
@@ -951,7 +1031,9 @@
         .addEventListener('keyup', debounce(updateFilters, 500));
 
     // Custom Select Click
-    document.querySelectorAll('.select-list li').forEach(item => {
+    document.querySelectorAll(
+        '.select-list:not(.checkbox-list):not(.checkbox-list-others) li'
+    ).forEach(item => {
 
         item.addEventListener('click', function() {
 
@@ -1052,7 +1134,8 @@
 
         document.querySelectorAll('.edit-application').forEach(button => {
 
-            button.addEventListener('click', function() {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
 
                 let application = {};
 
@@ -1196,11 +1279,7 @@
 
                 const state = operationalDetail.state || '';
 
-                setCustomSelect(
-                    'state',
-                    state
-                );
-
+                populateApplicationStates(operationalDetail.state);
 
                 /*
                 |--------------------------------------------------------------------------
@@ -1309,4 +1388,326 @@
 
     });
 </script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+
+        const selectedBox = document.getElementById('selectedStatesBox');
+        const dropdown = document.getElementById('applicationStateList');
+        const hiddenInput = document.getElementById('state');
+
+        if (!selectedBox || !dropdown || !hiddenInput) {
+            return;
+        }
+
+        const checkboxes = dropdown.querySelectorAll(
+            'input[type="checkbox"]'
+        );
+
+        const panIndiaCheckbox = dropdown.querySelector(
+            'input[value="Pan India"]'
+        );
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Update Selected States UI
+        |--------------------------------------------------------------------------
+        */
+
+        function updateSelectedStates() {
+
+            const selected = [];
+
+            selectedBox.innerHTML = '';
+
+            checkboxes.forEach(function(checkbox) {
+
+                if (checkbox.checked) {
+
+                    selected.push(checkbox.value);
+
+                    const tag = document.createElement('div');
+
+                    tag.className = 'state-tag';
+
+                    tag.innerHTML = `
+                    <span>${checkbox.value}</span>
+                    <span
+                        class="remove-state"
+                        data-value="${checkbox.value}"
+                        style="cursor:pointer;margin-left:6px;">
+                        &times;
+                    </span>
+                `;
+
+                    selectedBox.appendChild(tag);
+                }
+
+            });
+
+
+            if (selected.length === 0) {
+
+                selectedBox.innerHTML =
+                    '<span class="placeholder">Select State</span>';
+
+            }
+
+
+            hiddenInput.value = selected.join(',');
+
+        }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Pan India Logic
+        |--------------------------------------------------------------------------
+        */
+
+        function handlePanIndiaSelection() {
+
+            if (!panIndiaCheckbox) {
+                return;
+            }
+
+            checkboxes.forEach(function(checkbox) {
+
+                if (checkbox === panIndiaCheckbox) {
+                    return;
+                }
+
+                if (panIndiaCheckbox.checked) {
+
+                    checkbox.checked = false;
+                    checkbox.disabled = true;
+
+                    checkbox.parentElement.style.pointerEvents = 'none';
+                    checkbox.parentElement.style.opacity = '0.5';
+
+                } else {
+
+                    checkbox.disabled = false;
+
+                    checkbox.parentElement.style.pointerEvents = '';
+                    checkbox.parentElement.style.opacity = '';
+
+                }
+
+            });
+
+        }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Open / Close Dropdown
+        |--------------------------------------------------------------------------
+        */
+
+        selectedBox.addEventListener('click', function(e) {
+
+            if (e.target.classList.contains('remove-state')) {
+                return;
+            }
+
+            e.stopPropagation();
+
+            dropdown.classList.toggle('show');
+
+        });
+
+
+        document.addEventListener('click', function() {
+
+            dropdown.classList.remove('show');
+
+        });
+
+
+        dropdown.addEventListener('click', function(e) {
+
+            e.stopPropagation();
+
+            // Prevent any parent click handler from treating this
+            // as a form/button/action click.
+            if (
+                e.target.tagName === 'LI' ||
+                e.target.tagName === 'LABEL'
+            ) {
+                e.stopImmediatePropagation();
+            }
+
+        });
+
+        /*
+        |--------------------------------------------------------------------------
+        | Checkbox Change
+        |--------------------------------------------------------------------------
+        */
+
+        checkboxes.forEach(function(checkbox) {
+
+            checkbox.addEventListener('change', function() {
+
+                if (this === panIndiaCheckbox) {
+
+                    handlePanIndiaSelection();
+
+                } else if (this.checked && panIndiaCheckbox) {
+
+                    panIndiaCheckbox.checked = false;
+
+                    handlePanIndiaSelection();
+
+                }
+
+                updateSelectedStates();
+
+            });
+
+        });
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Remove Selected State
+        |--------------------------------------------------------------------------
+        */
+
+        selectedBox.addEventListener('click', function(e) {
+
+            if (!e.target.classList.contains('remove-state')) {
+                return;
+            }
+
+            e.preventDefault();
+            e.stopPropagation();
+
+            const value = e.target.dataset.value;
+
+            const checkbox = Array.from(checkboxes).find(
+                cb => cb.value === value
+            );
+
+            if (checkbox) {
+
+                checkbox.checked = false;
+
+                checkbox.dispatchEvent(
+                    new Event('change')
+                );
+
+            }
+
+        });
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Populate States When Editing Application
+        |--------------------------------------------------------------------------
+        */
+
+        window.populateApplicationStates = function(stateValue) {
+
+            /*
+             * Reset everything first
+             */
+            checkboxes.forEach(function(checkbox) {
+
+                checkbox.checked = false;
+                checkbox.disabled = false;
+
+                checkbox.parentElement.style.pointerEvents = '';
+                checkbox.parentElement.style.opacity = '';
+
+            });
+
+
+            if (!stateValue) {
+
+                updateSelectedStates();
+
+                return;
+            }
+
+
+            /*
+             * Database stores:
+             *
+             * Assam,Bihar,Chhattisgarh,Gujarat
+             *
+             * Convert to:
+             *
+             * ['Assam', 'Bihar', 'Chhattisgarh', 'Gujarat']
+             */
+
+            let states = [];
+
+            if (Array.isArray(stateValue)) {
+
+                states = stateValue;
+
+            } else {
+
+                states = String(stateValue)
+                    .split(',')
+                    .map(state => state.trim())
+                    .filter(state => state !== '');
+
+            }
+
+
+            /*
+             * Populate checkboxes
+             */
+
+            states.forEach(function(state) {
+
+                const checkbox = Array.from(checkboxes).find(
+                    cb => cb.value === state
+                );
+
+                if (checkbox) {
+                    checkbox.checked = true;
+                }
+
+            });
+
+
+            /*
+             * Apply Pan India rules
+             */
+
+            if (
+                panIndiaCheckbox &&
+                states.includes('Pan India')
+            ) {
+
+                panIndiaCheckbox.checked = true;
+
+            }
+
+
+            handlePanIndiaSelection();
+
+            updateSelectedStates();
+
+        };
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Initial State
+        |--------------------------------------------------------------------------
+        */
+
+        updateSelectedStates();
+
+    });
+</script>
+
+
 @endsection

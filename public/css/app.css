@@ -1797,10 +1797,10 @@ ul.select-list label {
 ul.select-list input[type="checkbox"] {
     appearance: none;
 }
-
+/* 
 ul.select-list.checkbox-list li:hover {
     background: transparent;
-}
+} */
 
 ul.select-list.checkbox-list li:hover label {
     color: var(--accent-color) !important;
@@ -2229,7 +2229,7 @@ span.text-accent {
 
 .action-btn button.edit-btn:hover,
 .action-btn a.edit-btn:hover {
-    background: #07CCB5;
+    background: #07CCB5 !important;
 }
 
 .action-btn button.trash-btn:hover,
@@ -2667,7 +2667,7 @@ h2.modal-title.h3 {
     font-weight: 500;
     color: #000;
 }
-.detail-value, .detail-value p {
+.detail-value, .detail-value p, .detail-value li, .detail-value span {
     color: rgb(20 20 20 / 50%);
 }
 .timeline-row {
