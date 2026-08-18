@@ -134,20 +134,21 @@
                         <div class="btn-group gap-1">
 
                             {{-- ASSIGN FUNDS --}}
-                            <button
+                            <!-- <button
                                 class="btn btn-sm btn-primary assign-fund-btn"
                                 data-id="{{ $reviewer->id }}"
                                 data-funds='@json($reviewer->funds->pluck("id")->values())'
                                 data-bs-toggle="modal"
                                 data-bs-target="#assignFundModal">
                                 Assign Fund
-                            </button>
+                            </button> -->
 
                             {{-- EDIT --}}
                             <button class="edit-btn edit-reviewer" data-id="{{ $reviewer->id }}"
                                 data-full_name="{{ $reviewer->full_name }}" data-email="{{ $reviewer->email }}"
                                 data-phone_number="{{ $reviewer->phone_number }}"
                                 data-role="{{ $reviewer->role }}"
+                                data-funds='@json($reviewer->funds->pluck("id")->values())'
                                 data-domain_expertise="{{ $reviewer->domain_expertise }}"
                                 data-status="{{ $reviewer->status }}"
                                 data-update-url="{{ route('superadmin.reviewers.update', ':id') }}"
@@ -196,6 +197,7 @@
     </div>
 
 </div>
+
 <div class="modal fade" id="reviewerModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
@@ -300,9 +302,11 @@
                         </div>
 
                         <!-- Status -->
+                        <!-- Status & Funds -->
                         <div class="row g-3">
 
-                            <div class="col-md-12">
+                            <!-- Status -->
+                            <div class="col-md-6">
                                 <label class="form-label fw-semibold">
                                     Status
                                     <span class="text-danger">*</span>
@@ -310,13 +314,11 @@
 
                                 <div class="select-wrapper w-100 position-relative">
 
-                                    <div
-                                        class="custom-select form-control py-2 d-flex justify-content-between align-items-center">
+                                    <div class="custom-select form-control py-2 d-flex justify-content-between align-items-center">
                                         <span class="text-muted">Select Status</span>
                                     </div>
 
-                                    <input type="hidden" name="status" id="status" required
-                                        class="hidden-select">
+                                    <input type="hidden" name="status" id="status" required class="hidden-select">
 
                                     <ul class="select-list" style="display: none;">
                                         <li data-value="verified">Verified</li>
@@ -326,8 +328,40 @@
                                 </div>
                             </div>
 
-                        </div>
+                            <!-- Funds -->
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">
+                                    Assign Funds
+                                </label>
 
+                                <div class="select-wrapper w-100 position-relative checkbox-wrap fund-wrap">
+
+                                    <div id="selectedFundsBox"
+                                        class="custom-select form-control d-flex flex-wrap gap-2 align-items-center">
+                                        <span class="placeholder">Select Funds</span>
+                                    </div>
+
+                                    <ul class="select-list checkbox-list">
+                                        @foreach ($funds as $fund)
+                                        <li>
+                                            <input type="checkbox"
+                                                value="{{ $fund->id }}"
+                                                id="fund_{{ $fund->id }}"
+                                                class="fund-checkbox">
+
+                                            <label for="fund_{{ $fund->id }}">
+                                                {{ $fund->fund_name }}
+                                            </label>
+                                        </li>
+                                        @endforeach
+                                    </ul>
+
+                                    <input type="hidden" name="fund_ids" id="hiddenFunds">
+
+                                </div>
+                            </div>
+
+                        </div>
                     </div>
 
                     <!-- Footer -->
@@ -351,107 +385,9 @@
     </div>
 </div>
 
-<div class="modal fade" id="assignFundModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
-        <div class="modal-content">
 
-            <div class="modal-header border-0 pb-0">
-                <h2 class="modal-title inner-title">Assign Funds</h2>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
 
-            <div class="modal-body p-3">
 
-                <form id="assignFundForm" method="POST"
-                    action="{{ route('client-admin.reviewers.assign-funds') }}">
-
-                    @csrf
-
-                    <input type="hidden" name="reviewer_id" id="assign_reviewer_id">
-
-                    <label class="form-label fw-semibold mb-2">
-                        Select Funds
-                    </label>
-
-                    <div class="select-wrapper w-100 position-relative checkbox-wrap fund-wrap">
-
-                        <div id="selectedFundsBox"
-                            class="custom-select form-control d-flex flex-wrap gap-2 align-items-center">
-                            <span class="placeholder">Select Funds</span>
-                        </div>
-
-                        <ul class="select-list checkbox-list">
-                            @foreach ($funds as $fund)
-                            <li>
-                                <input type="checkbox" value="{{ $fund->id }}"
-                                    id="fund_{{ $fund->id }}" class="fund-checkbox">
-
-                                <label for="fund_{{ $fund->id }}">
-                                    {{ $fund->fund_name }}
-                                </label>
-                            </li>
-                            @endforeach
-                        </ul>
-
-                        <input type="hidden" name="fund_ids" id="hiddenFunds">
-
-                    </div>
-
-                </form>
-
-            </div>
-
-            <div class="modal-footer border-0">
-
-                <button type="button" class="btn simple-btn" data-bs-dismiss="modal">
-                    Cancel
-                </button>
-
-                <button type="submit" form="assignFundForm" class="btn gradient-btn">
-                    Assign
-                </button>
-
-            </div>
-
-        </div>
-    </div>
-</div>
-
-<style>
-    /* Modal body */
-    #assignFundModal .modal-body {
-        min-height: 350px
-    }
-
-    /* Selected box */
-    #assignFundModal #selectedFundsBox {
-        min-height: 48px;
-        align-items: flex-start !important;
-        overflow-y: auto;
-    }
-
-    /* Dropdown */
-    #assignFundModal .select-list {
-        max-height: 180px;
-        /* Approximately 4 items */
-        overflow-y: auto;
-        overflow-x: hidden;
-    }
-
-    /* Optional scrollbar styling */
-    #assignFundModal .select-list::-webkit-scrollbar {
-        width: 6px;
-    }
-
-    #assignFundModal .select-list::-webkit-scrollbar-thumb {
-        background: #c5c5c5;
-        border-radius: 10px;
-    }
-
-    #assignFundModal .select-list::-webkit-scrollbar-track {
-        background: #f5f5f5;
-    }
-</style>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -667,53 +603,277 @@
         const form = document.getElementById('reviewerForm');
         const title = document.getElementById('reviewerModalTitle');
 
+        const selectedBox = document.getElementById('selectedFundsBox');
+        const hiddenInput = document.getElementById('hiddenFunds');
+
+        /*
+        |--------------------------------------------------------------------------
+        | Update selected funds UI
+        |--------------------------------------------------------------------------
+        */
+        function updateSelectedFunds() {
+
+            const selectedIds = [];
+
+            selectedBox.innerHTML = '';
+
+            document.querySelectorAll('.fund-checkbox:checked').forEach(cb => {
+
+                selectedIds.push(cb.value);
+
+                const labelElement = document.querySelector(
+                    `label[for="${cb.id}"]`
+                );
+
+                const label = labelElement
+                    ? labelElement.innerText.trim()
+                    : cb.value;
+
+                const tag = document.createElement('span');
+
+                tag.className = 'selected-item';
+
+                tag.innerHTML = `
+                    ${label}
+                    <span
+                        class="remove-fund"
+                        data-id="${cb.value}"
+                        style="cursor:pointer;margin-left:6px;"
+                    >
+                        &times;
+                    </span>
+                `;
+
+                selectedBox.appendChild(tag);
+            });
+
+            if (!selectedIds.length) {
+                selectedBox.innerHTML =
+                    '<span class="placeholder">Select Funds</span>';
+            }
+
+            hiddenInput.value = selectedIds.join(',');
+        }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Edit Reviewer
+        |--------------------------------------------------------------------------
+        */
         document.querySelectorAll('.edit-reviewer').forEach(button => {
 
             button.addEventListener('click', function() {
 
-                // Change modal title
                 title.innerText = 'Edit Reviewer';
 
-                // Fill fields
-                document.getElementById('reviewer_id').value = this.dataset.id;
-                document.getElementById('full_name').value = this.dataset.full_name;
-                document.getElementById('email').value = this.dataset.email;
-                document.getElementById('phone_number').value = this.dataset.phone_number ?? '';
-                document.getElementById('role').value = this.dataset.role ?? '';
-                document.getElementById('domain_expertise').value = this.dataset
-                    .domain_expertise ?? '';
+                /*
+                |--------------------------------------------------------------------------
+                | Basic fields
+                |--------------------------------------------------------------------------
+                */
 
-                // Status (hidden input)
-                document.getElementById('status').value = this.dataset.status;
+                document.getElementById('reviewer_id').value =
+                    this.dataset.id;
 
-                // Update form action (replace :id)
-                let url = this.dataset.updateUrl.replace(':id', this.dataset.id);
+                document.getElementById('full_name').value =
+                    this.dataset.full_name || '';
+
+                document.getElementById('email').value =
+                    this.dataset.email || '';
+
+                document.getElementById('phone_number').value =
+                    this.dataset.phone_number || '';
+
+                document.getElementById('role').value =
+                    this.dataset.role || '';
+
+                document.getElementById('domain_expertise').value =
+                    this.dataset.domain_expertise || '';
+
+                document.getElementById('status').value =
+                    this.dataset.status || '';
+
+
+                /*
+                |--------------------------------------------------------------------------
+                | Form action
+                |--------------------------------------------------------------------------
+                */
+
+                let url = this.dataset.updateUrl.replace(
+                    ':id',
+                    this.dataset.id
+                );
+
                 form.action = url;
 
-                // Remove password requirement for edit
+
+                /*
+                |--------------------------------------------------------------------------
+                | Password
+                |--------------------------------------------------------------------------
+                */
+
                 document.getElementById('password').required = false;
                 document.getElementById('password').value = '';
+
+
+                /*
+                |--------------------------------------------------------------------------
+                | Assigned Funds
+                |--------------------------------------------------------------------------
+                */
+
+                let assignedFunds = [];
+
+                try {
+                    assignedFunds = JSON.parse(
+                        this.dataset.funds || '[]'
+                    );
+                } catch (error) {
+                    assignedFunds = [];
+                }
+
+
+                /*
+                |--------------------------------------------------------------------------
+                | Reset all fund checkboxes
+                |--------------------------------------------------------------------------
+                */
+
+                document.querySelectorAll('.fund-checkbox').forEach(cb => {
+                    cb.checked = false;
+                });
+
+
+                /*
+                |--------------------------------------------------------------------------
+                | Check assigned funds
+                |--------------------------------------------------------------------------
+                */
+
+                assignedFunds.forEach(id => {
+
+                    const checkbox = document.getElementById(
+                        'fund_' + id
+                    );
+
+                    if (checkbox) {
+                        checkbox.checked = true;
+                    }
+                });
+
+
+                /*
+                |--------------------------------------------------------------------------
+                | Update selected fund chips + hidden input
+                |--------------------------------------------------------------------------
+                */
+
+                updateSelectedFunds();
 
             });
 
         });
 
-        // Reset modal when opening for CREATE
-        document.querySelector('[data-bs-target="#reviewerModal"]').addEventListener('click', function() {
 
-            title.innerText = 'Add Reviewer';
+        /*
+        |--------------------------------------------------------------------------
+        | Add Reviewer
+        |--------------------------------------------------------------------------
+        |
+        | Find the button that opens the modal for creating a reviewer.
+        | Add class="add-reviewer-btn" to that button.
+        |--------------------------------------------------------------------------
+        */
 
-            form.action = "{{ route('client-admin.reviewers.store') }}";
+        document.querySelectorAll('.add-reviewer-btn').forEach(button => {
 
-            document.getElementById('reviewer_id').value = '';
-            document.getElementById('full_name').value = '';
-            document.getElementById('email').value = '';
-            document.getElementById('phone_number').value = '';
-            document.getElementById('role').value = '';
-            document.getElementById('domain_expertise').value = '';
-            document.getElementById('status').value = '';
-            document.getElementById('password').required = true;
-            document.getElementById('password').value = '';
+            button.addEventListener('click', function() {
+
+                title.innerText = 'Add Reviewer';
+
+                form.action =
+                    "{{ route('superadmin.reviewers.store') }}";
+
+                document.getElementById('reviewer_id').value = '';
+
+                document.getElementById('full_name').value = '';
+
+                document.getElementById('email').value = '';
+
+                document.getElementById('phone_number').value = '';
+
+                document.getElementById('role').value = '';
+
+                document.getElementById('domain_expertise').value = '';
+
+                document.getElementById('status').value = '';
+
+                document.getElementById('password').required = true;
+
+                document.getElementById('password').value = '';
+
+
+                /*
+                |--------------------------------------------------------------------------
+                | Reset funds
+                |--------------------------------------------------------------------------
+                */
+
+                document.querySelectorAll('.fund-checkbox').forEach(cb => {
+                    cb.checked = false;
+                });
+
+                updateSelectedFunds();
+
+            });
+
+        });
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Checkbox changed
+        |--------------------------------------------------------------------------
+        */
+
+        document.querySelectorAll('.fund-checkbox').forEach(cb => {
+
+            cb.addEventListener('change', function() {
+                updateSelectedFunds();
+            });
+
+        });
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Remove selected fund
+        |--------------------------------------------------------------------------
+        */
+
+        selectedBox.addEventListener('click', function(e) {
+
+            if (!e.target.classList.contains('remove-fund')) {
+                return;
+            }
+
+            e.preventDefault();
+            e.stopPropagation();
+
+            const id = e.target.dataset.id;
+
+            const checkbox = document.getElementById(
+                'fund_' + id
+            );
+
+            if (checkbox) {
+                checkbox.checked = false;
+            }
+
+            updateSelectedFunds();
 
         });
 
@@ -804,4 +964,111 @@
 
     });
 </script>
+
+
+
+
+
+
+<!-- <div class="modal fade" id="assignFundModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+
+            <div class="modal-header border-0 pb-0">
+                <h2 class="modal-title inner-title">Assign Funds</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body p-3">
+
+                <form id="assignFundForm" method="POST"
+                    action="{{ route('client-admin.reviewers.assign-funds') }}">
+
+                    @csrf
+
+                    <input type="hidden" name="reviewer_id" id="assign_reviewer_id">
+
+                    <label class="form-label fw-semibold mb-2">
+                        Select Funds
+                    </label>
+
+                    <div class="select-wrapper w-100 position-relative checkbox-wrap fund-wrap">
+
+                        <div id="selectedFundsBox"
+                            class="custom-select form-control d-flex flex-wrap gap-2 align-items-center">
+                            <span class="placeholder">Select Funds</span>
+                        </div>
+
+                        <ul class="select-list checkbox-list">
+                            @foreach ($funds as $fund)
+                            <li>
+                                <input type="checkbox" value="{{ $fund->id }}"
+                                    id="fund_{{ $fund->id }}" class="fund-checkbox">
+
+                                <label for="fund_{{ $fund->id }}">
+                                    {{ $fund->fund_name }}
+                                </label>
+                            </li>
+                            @endforeach
+                        </ul>
+
+                        <input type="hidden" name="fund_ids" id="hiddenFunds">
+
+                    </div>
+
+                </form>
+
+            </div>
+
+            <div class="modal-footer border-0">
+
+                <button type="button" class="btn simple-btn" data-bs-dismiss="modal">
+                    Cancel
+                </button>
+
+                <button type="submit" form="assignFundForm" class="btn gradient-btn">
+                    Assign
+                </button>
+
+            </div>
+
+        </div>
+    </div>
+</div> -->
+
+<style>
+    /* Modal body */
+    #assignFundModal .modal-body {
+        min-height: 350px
+    }
+
+    /* Selected box */
+    #assignFundModal #selectedFundsBox {
+        min-height: 48px;
+        align-items: flex-start !important;
+        overflow-y: auto;
+    }
+
+    /* Dropdown */
+    #assignFundModal .select-list {
+        max-height: 180px;
+        /* Approximately 4 items */
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    /* Optional scrollbar styling */
+    #assignFundModal .select-list::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    #assignFundModal .select-list::-webkit-scrollbar-thumb {
+        background: #c5c5c5;
+        border-radius: 10px;
+    }
+
+    #assignFundModal .select-list::-webkit-scrollbar-track {
+        background: #f5f5f5;
+    }
+</style>
 @endsection

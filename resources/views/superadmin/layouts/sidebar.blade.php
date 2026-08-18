@@ -56,7 +56,7 @@
                 </div>
                 <div class="flex-grow-1 ms-3 text">Applicants</div>
             </a>
-            <a href="{{ route('superadmin.reviewers.index') }}" class="d-flex align-items-center text-decoration-none sidebar-links">
+            <a href="{{ route('superadmin.reviewers.index') }}" class="d-flex align-items-center text-decoration-none sidebar-links {{ request()->routeIs('superadmin.reviewers.index') ? 'active' : '' }}">
                 <div class="flex-shrink-0">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                         <path d="M11 2H9C4 2 2 4 2 9V15C2 20 4 22 9 22H15C20 22 22 20 22 15V13" stroke="white"

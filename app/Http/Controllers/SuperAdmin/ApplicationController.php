@@ -54,6 +54,10 @@ class ApplicationController extends Controller
             ->with('success', 'Application created successfully.');
     }
 
+    public function updateDetails(Request $request){
+        return $request->all();
+    }
+
     /**
      * Show the form for editing the specified resource.
      */

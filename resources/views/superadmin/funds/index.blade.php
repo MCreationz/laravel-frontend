@@ -92,40 +92,40 @@
                 @forelse($funds as $fund)
                 <tr>
 
-                  <td>
-    <div class="d-flex align-items-center gap-2 fund-name-trigger"
-        style="cursor: pointer;">
+                    <td>
+                        <div class="d-flex align-items-center gap-2 fund-name-trigger"
+                            style="cursor: pointer;">
 
-        @if ($fund->fund_logo)
-            <img src="{{ Storage::url($fund->fund_logo) }}"
-                alt="{{ $fund->fund_name }}"
-                style="width:40px;height:40px;object-fit:cover;border-radius:50%;">
-        @else
-            <div class="px-2 py-1 fw-bold gradient-text">
-                {{ strtoupper(substr($fund->fund_name, 0, 2)) }}
-            </div>
-        @endif
+                            @if ($fund->fund_logo)
+                            <img src="{{ Storage::url($fund->fund_logo) }}"
+                                alt="{{ $fund->fund_name }}"
+                                style="width:40px;height:40px;object-fit:cover;border-radius:50%;">
+                            @else
+                            <div class="px-2 py-1 fw-bold gradient-text">
+                                {{ strtoupper(substr($fund->fund_name, 0, 2)) }}
+                            </div>
+                            @endif
 
-        <div>
-            <div class="fw-medium">
-                {{ $fund->fund_name }}
-            </div>
+                            <div>
+                                <div class="fw-medium">
+                                    {{ $fund->fund_name }}
+                                </div>
 
-            <small class="text-muted">
-                {{ $fund->fund_owner }}
-            </small>
-        </div>
-    </div>
-</td>
+                                <small class="text-muted">
+                                    {{ $fund->fund_owner }}
+                                </small>
+                            </div>
+                        </div>
+                    </td>
 
-<script>
-    document.querySelectorAll('.fund-name-trigger').forEach(function (element) {
-        element.addEventListener('click', function () {
-            const modal = new bootstrap.Modal(document.getElementById('fundModal'));
-            modal.show();
-        });
-    });
-</script>
+                    <script>
+                        document.querySelectorAll('.fund-name-trigger').forEach(function(element) {
+                            element.addEventListener('click', function() {
+                                const modal = new bootstrap.Modal(document.getElementById('fundModal'));
+                                modal.show();
+                            });
+                        });
+                    </script>
                     <!-- Client -->
                     <td class="text-center">
                         {{ $fund->client?->organization_name ?? '-' }}

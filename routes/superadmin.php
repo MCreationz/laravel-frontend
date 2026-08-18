@@ -57,6 +57,8 @@ Route::prefix('super-admin')
 
         Route::post('/applications', [ApplicationController::class, 'store'])
             ->name('applications.store');
+             Route::post('/applications/update', [ApplicationController::class, 'updateDetails'])
+            ->name('applications.update.details');
 
         Route::get('/applications/{application}/edit', [ApplicationController::class, 'edit'])
             ->name('applications.edit');
