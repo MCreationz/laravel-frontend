@@ -124,9 +124,9 @@ form .form-control::placeholder {
     opacity: 1;
 }
 
-.custom-select.form-control {
+/* .custom-select.form-control {
     color: #C6D4E2;
-}
+} */
 
 .font-sm {
     font-size: 12px;
@@ -1371,13 +1371,12 @@ span.badge.bg-info-subtle.text-info {
     border-color: var(--accent-color);
     font-weight: bold;
     background-image: linear-gradient(45deg, transparent 50%, #ffffff 50%), linear-gradient(135deg, #ffffff 50%, transparent 50%), linear-gradient(to right, #cccccc00, #cccccc00);
-    background-position: calc(100% - 20px) calc(1em + 0px), calc(100% - 15px) calc(1em + 0px), calc(100% - 2.5em) 0.5em;
+    background-position: calc(100% - 20px) calc(1em + 3px), calc(100% - 15px) calc(1em + 3px), calc(100% - 2.5em) 0.5em;
     background-size: 6px 6px, 6px 6px, 1px 1.5em;
     background-repeat: no-repeat;
     max-width: 120px;
     min-width: 120px;
 }
-
 .search-box input {
     padding: 8px 10px 8px 30px !important;
     font-size: 11px !important;
@@ -2247,10 +2246,14 @@ span.text-accent {
     color: #14A190 !important;
     padding: 8.5px 10px;
     font-weight: 500;
-    min-width: 78px;
     letter-spacing: 0px;
 }
-
+.recent-inner .badge {
+    min-width: 78px;
+}
+span.badge.text-warning {
+    color: #C8900A !important;
+}
 /* Add Reviewer Modal */
 
 #reviewerModal .modal-content {}
@@ -3107,6 +3110,9 @@ h2.modal-title.h3 {
 }
 
 @media(max-width: 575px) {
+    .recent-inner .badge {
+        min-width: 55px;
+    }
     .progress-dots {
         display: none;
     }
@@ -3210,7 +3216,9 @@ h2.modal-title.h3 {
     .client-admin .header-org-chip {
         display: none;
     }
-
+.header .access-content-wrap {
+    display: none;
+}
     button.btn.btn-primary.add-btn {
         min-width: min-content;
         padding: 7px 16px !important;
