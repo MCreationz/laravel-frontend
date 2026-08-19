@@ -170,14 +170,6 @@ return '₹' . number_format($amount);
     </div>
 </div>
 
-<script>
-    const toggleBtn = document.getElementById("sidebar-toggle");
-    const sidebar = document.querySelector("body");
-
-    toggleBtn.addEventListener("click", () => {
-        sidebar.classList.toggle("sidebar-active");
-    });
-</script>
 
 {{-- <div class="dashboard-status d-flex d-flex row-cols-2 row-cols-md-3 flex-wrap row-gap-2">
         <div class="col px-1">
