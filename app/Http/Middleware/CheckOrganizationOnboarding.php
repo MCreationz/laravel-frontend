@@ -34,6 +34,8 @@ class CheckOrganizationOnboarding
             'pincode.details',
         ];
         // If onboarding is already complete, don't allow onboarding pages
+
+        
         // if ($organization->isProfileComplete() && in_array($routeName, $onboardingRoutes)) {
         //     return redirect()->route('dashboard');
         // }

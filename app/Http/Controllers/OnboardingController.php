@@ -220,33 +220,32 @@ class OnboardingController extends Controller
             $data
         );
 
-    NotificationService::createOnce(
-    $organization,
-    'onboarding_completed',
-    'Organization Details Saved',
-    'Your organization details are saved. Continue to the Application Form to keep your Fundink application moving.'
-);
-    $organizationName = $organization->profile?->legal_name
-    ?? $organization->organization_name
-    ?? 'New Organization';
+        NotificationService::createOnce(
+            $organization,
+            'onboarding_completed',
+            'Organization Details Saved',
+            'Your organization details are saved. Continue to the Application Form to keep your Fundink application moving.'
+        );
+        $organizationName = $organization->profile?->legal_name
+            ?? $organization->organization_name
+            ?? 'New Organization';
 
 
-User::whereHas('role', function ($query) {
-    $query->where('name', 'super_admin');
-})
-->each(function ($superAdmin) use ($organization, $organizationName) {
+        User::whereHas('role', function ($query) {
+            $query->where('name', 'super_admin');
+        })
+            ->each(function ($superAdmin) use ($organization, $organizationName) {
 
-    NotificationService::createOnce(
-        $superAdmin,
-        'organization_registered_' . $organization->id,
-        'New Organization Registered',
-        "{$organizationName} has successfully completed the organization registration process.",
-        [
-            'organization_id' => $organization->id,
-        ]
-    );
-
-});
+                NotificationService::createOnce(
+                    $superAdmin,
+                    'organization_registered_' . $organization->id,
+                    'New Organization Registered',
+                    "{$organizationName} has successfully completed the organization registration process.",
+                    [
+                        'organization_id' => $organization->id,
+                    ]
+                );
+            });
         return redirect()->route('dashboard');
     }
 
@@ -263,7 +262,7 @@ User::whereHas('role', function ($query) {
                 'Content-Type' => 'application/json',
                 'Accept' => 'application/json',
             ])->post('https://api.apigalaxy.in/kyc/v1/verify/pan/plus', [
-                'requested_orderId' => 'ORD-'.time(),
+                'requested_orderId' => 'ORD-' . time(),
                 'customer_pan_number' => strtoupper($request->pan_number),
                 'service_id' => 'AG1035',
                 'name_to_match' => 'dummy',
@@ -271,13 +270,24 @@ User::whereHas('role', function ($query) {
 
             $data = $response->json();
 
-            if (! $response->successful() || ! ($data['success'] ?? false)) {
+            Log::info('PAN API Response', [
+                'http_status' => $response->status(),
+                'response' => $data,
+            ]);
+
+            if (! $response->successful()) {
                 return response()->json([
                     'success' => false,
-                    'message' => $data['response_message'] ?? 'PAN verification failed.',
+                    'message' => 'Unable to process PAN verification request.',
                 ], 422);
             }
 
+            if (!($data['success'] ?? false)) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'PAN verification failed. Please check the PAN number and try again.',
+                ], 422);
+            }
             $result = $data['result'] ?? [];
 
             // Reject Individual PAN
@@ -307,13 +317,12 @@ User::whereHas('role', function ($query) {
                     'match_score' => $result['name_match_score'] ?? null,
                 ],
             ]);
-
         } catch (\Throwable $e) {
 
             Log::error('PAN Verification Error', [
                 'message' => $e->getMessage(),
             ]);
-            
+
 
             return response()->json([
                 'success' => false,
@@ -323,40 +332,38 @@ User::whereHas('role', function ($query) {
     }
 
 
-public function getPincodeDetails($pincode)
-{
-    if (!preg_match('/^\d{6}$/', $pincode)) {
+    public function getPincodeDetails($pincode)
+    {
+        if (!preg_match('/^\d{6}$/', $pincode)) {
+            return response()->json([
+                'message' => 'Invalid pincode.'
+            ], 422);
+        }
+
+        $records = DB::table('pincodes')
+            ->where('Pincode', $pincode)
+            ->get();
+
+        if ($records->isEmpty()) {
+            return response()->json([
+                'message' => 'Pincode not found.'
+            ], 404);
+        }
+
+        $first = (array) $records->first();
+
         return response()->json([
-            'message' => 'Invalid pincode.'
-        ], 422);
+            'status' => 'success',
+            'state' => $first['State'] ?? $first['state'] ?? '',
+            'district' => $first['DistrictsName'] ?? $first['district'] ?? $first['District'] ?? '',
+            'offices' => $records->map(function ($record) {
+                $record = (array) $record;
+
+                return $record['PostOfficeName']
+                    ?? $record['post_office_name']
+                    ?? $record['office_name']
+                    ?? '';
+            })->filter()->values(),
+        ]);
     }
-
-    $records = DB::table('pincodes')
-        ->where('Pincode', $pincode)
-        ->get();
-
-    if ($records->isEmpty()) {
-        return response()->json([
-            'message' => 'Pincode not found.'
-        ], 404);
-    }
-
-    $first = (array) $records->first();
-
-    return response()->json([
-        'status' => 'success',
-        'state' => $first['State'] ?? $first['state'] ?? '',
-        'district' => $first['DistrictsName'] ?? $first['district'] ?? $first['District'] ?? '',
-        'offices' => $records->map(function ($record) {
-            $record = (array) $record;
-
-            return $record['PostOfficeName']
-                ?? $record['post_office_name']
-                ?? $record['office_name']
-                ?? '';
-        })->filter()->values(),
-    ]);
-}
-
-
 }

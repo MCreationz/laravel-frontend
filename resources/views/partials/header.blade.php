@@ -123,7 +123,7 @@
                                 Organization:
                             </div>
                             <div class="flex-grow-1 text-break">
-                                {{ auth('organization')->user()->organization_name ?? '-' }}
+                                {{ auth('organization')->user()->profile->legal_name ?? '-' }}
                             </div>
                         </div>
 
