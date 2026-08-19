@@ -249,89 +249,98 @@ class OnboardingController extends Controller
         return redirect()->route('dashboard');
     }
 
-    public function verifyPan(Request $request)
-    {
-        $request->validate([
-            'pan_number' => 'required|string|size:10',
+  public function verifyPan(Request $request)
+{
+    $request->validate([
+        'pan_number' => [
+            'required',
+            'string',
+            'size:10',
+            'regex:/^[A-Z]{5}[0-9]{4}[A-Z]$/i',
+        ],
+    ]);
+
+    try {
+
+        $response = Http::withHeaders([
+            'apiKey' => env('PAN_API_KEY'),
+            'Content-Type' => 'application/json',
+            'Accept' => 'application/json',
+        ])->post('https://api.apigalaxy.in/kyc/v1/verify/pan/plus', [
+            'requested_orderId' => 'ORD-' . time(),
+            'customer_pan_number' => strtoupper($request->pan_number),
+            'service_id' => 'AG1035',
+            'name_to_match' => 'dummy',
         ]);
 
-        try {
+        $data = $response->json();
 
-            $response = Http::withHeaders([
-                'apiKey' => env('PAN_API_KEY'),
-                'Content-Type' => 'application/json',
-                'Accept' => 'application/json',
-            ])->post('https://api.apigalaxy.in/kyc/v1/verify/pan/plus', [
-                'requested_orderId' => 'ORD-' . time(),
-                'customer_pan_number' => strtoupper($request->pan_number),
-                'service_id' => 'AG1035',
-                'name_to_match' => 'dummy',
-            ]);
+        Log::info('PAN API Response', [
+            'http_status' => $response->status(),
+            'response' => $data,
+        ]);
 
-            $data = $response->json();
-            dd($data);
-
-            Log::info('PAN API Response', [
-                'http_status' => $response->status(),
-                'response' => $data,
-            ]);
-
-            if (! $response->successful()) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Unable to process PAN verification request.',
-                ], 422);
-            }
-
-            if (!($data['success'] ?? false)) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'PAN verification failed. Please check the PAN number and try again.',
-                ], 422);
-            }
-            $result = $data['result'] ?? [];
-
-            // Reject Individual PAN
-            $panType = strtolower(trim($result['pan_type'] ?? ''));
-
-            if (str_contains($panType, 'individual') || str_contains($panType, 'person')) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Individual PAN is not allowed. Please provide a Company/LLP PAN.',
-                ], 422);
-            }
-
-            return response()->json([
-                'success' => true,
-                'message' => 'PAN verified successfully.',
-                'data' => [
-                    'pan_number' => $result['pan_number'] ?? null,
-                    'organization_name' => $result['user_full_name'] ?? null,
-                    'pan_type' => $result['pan_type'] ?? null,
-                    'incorporation_date' => ! empty($result['user_dob'])
-                        ? str_replace('/', '-', $result['user_dob'])
-                        : null,
-                    'email' => $result['user_email'] ?? null,
-                    'phone' => $result['user_phone_number'] ?? null,
-                    'address' => $result['user_address'] ?? [],
-                    'aadhaar_linked' => $result['aadhaar_linked_status'] ?? null,
-                    'match_score' => $result['name_match_score'] ?? null,
-                ],
-            ]);
-        } catch (\Throwable $e) {
-
-            Log::error('PAN Verification Error', [
-                'message' => $e->getMessage(),
-            ]);
-
-
+        // API request itself failed
+        if (! $response->successful()) {
             return response()->json([
                 'success' => false,
-                'message' => 'Something went wrong while verifying PAN.',
-            ], 500);
+                'message' => 'Unable to process PAN verification request.',
+            ], 422);
         }
-    }
 
+        // API processed the request but PAN verification failed
+        if (! ($data['success'] ?? false)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'PAN verification failed. Please check the PAN number and try again.',
+            ], 422);
+        }
+
+        $result = $data['result'] ?? [];
+
+        // Reject Individual PAN
+        $panType = strtolower(trim($result['pan_type'] ?? ''));
+
+        if (
+            str_contains($panType, 'individual') ||
+            str_contains($panType, 'person')
+        ) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Individual PAN is not allowed. Please provide a Company/LLP PAN.',
+            ], 422);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'PAN verified successfully.',
+            'data' => [
+                'pan_number' => $result['pan_number'] ?? null,
+                'organization_name' => $result['user_full_name'] ?? null,
+                'pan_type' => $result['pan_type'] ?? null,
+                'incorporation_date' => ! empty($result['user_dob'])
+                    ? str_replace('/', '-', $result['user_dob'])
+                    : null,
+                'email' => $result['user_email'] ?? null,
+                'phone' => $result['user_phone_number'] ?? null,
+                'address' => $result['user_address'] ?? [],
+                'aadhaar_linked' => $result['aadhaar_linked_status'] ?? null,
+                'match_score' => $result['name_match_score'] ?? null,
+            ],
+        ]);
+
+    } catch (\Throwable $e) {
+
+        Log::error('PAN Verification Error', [
+            'message' => $e->getMessage(),
+        ]);
+
+        return response()->json([
+            'success' => false,
+            'message' => 'Something went wrong while verifying PAN.',
+        ], 500);
+    }
+}
 
     public function getPincodeDetails($pincode)
     {
