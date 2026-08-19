@@ -79,114 +79,126 @@
                 </tr>
             </thead>
 
-            <tbody>
+       <tbody>
 
-                @forelse($funds as $fund)
+    @forelse($funds as $fund)
 
-                <tr>
+        <tr>
 
-                    <!-- Fund Name -->
-                    <td>
-                     <div class="dashboard-v2-name-cell">
+            <!-- Fund Name -->
+            <td>
+                <div class="dashboard-v2-name-cell">
 
-    @if($fund->fund_logo)
-        <img
-            src="{{ Storage::url($fund->fund_logo) }}"
-            alt="{{ $fund->fund_name }} Logo"
-            style="width:48px;height:48px;object-fit:cover;flex-shrink:0;">
-    @else
-        <span class="hc-badge">
-            {{ strtoupper(substr($fund->fund_name ?? 'F', 0, 2)) }}
-        </span>
-    @endif
+                    @if($fund->fund_logo)
+                        <img
+                            src="{{ Storage::url($fund->fund_logo) }}"
+                            alt="{{ $fund->fund_name ?? 'Fund' }} Logo"
+                            style="width:48px;height:48px;object-fit:cover;flex-shrink:0;">
+                    @else
+                        <span class="hc-badge">
+                            {{ strtoupper(substr($fund->fund_name ?? 'F', 0, 2)) }}
+                        </span>
+                    @endif
 
-    <span>
-        <strong>{{ $fund->fund_name }}</strong>
-    </span>
+                    <span>
+                        <strong>{{ $fund->fund_name ?? 'Unnamed Fund' }}</strong>
+                    </span>
 
-</div>
+                </div>
 
-                        @if($fund->about_fund)
-                        <small class="text-muted d-block mt-1">
-                            {{ \Illuminate\Support\Str::limit($fund->about_fund, 60) }}
-                        </small>
-                        @endif
-                    </td>
+                @if($fund->about_fund)
+                    <small class="text-muted d-block mt-1">
+                        {{ \Illuminate\Support\Str::limit($fund->about_fund, 60) }}
+                    </small>
+                @endif
+            </td>
 
-                    <!-- Owner -->
-                    <td class="text-center">
-                        {{ $fund->fund_owner ?? '-' }}
-                    </td>
+            <!-- Owner -->
+            <td class="text-center">
+                {{ $fund->fund_owner ?? '-' }}
+            </td>
 
-                    <!-- Email -->
-                    <td class="text-center">
-                        {{ $fund->fund_owner_email ?? '-' }}
-                    </td>
+            <!-- Email -->
+            <td class="text-center">
+                {{ $fund->fund_owner_email ?? '-' }}
+            </td>
 
-                    <!-- Duration -->
-                    <td class="text-center text-nowrap">
-                        @if($fund->project_start && $fund->project_end)
-                        {{ $fund->project_start->format('d M Y') }}
-                        <br>
-                        <small class="text-muted">
-                            to {{ $fund->project_end->format('d M Y') }}
-                        </small>
-                        @else
-                        -
-                        @endif
-                    </td>
+            <!-- Duration -->
+            <td class="text-center text-nowrap">
+                @if($fund->project_start && $fund->project_end)
+                    {{ $fund->project_start->format('d M Y') }}
+                    <br>
+                    <small class="text-muted">
+                        to {{ $fund->project_end->format('d M Y') }}
+                    </small>
+                @else
+                    -
+                @endif
+            </td>
 
-                    <!-- Status -->
-                    <td class="text-center">
-                        @php
-                        $statusClass = match($fund->status) {
+            <!-- Status -->
+            <td class="text-center">
+                @php
+                    $statusClass = match($fund->status) {
                         'active' => 'bg-success-subtle text-success',
                         'closed' => 'bg-danger-subtle text-danger',
                         'draft' => 'bg-warning-subtle text-warning',
                         'completed' => 'bg-primary-subtle text-primary',
                         default => 'bg-secondary-subtle text-secondary',
-                        };
-                        @endphp
+                    };
+                @endphp
 
-                        <span class="badge {{ $statusClass }}">
-                            {{ ucfirst($fund->status ?? 'unknown') }}
-                        </span>
-                    </td>
+                <span class="badge {{ $statusClass }}">
+                    {{ ucfirst($fund->status ?? 'unknown') }}
+                </span>
+            </td>
 
-                    <!-- Actions -->
-                         @php
-                        $hasApplied = auth('organization')->check()
-                        && \App\Models\FundApplication::where('fund_id', $fund->id)
+            <!-- Actions -->
+            @php
+                $hasApplied = auth('organization')->check()
+                    && \App\Models\FundApplication::where('fund_id', $fund->id)
                         ->where('organization_id', auth('organization')->user()->id)
                         ->exists();
-                        @endphp
+            @endphp
 
-                        <td class="text-end">
-                            <div class="dashboard-v2-action">
-                                <a href="{{ route('projects.apply.questions', $fund) }}"
-                                    class="btn btn-primary dashboard-v2-apply">
-                                    {{ $hasApplied ? 'Apply Again' : 'Apply Now' }}
-                                </a>
+            <td class="text-end">
+                <div class="dashboard-v2-action">
 
-                                <a href="{{ route('projects.details', $fund->id) }}" class="dashboard-v2-view-link">
-                                    View Details
-                                </a>
-                            </div>
-                        </td>
+                    @if($fund->fund_scope === 'outside' && $fund->redirection_link)
+                        <a href="{{ $fund->redirection_link }}"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="btn btn-primary dashboard-v2-apply">
+                            Apply Now
+                        </a>
+                    @else
+                        <a href="{{ route('projects.apply.questions', $fund) }}"
+                            class="btn btn-primary dashboard-v2-apply">
+                            {{ $hasApplied ? 'Apply Again' : 'Apply Now' }}
+                        </a>
+                    @endif
 
-                </tr>
+                    <a href="{{ route('projects.details', $fund->id) }}"
+                        class="dashboard-v2-view-link">
+                        View Details
+                    </a>
 
-                @empty
+                </div>
+            </td>
 
-                <tr>
-                    <td colspan="6" class="text-center py-4">
-                        No funds available.
-                    </td>
-                </tr>
+        </tr>
 
-                @endforelse
+    @empty
 
-            </tbody>
+        <tr>
+            <td colspan="6" class="text-center py-4">
+                No funds available.
+            </td>
+        </tr>
+
+    @endforelse
+
+</tbody>
 
         </table>
 

@@ -106,96 +106,142 @@
                         <th class="text-end">Action</th>
                     </tr>
                 </thead>
-                <tbody>
-                    @forelse($funds as $fund)
-                    @php
-                    $snapshot = $fund->snapshot;
+               <tbody>
+    @forelse($funds as $fund)
+        @php
+            $snapshot = $fund->snapshot;
 
-                    $tags = collect(explode(',', $snapshot->eligible_states ?? ''))
-                    ->filter()
-                    ->values();
+            $tags = collect(explode(',', $snapshot?->eligible_states ?? ''))
+                ->map(fn ($tag) => trim($tag))
+                ->filter()
+                ->values();
 
-                    $statusItems = collect([
-                    $snapshot?->fund_outlay ? 'Fund Outlay: ₹' . $snapshot->fund_outlay : null,
-                    $snapshot?->fund_type ? 'Fund Type: ' . ucfirst($snapshot->fund_type) : null,
-                    $snapshot?->single_entity_cap ? 'Per Entity Cap: ₹' . $snapshot->single_entity_cap : null,
-                    ])->filter()->values();
-                    @endphp
+            $statusItems = collect([
+                $snapshot?->fund_outlay !== null
+                    ? 'Fund Outlay: ₹' . $snapshot->fund_outlay
+                    : null,
 
-                    <tr>
-                        <td>
-                            <div class="dashboard-v2-name-cell">
+                $snapshot?->fund_type
+                    ? 'Fund Type: ' . ucfirst($snapshot->fund_type)
+                    : null,
 
-                                @if($fund->fund_logo)
-                                <img
-                                    src="{{ Storage::url($fund->fund_logo) }}"
-                                    alt="{{ $fund->fund_name }} Logo"
-                                    style="width:48px;height:48px;object-fit:cover;flex-shrink:0;">
-                                @else
-                                <span class="hc-badge">
-                                    {{ strtoupper(substr($fund->fund_name ?? 'F', 0, 2)) }}
-                                </span>
-                                @endif
+                $snapshot?->single_entity_cap !== null
+                    ? 'Per Entity Cap: ₹' . $snapshot->single_entity_cap
+                    : null,
 
-                                <span>
-                                    <strong>{{ $fund->fund_name }}</strong>
-                                </span>
+                $fund->fund_scope
+                    ? 'Scope: ' . ($fund->fund_scope === 'in_house' ? 'In house' : 'Outside')
+                    : null,
 
-                            </div>
-                        </td>
+                $fund->maximum_project_duration !== null
+                    ? 'Duration: ' . $fund->maximum_project_duration . ' months'
+                    : null,
+            ])
+                ->filter()
+                ->values();
 
-                        <td>
-                            <div class="tag-wrap">
-                                @foreach($tags->take(3) as $tag)
-                                <span class="tag-pill">{{ trim($tag) }}</span>
-                                @endforeach
+            $hasApplied = auth('organization')->check()
+                && \App\Models\FundApplication::where('fund_id', $fund->id)
+                    ->where('organization_id', auth('organization')->user()->id)
+                    ->exists();
+        @endphp
 
-                                @if($tags->count() > 3)
-                                <span class="tag-pill plus">+{{ $tags->count() - 3 }}</span>
-                                @endif
-                            </div>
-                        </td>
+        <tr>
+            {{-- Name --}}
+            <td>
+                <div class="dashboard-v2-name-cell">
 
-                        <td>
-                            <div class="status-wrap">
-                                @foreach($statusItems->take(3) as $item)
-                                <span class="status-pill">{{ $item }}</span>
-                                @endforeach
+                    @if($fund->fund_logo)
+                        <img
+                            src="{{ Storage::url($fund->fund_logo) }}"
+                            alt="{{ $fund->fund_name ?? 'Fund' }} Logo"
+                            style="width:48px;height:48px;object-fit:cover;flex-shrink:0;">
+                    @else
+                        <span class="hc-badge">
+                            {{ strtoupper(substr($fund->fund_name ?? 'F', 0, 2)) }}
+                        </span>
+                    @endif
 
-                                @if($statusItems->count() > 3)
-                                <span class="status-pill plus">+{{ $statusItems->count() - 3 }}</span>
-                                @endif
-                            </div>
-                        </td>
+                    <span>
+                        <strong>{{ $fund->fund_name ?? 'Unnamed Fund' }}</strong>
+                    </span>
 
-                        @php
-                        $hasApplied = auth('organization')->check()
-                        && \App\Models\FundApplication::where('fund_id', $fund->id)
-                        ->where('organization_id', auth('organization')->user()->id)
-                        ->exists();
-                        @endphp
+                </div>
+            </td>
 
-                        <td class="text-end">
-                            <div class="dashboard-v2-action">
-                                <a href="{{ route('projects.apply.questions', $fund) }}"
-                                    class="btn btn-primary dashboard-v2-apply">
-                                    {{ $hasApplied ? 'Apply Again' : 'Apply Now' }}
-                                </a>
+            {{-- Domain Tags --}}
+            <td>
+                <div class="tag-wrap">
+                    @foreach($tags->take(3) as $tag)
+                        <span class="tag-pill">{{ $tag }}</span>
+                    @endforeach
 
-                                <a href="{{ route('projects.details', $fund->id) }}" class="dashboard-v2-view-link">
-                                    View Details
-                                </a>
-                            </div>
-                        </td>
-                    </tr>
-                    @empty
-                    <tr>
-                        <td colspan="4" class="text-center py-4">
-                            No funds available.
-                        </td>
-                    </tr>
-                    @endforelse
-                </tbody>
+                    @if($tags->count() > 3)
+                        <span class="tag-pill plus">
+                            +{{ $tags->count() - 3 }}
+                        </span>
+                    @endif
+
+                    @if($tags->isEmpty())
+                        <span class="text-muted">—</span>
+                    @endif
+                </div>
+            </td>
+
+            {{-- Status / Fund Information --}}
+            <td>
+                <div class="status-wrap">
+                    @foreach($statusItems->take(3) as $item)
+                        <span class="status-pill">{{ $item }}</span>
+                    @endforeach
+
+                    @if($statusItems->count() > 3)
+                        <span class="status-pill plus">
+                            +{{ $statusItems->count() - 3 }}
+                        </span>
+                    @endif
+
+                    @if($statusItems->isEmpty())
+                        <span class="text-muted">—</span>
+                    @endif
+                </div>
+            </td>
+
+            {{-- Actions --}}
+            <td class="text-end">
+    <div class="dashboard-v2-action">
+
+        @if($fund->fund_scope === 'outside' && $fund->redirection_link)
+            <a href="{{ $fund->redirection_link }}"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="btn btn-primary dashboard-v2-apply">
+                Apply Now
+            </a>
+        @else
+            <a href="{{ route('projects.apply.questions', $fund) }}"
+                class="btn btn-primary dashboard-v2-apply">
+                {{ $hasApplied ? 'Apply Again' : 'Apply Now' }}
+            </a>
+        @endif
+
+        <a href="{{ route('projects.details', $fund->id) }}"
+            class="dashboard-v2-view-link">
+            View Details
+        </a>
+
+    </div>
+</td>
+        </tr>
+
+    @empty
+        <tr>
+            <td colspan="4" class="text-center py-4">
+                No funds available.
+            </td>
+        </tr>
+    @endforelse
+</tbody>
             </table>
         </div>
     </div>
