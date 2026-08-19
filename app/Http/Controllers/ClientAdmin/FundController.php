@@ -155,64 +155,91 @@ class FundController extends Controller
     /**
      * Store Fund Overview (Step 1)
      */
-    public function storeOverview(Request $request)
-    {
-        $request->validate([
-            'fund_name' => 'required|string|max:255',
-            'fund_owner' => 'required|string|max:255',
-            'fund_owner_email' => 'required|email|max:255',
-            'about_fund' => 'nullable|string',
-            'project_start' => 'nullable|date',
-            'project_end' => 'nullable|date|after_or_equal:project_start',
-            'maximum_project_duration' => 'nullable|integer|min:1',
-            'fund_logo' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
-            'fund_banner' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
-        ]);
+   public function storeOverview(Request $request)
+{
+    $request->validate([
+        'fund_name' => 'nullable|string|max:255',
+        'fund_owner' => 'nullable|string|max:255',
+        'fund_owner_email' => 'nullable|email|max:255',
+        'about_fund' => 'nullable|string',
 
-        $fund = null;
+        'fund_scope' => 'nullable|in:in_house,outside',
+        'redirection_link' => [
+            'nullable',
+            'url',
+            'max:2048',
+            'required_if:fund_scope,outside',
+        ],
 
-        if (session()->has('current_fund_id')) {
-            $fund = Fund::where(
-                'client_id',
-                auth('client_admin')->id()
-            )->find(session('current_fund_id'));
-        }
+        'project_start' => 'nullable|date',
+        'project_end' => 'nullable|date|after_or_equal:project_start',
+        'maximum_project_duration' => 'nullable|integer|min:1',
+        'fund_logo' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
+        'fund_banner' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
+    ]);
 
-        if (! $fund) {
-            $fund = new Fund;
-            $fund->client_id = auth('client_admin')->id();
-        }
+    $fund = null;
 
-        $fund->fund_name = $request->fund_name;
-        $fund->fund_owner = $request->fund_owner;
-        $fund->fund_owner_email = $request->fund_owner_email;
-        $fund->about_fund = $request->about_fund;
-        $fund->project_start = $request->project_start;
-        $fund->project_end = $request->project_end;
-        $fund->maximum_project_duration = $request->maximum_project_duration;
-        $fund->current_step = 'snapshot';
-        $fund->status = 'active';
-
-        if ($request->hasFile('fund_logo')) {
-            $fund->fund_logo = $request->file('fund_logo')
-                ->store('funds/logos', 'public');
-        }
-
-        if ($request->hasFile('fund_banner')) {
-            $fund->fund_banner = $request->file('fund_banner')
-                ->store('funds/banners', 'public');
-        }
-
-        $fund->save();
-
-        session([
-            'current_fund_id' => $fund->id,
-        ]);
-
-        return redirect()
-            ->route('client-admin.funds.funding-snapshot')
-            ->with('success', 'Fund overview saved successfully.');
+    if (session()->has('current_fund_id')) {
+        $fund = Fund::where(
+            'client_id',
+            auth('client_admin')->id()
+        )->find(session('current_fund_id'));
     }
+
+    if (! $fund) {
+        $fund = new Fund;
+
+        $fund->client_id = auth('client_admin')->id();
+
+        // Default system values
+        $fund->status = 'active';
+        $fund->is_completed = false;
+    }
+
+    // User-facing fields
+    $fund->fund_name = $request->fund_name;
+    $fund->fund_owner = $request->fund_owner;
+    $fund->fund_owner_email = $request->fund_owner_email;
+    $fund->about_fund = $request->about_fund;
+
+    // Fund scope
+    $fund->fund_scope = $request->fund_scope;
+
+    // Redirection link is only applicable for outside funds
+    $fund->redirection_link = $request->fund_scope === 'outside'
+        ? $request->redirection_link
+        : null;
+
+    $fund->project_start = $request->project_start;
+    $fund->project_end = $request->project_end;
+    $fund->maximum_project_duration = $request->maximum_project_duration;
+
+    // System fields
+    $fund->current_step = 2; // Snapshot
+    $fund->status = $fund->status ?? 'active';
+    $fund->is_completed = $fund->is_completed ?? false;
+
+    if ($request->hasFile('fund_logo')) {
+        $fund->fund_logo = $request->file('fund_logo')
+            ->store('funds/logos', 'public');
+    }
+
+    if ($request->hasFile('fund_banner')) {
+        $fund->fund_banner = $request->file('fund_banner')
+            ->store('funds/banners', 'public');
+    }
+
+    $fund->save();
+
+    session([
+        'current_fund_id' => $fund->id,
+    ]);
+
+    return redirect()
+        ->route('client-admin.funds.funding-snapshot')
+        ->with('success', 'Fund overview saved successfully.');
+}
 
     /**
      * Funding Snapshot Step
@@ -250,11 +277,11 @@ class FundController extends Controller
         $fund = Fund::findOrFail($fundId);
 
         $validated = $request->validate([
-            'eligible_states' => ['required', 'string'],
-            'eligibility_instruction' => ['required', 'string'],
-            'fund_outlay' => ['required'],
-            'fund_type' => ['required', 'string', 'max:255'],
-            'single_entity_cap' => ['required'],
+            'eligible_states' => ['nullable', 'string'],
+            'eligibility_instruction' => ['nullable', 'string'],
+            'fund_outlay' => ['nullable', 'numeric'],
+            'fund_type' => ['nullable', 'string', 'max:255'],
+            'single_entity_cap' => ['nullable', 'numeric'],
         ]);
 
         FundSnapshot::updateOrCreate(
@@ -262,21 +289,29 @@ class FundController extends Controller
                 'fund_id' => $fund->id,
             ],
             [
-                'eligible_states' => $validated['eligible_states'],
-                'eligibility_instruction' => $validated['eligibility_instruction'],
-                'is_npo' => $request->boolean('is_npo'),
-                'is_startup' => $request->boolean('is_startup'),
-                'fund_outlay' => $validated['fund_outlay'],
-                'fund_type' => $validated['fund_type'],
-                'single_entity_cap' => $validated['single_entity_cap'],
+                'eligible_states' => $validated['eligible_states'] ?? null,
+                'eligibility_instruction' => $validated['eligibility_instruction'] ?? null,
+
+                // System defaults
+                'is_npo' => $request->boolean('is_npo', false),
+                'is_startup' => $request->boolean('is_startup', false),
+
+                'fund_outlay' => $validated['fund_outlay'] ?? null,
+                'fund_type' => $validated['fund_type'] ?? null,
+                'single_entity_cap' => $validated['single_entity_cap'] ?? null,
             ]
         );
+
+        // Move to next onboarding step
+        $fund->current_step = 3;
+        $fund->status = $fund->status ?? 'active';
+        $fund->is_completed = $fund->is_completed ?? false;
+        $fund->save();
 
         return redirect()
             ->route('client-admin.funds.questionnaire')
             ->with('success', 'Funding snapshot saved successfully.');
     }
-
     /**
      * Questionnaire Step
      */

@@ -1089,6 +1089,18 @@
                             <input type="hidden" name="purpose" id="funder_purpose" class="hidden-select">
 
                             <ul class="select-list" style="display: none;">
+
+                                @if ($role === 'fund_seeker')
+                                <li data-value="product_development">Product Development</li>
+                                <li data-value="working_capital">Working Capital</li>
+                                <li data-value="sales_marketing">Sales & Marketing</li>
+                                <li data-value="team_hiring">Team & Hiring</li>
+                                <li data-value="technology">Technology</li>
+                                <li data-value="business_expansion">Business Expansion</li>
+                                <li data-value="infrastructure">Infrastructure</li>
+                                <li data-value="research_development">Research & Development</li>
+                                <li data-value="others">Others</li>
+                                @else
                                 <li data-value="project">Project</li>
                                 <li data-value="program">Program</li>
                                 <li data-value="org_development">Organization Development</li>
@@ -1096,6 +1108,8 @@
                                 <li data-value="staff_training">Staff Training</li>
                                 <li data-value="technology">Technology</li>
                                 <li data-value="others">Others</li>
+                                @endif
+
                             </ul>
                         </div>
                     </div>

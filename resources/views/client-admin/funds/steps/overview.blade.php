@@ -79,53 +79,100 @@
                     </div>
                     <div class="row mb-3 flex-wrap row-gap-3 row-gap-md-4 px-md-1">
                         <div class="col-12 px-md-2">
-                            <label class="form-label">Fund Name<span>*</span></label>
+                            <label class="form-label">Fund Name</label>
                             <input type="text" name="fund_name" class="form-control" placeholder="Enter Fund Name"
                                 value="{{ old('fund_name', $fund?->fund_name) }}">
                             <div class="error-message text-danger" style="display:none;"></div>
                         </div>
                         <div class="col-12 col-md-6 px-md-2">
-                            <label class="form-label">Fund Owner<span>*</span></label>
+                            <label class="form-label">Fund Owner</label>
                             <input type="text" name="fund_owner" class="form-control" placeholder="Enter Fund Owner"
-                                value="{{ old('fund_owner', $fund?->fund_owner) }}" required>
+                                value="{{ old('fund_owner', $fund?->fund_owner) }}" >
 
                             <div class="error-message text-danger" style="display:none;"></div>
                         </div>
                         <div class="col-12 col-md-6 px-md-2">
-                            <label class="form-label">Fund Owner Email<span>*</span></label>
+                            <label class="form-label">Fund Owner Email</label>
                             <input type="email" name="fund_owner_email" class="form-control"
                                 placeholder="Fund Owner Email"
-                                value="{{ old('fund_owner_email', $fund?->fund_owner_email) }}" required>
+                                value="{{ old('fund_owner_email', $fund?->fund_owner_email) }}" >
 
                             <div class="error-message text-danger" style="display:none;"></div>
                         </div>
 
                         <div class="col-12 px-md-2">
-                            <label class="form-label">About Fund<span>*</span></label>
+                            <label class="form-label">About Fund</label>
                             <textarea name="about_fund" placeholder="Write Fund description" class="form-control" style="min-height: 136px">{{ old('about_fund', $fund?->about_fund) }}</textarea>
                         </div>
 
                     </div>
+
+                    <div class="row mb-3 flex-wrap row-gap-3 row-gap-md-4 px-md-1">
+
+<div class="col-12 col-md-6 px-md-2">
+    <label class="form-label">Fund Scope</label>
+
+    <div class="select-wrapper w-100 position-relative">
+        <div class="custom-select form-control">
+            {{ old('fund_scope', $fund?->fund_scope ?? 'in_house') === 'outside' ? 'Outside' : 'In house' }}
+        </div>
+
+        <input
+            type="hidden"
+            name="fund_scope"
+            id="fund_scope"
+            class="hidden-select"
+            value="{{ old('fund_scope', $fund?->fund_scope ?? 'in_house') }}"
+        >
+
+        <ul class="select-list" style="display: none;">
+            <li data-value="in_house">In house</li>
+            <li data-value="outside">Outside</li>
+        </ul>
+    </div>
+
+    <div class="error-message text-danger" style="display:none;"></div>
+</div>
+
+    <div class="col-12 col-md-6 px-md-2"
+         id="redirection-link-wrapper"
+         style="{{ old('fund_scope', $fund?->fund_scope) === 'outside' ? '' : 'display:none;' }}">
+
+        <label class="form-label">Redirection Link</label>
+
+        <input
+            type="url"
+            name="redirection_link"
+            id="redirection_link"
+            class="form-control"
+            placeholder="https://example.com"
+            value="{{ old('redirection_link', $fund?->redirection_link) }}"
+        >
+
+        <div class="error-message text-danger" style="display:none;"></div>
+    </div>
+
+</div>
                     <div class="mt-4 mb-4">
                         <h2 class="top-heading mb-0">Fund Timelines</h2>
                     </div>
                     <div class="row mb-3 flex-wrap row-gap-3 row-gap-md-4 px-md-1">
                         <div class="col-12 col-md-6 px-md-2">
-                            <label class="form-label">Application Starts On:<span>*</span></label>
+                            <label class="form-label">Application Starts On:</label>
                             <input type="date" name="project_start" class="form-control"
                                 placeholder="Enter project start date"
-                                value="{{ old('project_start', $fund?->project_start?->format('Y-m-d')) }}" required>
+                                value="{{ old('project_start', $fund?->project_start?->format('Y-m-d')) }}" >
                             <div class="error-message text-danger" style="display:none;"></div>
                         </div>
                         <div class="col-12 col-md-6 px-md-2">
-                            <label class="form-label">Application Closes On:<span>*</span></label>
+                            <label class="form-label">Application Closes On:</label>
                             <input type="date" name="project_end" class="form-control"
                                 placeholder="Enter project end date"
-                                value="{{ old('project_end', $fund?->project_end?->format('Y-m-d')) }}" required>
+                                value="{{ old('project_end', $fund?->project_end?->format('Y-m-d')) }}" >
                             <div class="error-message text-danger" style="display:none;"></div>
                         </div>
                         <div class="col-12 px-md-2">
-                            <label class="form-label">Maximum Project Duration:<span>*</span></label>
+                            <label class="form-label">Maximum Project Duration:</label>
                             <input type="number" name="maximum_project_duration" class="form-control"
                                 placeholder="Enter in months"
                                 value="{{ old('maximum_project_duration', $fund?->maximum_project_duration) }}">
@@ -139,7 +186,7 @@
                     <div class="row flex-wrap row-gap-3 row-gap-md-4 px-md-1">
                         <div class="col-12 px-md-2">
                             <div class="upload-box">
-                                <label class="form-label">Fund Logo<span>*</span></label>
+                                <label class="form-label">Fund Logo</label>
 
                                 <input type="file" id="fund_logo" name="fund_logo" hidden>
 
@@ -185,7 +232,7 @@
                         </div>
                         <div class="col-12 px-md-2">
                             <div class="upload-box">
-                                <label class="form-label">Fund Banner<span>*</span></label>
+                                <label class="form-label">Fund Banner</label>
 
                                 <input type="file" id="fund_banner" name="fund_banner" hidden>
 
@@ -270,6 +317,52 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+
+
+const fundScope = document.getElementById('fund_scope');
+const fundScopeSelect = fundScope.closest('.select-wrapper').querySelector('.custom-select');
+
+const redirectionLinkWrapper = document.getElementById('redirection-link-wrapper');
+const redirectionLink = document.getElementById('redirection_link');
+
+function updateFundScopeLabel() {
+    const selectedOption = fundScope
+        .closest('.select-wrapper')
+        .querySelector(`.select-list li[data-value="${fundScope.value}"]`);
+
+    if (selectedOption) {
+        fundScopeSelect.textContent = selectedOption.textContent.trim();
+    }
+}
+
+function toggleRedirectionLink() {
+    if (fundScope.value === 'outside') {
+        redirectionLinkWrapper.style.display = '';
+        redirectionLink.setAttribute('required', 'required');
+    } else {
+        redirectionLinkWrapper.style.display = 'none';
+        redirectionLink.removeAttribute('required');
+        redirectionLink.value = '';
+    }
+}
+
+fundScope
+    .closest('.select-wrapper')
+    .querySelectorAll('.select-list li')
+    .forEach(option => {
+        option.addEventListener('click', function () {
+            fundScope.value = this.dataset.value;
+
+            fundScopeSelect.textContent = this.textContent.trim();
+
+            toggleRedirectionLink();
+        });
+    });
+
+// Set initial state when page loads
+updateFundScopeLabel();
+toggleRedirectionLink();
+
 
             const allowedExtensions = ['jpg', 'jpeg', 'png', 'webp', 'gif'];
 

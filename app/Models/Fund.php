@@ -23,6 +23,8 @@ class Fund extends Model
         'current_step',
         'status',
         'is_completed',
+        'fund_scope',
+        'redirection_link',
     ];
 
     protected $casts = [
@@ -36,31 +38,32 @@ class Fund extends Model
         return $this->belongsTo(ClientAdmin::class);
     }
     public function reviewers()
-{
-    return $this->belongsToMany(Reviewer::class, 'fund_reviewer')
-        ->withTimestamps();
-}
+    {
+        return $this->belongsToMany(Reviewer::class, 'fund_reviewer')
+            ->withTimestamps();
+    }
 
     public function snapshot()
     {
         return $this->hasOne(FundSnapshot::class);
     }
     public function themes()
-{
-    return $this->hasMany(FundTheme::class);
-}    public function documents()
-{
-    return $this->hasMany(FundDocument::class);
-}
+    {
+        return $this->hasMany(FundTheme::class);
+    }
+    public function documents()
+    {
+        return $this->hasMany(FundDocument::class);
+    }
 
-public function questionnaires()
-{
-    return $this->hasMany(FundQuestionnaire::class)
-        ->where('is_active', true);
-}
+    public function questionnaires()
+    {
+        return $this->hasMany(FundQuestionnaire::class)
+            ->where('is_active', true);
+    }
 
-public function applications()
-{
-    return $this->hasMany(FundApplication::class);
-}
+    public function applications()
+    {
+        return $this->hasMany(FundApplication::class);
+    }
 }

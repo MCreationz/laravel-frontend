@@ -99,7 +99,7 @@
                     </div>
                     <div class="row mb-3 flex-wrap row-gap-3 row-gap-md-4 px-md-1">
                         <div class="col-12-4 px-md-2">
-                            <label class="form-label">Eligible States<span>*</span></label>
+                            <label class="form-label">Eligible States</label>
                             <div class="select-wrapper w-100 position-relative checkbox-wrap">
                                 <!-- Selected Items -->
                                 <div id="selectedStatesBox"
@@ -255,7 +255,7 @@
                                 </ul>
 
                                 <input type="hidden" name="eligible_states" id="hiddenStates"
-                                    value="{{ implode(',', $selectedStates) }}" required>
+                                    value="{{ implode(',', $selectedStates) }}">
                             </div>
 
                             @error('state')
@@ -265,17 +265,17 @@
 
 
 
-                       <div class="col-12 px-md-2">
-    <label class="form-label">
-        Eligibility Instruction <span>*</span>
-    </label>
+                        <div class="col-12 px-md-2">
+                            <label class="form-label">
+                                Eligibility Instruction
+                            </label>
 
-    <textarea
-        id="eligibility_instruction"
-        name="eligibility_instruction"
-        class="form-control"
-        rows="8">{{ old('eligibility_instruction', $fundSnapshot->eligibility_instruction ?? '') }}</textarea>
-</div>
+                            <textarea
+                                id="eligibility_instruction"
+                                name="eligibility_instruction"
+                                class="form-control"
+                                rows="8">{{ old('eligibility_instruction', $fundSnapshot->eligibility_instruction ?? '') }}</textarea>
+                        </div>
 
                     </div>
                     <div class="toggle-container d-flex mb-3 justify-content-start gap-2">
@@ -310,23 +310,23 @@
                     </div>
                     <div class="row mb-3 flex-wrap row-gap-3 row-gap-md-4 px-md-1">
                         <div class="col-12 col-md-6 px-md-2">
-                            <label class="form-label">Fund Outlay (₹)<span>*</span></label>
+                            <label class="form-label">Fund Outlay (₹)</label>
                             <input type="text" inputmode="numeric" name="fund_outlay" class="form-control"
                                 placeholder="Enter Fund Outlay (₹)"
                                 value="{{ old('fund_outlay', $fundSnapshot->fund_outlay ?? '') }}">
                             <div class="error-message text-danger" style="display:none;"></div>
                         </div>
                         <div class="col-12 col-md-6 px-md-2">
-                            <label class="form-label">Fund Type<span>*</span></label>
+                            <label class="form-label">Fund Type</label>
                             <input type="text" name="fund_type" class="form-control" placeholder="Enter Fund Type"
-                                value="{{ old('fund_type', $fundSnapshot->fund_type ?? '') }}" required>
+                                value="{{ old('fund_type', $fundSnapshot->fund_type ?? '') }}">
                             <div class="error-message text-danger" style="display:none;"></div>
                         </div>
                         <div class="col-12 px-md-2">
-                            <label class="form-label">Single Entity Cap (₹)<span>*</span></label>
+                            <label class="form-label">Single Entity Cap (₹)</label>
                             <input type="text" inputmode="numeric" name="single_entity_cap" class="form-control"
                                 placeholder="Enter Single Entity Cap (₹)"
-                                value="{{ old('single_entity_cap', $fundSnapshot->single_entity_cap ?? '') }}" required>
+                                value="{{ old('single_entity_cap', $fundSnapshot->single_entity_cap ?? '') }}">
                             <div class="error-message text-danger" style="display:none;"></div>
                         </div>
                     </div>
@@ -442,7 +442,7 @@
                                     <span class="text-danger">*</span>
                                 </label>
                                 <input type="text" class="form-control py-2" id="theme_name" name="theme_name"
-                                    placeholder="Enter Theme Name" required>
+                                    placeholder="Enter Theme Name">
                             </div>
 
                             <div class="col-md-6">
@@ -451,7 +451,7 @@
                                     <span class="text-danger">*</span>
                                 </label>
                                 <input type="text" class="form-control py-2" id="sub_theme_name" name="sub_theme_name"
-                                    placeholder="Enter Sub Theme" required>
+                                    placeholder="Enter Sub Theme">
                             </div>
                         </div>
 
@@ -516,18 +516,18 @@
                             <div class="px-3">
                                 <div class="row mb-3 flex-wrap row-gap-3 row-gap-md-4 px-md-1">
                                     <div class="col-12 col-md-6 px-md-2">
-                                        <label class="form-label">Document Name<span>*</span></label>
+                                        <label class="form-label">Document Name</label>
                                         <input type="text" name="fund_name" class="form-control"
                                             placeholder="Enter Document Name">
                                         <div class="error-message text-danger" style="display:none;"></div>
                                     </div>
                                     <div class="col-12 col-md-6 px-md-2">
-                                        <label class="form-label">Instruction<span>*</span></label>
+                                        <label class="form-label">Instruction</label>
                                         <input type="text" name="fund_owner" class="form-control"
-                                            placeholder="Enter Instruction" required>
+                                            placeholder="Enter Instruction">
                                         <div class="error-message text-danger" style="display:none;"></div>
                                     </div>
-                                    <div class="col-12 col-md-6 px-md-2"> <label class="form-label">Document Type<span>*</span></label>
+                                    <div class="col-12 col-md-6 px-md-2"> <label class="form-label">Document Type</label>
 
 
                                         <div class="select-wrapper w-100 position-relative">
@@ -550,11 +550,11 @@
 
                                     <div class="col-12 col-md-6 px-md-2">
                                         <label class="form-label">File Size <input type="hidden" name="document_type"
-                                                class="hidden-select">(MB)<span>*</span></label>
+                                                class="hidden-select">(MB)</label>
                                         <input type="number" name="about_fund" placeholder="Enter File Size (MB)"
                                             class="form-control">
                                     </div>
-                                    
+
                                 </div>
                             </div>
                         </div>
@@ -597,7 +597,7 @@
 
                         <div class="col-md-6">
                             <label class="form-label">
-                                Document Name <span>*</span>
+                                Document Name
                             </label>
 
                             <input type="text"
@@ -620,7 +620,7 @@
                         <div class="col-md-6">
 
                             <label class="form-label">
-                                Document Type <span>*</span>
+                                Document Type
                             </label>
 
                             <select id="edit_document_type"
@@ -641,7 +641,7 @@
                         <div class="col-md-6">
 
                             <label class="form-label">
-                                File Size (MB) <span>*</span>
+                                File Size (MB)
                             </label>
 
                             <input type="number"
@@ -762,10 +762,10 @@
 
 <script>
     ClassicEditor
-    .create(document.querySelector('#eligibility_instruction'))
-    .catch(error => {
-        console.error(error);
-    });
+        .create(document.querySelector('#eligibility_instruction'))
+        .catch(error => {
+            console.error(error);
+        });
 </script>
 
 
