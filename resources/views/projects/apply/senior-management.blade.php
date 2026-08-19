@@ -114,7 +114,7 @@
     </div>
 
     <div class="table-responsive">
-        <table class="table align-middle text-center">
+        <table class="table align-middle text-center mb-0">
             <thead class="table-light">
                 <tr>
                     <th class="text-nowrap">S No.</th>
@@ -237,7 +237,7 @@
     </div>
 
     <div style="border-radius:0px 0px 8px 8px;"
-        class="d-flex justify-content-center justify-content-md-end gap-2 gap-md-3 mt-4 steps-btn mt-4  flex-wrap">
+        class="d-flex justify-content-center justify-content-md-end gap-2 gap-md-3 mt-4 step-buttons mt-2  flex-wrap">
         <div class="btn-wrap">
             <button type="button" class="btn btn-secondary"
                 onclick="window.location.href='{{ route('projects.apply.questions', $fund)}}' ">

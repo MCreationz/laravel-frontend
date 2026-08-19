@@ -7,11 +7,11 @@
         @unless (auth('organization')->user()->isProfileComplete())
             <div class="expert-sec position-relative mt-4">
                 <div class="expert-content p-3 p-lg-4">
-                    <p class="font-sm gradient-text fw-semibold mb-2">How to raise fund with Fundink</p>
+                    <p class="fw-semibold mb-2 expert-title">How to raise fund with Fundink</p>
                     <ol class="ps-3 mb-0">
                         <li class="font-sm mb-1">Register your organization</li>
                         <li class="font-sm mb-1">Select Funding Calls</li>
-                        <li class="font-sm">Write 1000 words</li>
+                        <li class="font-sm">Apply directly</li>
                     </ol>
                 </div>
             </div>
