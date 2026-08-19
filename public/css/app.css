@@ -120,7 +120,7 @@ p:last-child {
 }
 
 form .form-control::placeholder {
-    color: #b9b9b9;
+    /* color: #b9b9b9; */
     opacity: 1;
 }
 
@@ -596,8 +596,7 @@ button.btn.show-password {
 }
 
 .select-list li {
-    padding: 8px 6px 8px 12px;
-    color: #878787 !important;
+    padding: 6px 6px 6px 12px;
     cursor: pointer;
     border-radius: 4px;
     font-size: 14px !important;
@@ -728,15 +727,17 @@ body.dashboard {
     color: #fff;
 }
 
-.sidebar .expert-content {
+/* .sidebar .expert-content {
     background: rgba(255, 255, 255, 0.08);
-}
+} */
 
-.sidebar .expert-content ol li,
+/* .sidebar .expert-content ol li,
 .sidebar .expert-sec .font-sm {
     color: #C6D4E2 !important;
+} */
+.expert-title {
+    color: var(--accent-color);
 }
-
 .sidebar-nav {
     background: transparent;
     border-radius: 10px;
@@ -747,7 +748,7 @@ body.dashboard {
     border-radius: 10px;
 }
 
-.expert-sec:after {
+/* .expert-sec:after {
     content: '';
     position: absolute;
     background: linear-gradient(65.76deg, rgba(1, 96, 214, 0.6) 29.78%, rgba(7, 204, 181, 0.6) 67.45%);
@@ -757,7 +758,7 @@ body.dashboard {
     top: -1px;
     z-index: -1;
     border-radius: 10px;
-}
+} */
 
 .expert-sec .btn {
     font-size: 12px !important;
@@ -849,7 +850,10 @@ button.nav-toggle span {
     border-radius: 21px;
     background: var(--white-color);
 }
-
+.step-buttons {
+    background: #F8FAFC;
+    padding: 20px;
+}
 .step {
     text-align: center;
     position: relative;
@@ -1213,10 +1217,10 @@ ul.sub-list li {
     line-height: 1.4 !important;
 }
 
-ul.sub-list li::marker {
+/* ul.sub-list li::marker {
     color: #9DC2E7;
     font-size: 24px;
-}
+} */
 
 ul.sub-list {
     padding-left: 20px;
@@ -1931,18 +1935,17 @@ ul.select-list input[type="checkbox"]:checked~label:before {
 }
 
 .consent .modal-header {
-    padding: 35px 0px 25px 0px;
+    padding: 30px 0px 25px 0px;
     margin-left: 28px;
     margin-right: 28px;
 }
-
 .consent .modal-body {
-    padding: 35px 16px 20px 35px;
+    padding: 24px 25px 20px 30px;
 }
 
 .consent ul.sub-list {
-    padding-left: 27px;
-    margin-bottom: 20px;
+    padding-left: 16px;
+    margin-bottom: 15px;
 }
 
 .consent .final-check {
@@ -1952,9 +1955,11 @@ ul.select-list input[type="checkbox"]:checked~label:before {
 }
 
 .consent .modal-footer {
-    padding: 0px 20px 22px 20px;
+    padding: 15px 20px;
 }
-
+.modal-body p {
+    margin-bottom: 10px;
+}
 /*  superadmin sidebar */
 .sidebar.dark-sidebar {
     background: var(--primary-blue);
