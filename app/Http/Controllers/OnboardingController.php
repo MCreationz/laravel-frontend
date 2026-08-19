@@ -269,6 +269,7 @@ class OnboardingController extends Controller
             ]);
 
             $data = $response->json();
+            dd($data);
 
             Log::info('PAN API Response', [
                 'http_status' => $response->status(),
