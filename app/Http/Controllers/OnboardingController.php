@@ -284,7 +284,7 @@ class OnboardingController extends Controller
         if (! $response->successful()) {
             return response()->json([
                 'success' => false,
-                'message' => 'Unable to process PAN verification request.',
+                'message' => 'PAN verification failed. Please check the PAN number and try again.',
             ], 422);
         }
 
