@@ -36,9 +36,9 @@ class CheckOrganizationOnboarding
         // If onboarding is already complete, don't allow onboarding pages
 
         
-        // if ($organization->isProfileComplete() && in_array($routeName, $onboardingRoutes)) {
-        //     return redirect()->route('dashboard');
-        // }
+        if ($organization->isProfileComplete() && in_array($routeName, $onboardingRoutes)) {
+            return redirect()->route('dashboard');
+        }
 
         if (in_array($routeName, $onboardingRoutes)) {
             return $next($request);
