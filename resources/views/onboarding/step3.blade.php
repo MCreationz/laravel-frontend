@@ -961,7 +961,7 @@
                         <label class="form-label">Months of Operation<span>*</span></label>
                         <input type="number" name="years_of_operation_months"
                             class="form-control @error('years_of_operation_months') is-invalid @enderror"
-                            value="{{ $years }}" placeholder="Enter in years" required>
+                            value="{{ $years }}" placeholder="Enter months of operation" required>
 
                         @error('years_of_operation_months')
                         <div class="text-danger small">{{ $message }}</div>
