@@ -32,6 +32,40 @@ class LoginController extends Controller
     |--------------------------------------------------------------------------
     */
 
+    // public function loginWithPassword(Request $request)
+    // {
+    //     $request->validate([
+    //         'email' => 'required|email',
+    //         'password' => 'required',
+    //     ]);
+
+    //     if (Auth::guard('organization')->attempt([
+    //         'work_email' => $request->email,
+    //         'password' => $request->password,
+    //     ])) {
+
+    //         $organization = Auth::guard('organization')->user();
+
+    //         // BLOCK UNVERIFIED EMAIL
+    //         if (! $organization->email_verified_at) {
+    //             Auth::guard('organization')->logout();
+
+    //             return back()
+    //                 ->withInput($request->only('email'))
+    //                 ->with('error', 'Please verify your email before logging in.');
+    //         }
+
+    //         $request->session()->regenerate();
+
+    //         return redirect()
+    //             ->route('dashboard')
+    //             ->with('success', 'Login successful');
+    //     }
+
+    //     return back()
+    //         ->withInput($request->only('email')) // keeps email in form
+    //         ->with('error', 'Invalid email or password.');
+    // }
     public function loginWithPassword(Request $request)
     {
         $request->validate([
@@ -39,35 +73,93 @@ class LoginController extends Controller
             'password' => 'required',
         ]);
 
-      if (Auth::guard('organization')->attempt([
-    'work_email' => $request->email,
-    'password' => $request->password,
-])) {
+        /*
+    |--------------------------------------------------------------------------
+    | 1. SUPER ADMIN LOGIN
+    |--------------------------------------------------------------------------
+    */
+        if (Auth::guard('web')->attempt([
+            'email' => $request->email,
+            'password' => $request->password,
+        ])) {
 
-    $organization = Auth::guard('organization')->user();
+            $user = Auth::guard('web')->user();
 
-    // BLOCK UNVERIFIED EMAIL
-    if (! $organization->email_verified_at) {
-        Auth::guard('organization')->logout();
+            // Check if user is Super Admin
+            if ($user->role()->where('role_id', 1)->exists()) {
 
+                $request->session()->regenerate();
+
+                return redirect()
+                    ->route('superadmin.dashboard');
+            }
+
+            // Not a super admin, logout and continue checking other guards
+            Auth::guard('web')->logout();
+        }
+
+
+        /*
+    |--------------------------------------------------------------------------
+    | 2. CLIENT ADMIN LOGIN
+    |--------------------------------------------------------------------------
+    */
+        if (Auth::guard('client_admin')->attempt([
+            'email' => $request->email,
+            'password' => $request->password,
+            'status' => 'verified',
+        ])) {
+
+            $request->session()->regenerate();
+
+            return redirect()
+                ->route('client-admin.dashboard');
+        }
+
+
+        /*
+    |--------------------------------------------------------------------------
+    | 3. ORGANIZATION LOGIN
+    |--------------------------------------------------------------------------
+    */
+        if (Auth::guard('organization')->attempt([
+            'work_email' => $request->email,
+            'password' => $request->password,
+        ])) {
+
+            $organization = Auth::guard('organization')->user();
+
+            // BLOCK UNVERIFIED EMAIL
+            if (! $organization->email_verified_at) {
+
+                Auth::guard('organization')->logout();
+
+                return back()
+                    ->withInput($request->only('email'))
+                    ->with(
+                        'error',
+                        'Please verify your email before logging in.'
+                    );
+            }
+
+            $request->session()->regenerate();
+
+            return redirect()
+                ->route('dashboard')
+                ->with('success', 'Login successful');
+        }
+
+
+        /*
+    |--------------------------------------------------------------------------
+    | INVALID LOGIN
+    |--------------------------------------------------------------------------
+    */
         return back()
             ->withInput($request->only('email'))
-            ->with('error', 'Please verify your email before logging in.');
-    }
-
-    $request->session()->regenerate();
-
-    return redirect()
-        ->route('dashboard')
-        ->with('success', 'Login successful');
-}
-
-        return back()
-            ->withInput($request->only('email')) // keeps email in form
             ->with('error', 'Invalid email or password.');
     }
 
-    
     /*
     |--------------------------------------------------------------------------
     | OTP LOGIN EMAIL PAGE
@@ -91,7 +183,7 @@ class LoginController extends Controller
             'email' => 'required|email',
         ]);
 
-        
+
 
         $organization = Organization::where('work_email', $request->email)->first();
 
@@ -102,10 +194,10 @@ class LoginController extends Controller
         }
 
         if (! $organization->email_verified_at) {
-    return redirect()
-        ->route('login')
-        ->with('error', 'Please verify your email before logging in.');
-}
+            return redirect()
+                ->route('login')
+                ->with('error', 'Please verify your email before logging in.');
+        }
 
         $otp = random_int(100000, 999999);
         $expiryMinutes = 10;
@@ -258,144 +350,142 @@ class LoginController extends Controller
     }
 
 
-public function forgotPassword()
-{
-    return view('auth.forgot-password');
-}
-
-public function sendResetLink(Request $request)
-{
-    $request->validate([
-        'work_email' => ['required', 'email']
-    ]);
-
-    $organization = Organization::where(
-        'work_email',
-        $request->work_email
-    )->first();
-
-    if (!$organization) {
-        return back()->withErrors([
-            'work_email' => 'No account found with this email address.'
-        ])->withInput();
+    public function forgotPassword()
+    {
+        return view('auth.forgot-password');
     }
 
-    $token = Str::random(64);
+    public function sendResetLink(Request $request)
+    {
+        $request->validate([
+            'work_email' => ['required', 'email']
+        ]);
 
-    OrganizationPasswordReset::updateOrCreate(
-        [
-            'organization_id' => $organization->id,
-        ],
-        [
-            'token'      => $token,
-            'expires_at' => now()->addMinutes(30),
-        ]
-    );
+        $organization = Organization::where(
+            'work_email',
+            $request->work_email
+        )->first();
 
-    $resetUrl = route('password.reset.form', [
-        'token' => $token
-    ]);
+        if (!$organization) {
+            return back()->withErrors([
+                'work_email' => 'No account found with this email address.'
+            ])->withInput();
+        }
 
-Mail::to($organization->work_email)
-    ->send(new ResetPasswordMail($resetUrl, $organization));
+        $token = Str::random(64);
 
-    return back()->with(
-        'success',
-        'Password reset link has been sent to your email.'
-    );
-}
+        OrganizationPasswordReset::updateOrCreate(
+            [
+                'organization_id' => $organization->id,
+            ],
+            [
+                'token'      => $token,
+                'expires_at' => now()->addMinutes(30),
+            ]
+        );
 
+        $resetUrl = route('password.reset.form', [
+            'token' => $token
+        ]);
 
-public function showResetForm($token)
-{
-    $reset = OrganizationPasswordReset::where('token', $token)
-        ->first();
+        Mail::to($organization->work_email)
+            ->send(new ResetPasswordMail($resetUrl, $organization));
 
-    if (!$reset) {
-        return redirect()
-            ->route('forgot.password')
-            ->withErrors([
-                'email' => 'Invalid password reset link.'
-            ]);
+        return back()->with(
+            'success',
+            'Password reset link has been sent to your email.'
+        );
     }
 
-    if ($reset->expires_at->isPast()) {
+
+    public function showResetForm($token)
+    {
+        $reset = OrganizationPasswordReset::where('token', $token)
+            ->first();
+
+        if (!$reset) {
+            return redirect()
+                ->route('forgot.password')
+                ->withErrors([
+                    'email' => 'Invalid password reset link.'
+                ]);
+        }
+
+        if ($reset->expires_at->isPast()) {
+
+            $reset->delete();
+
+            return redirect()
+                ->route('forgot.password')
+                ->withErrors([
+                    'email' => 'Password reset link has expired.'
+                ]);
+        }
+
+        return view('auth.reset-password', compact('token'));
+    }
+    public function resetPassword(Request $request)
+    {
+        $request->validate([
+            'token' => ['required'],
+            'password' => ['required', 'min:8', 'confirmed'],
+        ]);
+
+        $reset = OrganizationPasswordReset::where(
+            'token',
+            $request->token
+        )->first();
+
+        if (!$reset) {
+            return redirect()
+                ->route('forgot.password')
+                ->withErrors([
+                    'email' => 'Invalid password reset link.'
+                ]);
+        }
+
+        if ($reset->expires_at->isPast()) {
+
+            $reset->delete();
+
+            return redirect()
+                ->route('forgot.password')
+                ->withErrors([
+                    'email' => 'Password reset link has expired.'
+                ]);
+        }
+
+        $organization = Organization::find($reset->organization_id);
+
+        if (!$organization) {
+
+            $reset->delete();
+
+            return redirect()
+                ->route('forgot.password')
+                ->withErrors([
+                    'email' => 'Organization not found.'
+                ]);
+        }
+
+        $organization->update([
+            'password' => Hash::make($request->password),
+        ]);
 
         $reset->delete();
 
-        return redirect()
-            ->route('forgot.password')
-            ->withErrors([
-                'email' => 'Password reset link has expired.'
-            ]);
-    }
-
-    return view('auth.reset-password', compact('token'));
-}
-public function resetPassword(Request $request)
-{
-    $request->validate([
-        'token' => ['required'],
-        'password' => ['required', 'min:8', 'confirmed'],
-    ]);
-
-    $reset = OrganizationPasswordReset::where(
-        'token',
-        $request->token
-    )->first();
-
-    if (!$reset) {
-        return redirect()
-            ->route('forgot.password')
-            ->withErrors([
-                'email' => 'Invalid password reset link.'
-            ]);
-    }
-
-    if ($reset->expires_at->isPast()) {
-
-        $reset->delete();
+        \App\Services\NotificationService::create(
+            $organization,
+            'password_reset',
+            'Password Reset',
+            'Your password has been reset.',
+            [
+                'action' => 'password_reset',
+            ]
+        );
 
         return redirect()
-            ->route('forgot.password')
-            ->withErrors([
-                'email' => 'Password reset link has expired.'
-            ]);
+            ->route('login')
+            ->with('success', 'Password has been reset successfully.');
     }
-
-    $organization = Organization::find($reset->organization_id);
-
-    if (!$organization) {
-
-        $reset->delete();
-
-        return redirect()
-            ->route('forgot.password')
-            ->withErrors([
-                'email' => 'Organization not found.'
-            ]);
-    }
-
-    $organization->update([
-        'password' => Hash::make($request->password),
-    ]);
-
-    $reset->delete();
-
-    \App\Services\NotificationService::create(
-    $organization,
-    'password_reset',
-    'Password Reset',
-    'Your password has been reset.',
-    [
-        'action' => 'password_reset',
-    ]
-);
-
-    return redirect()
-        ->route('login')
-        ->with('success', 'Password has been reset successfully.');
-}
-
-
 }
