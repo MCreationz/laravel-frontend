@@ -50,12 +50,16 @@
                 <div class="project-description">
 
                     {{-- About Fund --}}
-                    <h3 class="sub-heading">About Fund</h3>
+                   {{-- About Fund --}}
+<h3 class="sub-heading">About Fund</h3>
 
-                    <p>
-                        {{ $fund->about_fund ?: '-' }}
-                    </p>
-
+@if($fund->about_fund)
+    <div class="about-fund-content">
+        {!! $fund->about_fund !!}
+    </div>
+@else
+    <p>-</p>
+@endif
 
                     {{-- Fund Scope --}}
                     <h3 class="sub-heading mt-4">Fund Scope</h3>

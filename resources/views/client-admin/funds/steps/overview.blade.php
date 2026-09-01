@@ -3,6 +3,8 @@
 @section('title', 'Funds')
 
 @section('content')
+<link href="https://cdn.jsdelivr.net/npm/quill@2/dist/quill.snow.css" rel="stylesheet">
+<script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/classic/ckeditor.js"></script>
 
     <div class="step-section position-relative mb-3">
         <div class="bg-image position-absolute top-0 start-0 w-100 h-100">
@@ -100,10 +102,17 @@
                             <div class="error-message text-danger" style="display:none;"></div>
                         </div>
 
-                        <div class="col-12 px-md-2">
-                            <label class="form-label">About Fund</label>
-                            <textarea name="about_fund" placeholder="Write Fund description" class="form-control" style="min-height: 136px">{{ old('about_fund', $fund?->about_fund) }}</textarea>
-                        </div>
+                     <div class="col-12 px-md-2">
+    <label class="form-label">About Fund</label>
+    <textarea
+        rows="8"
+        name="about_fund"
+        placeholder="Write Fund description"
+        class="form-control"
+        style="height: 200px; resize: vertical;"
+        id="about"
+    >{{ old('about_fund', $fund?->about_fund) }}</textarea>
+</div>
 
                     </div>
 
@@ -153,32 +162,37 @@
     </div>
 
 </div>
-                    <div class="mt-4 mb-4">
-                        <h2 class="top-heading mb-0">Fund Timelines</h2>
-                    </div>
-                    <div class="row mb-3 flex-wrap row-gap-3 row-gap-md-4 px-md-1">
-                        <div class="col-12 col-md-6 px-md-2">
-                            <label class="form-label">Application Starts On:</label>
-                            <input type="date" name="project_start" class="form-control"
-                                placeholder="Enter project start date"
-                                value="{{ old('project_start', $fund?->project_start?->format('Y-m-d')) }}" >
-                            <div class="error-message text-danger" style="display:none;"></div>
-                        </div>
-                        <div class="col-12 col-md-6 px-md-2">
-                            <label class="form-label">Application Closes On:</label>
-                            <input type="date" name="project_end" class="form-control"
-                                placeholder="Enter project end date"
-                                value="{{ old('project_end', $fund?->project_end?->format('Y-m-d')) }}" >
-                            <div class="error-message text-danger" style="display:none;"></div>
-                        </div>
-                        <div class="col-12 px-md-2">
-                            <label class="form-label">Maximum Project Duration:</label>
-                            <input type="number" name="maximum_project_duration" class="form-control"
-                                placeholder="Enter in months"
-                                value="{{ old('maximum_project_duration', $fund?->maximum_project_duration) }}">
-                            <div class="error-message text-danger" style="display:none;"></div>
-                        </div>
-                    </div>
+                    <div id="fund-timelines-section">
+    <div class="mt-4 mb-4">
+        <h2 class="top-heading mb-0">Fund Timelines</h2>
+    </div>
+
+    <div class="row mb-3 flex-wrap row-gap-3 row-gap-md-4 px-md-1">
+        <div class="col-12 col-md-6 px-md-2">
+            <label class="form-label">Application Starts On:</label>
+            <input type="date" name="project_start" class="form-control"
+                placeholder="Enter project start date"
+                value="{{ old('project_start', $fund?->project_start?->format('Y-m-d')) }}">
+            <div class="error-message text-danger" style="display:none;"></div>
+        </div>
+
+        <div class="col-12 col-md-6 px-md-2">
+            <label class="form-label">Application Closes On:</label>
+            <input type="date" name="project_end" class="form-control"
+                placeholder="Enter project end date"
+                value="{{ old('project_end', $fund?->project_end?->format('Y-m-d')) }}">
+            <div class="error-message text-danger" style="display:none;"></div>
+        </div>
+
+        <div class="col-12 px-md-2">
+            <label class="form-label">Maximum Project Duration:</label>
+            <input type="number" name="maximum_project_duration" class="form-control"
+                placeholder="Enter in months"
+                value="{{ old('maximum_project_duration', $fund?->maximum_project_duration) }}">
+            <div class="error-message text-danger" style="display:none;"></div>
+        </div>
+    </div>
+</div>
 
                     <div class="mt-4 mb-4">
                         <h3 class="top-heading mb-0">Fund Branding</h3>
@@ -291,6 +305,12 @@
         </div>
     </div>
 
+    <style>
+        .ck-editor__editable_inline {
+    min-height: 130px;
+}
+    </style>
+
     {{--
     <script>
         document.getElementById("fund_logo").addEventListener("change", function () {
@@ -313,96 +333,116 @@
             document.getElementById('fund_banner_name').textContent = fileName;
         });
     </script> --}}
-
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-
-
-const fundScope = document.getElementById('fund_scope');
-const fundScopeSelect = fundScope.closest('.select-wrapper').querySelector('.custom-select');
-
-const redirectionLinkWrapper = document.getElementById('redirection-link-wrapper');
-const redirectionLink = document.getElementById('redirection_link');
-
-function updateFundScopeLabel() {
-    const selectedOption = fundScope
-        .closest('.select-wrapper')
-        .querySelector(`.select-list li[data-value="${fundScope.value}"]`);
-
-    if (selectedOption) {
-        fundScopeSelect.textContent = selectedOption.textContent.trim();
-    }
-}
-
-function toggleRedirectionLink() {
-    if (fundScope.value === 'outside') {
-        redirectionLinkWrapper.style.display = '';
-        redirectionLink.setAttribute('required', 'required');
-    } else {
-        redirectionLinkWrapper.style.display = 'none';
-        redirectionLink.removeAttribute('required');
-        redirectionLink.value = '';
-    }
-}
-
-fundScope
-    .closest('.select-wrapper')
-    .querySelectorAll('.select-list li')
-    .forEach(option => {
-        option.addEventListener('click', function () {
-            fundScope.value = this.dataset.value;
-
-            fundScopeSelect.textContent = this.textContent.trim();
-
-            toggleRedirectionLink();
+<script>
+    ClassicEditor
+        .create(document.querySelector('#about'))
+        .catch(error => {
+            console.error(error);
         });
-    });
+</script>
 
-// Set initial state when page loads
-updateFundScopeLabel();
-toggleRedirectionLink();
+   <script>
+    document.addEventListener('DOMContentLoaded', function() {
+
+        const fundScope = document.getElementById('fund_scope');
+        const fundScopeSelect = fundScope
+            .closest('.select-wrapper')
+            .querySelector('.custom-select');
+
+        const redirectionLinkWrapper = document.getElementById('redirection-link-wrapper');
+        const redirectionLink = document.getElementById('redirection_link');
+
+        function updateFundScopeLabel() {
+            const selectedOption = fundScope
+                .closest('.select-wrapper')
+                .querySelector(`.select-list li[data-value="${fundScope.value}"]`);
+
+            if (selectedOption) {
+                fundScopeSelect.textContent = selectedOption.textContent.trim();
+            }
+        }
+
+        function toggleRedirectionLink() {
+            if (fundScope.value === 'outside') {
+                redirectionLinkWrapper.style.display = '';
+                redirectionLink.setAttribute('required', 'required');
+            } else {
+                redirectionLinkWrapper.style.display = 'none';
+                redirectionLink.removeAttribute('required');
+                redirectionLink.value = '';
+            }
+        }
+
+       function toggleProjectTimeline() {
+    const timelineSection = document.getElementById('fund-timelines-section');
+
+    if (fundScope.value === 'outside') {
+        timelineSection.style.display = 'none';
+    } else {
+        timelineSection.style.display = '';
+    }
+}
+
+        fundScope
+            .closest('.select-wrapper')
+            .querySelectorAll('.select-list li')
+            .forEach(option => {
+                option.addEventListener('click', function() {
+
+                    fundScope.value = this.dataset.value;
+
+                    fundScopeSelect.textContent = this.textContent.trim();
+
+                    toggleRedirectionLink();
+                    toggleProjectTimeline();
+                });
+            });
+
+        // Set initial state when page loads
+        updateFundScopeLabel();
+        toggleRedirectionLink();
+        toggleProjectTimeline();
 
 
-            const allowedExtensions = ['jpg', 'jpeg', 'png', 'webp', 'gif'];
+        const allowedExtensions = ['jpg', 'jpeg', 'png', 'webp', 'gif'];
 
-            document.querySelectorAll('input[type="file"]').forEach(input => {
+        document.querySelectorAll('input[type="file"]').forEach(input => {
 
-                input.setAttribute(
-                    'accept',
-                    'image/jpeg,image/png,image/webp,image/gif,.jpg,.jpeg,.png,.webp,.gif'
-                );
+            input.setAttribute(
+                'accept',
+                'image/jpeg,image/png,image/webp,image/gif,.jpg,.jpeg,.png,.webp,.gif'
+            );
 
-                input.addEventListener('change', function() {
+            input.addEventListener('change', function() {
 
-                    if (!this.files.length) return;
+                if (!this.files.length) return;
 
-                    const file = this.files[0];
-                    const ext = file.name.split('.').pop().toLowerCase();
+                const file = this.files[0];
+                const ext = file.name.split('.').pop().toLowerCase();
 
-                    if (!allowedExtensions.includes(ext)) {
+                if (!allowedExtensions.includes(ext)) {
 
-                        alert('Only image files (JPG, JPEG, PNG, WEBP, GIF) are allowed.');
+                    alert('Only image files (JPG, JPEG, PNG, WEBP, GIF) are allowed.');
 
-                        this.value = '';
-
-                        const nameField = document.getElementById(this.id + '_name');
-
-                        if (nameField) {
-                            nameField.textContent = '';
-                        }
-
-                        return;
-                    }
+                    this.value = '';
 
                     const nameField = document.getElementById(this.id + '_name');
 
                     if (nameField) {
-                        nameField.textContent = '✓ ' + file.name;
+                        nameField.textContent = '';
                     }
-                });
-            });
 
+                    return;
+                }
+
+                const nameField = document.getElementById(this.id + '_name');
+
+                if (nameField) {
+                    nameField.textContent = '✓ ' + file.name;
+                }
+            });
         });
-    </script>
+
+    });
+</script>
 @endsection
