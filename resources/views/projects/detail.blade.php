@@ -12,10 +12,10 @@
             {{-- Fund Banner --}}
             <div class="top-profile-bannner">
                 @if($fund->fund_banner)
-                    <img
-                        src="{{ Storage::url($fund->fund_banner) }}"
-                        alt="{{ $fund->fund_name ?? 'Fund' }} Banner"
-                        class="img-fluid w-100 h-100 object-fit-cover">
+                <img
+                    src="{{ Storage::url($fund->fund_banner) }}"
+                    alt="{{ $fund->fund_name ?? 'Fund' }} Banner"
+                    class="img-fluid w-100 h-100 object-fit-cover">
                 @endif
             </div>
 
@@ -26,14 +26,14 @@
 
                     <div class="profile-banner">
                         @if($fund->fund_logo)
-                            <img
-                                src="{{ Storage::url($fund->fund_logo) }}"
-                                alt="{{ $fund->fund_name ?? 'Fund' }} Logo"
-                                class="img-fluid w-100 h-100 object-fit-cover">
+                        <img
+                            src="{{ Storage::url($fund->fund_logo) }}"
+                            alt="{{ $fund->fund_name ?? 'Fund' }} Logo"
+                            class="img-fluid w-100 h-100 object-fit-cover">
                         @else
-                            <h1 class="gradient-text mb-0">
-                                {{ strtoupper(substr($fund->fund_name ?? 'F', 0, 2)) }}
-                            </h1>
+                        <h1 class="gradient-text mb-0">
+                            {{ strtoupper(substr($fund->fund_name ?? 'F', 0, 2)) }}
+                        </h1>
                         @endif
                     </div>
 
@@ -50,27 +50,27 @@
                 <div class="project-description">
 
                     {{-- About Fund --}}
-                   {{-- About Fund --}}
-<h3 class="sub-heading">About Fund</h3>
+                    {{-- About Fund --}}
+                    <h3 class="sub-heading">About Fund</h3>
 
-@if($fund->about_fund)
-    <div class="about-fund-content">
-        {!! $fund->about_fund !!}
-    </div>
-@else
-    <p>-</p>
-@endif
+                    @if($fund->about_fund)
+                    <div class="about-fund-content">
+                        {!! $fund->about_fund !!}
+                    </div>
+                    @else
+                    <p>-</p>
+                    @endif
 
                     {{-- Fund Scope --}}
                     <h3 class="sub-heading mt-4">Fund Scope</h3>
 
                     <p>
                         @if($fund->fund_scope === 'outside')
-                            Outside
+                        Outside
                         @elseif($fund->fund_scope === 'in_house')
-                            In house
+                        In house
                         @else
-                            -
+                        -
                         @endif
                     </p>
 
@@ -79,36 +79,36 @@
                     <h3 class="sub-heading mt-4">Eligibility</h3>
 
                     @if($fund->snapshot?->eligibility_instruction)
-                        <div class="eligibility-content">
-                            {!! $fund->snapshot->eligibility_instruction !!}
-                        </div>
+                    <div class="eligibility-content">
+                        {!! $fund->snapshot->eligibility_instruction !!}
+                    </div>
                     @else
-                        <p>-</p>
+                    <p>-</p>
                     @endif
 
                     <ul class="d-inline-flex column-gap-5 flex-wrap">
 
                         @if($fund->snapshot?->is_npo)
-                            <li>NPO Eligible</li>
+                        <li>NPO Eligible</li>
                         @endif
 
                         @if($fund->snapshot?->is_startup)
-                            <li>Startup Eligible</li>
+                        <li>Startup Eligible</li>
                         @endif
 
                         @if($fund->snapshot?->eligible_states)
-                            <li>
-                                Eligible States:
-                                {{ $fund->snapshot->eligible_states }}
-                            </li>
+                        <li>
+                            Eligible States:
+                            {{ $fund->snapshot->eligible_states }}
+                        </li>
                         @endif
 
                         @if(
-                            ! $fund->snapshot?->is_npo &&
-                            ! $fund->snapshot?->is_startup &&
-                            ! $fund->snapshot?->eligible_states
+                        ! $fund->snapshot?->is_npo &&
+                        ! $fund->snapshot?->is_startup &&
+                        ! $fund->snapshot?->eligible_states
                         )
-                            <li>-</li>
+                        <li>-</li>
                         @endif
 
                     </ul>
@@ -121,19 +121,19 @@
 
                         @forelse($fund->themes as $theme)
 
-                            @if($theme->theme_name)
-                                <li>
-                                    {{ $theme->theme_name }}
+                        @if($theme->theme_name)
+                        <li>
+                            {{ $theme->theme_name }}
 
-                                    @if($theme->sub_theme_name)
-                                        - {{ $theme->sub_theme_name }}
-                                    @endif
-                                </li>
+                            @if($theme->sub_theme_name)
+                            - {{ $theme->sub_theme_name }}
                             @endif
+                        </li>
+                        @endif
 
                         @empty
 
-                            <li>-</li>
+                        <li>-</li>
 
                         @endforelse
 
@@ -150,9 +150,9 @@
                                 <div>Fund Outlay</div>
                                 <h4 class="mb-0">
                                     @if($fund->snapshot?->fund_outlay !== null)
-                                        ₹{{ number_format($fund->snapshot->fund_outlay) }}
+                                    ₹{{ number_format($fund->snapshot->fund_outlay) }}
                                     @else
-                                        -
+                                    -
                                     @endif
                                 </h4>
                             </div>
@@ -172,9 +172,9 @@
                                 <div>Single Entity Cap</div>
                                 <h4 class="mb-0">
                                     @if($fund->snapshot?->single_entity_cap !== null)
-                                        ₹{{ number_format($fund->snapshot->single_entity_cap) }}
+                                    ₹{{ number_format($fund->snapshot->single_entity_cap) }}
                                     @else
-                                        -
+                                    -
                                     @endif
                                 </h4>
                             </div>
@@ -184,6 +184,8 @@
 
 
                     {{-- Project Details --}}
+                    @if($fund->fund_scope !== 'outside')
+
                     <h3 class="sub-heading mt-4">Project Details</h3>
 
                     <div class="d-flex flex-wrap gap-2 gray-box-outer">
@@ -193,9 +195,9 @@
                                 <div>Maximum Project Duration</div>
                                 <h4 class="mb-0">
                                     @if($fund->maximum_project_duration)
-                                        {{ $fund->maximum_project_duration }} Months
+                                    {{ $fund->maximum_project_duration }} Months
                                     @else
-                                        -
+                                    -
                                     @endif
                                 </h4>
                             </div>
@@ -206,9 +208,9 @@
                                 <div>Project Start</div>
                                 <h4 class="mb-0">
                                     @if($fund->project_start)
-                                        {{ $fund->project_start->format('d/m/Y') }}
+                                    {{ $fund->project_start->format('d/m/Y') }}
                                     @else
-                                        -
+                                    -
                                     @endif
                                 </h4>
                             </div>
@@ -219,9 +221,9 @@
                                 <div>Project End</div>
                                 <h4 class="mb-0">
                                     @if($fund->project_end)
-                                        {{ $fund->project_end->format('d/m/Y') }}
+                                    {{ $fund->project_end->format('d/m/Y') }}
                                     @else
-                                        -
+                                    -
                                     @endif
                                 </h4>
                             </div>
@@ -229,6 +231,7 @@
 
                     </div>
 
+                    @endif
 
                     {{-- Application Details --}}
                     <h3 class="sub-heading mt-4">Application Details</h3>
@@ -250,13 +253,13 @@
                                 <h4 class="mb-0">
 
                                     @if($fund->snapshot?->is_npo && $fund->snapshot?->is_startup)
-                                        NPO & Startup
+                                    NPO & Startup
                                     @elseif($fund->snapshot?->is_npo)
-                                        NPO
+                                    NPO
                                     @elseif($fund->snapshot?->is_startup)
-                                        Startup
+                                    Startup
                                     @else
-                                        Open
+                                    Open
                                     @endif
 
                                 </h4>
@@ -268,10 +271,10 @@
 
                     {{-- Application --}}
                     @php
-                        $hasApplied = auth('organization')->check()
-                            && \App\Models\FundApplication::where('fund_id', $fund->id)
-                                ->where('organization_id', auth('organization')->user()->id)
-                                ->exists();
+                    $hasApplied = auth('organization')->check()
+                    && \App\Models\FundApplication::where('fund_id', $fund->id)
+                    ->where('organization_id', auth('organization')->user()->id)
+                    ->exists();
                     @endphp
 
                     <div class="d-flex justify-content-center justify-content-md-end gap-2 flex-wrap">
@@ -286,21 +289,21 @@
 
                             @if($fund->fund_scope === 'outside' && $fund->redirection_link)
 
-                                <a
-                                    href="{{ $fund->redirection_link }}"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    class="btn btn-primary">
-                                    Apply Now
-                                </a>
+                            <a
+                                href="{{ $fund->redirection_link }}"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="btn btn-primary">
+                                Apply Now
+                            </a>
 
                             @else
 
-                                <a
-                                    href="{{ route('projects.apply.questions', $fund) }}"
-                                    class="btn btn-primary">
-                                    {{ $hasApplied ? 'Apply Again' : 'Apply Now' }}
-                                </a>
+                            <a
+                                href="{{ route('projects.apply.questions', $fund) }}"
+                                class="btn btn-primary">
+                                {{ $hasApplied ? 'Apply Again' : 'Apply Now' }}
+                            </a>
 
                             @endif
 
@@ -318,5 +321,3 @@
 
 
 @endsection
-
-
