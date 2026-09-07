@@ -94,6 +94,29 @@
                 </div>
                 <div class="flex-grow-1 ms-3 text">Funds</div>
             </a>
+              <a href="{{ route('superadmin.entities.index') }}" class="d-flex align-items-center text-decoration-none sidebar-links {{ request()->routeIs('superadmin.entities.index') ? 'active' : '' }}">
+                <div class="flex-shrink-0">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="23" height="19" viewBox="0 0 23 19" fill="none">
+                        <path
+                            d="M18.34 5.14996V10.3C18.34 13.38 16.58 14.7 13.94 14.7H5.14999C4.69999 14.7 4.27 14.66 3.87 14.57C3.62 14.53 3.38 14.46 3.16 14.38C1.66 13.82 0.75 12.52 0.75 10.3V5.14996C0.75 2.06996 2.50999 0.75 5.14999 0.75H13.94C16.18 0.75 17.79 1.7 18.22 3.87C18.29 4.27 18.34 4.67996 18.34 5.14996Z"
+                            stroke="white" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                        <path
+                            d="M21.3372 8.15106V13.3011C21.3372 16.3811 19.5772 17.701 16.9372 17.701H8.14719C7.40719 17.701 6.7372 17.6011 6.1572 17.3811C4.9672 16.9411 4.15719 16.0311 3.86719 14.5711C4.26719 14.6611 4.69719 14.701 5.14719 14.701H13.9372C16.5772 14.701 18.3372 13.3811 18.3372 10.3011V5.15106C18.3372 4.68106 18.2972 4.26109 18.2172 3.87109C20.1172 4.27109 21.3372 5.61106 21.3372 8.15106Z"
+                            stroke="white" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                        <path
+                            d="M9.53845 10.3699C10.9965 10.3699 12.1785 9.18789 12.1785 7.72986C12.1785 6.27183 10.9965 5.08984 9.53845 5.08984C8.08042 5.08984 6.89844 6.27183 6.89844 7.72986C6.89844 9.18789 8.08042 10.3699 9.53845 10.3699Z"
+                            stroke="white" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                        <path d="M3.82031 5.5293V9.92932" stroke="white" stroke-width="1.5" stroke-miterlimit="10"
+                            stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M15.2578 5.53125V9.93127" stroke="white" stroke-width="1.5" stroke-miterlimit="10"
+                            stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </div>
+                <div class="flex-grow-1 ms-3 text">Entities</div>
+            </a>
         </div>
 
     </div>

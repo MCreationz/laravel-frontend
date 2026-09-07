@@ -6,6 +6,7 @@ use App\Http\Controllers\SuperAdmin\Auth\LoginController;
 use App\Http\Controllers\SuperAdmin\ClientAdminController;
 use App\Http\Controllers\SuperAdmin\CompanyController;
 use App\Http\Controllers\SuperAdmin\DashboardController;
+use App\Http\Controllers\SuperAdmin\EntityController;
 use App\Http\Controllers\SuperAdmin\FundController;
 use App\Http\Controllers\SuperAdmin\FundingCategoryController;
 use App\Http\Controllers\SuperAdmin\NotificationController;
@@ -179,6 +180,30 @@ Route::prefix('super-admin')
 
         Route::post('/reviewers/assign-funds', [ReviewerController::class, 'assignFunds'])
             ->name('reviewers.assign-funds');
+
+
+            /*
+|--------------------------------------------------------------------------
+| Entities
+|--------------------------------------------------------------------------
+*/
+Route::get('/entities', [EntityController::class, 'index'])
+    ->name('entities.index');
+
+Route::get('/entities/create', [EntityController::class, 'create'])
+    ->name('entities.create');
+
+Route::post('/entities', [EntityController::class, 'store'])
+    ->name('entities.store');
+
+Route::get('/entities/{entity}/edit', [EntityController::class, 'edit'])
+    ->name('entities.edit');
+
+Route::put('/entities/{entity}', [EntityController::class, 'update'])
+    ->name('entities.update');
+
+Route::delete('/entities/{entity}', [EntityController::class, 'destroy'])
+    ->name('entities.destroy');
 
         // Funds
         Route::get('/funds', [FundController::class, 'index'])
