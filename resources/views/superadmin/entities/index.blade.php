@@ -3,6 +3,19 @@
 @section('title', 'Entities')
 
 @section('content')
+
+<style>
+    .detail-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 4px 20px;
+    }
+    .detail-item {
+        font-size: 14px;
+        line-height: 1.6;
+    }
+</style>
+
 <div class="card-box bg-white rounded">
     <!-- Header -->
     <div class="top-search-wrap p-3 mb-2">
@@ -176,6 +189,33 @@
                                         stroke-width="1.2" />
                                 </svg>
                             </a> -->
+ <a href="#"
+    class="view-btn view-entity"
+    data-bs-toggle="modal"
+    data-bs-target="#entityModal"
+    data-entity='@json($organization)'>
+
+    <svg xmlns="http://www.w3.org/2000/svg"
+        width="16"
+        height="16"
+        viewBox="0 0 16 16"
+        fill="none">
+        <path
+            d="M1.33301 8.00033C1.33301 8.00033 3.66634 3.33366 7.99967 3.33366C12.333 3.33366 14.6663 8.00033 14.6663 8.00033C14.6663 8.00033 12.333 12.667 7.99967 12.667C3.66634 12.667 1.33301 8.00033 1.33301 8.00033Z"
+            stroke="#07CCB5"
+            stroke-width="1.2"
+            stroke-linecap="round"
+            stroke-linejoin="round" />
+
+        <path
+            d="M7.99967 10.0003C9.10424 10.0003 9.99967 9.10489 9.99967 8.00033C9.99967 6.89576 9.10424 6.00033 7.99967 6.00033C6.8951 6.00033 5.99967 6.89576 5.99967 8.00033C5.99967 9.10489 6.8951 10.0003 7.99967 10.0003Z"
+            stroke="#07CCB5"
+            stroke-width="1.2"
+            stroke-linecap="round"
+            stroke-linejoin="round" />
+    </svg>
+
+</a>
 
                             <!-- Delete -->
                             <form action="{{ route('superadmin.entities.destroy', $organization->id) }}"
@@ -222,6 +262,385 @@
     <!-- Pagination -->
     <div class="p-3">
         {{ $organizations->links() }}
+    </div>
+</div>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+
+        document.querySelectorAll('.view-entity').forEach(function (button) {
+
+            button.addEventListener('click', function () {
+
+                const entity = JSON.parse(this.dataset.entity);
+
+                const profile = entity.profile || {};
+                const address = entity.address || {};
+                const operationalDetail = entity.operational_detail || entity.operationalDetail || {};
+                const funders = entity.funders || [];
+
+                /*
+                |--------------------------------------------------------------------------
+                | Helpers
+                |--------------------------------------------------------------------------
+                */
+
+                const value = (val) => {
+                    return val !== null && val !== undefined && val !== ''
+                        ? val
+                        : '-';
+                };
+
+                const escapeHtml = (text) => {
+                    const div = document.createElement('div');
+                    div.textContent = text ?? '';
+                    return div.innerHTML;
+                };
+
+                const toTitleCase = (val) => {
+                    return String(val)
+                        .replace(/_/g, ' ')
+                        .replace(/\b\w/g, char => char.toUpperCase());
+                };
+
+                /*
+                |--------------------------------------------------------------------------
+                | Organization Type
+                |--------------------------------------------------------------------------
+                */
+
+                let entityType = '-';
+
+                if (entity.role === 'fund_seeker') {
+                    entityType = 'Startup';
+                } else if (entity.role === 'funder') {
+                    entityType = 'NPO';
+                }
+
+                /*
+                |--------------------------------------------------------------------------
+                | Header
+                |--------------------------------------------------------------------------
+                */
+
+                const organizationName = value(entity.organization_name);
+
+                document.getElementById('entityShort').textContent =
+                    organizationName !== '-'
+                        ? organizationName.substring(0, 2).toUpperCase()
+                        : '-';
+
+                document.getElementById('entityName').textContent =
+                    organizationName;
+
+                document.getElementById('entityType').textContent =
+                    entityType + ' Entity Details';
+
+                /*
+                |--------------------------------------------------------------------------
+                | Organization Information
+                |--------------------------------------------------------------------------
+                */
+
+                document.getElementById('entityOrganizationName').textContent =
+                    organizationName;
+
+                document.getElementById('entityEmail').textContent =
+                    value(entity.work_email);
+
+                document.getElementById('entityRole').textContent =
+                    entityType;
+
+                document.getElementById('entityReferralSource').textContent =
+                    value(entity.referral_source);
+
+                /*
+                |--------------------------------------------------------------------------
+                | Profile / Completion
+                |--------------------------------------------------------------------------
+                */
+
+                document.getElementById('entityProfileStatus').textContent =
+                    Object.keys(profile).length > 0
+                        ? 'Added'
+                        : 'Pending';
+
+                document.getElementById('entityAddressStatus').textContent =
+                    Object.keys(address).length > 0
+                        ? 'Added'
+                        : 'Pending';
+
+                document.getElementById('entityProfile').textContent =
+                    Object.keys(profile).length > 0
+                        ? 'Added'
+                        : 'Pending';
+
+                /*
+                |--------------------------------------------------------------------------
+                | Entity Information
+                |--------------------------------------------------------------------------
+                */
+
+                document.getElementById('entityId').textContent =
+                    value(entity.id);
+
+                document.getElementById('entityTypeValue').textContent =
+                    entityType;
+
+                document.getElementById('entityCreatedAt').textContent =
+                    entity.created_at
+                        ? new Date(entity.created_at).toLocaleDateString('en-GB', {
+                            day: '2-digit',
+                            month: 'short',
+                            year: 'numeric'
+                        })
+                        : '-';
+
+                document.getElementById('entityUpdatedAt').textContent =
+                    entity.updated_at
+                        ? new Date(entity.updated_at).toLocaleDateString('en-GB', {
+                            day: '2-digit',
+                            month: 'short',
+                            year: 'numeric'
+                        })
+                        : '-';
+
+                /*
+                |--------------------------------------------------------------------------
+                | Address
+                |--------------------------------------------------------------------------
+                */
+
+                let addressHtml = '<div class="detail-grid">';
+
+                Object.entries(address).forEach(function ([key, val]) {
+
+                    if (
+                        key === 'id' ||
+                        key === 'organization_id' ||
+                        key === 'created_at' ||
+                        key === 'updated_at'
+                    ) {
+                        return;
+                    }
+
+                    if (val !== null && val !== '') {
+                        const label = toTitleCase(key);
+                        const displayVal = (typeof val === 'string' && val.includes('_'))
+                            ? toTitleCase(val)
+                            : val;
+
+                        addressHtml += `
+                            <div class="detail-item">
+                                <span class="text-muted">${escapeHtml(label)}:</span>
+                                <strong>${escapeHtml(String(displayVal))}</strong>
+                            </div>
+                        `;
+                    }
+                });
+
+                addressHtml += '</div>';
+
+                document.getElementById('entityAddress').innerHTML =
+                    addressHtml === '<div class="detail-grid"></div>' ? '-' : addressHtml;
+
+                /*
+                |--------------------------------------------------------------------------
+                | Operational Details
+                |--------------------------------------------------------------------------
+                */
+
+                let operationalHtml = '<div class="detail-grid">';
+
+                Object.entries(operationalDetail).forEach(function ([key, val]) {
+
+                    if (
+                        key === 'id' ||
+                        key === 'organization_id' ||
+                        key === 'created_at' ||
+                        key === 'updated_at'
+                    ) {
+                        return;
+                    }
+
+                    if (val !== null && val !== '') {
+                        const label = toTitleCase(key);
+                        const displayVal = (typeof val === 'string' && val.includes('_'))
+                            ? toTitleCase(val)
+                            : val;
+
+                        operationalHtml += `
+                            <div class="detail-item">
+                                <span class="text-muted">${escapeHtml(label)}:</span>
+                                <strong>${escapeHtml(String(displayVal))}</strong>
+                            </div>
+                        `;
+                    }
+                });
+
+                operationalHtml += '</div>';
+
+                document.getElementById('entityOperationalDetails').innerHTML =
+                    operationalHtml === '<div class="detail-grid"></div>' ? '-' : operationalHtml;
+
+                /*
+                |--------------------------------------------------------------------------
+                | Funders
+                |--------------------------------------------------------------------------
+                */
+
+                let fundersHtml = '';
+
+                if (funders.length) {
+
+                    funders.forEach(function (funder) {
+
+                        const name =
+                            funder.organization_name ||
+                            funder.name ||
+                            funder.funder_name ||
+                            '-';
+
+                        fundersHtml += `
+                            <div class="mb-2">
+                                ${escapeHtml(String(name))}
+                            </div>
+                        `;
+                    });
+
+                } else {
+                    fundersHtml = '-';
+                }
+
+                document.getElementById('entityFunders').innerHTML =
+                    fundersHtml;
+
+                /*
+                |--------------------------------------------------------------------------
+                | Profile Completion
+                |--------------------------------------------------------------------------
+                */
+
+                const profileComplete =
+                    Object.keys(profile).length > 0 &&
+                    Object.keys(address).length > 0 &&
+                    Object.keys(operationalDetail).length > 0;
+
+                document.getElementById('entityCompletion').innerHTML =
+                    profileComplete
+                        ? '<span class="badge bg-success-subtle text-success">Complete</span>'
+                        : '<span class="badge bg-warning-subtle text-warning">Incomplete</span>';
+            });
+        });
+    });
+</script>
+
+<div class="modal fade" id="entityModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content">
+
+            <!-- Header -->
+            <div class="modal-header border-0" style="border-bottom:1px solid rgb(0 0 0 / 10%) !important;">
+                <div class="d-flex align-items-center gap-3">
+                    <div class="FD-text"><h2 class="gradient-text mb-0" id="entityShort">-</h2></div>
+                    <div>
+                        <h3 class="mb-0 modal-heading" id="entityName">-</h3>
+                        <small class="text-muted" id="entityType">Entity Details</small>
+                    </div>
+                </div>
+                <button class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <!-- Body -->
+            <div class="modal-body">
+                <div class="row g-4">
+
+                    <!-- LEFT -->
+                    <div class="col-lg-8">
+
+                        <h5 class="mb-3">Organization Information</h5>
+                        <div class="row row-cols-2 g-3 mb-4">
+                            <div class="app-detail-col">
+                                <p class="text-muted mb-0 small">Organization Name</p>
+                                <div class="detail-title" id="entityOrganizationName">-</div>
+                            </div>
+                            <div class="app-detail-col">
+                                <p class="text-muted mb-0 small">Work Email</p>
+                                <div class="detail-title" id="entityEmail">-</div>
+                            </div>
+                            <div class="app-detail-col">
+                                <p class="text-muted mb-0 small">Type</p>
+                                <div class="detail-title" id="entityRole">-</div>
+                            </div>
+                            <div class="app-detail-col">
+                                <p class="text-muted mb-0 small">Referral Source</p>
+                                <div class="detail-title" id="entityReferralSource">-</div>
+                            </div>
+                            <div class="app-detail-col">
+                                <p class="text-muted mb-0 small">Profile Status</p>
+                                <div class="detail-title" id="entityProfileStatus">-</div>
+                            </div>
+                            <div class="app-detail-col">
+                                <p class="text-muted mb-0 small">Address Status</p>
+                                <div class="detail-title" id="entityAddressStatus">-</div>
+                            </div>
+                        </div>
+
+                        <h5 class="mb-2">Address</h5>
+                        <div class="snapshot-box mb-4">
+                            <div id="entityAddress" style="font-size:14px;">-</div>
+                        </div>
+
+                        <h5 class="mb-2">Operational Details</h5>
+                        <div class="snapshot-box">
+                            <div id="entityOperationalDetails" style="font-size:14px;">-</div>
+                        </div>
+
+                    </div>
+
+                    <!-- RIGHT -->
+                    <div class="col-lg-4">
+
+                        <h5 class="mb-3">Entity Information</h5>
+
+                        <div class="app-detail-col mb-2">
+                            <p class="text-muted mb-0 small">Entity ID</p>
+                            <div class="detail-title" id="entityId">-</div>
+                        </div>
+                        <div class="app-detail-col mb-2">
+                            <p class="text-muted mb-0 small">Type</p>
+                            <div class="detail-title" id="entityTypeValue">-</div>
+                        </div>
+                        <div class="app-detail-col mb-2">
+                            <p class="text-muted mb-0 small">Profile</p>
+                            <div class="detail-title" id="entityProfile">-</div>
+                        </div>
+                        <div class="app-detail-col mb-2">
+                            <p class="text-muted mb-0 small">Created At</p>
+                            <div class="detail-title" id="entityCreatedAt">-</div>
+                        </div>
+                        <div class="app-detail-col mb-4">
+                            <p class="text-muted mb-0 small">Updated At</p>
+                            <div class="detail-title" id="entityUpdatedAt">-</div>
+                        </div>
+
+                        <div class="snapshot-box mb-3">
+                            <p class="fw-semibold mb-2">Funders</p>
+                            <div id="entityFunders" style="font-size:14px;">-</div>
+                        </div>
+
+                        <div class="snapshot-box">
+                            <p class="fw-semibold mb-2">Profile Completion</p>
+                            <div id="entityCompletion">-</div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
     </div>
 </div>
 @endsection

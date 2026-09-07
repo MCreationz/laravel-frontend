@@ -43,6 +43,8 @@ class EntityController extends Controller
             ->paginate(20)
             ->withQueryString();
 
+        //    return $organizations[0];
+
         return view('superadmin.entities.index', compact('organizations'));
     }
     /**
