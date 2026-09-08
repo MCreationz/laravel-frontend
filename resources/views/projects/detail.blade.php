@@ -184,54 +184,44 @@
 
 
                     {{-- Project Details --}}
-                    @if($fund->fund_scope !== 'outside')
-
                     <h3 class="sub-heading mt-4">Project Details</h3>
 
                     <div class="d-flex flex-wrap gap-2 gray-box-outer">
 
+                        @if($fund->maximum_project_duration)
                         <div class="col col-12">
                             <div class="gray-box">
                                 <div>Maximum Project Duration</div>
                                 <h4 class="mb-0">
-                                    @if($fund->maximum_project_duration)
                                     {{ $fund->maximum_project_duration }} Months
-                                    @else
-                                    -
-                                    @endif
                                 </h4>
                             </div>
                         </div>
+                        @endif
 
+                        @if($fund->project_start)
                         <div class="col col-12">
                             <div class="gray-box">
                                 <div>Project Start</div>
                                 <h4 class="mb-0">
-                                    @if($fund->project_start)
                                     {{ $fund->project_start->format('d/m/Y') }}
-                                    @else
-                                    -
-                                    @endif
                                 </h4>
                             </div>
                         </div>
+                        @endif
 
+                        @if($fund->project_end)
                         <div class="col col-12">
                             <div class="gray-box">
                                 <div>Project End</div>
                                 <h4 class="mb-0">
-                                    @if($fund->project_end)
                                     {{ $fund->project_end->format('d/m/Y') }}
-                                    @else
-                                    -
-                                    @endif
                                 </h4>
                             </div>
                         </div>
+                        @endif
 
                     </div>
-
-                    @endif
 
                     {{-- Application Details --}}
                     <h3 class="sub-heading mt-4">Application Details</h3>
