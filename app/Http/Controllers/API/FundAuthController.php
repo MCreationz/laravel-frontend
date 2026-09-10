@@ -26,10 +26,10 @@ class FundAuthController extends Controller
             'authenticated' => true,
             'organization' => [
                 'id' => $organization->id,
-                'name' => $profile?->legal_name
+                'name' => $organization->profile?->legal_name
                     ?? $organization->organization_name,
                 'email' => $organization->work_email,
-                'role' => $organization->role,
+                'role' => $organization->role === 'funder' ? 'NPO' : 'Startup',
             ],
         ]);
     }
