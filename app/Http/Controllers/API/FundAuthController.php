@@ -14,18 +14,22 @@ class FundAuthController extends Controller
     {
         $organization = Auth::guard('organization')->user();
 
-        if (!$organization) {
+        if (! $organization) {
             return response()->json([
                 'authenticated' => false,
             ], 401);
         }
 
+        $profile = $organization->profile;
+
         return response()->json([
             'authenticated' => true,
-            'user' => [
-                'id'    => $organization->id,
-                'name'  => $organization->name,
+            'organization' => [
+                'id' => $organization->id,
+                'name' => $profile?->legal_name
+                    ?? $organization->organization_name,
                 'email' => $organization->work_email,
+                'role' => $organization->role,
             ],
         ]);
     }
