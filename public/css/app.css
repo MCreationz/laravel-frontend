@@ -1381,6 +1381,11 @@ span.badge.bg-info-subtle.text-info {
     max-width: 120px;
     min-width: 120px;
 }
+.top-search-wrap select.form-control.btn-select option {
+    background-color: #ffffff;
+    color: #000000;
+    text-align: left;
+}
 .search-box input {
     padding: 8px 10px 8px 30px !important;
     font-size: 11px !important;
