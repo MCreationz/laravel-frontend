@@ -20,12 +20,12 @@ Route::prefix('v1')->group(function () {
             'status'
         ]);
 
-    
+        Route::middleware('auth:organization')->group(function () {
             Route::get('/funds/{id}', [
                 FundController::class,
                 'show'
             ]);
-      
+        });
     });
 
     // Existing APIs
