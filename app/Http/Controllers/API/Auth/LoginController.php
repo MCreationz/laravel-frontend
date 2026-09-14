@@ -21,10 +21,33 @@ class LoginController extends Controller
     |--------------------------------------------------------------------------
     */
 
-    public function showLogin()
-    {
-        return view('auth.login');
+public function showLogin(Request $request)
+{
+    $redirect = $request->input('redirect');
+
+    if ($redirect) {
+        $url = parse_url($redirect);
+
+        if (
+            ($url['scheme'] ?? null) !== 'https' ||
+            ! in_array($url['host'] ?? null, [
+                'fundink.in',
+                'www.fundink.in',
+            ], true)
+        ) {
+            $redirect = null;
+        }
     }
+
+    if ($redirect) {
+        session([
+            'fundink_redirect' => $redirect,
+            'fundink_redirect_expires_at' => now()->addMinutes(4),
+        ]);
+    }
+
+    return view('auth.login');
+}
 
 
     public function loginWithPassword(Request $request)
@@ -40,28 +63,7 @@ class LoginController extends Controller
     | Store and validate Fundink redirect
     |--------------------------------------------------------------------------
     */
-        $redirect = $request->input('redirect');
-
-        if ($redirect) {
-            $url = parse_url($redirect);
-
-            if (
-                ($url['scheme'] ?? null) !== 'https' ||
-                ! in_array($url['host'] ?? null, [
-                    'fundink.in',
-                    'www.fundink.in',
-                ], true)
-            ) {
-                $redirect = null;
-            }
-        }
-
-        if ($redirect) {
-            session([
-                'fundink_redirect' => $redirect,
-                'fundink_redirect_expires_at' => now()->addMinutes(4),
-            ]);
-        }
+       
 
 
         /*
@@ -175,83 +177,7 @@ class LoginController extends Controller
             ->with('error', 'Invalid email or password.');
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | OTP LOGIN EMAIL PAGE
-    |--------------------------------------------------------------------------
-    */
-
-    public function showOtpEmail()
-    {
-        return view('auth.login-email');
-    }
-
-    /*
-    |--------------------------------------------------------------------------
-    | SEND LOGIN OTP
-    |--------------------------------------------------------------------------
-    */
-
-    public function sendLoginOtp(Request $request)
-    {
-        $request->validate([
-            'email' => 'required|email',
-        ]);
-
-
-
-        $organization = Organization::where('work_email', $request->email)->first();
-
-
-
-        if (! $organization) {
-            return back()->with('error', 'Account not found.');
-        }
-
-        if (! $organization->email_verified_at) {
-            return redirect()
-                ->route('login')
-                ->with('error', 'Please verify your email before logging in.');
-        }
-
-        $otp = random_int(100000, 999999);
-        $expiryMinutes = 10;
-
-        $organization->update([
-            'otp_code' => $otp,
-            'otp_expires_at' => Carbon::now()->addMinutes($expiryMinutes),
-        ]);
-
-        $this->sendOtpMail($organization, $otp, $expiryMinutes);
-
-        session()->put('login_email', $organization->work_email);
-
-        return redirect()->route('login.otp')
-            ->with('success', 'OTP sent to your email.');
-    }
-
-    /*
-    |--------------------------------------------------------------------------
-    | OTP INPUT PAGE
-    |--------------------------------------------------------------------------
-    */
-
-    public function showOtpForm()
-    {
-        if (! session('login_email')) {
-            return redirect()->route('login');
-        }
-
-        return view('auth.login-otp');
-    }
-
-    /*
-    |--------------------------------------------------------------------------
-    | VERIFY LOGIN OTP
-    |--------------------------------------------------------------------------
-    */
-
-    public function verifyLoginOtp(Request $request)
+      public function verifyLoginOtp(Request $request)
     {
         $request->validate([
             'otp' => 'required|digits:6',
@@ -330,6 +256,84 @@ class LoginController extends Controller
             ->route('dashboard')
             ->with('success', 'Login successful');
     }
+
+    /*
+    |--------------------------------------------------------------------------
+    | OTP LOGIN EMAIL PAGE
+    |--------------------------------------------------------------------------
+    */
+
+    public function showOtpEmail()
+    {
+        return view('auth.login-email');
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | SEND LOGIN OTP
+    |--------------------------------------------------------------------------
+    */
+
+    public function sendLoginOtp(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+        ]);
+
+
+
+        $organization = Organization::where('work_email', $request->email)->first();
+
+
+
+        if (! $organization) {
+            return back()->with('error', 'Account not found.');
+        }
+
+        if (! $organization->email_verified_at) {
+            return redirect()
+                ->route('login')
+                ->with('error', 'Please verify your email before logging in.');
+        }
+
+        $otp = random_int(100000, 999999);
+        $expiryMinutes = 10;
+
+        $organization->update([
+            'otp_code' => $otp,
+            'otp_expires_at' => Carbon::now()->addMinutes($expiryMinutes),
+        ]);
+
+        $this->sendOtpMail($organization, $otp, $expiryMinutes);
+
+        session()->put('login_email', $organization->work_email);
+
+        return redirect()->route('login.otp')
+            ->with('success', 'OTP sent to your email.');
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | OTP INPUT PAGE
+    |--------------------------------------------------------------------------
+    */
+
+    public function showOtpForm()
+    {
+        if (! session('login_email')) {
+            return redirect()->route('login');
+        }
+
+        return view('auth.login-otp');
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | VERIFY LOGIN OTP
+    |--------------------------------------------------------------------------
+    */
+
+  
     /*
     |--------------------------------------------------------------------------
     | RESEND LOGIN OTP
