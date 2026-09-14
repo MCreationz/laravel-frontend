@@ -26,154 +26,154 @@ class LoginController extends Controller
         return view('auth.login');
     }
 
- 
-public function loginWithPassword(Request $request)
-{
-    $request->validate([
-        'email' => 'required|email',
-        'password' => 'required',
-        'redirect' => 'nullable|string',
-    ]);
 
-    /*
+    public function loginWithPassword(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+            'redirect' => 'nullable|string',
+        ]);
+
+        /*
     |--------------------------------------------------------------------------
     | Store and validate Fundink redirect
     |--------------------------------------------------------------------------
     */
-    $redirect = $request->input('redirect');
+        $redirect = $request->input('redirect');
 
-    if ($redirect) {
-        $url = parse_url($redirect);
+        if ($redirect) {
+            $url = parse_url($redirect);
 
-        if (
-            ($url['scheme'] ?? null) !== 'https' ||
-            ! in_array($url['host'] ?? null, [
-                'fundink.in',
-                'www.fundink.in',
-            ], true)
-        ) {
-            $redirect = null;
+            if (
+                ($url['scheme'] ?? null) !== 'https' ||
+                ! in_array($url['host'] ?? null, [
+                    'fundink.in',
+                    'www.fundink.in',
+                ], true)
+            ) {
+                $redirect = null;
+            }
         }
-    }
 
-    if ($redirect) {
-        session([
-            'fundink_redirect' => $redirect,
-            'fundink_redirect_expires_at' => now()->addMinutes(4),
-        ]);
-    }
+        if ($redirect) {
+            session([
+                'fundink_redirect' => $redirect,
+                'fundink_redirect_expires_at' => now()->addMinutes(4),
+            ]);
+        }
 
 
-    /*
+        /*
     |--------------------------------------------------------------------------
     | 1. SUPER ADMIN LOGIN
     |--------------------------------------------------------------------------
     */
-    if (Auth::guard('web')->attempt([
-        'email' => $request->email,
-        'password' => $request->password,
-    ])) {
+        if (Auth::guard('web')->attempt([
+            'email' => $request->email,
+            'password' => $request->password,
+        ])) {
 
-        $user = Auth::guard('web')->user();
+            $user = Auth::guard('web')->user();
 
-        if ($user->role()->where('role_id', 1)->exists()) {
+            if ($user->role()->where('role_id', 1)->exists()) {
 
-            $request->session()->regenerate();
+                $request->session()->regenerate();
 
-            return redirect()
-                ->route('superadmin.dashboard');
+                return redirect()
+                    ->route('superadmin.dashboard');
+            }
+
+            Auth::guard('web')->logout();
         }
 
-        Auth::guard('web')->logout();
-    }
 
-
-    /*
+        /*
     |--------------------------------------------------------------------------
     | 2. CLIENT ADMIN LOGIN
     |--------------------------------------------------------------------------
     */
-    if (Auth::guard('client_admin')->attempt([
-        'email' => $request->email,
-        'password' => $request->password,
-        'status' => 'verified',
-    ])) {
+        if (Auth::guard('client_admin')->attempt([
+            'email' => $request->email,
+            'password' => $request->password,
+            'status' => 'verified',
+        ])) {
 
-        $request->session()->regenerate();
+            $request->session()->regenerate();
 
-        return redirect()
-            ->route('client-admin.dashboard');
-    }
+            return redirect()
+                ->route('client-admin.dashboard');
+        }
 
 
-    /*
+        /*
     |--------------------------------------------------------------------------
     | 3. ORGANIZATION LOGIN
     |--------------------------------------------------------------------------
     */
-    if (Auth::guard('organization')->attempt([
-        'work_email' => $request->email,
-        'password' => $request->password,
-    ])) {
+        if (Auth::guard('organization')->attempt([
+            'work_email' => $request->email,
+            'password' => $request->password,
+        ])) {
 
-        $organization = Auth::guard('organization')->user();
+            $organization = Auth::guard('organization')->user();
 
-        // BLOCK UNVERIFIED EMAIL
-        if (! $organization->email_verified_at) {
+            // BLOCK UNVERIFIED EMAIL
+            if (! $organization->email_verified_at) {
 
-            Auth::guard('organization')->logout();
+                Auth::guard('organization')->logout();
 
-            return back()
-                ->withInput($request->only('email'))
-                ->with(
-                    'error',
-                    'Please verify your email before logging in.'
-                );
-        }
+                return back()
+                    ->withInput($request->only('email'))
+                    ->with(
+                        'error',
+                        'Please verify your email before logging in.'
+                    );
+            }
 
-        $request->session()->regenerate();
+            $request->session()->regenerate();
 
-        /*
+            /*
         |--------------------------------------------------------------------------
         | Redirect back to Fundink opportunity
         |--------------------------------------------------------------------------
         */
-        $fundinkRedirect = session('fundink_redirect');
-        $redirectExpiresAt = session('fundink_redirect_expires_at');
+            $fundinkRedirect = session('fundink_redirect');
+            $redirectExpiresAt = session('fundink_redirect_expires_at');
 
-        if (
-            $fundinkRedirect &&
-            $redirectExpiresAt &&
-            now()->lt($redirectExpiresAt)
-        ) {
+            if (
+                $fundinkRedirect &&
+                $redirectExpiresAt &&
+                now()->lt($redirectExpiresAt)
+            ) {
+                session()->forget([
+                    'fundink_redirect',
+                    'fundink_redirect_expires_at',
+                ]);
+
+                return redirect()->away($fundinkRedirect);
+            }
+
             session()->forget([
                 'fundink_redirect',
                 'fundink_redirect_expires_at',
             ]);
 
-            return redirect()->away($fundinkRedirect);
+            return redirect()
+                ->route('dashboard')
+                ->with('success', 'Login successful');
         }
 
-        session()->forget([
-            'fundink_redirect',
-            'fundink_redirect_expires_at',
-        ]);
 
-        return redirect()
-            ->route('dashboard')
-            ->with('success', 'Login successful');
-    }
-
-
-    /*
+        /*
     |--------------------------------------------------------------------------
     | INVALID LOGIN
     |--------------------------------------------------------------------------
     */
-    return back()
-        ->withInput($request->only('email'))
-        ->with('error', 'Invalid email or password.');
-}
+        return back()
+            ->withInput($request->only('email'))
+            ->with('error', 'Invalid email or password.');
+    }
 
     /*
     |--------------------------------------------------------------------------
@@ -251,85 +251,85 @@ public function loginWithPassword(Request $request)
     |--------------------------------------------------------------------------
     */
 
-public function verifyLoginOtp(Request $request)
-{
-    $request->validate([
-        'otp' => 'required|digits:6',
-    ]);
+    public function verifyLoginOtp(Request $request)
+    {
+        $request->validate([
+            'otp' => 'required|digits:6',
+        ]);
 
-    $email = session('login_email');
+        $email = session('login_email');
 
-    if (! $email) {
-        return redirect()
-            ->route('login')
-            ->with('error', 'Session expired.');
-    }
+        if (! $email) {
+            return redirect()
+                ->route('login')
+                ->with('error', 'Session expired.');
+        }
 
-    $organization = Organization::where('work_email', $email)->first();
+        $organization = Organization::where('work_email', $email)->first();
 
-    if (! $organization) {
-        return redirect()
-            ->route('login')
-            ->with('error', 'Account not found.');
-    }
+        if (! $organization) {
+            return redirect()
+                ->route('login')
+                ->with('error', 'Account not found.');
+        }
 
-    if (! $organization->otp_code) {
-        return back()->with('error', 'OTP not generated.');
-    }
+        if (! $organization->otp_code) {
+            return back()->with('error', 'OTP not generated.');
+        }
 
-    if ($organization->otp_code != $request->otp) {
-        return back()->with(
-            'error',
-            'Incorrect verification code. Enter the correct code to complete verification.'
-        );
-    }
+        if ($organization->otp_code != $request->otp) {
+            return back()->with(
+                'error',
+                'Incorrect verification code. Enter the correct code to complete verification.'
+            );
+        }
 
-    if (Carbon::now()->gt($organization->otp_expires_at)) {
-        return back()->with('error', 'OTP expired.');
-    }
+        if (Carbon::now()->gt($organization->otp_expires_at)) {
+            return back()->with('error', 'OTP expired.');
+        }
 
-    Auth::guard('organization')->login($organization);
+        Auth::guard('organization')->login($organization);
 
-    $request->session()->regenerate();
+        $request->session()->regenerate();
 
-    // Clear OTP
-    $organization->update([
-        'otp_code' => null,
-        'otp_expires_at' => null,
-    ]);
+        // Clear OTP
+        $organization->update([
+            'otp_code' => null,
+            'otp_expires_at' => null,
+        ]);
 
-    session()->forget('login_email');
+        session()->forget('login_email');
 
-    /*
+        /*
     |--------------------------------------------------------------------------
     | Redirect back to Fundink opportunity
     |--------------------------------------------------------------------------
     */
-    $fundinkRedirect = session('fundink_redirect');
-    $redirectExpiresAt = session('fundink_redirect_expires_at');
+        $fundinkRedirect = session('fundink_redirect');
+        $redirectExpiresAt = session('fundink_redirect_expires_at');
 
-    if (
-        $fundinkRedirect &&
-        $redirectExpiresAt &&
-        now()->lt($redirectExpiresAt)
-    ) {
+        if (
+            $fundinkRedirect &&
+            $redirectExpiresAt &&
+            now()->lt($redirectExpiresAt)
+        ) {
+            session()->forget([
+                'fundink_redirect',
+                'fundink_redirect_expires_at',
+            ]);
+
+            return redirect()->away($fundinkRedirect);
+        }
+
         session()->forget([
             'fundink_redirect',
             'fundink_redirect_expires_at',
         ]);
 
-        return redirect()->away($fundinkRedirect);
+        return redirect()
+            ->route('dashboard')
+            ->with('success', 'Login successful');
     }
-
-    session()->forget([
-        'fundink_redirect',
-        'fundink_redirect_expires_at',
-    ]);
-
-    return redirect()
-        ->route('dashboard')
-        ->with('success', 'Login successful');
-}
     /*
     |--------------------------------------------------------------------------
     | RESEND LOGIN OTP
