@@ -20,15 +20,19 @@ return Application::configure(basePath: dirname(__DIR__))
 
         health: '/up',
     )
-    ->withMiddleware(function (Middleware $middleware): void {
-        $middleware->alias([
-            'role' => \App\Http\Middleware\CheckRole::class,
-            'auth:sanctum' => \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
-            'superadmin' => \App\Http\Middleware\SuperAdminMiddleware::class,
-            'check.onboarding' => \App\Http\Middleware\CheckOrganizationOnboarding::class,
+   ->withMiddleware(function (Middleware $middleware): void {
 
-        ]);
-    })
+    $middleware->alias([
+        'role' => \App\Http\Middleware\CheckRole::class,
+        'auth:sanctum' => \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
+        'superadmin' => \App\Http\Middleware\SuperAdminMiddleware::class,
+        'check.onboarding' => \App\Http\Middleware\CheckOrganizationOnboarding::class,
+    ]);
+
+    $middleware->validateCsrfTokens(except: [
+        'api/v1/auth/logout',
+    ]);
+})
     ->withExceptions(function (Exceptions $exceptions): void {
 
         $exceptions->render(function (Throwable $e, $request) {
