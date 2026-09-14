@@ -21,33 +21,33 @@ class LoginController extends Controller
     |--------------------------------------------------------------------------
     */
 
-public function showLogin(Request $request)
-{
-    $redirect = $request->input('redirect');
+    public function showLogin(Request $request)
+    {
+        $redirect = $request->input('redirect');
 
-    if ($redirect) {
-        $url = parse_url($redirect);
+        if ($redirect) {
+            $url = parse_url($redirect);
 
-        if (
-            ($url['scheme'] ?? null) !== 'https' ||
-            ! in_array($url['host'] ?? null, [
-                'fundink.in',
-                'www.fundink.in',
-            ], true)
-        ) {
-            $redirect = null;
+            if (
+                ($url['scheme'] ?? null) !== 'https' ||
+                ! in_array($url['host'] ?? null, [
+                    'fundink.in',
+                    'www.fundink.in',
+                ], true)
+            ) {
+                $redirect = null;
+            }
         }
-    }
 
-    if ($redirect) {
-        session([
-            'fundink_redirect' => $redirect,
-            'fundink_redirect_expires_at' => now()->addMinutes(4),
-        ]);
-    }
+        if ($redirect) {
+            session([
+                'fundink_redirect' => $redirect,
+                'fundink_redirect_expires_at' => now()->addMinutes(4),
+            ]);
+        }
 
-    return view('auth.login');
-}
+        return view('auth.login');
+    }
 
 
     public function loginWithPassword(Request $request)
@@ -63,7 +63,7 @@ public function showLogin(Request $request)
     | Store and validate Fundink redirect
     |--------------------------------------------------------------------------
     */
-       
+
 
 
         /*
@@ -177,7 +177,7 @@ public function showLogin(Request $request)
             ->with('error', 'Invalid email or password.');
     }
 
-      public function verifyLoginOtp(Request $request)
+    public function verifyLoginOtp(Request $request)
     {
         $request->validate([
             'otp' => 'required|digits:6',
@@ -333,7 +333,7 @@ public function showLogin(Request $request)
     |--------------------------------------------------------------------------
     */
 
-  
+
     /*
     |--------------------------------------------------------------------------
     | RESEND LOGIN OTP
