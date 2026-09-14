@@ -25,6 +25,10 @@ Route::prefix('v1')->group(function () {
                 FundController::class,
                 'show'
             ]);
+            Route::post('/auth/logout', [
+                FundAuthController::class,
+                'logout'
+            ])->middleware('auth:organization');
         });
     });
 

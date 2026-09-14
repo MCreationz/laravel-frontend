@@ -11,7 +11,7 @@
             <img src="{{ asset('img/direction.png') }}" alt="direction icon" width="25.228912353515625"
                 height="18.28917694091797" fetchpriority="high">
         </div>
-        <a href="#" class="back-btn">Go Back</a>
+        <a href="{{ route('login') }}" class="back-btn">Go Back</a>
         </div>
 
         <h1>Welcome to Fundink</h1>

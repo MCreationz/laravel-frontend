@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class FundAuthController extends Controller
@@ -33,6 +34,16 @@ class FundAuthController extends Controller
             ],
         ]);
     }
+    public function logout(Request $request)
+    {
+        Auth::guard('organization')->logout();
 
-    
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Logged out successfully.',
+        ]);
+    }
 }
